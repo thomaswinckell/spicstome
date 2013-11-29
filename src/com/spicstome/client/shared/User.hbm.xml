@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 21 janv. 2013 18:53:20 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping package="com.spicstome.client.shared" default-lazy="false">
+
+    <class name="User" table="user">
+    
+        <id name="id_user" type="int" column ="id_user" >
+            <generator class="increment" />
+        </id>
+        <property name="login" type="string" column ="login" />
+
+        
+    </class>
+        
+</hibernate-mapping>
