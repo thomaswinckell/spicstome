@@ -6,7 +6,7 @@ import com.google.gwt.place.shared.Place;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 
-import com.spicstome.client.services.MailMeServices;
+import com.spicstome.client.services.SpicsToMeServices;
 import com.spicstome.client.ClientFactory;
 import com.spicstome.client.hibernate.HibernateManager;
 import com.spicstome.client.place.GoodbyePlace;
@@ -49,7 +49,7 @@ public class LoginActivity extends AbstractActivity implements
 		
 		System.out.println("appel service");
 		
-		MailMeServices.Util.getInstance().Login(login, password, new AsyncCallback<Boolean>() {
+		SpicsToMeServices.Util.getInstance().Login(login, password, new AsyncCallback<Boolean>() {
 			@Override
 			public void onSuccess(Boolean result) {
 
