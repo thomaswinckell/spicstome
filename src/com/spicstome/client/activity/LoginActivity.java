@@ -13,6 +13,14 @@ import com.spicstome.client.place.GoodbyePlace;
 import com.spicstome.client.place.LoginPlace;
 import com.spicstome.client.ui.LoginView;
 
+/**
+ * 
+ * @author Maxime
+ * 
+ * LoginActivity , handle the login part of the application
+ *
+ */
+
 public class LoginActivity extends AbstractActivity implements
 		LoginView.Presenter {
 	

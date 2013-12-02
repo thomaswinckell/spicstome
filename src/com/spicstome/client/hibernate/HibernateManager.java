@@ -8,7 +8,13 @@ import org.hibernate.cfg.Configuration;
 import com.spicstome.client.shared.Article;
 import com.spicstome.client.shared.User;
 
-
+/**
+ * 
+ * @author Maxime
+ * 
+ * HibernateManager execute query's and return result from database
+ *
+ */
 
 public class HibernateManager {
 

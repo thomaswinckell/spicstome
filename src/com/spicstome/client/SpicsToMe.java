@@ -16,7 +16,11 @@ import com.spicstome.client.mvp.AppPlaceHistoryMapper;
 import com.spicstome.client.place.LoginPlace;
 
 /**
- * Entry point classes define <code>onModuleLoad()</code>.
+ * 
+ * @author Maxime
+ * 
+ * Main Application , Create the ClientFactory and will init the first Place to call
+ *
  */
 public class SpicsToMe implements EntryPoint
 {
@@ -44,7 +48,7 @@ public class SpicsToMe implements EntryPoint
 		AppPlaceHistoryMapper historyMapper= GWT.create(AppPlaceHistoryMapper.class);
 		PlaceHistoryHandler historyHandler = new PlaceHistoryHandler(historyMapper);
 		
-		// defaultPlace est la premiere place qui sera demandé
+		// defaultPlace will be the first place called by placeController 
 	
 		historyHandler.register(placeController, eventBus, defaultPlace);
 

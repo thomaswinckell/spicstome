@@ -8,6 +8,15 @@ import com.spicstome.client.ui.LoginView;
 import com.spicstome.client.ui.LoginViewImpl;
 
 
+/**
+ * 
+ * @author Maxime
+ * 
+ * ClientFactory provide all the view of the application and contain 
+ * the PlaceController which will map the places during the execution
+ *
+ */
+
 public class ClientFactory 
 {
 	private static final SimpleEventBus eventBus = new SimpleEventBus();

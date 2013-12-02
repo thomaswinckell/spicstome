@@ -6,6 +6,8 @@
   <inherits name="com.google.gwt.activity.Activity"/>
   <inherits name="com.google.gwt.place.Place"/>
 
+  <!-- Entry Point is the first class called at the begining of the application -->
+  
   <entry-point class='com.spicstome.client.SpicsToMe'/>
 
 
