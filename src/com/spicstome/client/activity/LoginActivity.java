@@ -3,8 +3,13 @@ package com.spicstome.client.activity;
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.place.shared.Place;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
+
+import com.spicstome.client.services.MailMeServices;
 import com.spicstome.client.ClientFactory;
+import com.spicstome.client.hibernate.HibernateManager;
+import com.spicstome.client.place.GoodbyePlace;
 import com.spicstome.client.place.LoginPlace;
 import com.spicstome.client.ui.LoginView;
 
@@ -32,18 +37,30 @@ public class LoginActivity extends AbstractActivity implements
 	}
 
 	/**
-	 * Ask user before stopping this activity
-	 */
-	@Override
-	public String mayStop() {
-		return "Please hold on. This activity is stopping.";
-	}
-
-	/**
 	 * Navigate to a new Place in the browser
 	 */
 	public void goTo(Place place) {
 		System.out.println("go To HelloActivity");
 		clientFactory.getPlaceController().goTo(place);
+	}
+
+	@Override
+	public void login(String login, String password) {
+		
+		System.out.println("appel service");
+		
+		MailMeServices.Util.getInstance().Login(login, password, new AsyncCallback<Boolean>() {
+			@Override
+			public void onSuccess(Boolean result) {
+
+				if(result) 
+					goTo(new GoodbyePlace("Youhou"));
+
+			}
+			@Override
+			public void onFailure(Throwable caught) {
+				System.out.println(caught);
+			}
+		});
 	}
 }

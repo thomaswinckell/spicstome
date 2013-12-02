@@ -1,5 +1,7 @@
 package com.spicstome.client.hibernate;
 
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.cfg.Configuration;
 
@@ -47,6 +49,15 @@ public class HibernateManager {
 	
 	public Article article(int id){
 		return (Article)session.load(Article.class, id);
+	}
+	
+	public boolean login(String login,String password)
+	{
+		List<User> list = session.createQuery("FROM User WHERE login = '" + login + "'").list();
+		
+		if(list.isEmpty()) return false;
+		else
+			return true;
 	}
 }
 

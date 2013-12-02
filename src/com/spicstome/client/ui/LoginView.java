@@ -17,5 +17,6 @@ public interface LoginView extends IsWidget
 	public interface Presenter
 	{
 		void goTo(Place place);
+		void login(String login,String password);
 	}
 }

@@ -50,6 +50,8 @@ public class SpicsToMe implements EntryPoint
 
 		RootPanel.get().add(appWidget);
 		
+		RootPanel.get().setStyleName("main");
+		
 		// Goes to place represented on URL or default place
 		historyHandler.handleCurrentHistory();
 	}
