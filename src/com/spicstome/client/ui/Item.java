@@ -10,16 +10,16 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-public class ItemSelection extends Composite implements HasClickHandlers {
+public class Item extends Composite implements HasClickHandlers {
 
 	VerticalPanel panel = new VerticalPanel();
 	FocusPanel clickBox = new FocusPanel();
 	Label label;
 	Image image;
-	ListItemSelection parent;
+	ListItem parent;
 	boolean check=false;
 	
-	public ItemSelection(String srcImage,String text) 
+	public Item(String srcImage,String text) 
 	{
 		label = new Label(text);
 		image = new Image(srcImage);
@@ -30,18 +30,18 @@ public class ItemSelection extends Composite implements HasClickHandlers {
 		
 		clickBox.add(panel);
 		
-		label.setStyleName("titleItemSelection");
+		label.setStyleName("titleItem");
 		
 		initWidget(clickBox);
 		
-		panel.setStyleName("itemSelectionUnchecked");
+		panel.setStyleName("itemUnchecked");
 	}
 
-	void setParent(ListItemSelection l)
+	void setParent(ListItem l)
 	{
 		
 		parent=l;
-		final ItemSelection me = this;
+		final Item me = this;
 		
 		clickBox.addClickHandler(new ClickHandler() {
 			
@@ -65,13 +65,13 @@ public class ItemSelection extends Composite implements HasClickHandlers {
 		return null;
 	}
 
-	public void Check()
+	public void Check(boolean b)
 	{
-		this.check=!check;
+		this.check=b;
 		
 		if(check)
-			panel.setStyleName("itemSelectionChecked");
+			panel.setStyleName("itemChecked");
 		else
-			panel.setStyleName("itemSelectionUnchecked");
+			panel.setStyleName("itemUnchecked");
 	}
 }

@@ -10,16 +10,16 @@ import com.spicstome.client.place.AlbumManagementPlace;
 public class MainMenuViewImpl extends UserView implements MainMenuView
 {
 	Presenter listener;
-	ArrayList<ItemSelection> modules;
+	ArrayList<Item> modules;
 	HorizontalPanel modulesPanel = new HorizontalPanel();
 
 	public MainMenuViewImpl()
 	{
 		super();
 
-		modules = new ArrayList<ItemSelection>();
-		modules.add(new ItemSelection("images/albumlogo.png","Gestion album"));
-		modules.add(new ItemSelection("images/userlogo.png","Gestion des utilisateurs"));
+		modules = new ArrayList<Item>();
+		modules.add(new Item("images/albumlogo.png","Gestion album"));
+		modules.add(new Item("images/userlogo.png","Gestion des utilisateurs"));
 		
 
 		modules.get(0).clickBox.addClickHandler(new ClickHandler() {
