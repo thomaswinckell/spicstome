@@ -5,13 +5,31 @@ h1 {
   text-align:center;
 }
 
-.titleIconComposite
+.titleItemSelection
 {
 	text-align:center;
 	font-size:20px;
 }
 
-.iconComposite
+.itemSelectionChecked:hover
+{
+	cursor:pointer;
+}
+.itemSelectionUnchecked:hover
+{
+	cursor:pointer;
+}
+.itemSelectionChecked
+{
+	width:100px;
+	margin:10px;
+	padding:10px;
+	background-color:lightgreen;
+	border-radius:20px;
+}
+
+
+.itemSelectionUnchecked
 {
 	width:100px;
 	margin:10px;
@@ -19,6 +37,9 @@ h1 {
 	background-color:lightgrey;
 	border-radius:20px;
 }
+
+
+
 
 .mainPanel
 {
