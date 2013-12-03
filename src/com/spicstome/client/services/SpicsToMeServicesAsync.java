@@ -20,7 +20,7 @@ import com.spicstome.client.shared.User;
 
 public interface SpicsToMeServicesAsync {
 	
-	void Login(String userName, String password, AsyncCallback<Integer> callback);
+	void Login(String userName, String password, AsyncCallback<User> callback);
 	void CurrentUser(AsyncCallback<User> callback);
 	
 }

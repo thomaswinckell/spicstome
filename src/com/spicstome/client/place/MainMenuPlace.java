@@ -6,26 +6,25 @@ import com.google.gwt.place.shared.PlaceTokenizer;
 public class MainMenuPlace extends Place
 {
 
-	
-	public MainMenuPlace()
-	{
-		
+	public MainMenuPlace() {
 	}
 
 
-	public static class Tokenizer implements PlaceTokenizer<MainMenuPlace>
-	{
+	/**
+	 * PlaceTokenizer knows how to serialize the Place's state to a URL token.
+	 */
+	public static class Tokenizer implements PlaceTokenizer<MainMenuPlace> {
+
 		@Override
-		public String getToken(MainMenuPlace place)
-		{
+		public String getToken(MainMenuPlace place) {
 			return "";
 		}
 
 		@Override
-		public MainMenuPlace getPlace(String token)
-		{
+		public MainMenuPlace getPlace(String token) {
 			return new MainMenuPlace();
 		}
+
 	}
 	
 }

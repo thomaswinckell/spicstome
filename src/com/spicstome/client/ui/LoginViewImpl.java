@@ -4,16 +4,14 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.FormPanel;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
-import com.google.gwt.user.client.ui.HasHorizontalAlignment.HorizontalAlignmentConstant;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.spicstome.client.place.MainMenuPlace;
+
 
 
 
@@ -42,7 +40,6 @@ public class LoginViewImpl extends Composite implements LoginView
 		viewPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		
 		
-		
 		button = new Button("Connexion");
 		button.setStyleName("connexionButton");
 		
@@ -55,7 +52,6 @@ public class LoginViewImpl extends Composite implements LoginView
 
             @Override
             public void onClick(ClickEvent event) {
-                //listener.goTo(new GoodbyePlace(textLogin.getText()));
             	listener.login(textLogin.getText(), textPassword.getText());
             	
             }

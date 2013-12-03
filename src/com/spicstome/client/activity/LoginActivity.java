@@ -9,7 +9,6 @@ import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.spicstome.client.services.SpicsToMeServices;
 import com.spicstome.client.shared.User;
 import com.spicstome.client.ClientFactory;
-import com.spicstome.client.hibernate.HibernateManager;
 import com.spicstome.client.place.MainMenuPlace;
 import com.spicstome.client.place.LoginPlace;
 import com.spicstome.client.ui.LoginView;
@@ -39,7 +38,6 @@ public class LoginActivity extends AbstractActivity implements
 	 */
 	@Override
 	public void start(AcceptsOneWidget containerWidget, EventBus eventBus) {
-		System.out.println("start de l'activit� Hello");
 		LoginView loginView = clientFactory.getLoginView();
 		loginView.setPresenter(this);
 		containerWidget.setWidget(loginView.asWidget());
@@ -49,21 +47,21 @@ public class LoginActivity extends AbstractActivity implements
 	 * Navigate to a new Place in the browser
 	 */
 	public void goTo(Place place) {
-		System.out.println("go To HelloActivity");
 		clientFactory.getPlaceController().goTo(place);
 	}
 
 	@Override
 	public void login(String login, String password) {
 		
-		System.out.println("appel service");
 		
-		SpicsToMeServices.Util.getInstance().Login(login, password, new AsyncCallback<Integer>() {
+		SpicsToMeServices.Util.getInstance().Login(login, password, new AsyncCallback<User>() {
 			@Override
-			public void onSuccess(Integer id) {
+			public void onSuccess(User user) {
 
-				if(id!=-1) 
+				if(user!=null) 
+				{
 					goTo(new MainMenuPlace());
+				}	
 				else
 					clientFactory.getLoginView().setWrongLogin();
 

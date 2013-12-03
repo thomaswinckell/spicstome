@@ -37,7 +37,7 @@ public interface SpicsToMeServices extends RemoteService {
 		}
 	}
 	
-	int Login(String userName, String password);
+	User Login(String userName, String password);
 	User CurrentUser();
 	
 	

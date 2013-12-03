@@ -43,28 +43,27 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	}
 	
 	@Override
-	public int Login(String login, String password) {
+	public User Login(String login, String password) {
 	
 		User user = HibernateManager.getInstance().login(login, password);
 
 		if(user!=null)
 		{
 			getThreadLocalRequest().getSession().setAttribute("currentUser", user);
-			return user.getId_user();
 		}
-		else
-		{
-			return -1;
-		}
+		
+		return user;
 		
 		
 	}
 
 	@Override
 	public User CurrentUser() {
-		User user = (User)getThreadLocalRequest().getSession().getAttribute("currentUser");
-		return user;
+		
+		return (User)getThreadLocalRequest().getSession().getAttribute("currentUser");
 	}
+
+	
 	
 	
 

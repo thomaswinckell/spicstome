@@ -5,24 +5,24 @@ import com.google.gwt.place.shared.PlaceTokenizer;
 
 public class LoginPlace extends Place
 {
-	
-	
-	public LoginPlace()
-	{
-	}
 
-	public static class Tokenizer implements PlaceTokenizer<LoginPlace>
-	{
+	public LoginPlace() {
+		
+	}
+	
+
+	/**
+	 * PlaceTokenizer knows how to serialize the Place's state to a URL token.
+	 */
+	public static class Tokenizer implements PlaceTokenizer<LoginPlace> {
 
 		@Override
-		public String getToken(LoginPlace place)
-		{
+		public String getToken(LoginPlace place) {
 			return "";
 		}
 
 		@Override
-		public LoginPlace getPlace(String token)
-		{
+		public LoginPlace getPlace(String token) {
 			return new LoginPlace();
 		}
 

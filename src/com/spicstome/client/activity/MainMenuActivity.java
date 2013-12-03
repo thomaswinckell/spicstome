@@ -1,51 +1,40 @@
 package com.spicstome.client.activity;
 
-import com.google.gwt.activity.shared.AbstractActivity;
+
 import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.place.shared.Place;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.spicstome.client.ClientFactory;
 import com.spicstome.client.place.MainMenuPlace;
-import com.spicstome.client.services.SpicsToMeServices;
-import com.spicstome.client.shared.User;
 import com.spicstome.client.ui.MainMenuView;
+import com.spicstome.client.ui.UserView;
 
-public class MainMenuActivity extends AbstractActivity {
-	private ClientFactory clientFactory;
-	// Name that will be appended to "Good-bye, "
+public class MainMenuActivity extends UserActivity implements
+MainMenuView.Presenter{
 
-	private User currentUser;
-	
+
+
 	public MainMenuActivity(MainMenuPlace place, ClientFactory clientFactory) {
-		this.clientFactory = clientFactory;
+		super(place,clientFactory);
 	}
 
 	@Override
 	public void start(AcceptsOneWidget containerWidget, EventBus eventBus) {
-		MainMenuView goodbyeView = clientFactory.getGoodbyeView();
+
+		MainMenuView mainmenu = clientFactory.getMainMenuView();
+		userView = (UserView) mainmenu;
+		containerWidget.setWidget(userView.asWidget());
+		mainmenu.setPresenter(this);
 		
-		System.out.println("start mainmenu");
+		super.start(containerWidget, eventBus);
 		
-		SpicsToMeServices.Util.getInstance().CurrentUser( new AsyncCallback<User>() {
-			@Override
-			public void onSuccess(User user) {
-					
-				if(user!=null) 
-				{		
-					currentUser = user;
-					clientFactory.getGoodbyeView().setName(currentUser.getLogin());
-				}
-				
-			}
-			@Override
-			public void onFailure(Throwable caught) {
-				System.out.println(caught);
-			}
-		});
+	}
+
+	@Override
+	public void goTo(Place place) {
 		
+		clientFactory.getPlaceController().goTo(place);
 		
-		containerWidget.setWidget(goodbyeView.asWidget());
-		System.out.println("start terminé");
 	}
 	
 	

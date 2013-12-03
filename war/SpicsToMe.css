@@ -5,13 +5,13 @@ h1 {
   text-align:center;
 }
 
-.titleModuleComposite
+.titleIconComposite
 {
 	text-align:center;
 	font-size:20px;
 }
 
-.moduleComposite
+.iconComposite
 {
 	width:100px;
 	margin:10px;
@@ -22,11 +22,12 @@ h1 {
 
 .mainPanel
 {
-	margin:50px;
+	margin:auto;
 	padding:20px;
 	border-width:5px;
 	border-style:dotted;
 	border-color:grey;
+	border-radius:20px;
 }
 
 .errorMessage
@@ -49,9 +50,5 @@ h1 {
 	border-width:5px;
 	border-style:dotted;
 	border-color:grey;
-}
-
-.main
-{
-
+	border-radius:20px;
 }

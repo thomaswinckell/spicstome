@@ -2,42 +2,49 @@ package com.spicstome.client.ui;
 
 import java.util.ArrayList;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Label;
+import com.spicstome.client.place.AlbumManagementPlace;
 
-
-public class MainMenuViewImpl extends SpicsToMeComposite implements MainMenuView
+public class MainMenuViewImpl extends UserView implements MainMenuView
 {
-	String name;
-	Label label = new Label("");
-	ArrayList<ModuleComposite> modules;
+	Presenter listener;
+	ArrayList<IconComposite> modules;
 	HorizontalPanel modulesPanel = new HorizontalPanel();
 
 	public MainMenuViewImpl()
 	{
 		super();
-		modules = new ArrayList<ModuleComposite>();
-		modules.add(new ModuleComposite("images/albumlogo.png","Gestion d'album"));
-		modules.add(new ModuleComposite("images/userlogo.png","Gestion des utilisateurs"));
+
+		modules = new ArrayList<IconComposite>();
+		modules.add(new IconComposite("images/albumlogo.png","Gestion album"));
+		modules.add(new IconComposite("images/userlogo.png","Gestion des utilisateurs"));
 		
-		mainPanel.add(label);
+
+		modules.get(0).image.addClickHandler(new ClickHandler() {
+
+            @Override
+            public void onClick(ClickEvent event) {
+            	listener.goTo(new AlbumManagementPlace());
+            }
+        });
 		
 		for(int i=0;i<modules.size();i++)
 		{
+			
+			
 			modulesPanel.add(modules.get(i));
 		}
 		
 		mainPanel.add(modulesPanel);
-		
-		
 	}
 
 	@Override
-	public void setName(String name)
-	{
-		this.name = name;
-		label.setText("Bienvenue "+name+",");
+	public void setPresenter(Presenter listener) {
+		this.listener=listener;
+		
 	}
-	
+
 	
 }
