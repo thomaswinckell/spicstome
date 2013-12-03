@@ -1,4 +1,4 @@
 spicstome
 =========
 
-Webmail for autistic people
+Webmail for autistic people + life project
