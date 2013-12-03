@@ -20,6 +20,7 @@ import javax.servlet.ServletException;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.spicstome.client.hibernate.HibernateManager;
 import com.spicstome.client.services.SpicsToMeServices;
+import com.spicstome.client.shared.User;
 
 /**
  * 
@@ -42,9 +43,30 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	}
 	
 	@Override
-	public boolean Login(String login, String password) {
-		return HibernateManager.getInstance().login(login, password);
+	public int Login(String login, String password) {
+	
+		User user = HibernateManager.getInstance().login(login, password);
+
+		if(user!=null)
+		{
+			getThreadLocalRequest().getSession().setAttribute("currentUser", user);
+			return user.getId_user();
+		}
+		else
+		{
+			return -1;
+		}
+		
+		
 	}
+
+	@Override
+	public User CurrentUser() {
+		User user = (User)getThreadLocalRequest().getSession().getAttribute("currentUser");
+		return user;
+	}
+	
+	
 
 	
 	

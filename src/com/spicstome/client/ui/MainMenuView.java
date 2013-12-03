@@ -8,7 +8,7 @@ import com.google.gwt.user.client.ui.IsWidget;
  * 
  * @author drfibonacci
  */
-public interface GoodbyeView extends IsWidget
+public interface MainMenuView extends IsWidget
 {
 	void setName(String name);
 }

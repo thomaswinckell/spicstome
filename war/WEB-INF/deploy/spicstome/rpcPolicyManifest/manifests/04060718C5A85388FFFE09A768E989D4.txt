@@ -1,0 +1,2 @@
+serviceClass: com.spicstome.client.services.SpicsToMeServices
+path: BF74CA263247E79B2C08F8E36C45CC71.gwt.rpc

@@ -57,13 +57,14 @@ public class HibernateManager {
 		return (Article)session.load(Article.class, id);
 	}
 	
-	public boolean login(String login,String password)
+	public User login(String login,String password)
 	{
-		List<User> list = session.createQuery("FROM User WHERE login = '" + login + "'").list();
+		List<User> list = session.createQuery("FROM User WHERE login = '" + login + "' AND password = '"+password+"'").list();
 		
-		if(list.isEmpty()) return false;
+		if(list.isEmpty()) 
+			return null;
 		else
-			return true;
+			return list.get(0);
 	}
 }
 

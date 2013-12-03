@@ -4,9 +4,9 @@ import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.activity.shared.ActivityMapper;
 import com.google.gwt.place.shared.Place;
 import com.spicstome.client.ClientFactory;
-import com.spicstome.client.activity.GoodbyeActivity;
+import com.spicstome.client.activity.MainMenuActivity;
 import com.spicstome.client.activity.LoginActivity;
-import com.spicstome.client.place.GoodbyePlace;
+import com.spicstome.client.place.MainMenuPlace;
 import com.spicstome.client.place.LoginPlace;
 
 public class AppActivityMapper implements ActivityMapper {
@@ -35,8 +35,8 @@ public class AppActivityMapper implements ActivityMapper {
 		System.out.println("Une place est demandé");
 		if (place instanceof LoginPlace)
 			return new LoginActivity((LoginPlace) place, clientFactory);
-		else if (place instanceof GoodbyePlace)
-			return new GoodbyeActivity((GoodbyePlace) place, clientFactory);
+		else if (place instanceof MainMenuPlace)
+			return new MainMenuActivity((MainMenuPlace) place, clientFactory);
 
 		return null;
 	}

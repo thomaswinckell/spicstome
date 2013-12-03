@@ -7,9 +7,10 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 
 import com.spicstome.client.services.SpicsToMeServices;
+import com.spicstome.client.shared.User;
 import com.spicstome.client.ClientFactory;
 import com.spicstome.client.hibernate.HibernateManager;
-import com.spicstome.client.place.GoodbyePlace;
+import com.spicstome.client.place.MainMenuPlace;
 import com.spicstome.client.place.LoginPlace;
 import com.spicstome.client.ui.LoginView;
 
@@ -38,7 +39,7 @@ public class LoginActivity extends AbstractActivity implements
 	 */
 	@Override
 	public void start(AcceptsOneWidget containerWidget, EventBus eventBus) {
-		System.out.println("start de l'activité Hello");
+		System.out.println("start de l'activitï¿½ Hello");
 		LoginView loginView = clientFactory.getLoginView();
 		loginView.setPresenter(this);
 		containerWidget.setWidget(loginView.asWidget());
@@ -57,12 +58,14 @@ public class LoginActivity extends AbstractActivity implements
 		
 		System.out.println("appel service");
 		
-		SpicsToMeServices.Util.getInstance().Login(login, password, new AsyncCallback<Boolean>() {
+		SpicsToMeServices.Util.getInstance().Login(login, password, new AsyncCallback<Integer>() {
 			@Override
-			public void onSuccess(Boolean result) {
+			public void onSuccess(Integer id) {
 
-				if(result) 
-					goTo(new GoodbyePlace("Youhou"));
+				if(id!=-1) 
+					goTo(new MainMenuPlace());
+				else
+					clientFactory.getLoginView().setWrongLogin();
 
 			}
 			@Override

@@ -7,10 +7,13 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FormPanel;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment.HorizontalAlignmentConstant;
+import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.spicstome.client.place.GoodbyePlace;
+import com.spicstome.client.place.MainMenuPlace;
 
 
 
@@ -20,22 +23,33 @@ public class LoginViewImpl extends Composite implements LoginView
 
 	private Presenter listener;
 	private TextBox textLogin;
-	private TextBox textPassword;
+	private PasswordTextBox textPassword;
 	private Button button;
+	
+	private HorizontalPanel wrongPanel = new HorizontalPanel();
+	private Label wrongLabel;
+
 	
 	VerticalPanel viewPanel = new VerticalPanel(); 
 
 	public LoginViewImpl()
 	{
+		Image image = new Image("images/logo.png");
+		wrongLabel  = new Label("Connexion refusée");
+		wrongLabel.setStyleName("errorMessage");
 		
-		viewPanel.setStyleName("vp");
+		viewPanel.setStyleName("connexionPanel");
 		viewPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		
 		
-		button = new Button("Se connecter");
+		
+		button = new Button("Connexion");
+		button.setStyleName("connexionButton");
+		
 		
 		textLogin = new TextBox();
-		textPassword = new TextBox();
+		textPassword = new PasswordTextBox();
+		
 		
 		button.addClickHandler(new ClickHandler() {
 
@@ -46,14 +60,18 @@ public class LoginViewImpl extends Composite implements LoginView
             	
             }
         });
+		wrongLabel.setVisible(false);
+		wrongPanel.add(wrongLabel);
 		
 		
+		
+		viewPanel.add(image);
 		viewPanel.add(new Label("Login :"));
 		viewPanel.add(textLogin);
 		viewPanel.add(new Label("Mot de passe :"));
 		viewPanel.add(textPassword);
 		viewPanel.add(button);
-		
+		viewPanel.add(wrongPanel);
 		
 		
 		initWidget(viewPanel);
@@ -66,5 +84,16 @@ public class LoginViewImpl extends Composite implements LoginView
 	public void setPresenter(Presenter listener)
 	{
 		this.listener = listener;
+	}
+
+
+
+
+	@Override
+	public void setWrongLogin() 
+	{
+		textLogin.setText("");
+		textPassword.setText("");
+		wrongLabel.setVisible(true);
 	}
 }

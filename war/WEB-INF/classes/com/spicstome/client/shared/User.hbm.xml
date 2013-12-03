@@ -10,7 +10,6 @@
             <generator class="increment" />
         </id>
         <property name="login" type="string" column ="login" />
-
         
     </class>
         

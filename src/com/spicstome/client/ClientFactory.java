@@ -2,8 +2,8 @@ package com.spicstome.client;
 
 import com.google.gwt.place.shared.PlaceController;
 import com.google.web.bindery.event.shared.SimpleEventBus;
-import com.spicstome.client.ui.GoodbyeView;
-import com.spicstome.client.ui.GoodbyeViewImpl;
+import com.spicstome.client.ui.MainMenuView;
+import com.spicstome.client.ui.MainMenuViewImpl;
 import com.spicstome.client.ui.LoginView;
 import com.spicstome.client.ui.LoginViewImpl;
 
@@ -22,7 +22,7 @@ public class ClientFactory
 	private static final SimpleEventBus eventBus = new SimpleEventBus();
 	private static final PlaceController placeController = new PlaceController(eventBus);
 	private static final LoginView loginView = new LoginViewImpl();
-	private static final GoodbyeView goodbyeView = new GoodbyeViewImpl();
+	private static final MainMenuView mainMenuView = new MainMenuViewImpl();
 
 
 	public SimpleEventBus getEventBus()
@@ -41,8 +41,8 @@ public class ClientFactory
 		return placeController;
 	}
 
-	public GoodbyeView getGoodbyeView()
+	public MainMenuView getGoodbyeView()
 	{
-		return goodbyeView;
+		return mainMenuView;
 	}
 }

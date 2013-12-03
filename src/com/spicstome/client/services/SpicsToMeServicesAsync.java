@@ -14,14 +14,13 @@
  *******************************************************************************/
 package com.spicstome.client.services;
 
-import java.util.List;
-
-
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.spicstome.client.shared.User;
+
 
 public interface SpicsToMeServicesAsync {
 	
-	void Login(String userName, String password, AsyncCallback<Boolean> callback);
-
+	void Login(String userName, String password, AsyncCallback<Integer> callback);
+	void CurrentUser(AsyncCallback<User> callback);
 	
 }

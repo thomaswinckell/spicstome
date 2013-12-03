@@ -1,0 +1,2 @@
+serviceClass: com.spicstome.client.services.MailMeServices
+path: 91448FECAC06CD6E39F94B647E0F96A9.gwt.rpc

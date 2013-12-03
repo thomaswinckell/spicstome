@@ -13,6 +13,7 @@ public interface LoginView extends IsWidget
 {
 	
 	void setPresenter(Presenter listener);
+	void setWrongLogin();
 
 	public interface Presenter
 	{

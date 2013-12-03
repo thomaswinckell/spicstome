@@ -14,11 +14,12 @@
  *******************************************************************************/
 package com.spicstome.client.services;
 
-import java.util.List;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
+import com.spicstome.client.shared.User;
+
 
 
 @RemoteServiceRelativePath("SpicsToMeServices")
@@ -36,8 +37,8 @@ public interface SpicsToMeServices extends RemoteService {
 		}
 	}
 	
-	boolean Login(String userName, String password);
-	
+	int Login(String userName, String password);
+	User CurrentUser();
 	
 	
 
