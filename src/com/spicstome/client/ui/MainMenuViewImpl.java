@@ -6,6 +6,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.spicstome.client.place.AlbumManagementPlace;
+import com.spicstome.client.place.MainMenuLifeProjetPlace;
 
 public class MainMenuViewImpl extends UserView implements MainMenuView
 {
@@ -31,6 +32,18 @@ public class MainMenuViewImpl extends UserView implements MainMenuView
             	listener.goTo(new AlbumManagementPlace());
             }
         });
+		
+		//module 1
+		
+		//module 2
+		modules.get(2).clickBox.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				listener.goTo(new MainMenuLifeProjetPlace());
+				
+			}
+		});
 		
 		for(int i=0;i<modules.size();i++)
 		{
