@@ -21,7 +21,9 @@ public class MainMenuViewImpl extends UserView implements MainMenuView
 		modules.add(new Item("images/albumlogo.png","Gestion album"));
 		modules.add(new Item("images/userlogo.png","Gestion des utilisateurs"));
 		
-
+		//Module Projet de vie
+		modules.add(new Item("images/tree.png","Gestion des Projets de vie"));
+        
 		modules.get(0).clickBox.addClickHandler(new ClickHandler() {
 
             @Override
