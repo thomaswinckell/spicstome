@@ -6,6 +6,7 @@ import org.hibernate.Session;
 import org.hibernate.cfg.Configuration;
 
 import com.spicstome.client.shared.Article;
+import com.spicstome.client.shared.Student;
 import com.spicstome.client.shared.User;
 
 /**
@@ -59,12 +60,15 @@ public class HibernateManager {
 	
 	public User login(String login,String password)
 	{
+		/*
 		List<User> list = session.createQuery("FROM User WHERE login = '" + login + "' AND password = '"+password+"'").list();
 		
 		if(list.isEmpty()) 
 			return null;
 		else
 			return list.get(0);
+		*/
+		return null;
 	}
 }
 

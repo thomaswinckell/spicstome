@@ -9,14 +9,18 @@ import com.spicstome.client.ClientFactory;
 import com.spicstome.client.services.SpicsToMeServices;
 import com.spicstome.client.shared.User;
 import com.spicstome.client.ui.UserView;
+import com.spicstome.client.ui.composite.UserViewComposite;
 
-public class UserActivity extends AbstractActivity{
+public class UserActivity extends AbstractActivity implements UserView.Presenter{
 
-	protected UserView userView;
+	protected UserViewComposite userView;
 	protected ClientFactory clientFactory;
 	
-	public UserActivity(Place place, ClientFactory clientFactory) {
+	public UserActivity(Place place, ClientFactory clientFactory,UserViewComposite userView) {
 		this.clientFactory = clientFactory;
+		
+		this.userView = userView;
+		
 	}
 	
 	@Override
@@ -36,6 +40,15 @@ public class UserActivity extends AbstractActivity{
 				System.out.println(caught);
 			}
 		});
+		
+		panel.setWidget(userView.asWidget());
+		userView.setPresenter(this);
+		
+	}
+
+	@Override
+	public void goTo(Place place) {
+		clientFactory.getPlaceController().goTo(place);
 		
 	}
 

@@ -1,16 +1,59 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 21 janv. 2013 18:53:20 by Hibernate Tools 3.4.0.CR1 -->
+
 <hibernate-mapping package="com.spicstome.client.shared" default-lazy="false">
 
-    <class name="User" table="user">
-    
-        <id name="id_user" type="int" column ="id_user" >
-            <generator class="increment" />
-        </id>
-        <property name="login" type="string" column ="login" />
+<class name="User" abstract="true" select-before-update="true">
+
+	<id name="id" type="long" column="id_user">
+		<generator class="increment" />
+	</id>
+	
+	<property name="subscriptionDate" type="timestamp" column="subscription_date" />
+
+	<property name="login" type="string" column="login" />
+
+	<property name="password" type="string" column="password" />
+
+	<many-to-one name="image" class="Image" column="id_image" unique="true" cascade="all" />
+	
+	<union-subclass name="Student" table="student" extends="User">
+	    
+		<many-to-one name="album" class="Album" column="id_album" unique="true" cascade="all"/>
+		
+		<set name="logs" table="logs">
+			<key>
+				<column name="id_user" not-null="true" />
+			</key>
+			<one-to-many class="Log" />
+		</set>
+		
+		<set name="teachers" table="teachers_students" inverse="false" lazy="true" fetch="select">
+	        <key column="id_student" />
+	        <many-to-many class="Teacher" column="id_teacher" />
+	    </set>
         
-    </class>
+        <set name="referents" table="referents_students" inverse="false" lazy="true" fetch="select">
+            <key column="id_student" />
+	        <many-to-many class="Referent" column="id_referent" />
+        </set>
+	</union-subclass>
+	
+	<union-subclass name="Referent" table="referent" extends="User">
+        <set name="students" table="referents_students" inverse="true" lazy="true" fetch="select">
+            <key column="id_referent" />
+	        <many-to-many class="Student" column="id_student" />
+        </set>
+	</union-subclass>
+	
+	<union-subclass name="Teacher" table="teacher" extends="User">
+		<set name="students" table="teachers_students" inverse="true" lazy="true" fetch="select">
+            <key column="id_teacher" />
+	        <many-to-many class="Student" column="id_student" />
+        </set>
+	</union-subclass>
+
+</class>
         
 </hibernate-mapping>

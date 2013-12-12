@@ -6,26 +6,19 @@ import com.google.gwt.place.shared.Place;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.spicstome.client.ClientFactory;
 import com.spicstome.client.place.MainMenuPlace;
-import com.spicstome.client.ui.MainMenuView;
-import com.spicstome.client.ui.UserView;
+import com.spicstome.client.ui.composite.UserViewComposite;
 
-public class MainMenuActivity extends UserActivity implements
-MainMenuView.Presenter{
+public class MainMenuActivity extends UserActivity{
 
 
 
 	public MainMenuActivity(MainMenuPlace place, ClientFactory clientFactory) {
-		super(place,clientFactory);
+		super(place,clientFactory,(UserViewComposite)clientFactory.getMainMenuView());
 	}
 
 	@Override
 	public void start(AcceptsOneWidget containerWidget, EventBus eventBus) {
 
-		MainMenuView mainmenu = clientFactory.getMainMenuView();
-		userView = (UserView) mainmenu;
-		containerWidget.setWidget(userView.asWidget());
-		mainmenu.setPresenter(this);
-		
 		super.start(containerWidget, eventBus);
 		
 	}

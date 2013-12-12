@@ -16,6 +16,10 @@
     	
 	    <mapping resource="com/spicstome/client/shared/User.hbm.xml" />
 		<mapping resource="com/spicstome/client/shared/Pecs.hbm.xml" />
+		<mapping resource="com/spicstome/client/shared/Album.hbm.xml" />
+		<mapping resource="com/spicstome/client/shared/Image.hbm.xml" />
+		<mapping resource="com/spicstome/client/shared/Log.hbm.xml" />
+		
 	    
     </session-factory>
 </hibernate-configuration>

@@ -4,8 +4,8 @@ import com.google.gwt.place.shared.PlaceController;
 import com.google.web.bindery.event.shared.SimpleEventBus;
 import com.spicstome.client.ui.AlbumManagementView;
 import com.spicstome.client.ui.AlbumManagementViewImpl;
-import com.spicstome.client.ui.MainMenuLifeProjetView;
-import com.spicstome.client.ui.MainMenuLifeProjetViewImpl;
+import com.spicstome.client.ui.AlbumView;
+import com.spicstome.client.ui.AlbumViewImpl;
 import com.spicstome.client.ui.MainMenuView;
 import com.spicstome.client.ui.MainMenuViewImpl;
 import com.spicstome.client.ui.LoginView;
@@ -28,8 +28,7 @@ public class ClientFactory
 	private static final LoginView loginView = new LoginViewImpl();
 	private static final MainMenuView mainMenuView = new MainMenuViewImpl();
 	private static final AlbumManagementView albumManagementView = new AlbumManagementViewImpl();
-	private static final MainMenuLifeProjetView mainMenuLifeProjetView=new MainMenuLifeProjetViewImpl();
-
+	private static final AlbumView albumView = new AlbumViewImpl();
 
 	public SimpleEventBus getEventBus()
 	{
@@ -55,11 +54,8 @@ public class ClientFactory
 	{
 		return albumManagementView;
 	}
-
-	public MainMenuLifeProjetView getMainMenuLifeProjetView()
+	public AlbumView getAlbumView()
 	{
-		return mainMenuLifeProjetView;
+		return albumView;
 	}
-
-
 }

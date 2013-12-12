@@ -57,7 +57,7 @@ public class LoginActivity extends AbstractActivity implements
 		SpicsToMeServices.Util.getInstance().Login(login, password, new AsyncCallback<User>() {
 			@Override
 			public void onSuccess(User user) {
-
+				/*
 				if(user!=null) 
 				{
 					goTo(new MainMenuPlace());
@@ -65,6 +65,9 @@ public class LoginActivity extends AbstractActivity implements
 				else
 					clientFactory.getLoginView().setWrongLogin();
 
+				*/
+				goTo(new MainMenuPlace());
+				
 			}
 			@Override
 			public void onFailure(Throwable caught) {

@@ -1,29 +1,37 @@
 package com.spicstome.client.ui;
 
-import java.util.ArrayList;
 
+import java.util.ArrayList;
+import java.util.List;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.spicstome.client.place.AlbumPlace;
+import com.spicstome.client.shared.Album;
+import com.spicstome.client.ui.composite.CRUDListItemComposite;
+import com.spicstome.client.ui.composite.ChoiceListItemComposite;
+import com.spicstome.client.ui.composite.ItemComposite;
+import com.spicstome.client.ui.composite.UserViewComposite;
 
 
 
-public class AlbumManagementViewImpl extends UserView implements AlbumManagementView
+public class AlbumManagementViewImpl extends UserViewComposite  implements AlbumManagementView
 {
-	Presenter listener;
-	CRUDListItem albumUser;
-	ChoiceListItem choice;
+	
+	CRUDListItemComposite albumUser;
+	ChoiceListItemComposite choice;
 	
 	public AlbumManagementViewImpl()
 	{
 		super();
 		
-		ArrayList<Item> modules = new ArrayList<Item>();
-		modules.add(new Item("images/albumlogo.png","Album de Albert"));
-		modules.add(new Item("images/albumlogo.png","Album de Maxime"));
-		modules.add(new Item("images/albumlogo.png","Album de Robert"));
-		modules.add(new Item("images/albumlogo.png","Album de Jean-Claude"));
+		ArrayList<ItemComposite> modules = new ArrayList<ItemComposite>();
+		modules.add(new ItemComposite("images/albumlogo.png","Album de Albert",42,true));
+		modules.add(new ItemComposite("images/albumlogo.png","Album de Maxime",42,true));
+		modules.add(new ItemComposite("images/albumlogo.png","Album de Robert",42,true));
+		modules.add(new ItemComposite("images/albumlogo.png","Album de Jean-Claude",42,true));
 
-		albumUser = new CRUDListItem(modules);
+		albumUser = new CRUDListItemComposite();
+		albumUser.setList(modules);
 		//albumUser.setMultiSelection(true);
 		//choice = new ChoiceListItem(modules);
 		
@@ -32,21 +40,38 @@ public class AlbumManagementViewImpl extends UserView implements AlbumManagement
 		mainPanel.add(albumUser);
 		//mainPanel.add(choice);
 		
-		/*
-		choice.buttonSelect.addClickHandler(new ClickHandler() {
+		
+		albumUser.buttonView.addClickHandler(new ClickHandler() {
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				//choice.selectionList
-				
-			}
-		});*/
-	}
 
-	@Override
-	public void setPresenter(Presenter listener) {
-		this.listener=listener;
+				ItemComposite selection;
+				
+				if(albumUser.HasSelection())
+				{
+					selection = albumUser.GetOneSelection();
+					System.out.println(selection.data);
+					
+					listener.goTo(new AlbumPlace());
+				}
+			}
+		});
+		
 		
 	}
+
+	
+
+	@Override
+	public void setAlbum(List<Album> list) {
+		
+		
+		
+	}
+
+
+
+	
 
 }

@@ -7,8 +7,14 @@ h1 {
 
 .titleItem
 {
-	text-align:center;
-	font-size:20px;
+	font-size:18px;
+	margin:10px;
+}
+
+.titleAlbum
+{
+	font-size:18px;
+	margin:10px;
 }
 
 .itemChecked:hover
@@ -21,21 +27,20 @@ h1 {
 }
 .itemChecked
 {
-	width:100px;
-	margin:10px;
-	padding:10px;
+
+	margin:2px;
+	padding:5px;
 	background-color:lightgreen;
-	border-radius:20px;
+	border-radius:15px;
 }
 
 
 .itemUnchecked
 {
-	width:100px;
-	margin:10px;
-	padding:10px;
-	background-color:lightgrey;
-	border-radius:20px;
+
+	margin:2px;
+	padding:5px;
+	
 }
 
 
@@ -46,7 +51,7 @@ h1 {
 	margin:auto;
 	padding:20px;
 	border-width:5px;
-	border-style:dotted;
+	border-style:outset;
 	border-color:grey;
 	border-radius:20px;
 }
@@ -69,7 +74,22 @@ h1 {
 	margin:auto;
 	padding:10px;
 	border-width:5px;
-	border-style:dotted;
+	border-style:outset;
 	border-color:grey;
 	border-radius:20px;
+}
+
+.page
+{
+	width:250px;
+	height:300px;
+	
+	border-style:inset;
+	border-width:1px;
+	border-color:grey;
+	
+	border-radius:20px 20px 0px 0px;
+	
+	background-color: #f2f2e5;
+	
 }
