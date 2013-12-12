@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.spicstome.client.shared" default-lazy="false">
+
+<class name="Album" table="album">
+
+	<id name="id" type="long" column="id">
+		<generator class="increment" />
+	</id>
+
+	<many-to-one name="folder" class="Folder" column="id_folder" unique="true" cascade="all"/>
+
+</class>
+        
+</hibernate-mapping>

@@ -1,30 +1,42 @@
 package com.spicstome.client.shared;
 
+import java.util.Date;
+
 import com.google.gwt.user.client.rpc.IsSerializable;
 
-public class User implements IsSerializable{
+public abstract class User implements IsSerializable {
 	
-	private int id_user;
+	private long id;
+	private Date subscriptionDate;
 	private String login;
-	private String avatar;
+	private String password;
+	private Image image;
 	
-	public User()
-	{
-
+	public User() {
+		
 	}
 	
-	public User(String name,String filename)
-	{
-		this.avatar=filename;
-		this.login=name;
+	public User(Date subscriptionDate, String login, String password, Image image)	{
+		this.subscriptionDate = subscriptionDate;
+		this.login = login;
+		this.password = password;
+		this.image = image;
 	}
 
-	public int getId_user() {
-		return id_user;
+	public long getId() {
+		return id;
 	}
 
-	public void setId_user(int id_user) {
-		this.id_user = id_user;
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public Date getSubscriptionDate() {
+		return subscriptionDate;
+	}
+
+	public void setSubscriptionDate(Date subscriptionDate) {
+		this.subscriptionDate = subscriptionDate;
 	}
 
 	public String getLogin() {
@@ -35,12 +47,25 @@ public class User implements IsSerializable{
 		this.login = login;
 	}
 
-	public String getAvatar() {
-		return avatar;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setAvatar(String avatar) {
-		this.avatar = avatar;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
+	public Image getImage() {
+		return image;
+	}
+
+	public void setImage(Image image) {
+		this.image = image;
+	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", login=" + login + ", password=" + password
+				+ ", image=" + image + "]";
+	}
 }

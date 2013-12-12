@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.spicstome.client.shared" default-lazy="false">
+
+<class name="Log" table="log">
+
+	<id name="id" type="long" column="id">
+		<generator class="increment" />
+	</id>
+	
+	<many-to-one name="user" class="User" fetch="select">
+        <column name="id_user" not-null="true" />
+    </many-to-one>
+    
+	<property name="emailRecipient" type="string" column="email_recipient" />
+	
+	<property name="date" type="timestamp" column="date" />
+
+	<set name="articles" table="logs_articles" lazy="false">
+		<key column="id_log" />
+		<many-to-many class="Log" column="id_article" />
+	</set>
+
+</class>
+        
+</hibernate-mapping>
