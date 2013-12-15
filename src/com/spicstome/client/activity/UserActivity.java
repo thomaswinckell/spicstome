@@ -9,14 +9,14 @@ import com.spicstome.client.ClientFactory;
 import com.spicstome.client.services.SpicsToMeServices;
 import com.spicstome.client.shared.User;
 import com.spicstome.client.ui.UserView;
-import com.spicstome.client.ui.composite.UserViewComposite;
+import com.spicstome.client.ui.UserViewLayout;
 
 public class UserActivity extends AbstractActivity implements UserView.Presenter{
 
-	protected UserViewComposite userView;
+	protected UserViewLayout userView;
 	protected ClientFactory clientFactory;
 	
-	public UserActivity(Place place, ClientFactory clientFactory,UserViewComposite userView) {
+	public UserActivity(Place place, ClientFactory clientFactory,UserViewLayout userView) {
 		this.clientFactory = clientFactory;
 		
 		this.userView = userView;
@@ -43,7 +43,7 @@ public class UserActivity extends AbstractActivity implements UserView.Presenter
 		
 		panel.setWidget(userView.asWidget());
 		userView.setPresenter(this);
-		
+		userView.setName("?");
 	}
 
 	@Override

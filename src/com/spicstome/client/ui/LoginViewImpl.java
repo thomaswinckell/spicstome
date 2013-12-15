@@ -1,79 +1,85 @@
 package com.spicstome.client.ui;
 
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.HasHorizontalAlignment;
-import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.PasswordTextBox;
-import com.google.gwt.user.client.ui.TextBox;
-import com.google.gwt.user.client.ui.VerticalPanel;
+
+import com.smartgwt.client.types.VerticalAlignment;
+import com.smartgwt.client.widgets.Button;
+import com.smartgwt.client.widgets.Img;
+import com.smartgwt.client.widgets.Label;
+import com.smartgwt.client.widgets.events.ClickEvent;
+import com.smartgwt.client.widgets.events.ClickHandler;
+import com.smartgwt.client.widgets.form.DynamicForm;
+import com.smartgwt.client.widgets.form.fields.PasswordItem;
+import com.smartgwt.client.widgets.form.fields.TextItem;
+import com.smartgwt.client.widgets.layout.HLayout;
+import com.smartgwt.client.widgets.layout.VLayout;
 
 
-
-
-public class LoginViewImpl extends Composite implements LoginView
+public class LoginViewImpl extends VLayout implements LoginView
 {
 	
 
 	private Presenter listener;
-	private TextBox textLogin;
-	private PasswordTextBox textPassword;
+	private TextItem textLogin;
+	private PasswordItem textPassword;
 	private Button button;
-	
-	private HorizontalPanel wrongPanel = new HorizontalPanel();
+	private DynamicForm form = new DynamicForm();
+	private HLayout wrongPanel = new HLayout();
 	private Label wrongLabel;
-
+	private Img image ;
 	
-	VerticalPanel viewPanel = new VerticalPanel(); 
+	VLayout viewPanel = new VLayout(); 
 
 	public LoginViewImpl()
 	{
-		Image image = new Image("images/logo.png");
+		image = new Img("logo.png");
+		image.setSize(60);
+		
 		wrongLabel  = new Label("Connexion refusée");
 		wrongLabel.setStyleName("errorMessage");
+		wrongLabel.setVisible(false);
 		
-		viewPanel.setStyleName("connexionPanel");
-		viewPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+		setStyleName("connexionPanel");
 		
 		
 		button = new Button("Connexion");
 		button.setStyleName("connexionButton");
 		
 		
-		textLogin = new TextBox();
-		textPassword = new PasswordTextBox();
+		textLogin = new TextItem();
+		textLogin.setName("Login");
+		textPassword = new PasswordItem();
+		textPassword.setName("Password");
 		
+		form.setFields(textLogin,textPassword);
 		
 		button.addClickHandler(new ClickHandler() {
-
             @Override
             public void onClick(ClickEvent event) {
-            	listener.login(textLogin.getText(), textPassword.getText());
-            	
+            	listener.login(textLogin.getValueAsString(), textPassword.getValueAsString());           	
             }
         });
-		wrongLabel.setVisible(false);
-		wrongPanel.add(wrongLabel);
 		
 		
 		
-		viewPanel.add(image);
-		viewPanel.add(new Label("Login :"));
-		viewPanel.add(textLogin);
-		viewPanel.add(new Label("Mot de passe :"));
-		viewPanel.add(textPassword);
-		viewPanel.add(button);
-		viewPanel.add(wrongPanel);
+		
+		image.setLayoutAlign(VerticalAlignment.CENTER);
+		button.setLayoutAlign(VerticalAlignment.CENTER);
+		form.setLayoutAlign(VerticalAlignment.CENTER);
+		
+		wrongPanel.addMember(wrongLabel);
 		
 		
-		initWidget(viewPanel);
+		
+		viewPanel.addMember(image);
+		viewPanel.addMember(form);
+		
+		viewPanel.addMember(button);
+		viewPanel.addMember(wrongPanel);
+		
+		
+		addMember(viewPanel);
 	}
 
-	
 
 
 	@Override
@@ -88,8 +94,8 @@ public class LoginViewImpl extends Composite implements LoginView
 	@Override
 	public void setWrongLogin() 
 	{
-		textLogin.setText("");
-		textPassword.setText("");
+		textLogin.setValue("");
+		textPassword.setValue("");
 		wrongLabel.setVisible(true);
 	}
 }

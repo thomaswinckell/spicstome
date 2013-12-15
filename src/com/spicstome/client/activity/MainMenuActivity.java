@@ -6,14 +6,14 @@ import com.google.gwt.place.shared.Place;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.spicstome.client.ClientFactory;
 import com.spicstome.client.place.MainMenuPlace;
-import com.spicstome.client.ui.composite.UserViewComposite;
+import com.spicstome.client.ui.UserViewLayout;
 
 public class MainMenuActivity extends UserActivity{
 
 
 
 	public MainMenuActivity(MainMenuPlace place, ClientFactory clientFactory) {
-		super(place,clientFactory,(UserViewComposite)clientFactory.getMainMenuView());
+		super(place,clientFactory,(UserViewLayout)clientFactory.getMainMenuView());
 	}
 
 	@Override

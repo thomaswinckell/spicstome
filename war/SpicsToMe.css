@@ -5,11 +5,6 @@ h1 {
   text-align:center;
 }
 
-.titleItem
-{
-	font-size:18px;
-	margin:10px;
-}
 
 .titleAlbum
 {
@@ -48,7 +43,7 @@ h1 {
 
 .mainPanel
 {
-	margin:auto;
+	margin:100px;
 	padding:20px;
 	border-width:5px;
 	border-style:outset;
@@ -61,17 +56,11 @@ h1 {
 	color:red;
 	font-style:italic
 }
-.connexionButton
-{
-	background-color:lightgreen;
-	margin:10px;
-}
 
 .connexionPanel
 {
-	width:30%;
-	height:10%;
 	margin:auto;
+	padding:20px;
 	padding:10px;
 	border-width:5px;
 	border-style:outset;
@@ -81,8 +70,6 @@ h1 {
 
 .page
 {
-	width:250px;
-	height:300px;
 	
 	border-style:inset;
 	border-width:1px;
@@ -91,5 +78,11 @@ h1 {
 	border-radius:20px 20px 0px 0px;
 	
 	background-color: #f2f2e5;
+	
+}
+
+.albumtree
+{
+	border-width:5px;
 	
 }
