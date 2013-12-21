@@ -30,6 +30,8 @@ public class Book extends VLayout{
 		
 		super();
 		
+		setMargin(20);
+		
 		buttonNext.setIcon("next-icon.png");
 		buttonPrev.setIcon("prev-icon.png");
 		
@@ -85,12 +87,12 @@ public class Book extends VLayout{
 		
 		for(int i=0;i<lastPage;i++)
 		{
-			int imageSize = 80;
+			int imageSize = 50;
 			
 			int tileWidth  = imageSize+20;
 			int tileHeight = imageSize+20;
 			
-			ImageListPanel imageList = new ImageListPanel(Mode.CLICK,tileWidth,tileHeight,imageSize){
+			ImageListPanel imageList = new ImageListPanel(Mode.DRAG,tileWidth,tileHeight,imageSize){
 			
 				@Override
 				public void selectChanged(ImageRecord imageRecord) {
@@ -142,6 +144,8 @@ public class Book extends VLayout{
 		horizontalPagePanel.addMember(listPage.get(iLeftPage));
 		horizontalPagePanel.addMember(listPage.get(iLeftPage+1));
 		
+		listPage.get(iLeftPage).animShow();
+		listPage.get(iLeftPage+1).animShow();
 	}
 
 }

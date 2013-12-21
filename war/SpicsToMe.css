@@ -12,38 +12,19 @@ h1 {
 	margin:10px;
 }
 
-.itemChecked:hover
+
+
+
+.connectPanel
 {
-	cursor:pointer;
+	background-color:lightblue;
 }
-.itemUnchecked:hover
-{
-	cursor:pointer;
-}
-.itemChecked
-{
-
-	margin:2px;
-	padding:5px;
-	background-color:lightgreen;
-	border-radius:15px;
-}
-
-
-.itemUnchecked
-{
-
-	margin:2px;
-	padding:5px;
-	
-}
-
 
 
 
 .mainPanel
 {
-	margin:100px;
+	margin:10px;
 	padding:20px;
 	border-width:5px;
 	border-style:outset;
@@ -83,6 +64,27 @@ h1 {
 
 .albumtree
 {
-	border-width:5px;
 	
+	
+}
+.crumb:hover
+{
+	cursor:pointer;
+}
+.crumb
+{
+
+	font-size:18px;
+	color:darkblue;
+}
+
+.album
+{
+	margin:20px;
+	padding:20px;
+	padding:10px;
+	border-width:2px;
+	border-style:outset;
+	border-color:grey;
+	border-radius:20px;
 }

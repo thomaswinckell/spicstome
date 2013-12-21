@@ -22,8 +22,8 @@ public class MainMenuViewImpl extends UserViewLayout implements MainMenuView
 		super();
 		
 		ArrayList<ImageRecord> modules = new ArrayList<ImageRecord>();
-		modules.add(new ImageRecord(0,"Gestion album","Gestion album","albumlogo.png"));
-		modules.add(new ImageRecord(1,"Gestion des utilisateurs","Gestion des utilisateurs","userlogo.png"));
+		modules.add(new ImageRecord(0,"Gestion album","albumlogo.png"));
+		modules.add(new ImageRecord(1,"Gestion des utilisateurs","userlogo.png"));
 		
 		
 		imageList = new ImageListPanel(Mode.CLICK,200,150,100){
@@ -32,15 +32,17 @@ public class MainMenuViewImpl extends UserViewLayout implements MainMenuView
 
 				if(object.getAttributeAsInt(ImageRecord.PICTURE_ID)==0)
 				{
-					listener.goTo(new AlbumManagementPlace());
+					goTo(new AlbumManagementPlace());
 				}
+				
+				
 				
 			}
 		};
 		
 		imageList.setItems(modules);
 
-		addMember(imageList);
+		mainPanel.addMember(imageList);
 	}
 
 	

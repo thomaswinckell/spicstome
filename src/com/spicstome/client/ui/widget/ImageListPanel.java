@@ -27,8 +27,9 @@ public abstract class ImageListPanel extends VLayout {
 		this.mode = mode;
 		
 		
-		setWidth100();
-		setHeight100();
+		
+		setHeight(200);
+		
 		setShowEdges(false);
 		
 		setAnimateTime(800);
@@ -40,6 +41,8 @@ public abstract class ImageListPanel extends VLayout {
 		tileGrid.setTileMargin(2);
 		tileGrid.setTileWidth(tileWidth);
 		tileGrid.setTileHeight(tileHeight);
+		
+		
 
 		
 		DetailViewerField pictureField = new DetailViewerField(ImageRecord.PICTURE_PATH);  
