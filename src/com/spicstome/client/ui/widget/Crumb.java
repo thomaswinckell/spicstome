@@ -5,6 +5,16 @@ import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
 
+
+/**
+ * 
+ * 
+ * @author Maxime
+ *
+ *Crumb = link int Breadcrumb
+ *
+ */
+
 public abstract class Crumb extends HLayout{
 
 
