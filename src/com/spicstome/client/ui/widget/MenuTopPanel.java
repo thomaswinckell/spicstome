@@ -8,7 +8,7 @@ import com.smartgwt.client.widgets.layout.HLayout;
 import com.spicstome.client.place.MainMenuPlace;
 import com.spicstome.client.ui.UserViewLayout;
 
-public class MenuPanel extends HLayout{
+public class MenuTopPanel extends HLayout{
 
 	protected Label labelUser = new Label();
 	protected IconButton buttonLogout = new IconButton("");
@@ -16,7 +16,7 @@ public class MenuPanel extends HLayout{
 	public BreadCrumb breadcrumb=new BreadCrumb();
 	protected UserViewLayout mainView;
 	
-	public MenuPanel(UserViewLayout main)
+	public MenuTopPanel(UserViewLayout main)
 	{
 		super();
 		

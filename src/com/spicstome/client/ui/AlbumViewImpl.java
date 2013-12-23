@@ -1,20 +1,18 @@
 package com.spicstome.client.ui;
 
 
+import com.smartgwt.client.widgets.Canvas;
 import com.spicstome.client.place.AlbumManagementPlace;
-import com.spicstome.client.place.AlbumPlace;
 import com.spicstome.client.shared.Album;
+import com.spicstome.client.ui.widget.AlbumBookPanel;
+import com.spicstome.client.ui.widget.AlbumEditPanel;
 import com.spicstome.client.ui.widget.AlbumPanel;
 import com.spicstome.client.ui.widget.Crumb;
-import com.spicstome.client.ui.widget.ImageListPanel;
-import com.spicstome.client.ui.widget.ImageListPanel.Mode;
-import com.spicstome.client.ui.widget.ImageRecord;
 
 public class AlbumViewImpl extends UserViewLayout  implements AlbumView{
 	
 	
 	AlbumPanel album;
-	ImageListPanel dropZone;
 	
 	public AlbumViewImpl()
 	{
@@ -22,45 +20,30 @@ public class AlbumViewImpl extends UserViewLayout  implements AlbumView{
 		super();
 		
 		addCrumb(new Crumb("Les albums"){
-
 			@Override
-			public void onClickCrumb() {
-				
+			public void onClickCrumb() {			
 				goTo(new AlbumManagementPlace());
-				
 			}
-			
 		});
 		
-		addCrumb(new Crumb("Album de Albert"){
+		addCrumb(new Crumb("Album de Albert"){});
 
-			@Override
-			public void onClickCrumb() {
-				
-				goTo(new AlbumPlace());
-				
-			}
-			
-		});
-		
-		dropZone = new ImageListPanel(Mode.DRAG_AND_DROP, 200, 170, 150){
+	}
 
-			@Override
-			public void selectChanged(ImageRecord imageRecord) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-		};
+	@Override
+	public void setAlbum(Album a,String m) {
 		
-		dropZone.setWidth100();
-		dropZone.setHeight(270);
+		Canvas[] children = mainPanel.getChildren();
+		mainPanel.removeMembers(children);
 		
-		dropZone.setStyleName("album");
+		if(m=="EDIT")
+			this.album = new AlbumEditPanel(new Album());
+		else
+			this.album = new AlbumBookPanel(new Album());
 		
-        album = new AlbumPanel(new Album());
-        
-        mainPanel.addMember(album);
-        mainPanel.addMember(dropZone);
+		
+		
+		mainPanel.addMember(this.album);
+		
 	}
 }

@@ -3,16 +3,15 @@ package com.spicstome.client.activity;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.spicstome.client.ClientFactory;
-import com.spicstome.client.place.AlbumPlace;
-import com.spicstome.client.shared.Album;
+import com.spicstome.client.place.MailPlace;
 import com.spicstome.client.ui.UserViewLayout;
 
-public class AlbumActivity extends UserActivity{
+public class MailActivity extends UserActivity{
 
-	public AlbumActivity(AlbumPlace place, ClientFactory clientFactory) {
-		super(place, clientFactory,(UserViewLayout)clientFactory.getAlbumView());
+	public MailActivity(MailPlace place, ClientFactory clientFactory) {
+		super(place, clientFactory,(UserViewLayout)clientFactory.getMailView());
 
-		clientFactory.getAlbumView().setAlbum(new Album(),place.getName());
+		
 	}
 
 	@Override

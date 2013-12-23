@@ -1,13 +1,11 @@
 package com.spicstome.client.ui;
 
-import javax.swing.plaf.basic.BasicBorders.MarginBorder;
+
 
 import com.google.gwt.place.shared.Place;
-import com.smartgwt.client.types.Alignment;
-import com.smartgwt.client.types.Overflow;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.spicstome.client.ui.widget.Crumb;
-import com.spicstome.client.ui.widget.MenuPanel;
+import com.spicstome.client.ui.widget.MenuTopPanel;
 
 
 
@@ -16,11 +14,11 @@ public class UserViewLayout extends VLayout implements UserView{
 	
 	protected VLayout mainPanel = new VLayout();
 	protected Presenter listener;
-	protected MenuPanel connectPanel;
+	protected MenuTopPanel connectPanel;
 	
 	public UserViewLayout() {
 		
-		connectPanel=new MenuPanel(this);
+		connectPanel=new MenuTopPanel(this);
 		
 	
 		

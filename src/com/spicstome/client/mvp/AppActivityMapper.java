@@ -6,10 +6,12 @@ import com.google.gwt.place.shared.Place;
 import com.spicstome.client.ClientFactory;
 import com.spicstome.client.activity.AlbumActivity;
 import com.spicstome.client.activity.AlbumManagementActivity;
+import com.spicstome.client.activity.MailActivity;
 import com.spicstome.client.activity.MainMenuActivity;
 import com.spicstome.client.activity.LoginActivity;
 import com.spicstome.client.place.AlbumManagementPlace;
 import com.spicstome.client.place.AlbumPlace;
+import com.spicstome.client.place.MailPlace;
 import com.spicstome.client.place.MainMenuPlace;
 import com.spicstome.client.place.LoginPlace;
 
@@ -44,6 +46,8 @@ public class AppActivityMapper implements ActivityMapper {
 			return new AlbumManagementActivity((AlbumManagementPlace) place, clientFactory);
 		else if (place instanceof AlbumPlace)
 			return new AlbumActivity((AlbumPlace) place, clientFactory);
+		else if (place instanceof MailPlace)
+			return new MailActivity((MailPlace) place, clientFactory);
 		return null;
 	}
 

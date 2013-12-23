@@ -41,5 +41,8 @@ public abstract class Crumb extends HLayout{
 		addMember(button);
 	}
 	
-	public abstract void onClickCrumb();
+	public void onClickCrumb()
+	{
+		
+	}
 }

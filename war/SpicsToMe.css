@@ -12,6 +12,12 @@ h1 {
 	margin:10px;
 }
 
+.dragStyle
+{
+	min-width:100px;
+	height:200px;
+}
+
 
 
 
@@ -81,7 +87,7 @@ h1 {
 .album
 {
 	margin:20px;
-	padding:20px;
+	
 	padding:10px;
 	border-width:2px;
 	border-style:outset;

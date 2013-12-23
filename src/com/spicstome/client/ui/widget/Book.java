@@ -6,19 +6,21 @@ import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.IconButton;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
+import com.smartgwt.client.widgets.events.FocusChangedEvent;
+import com.smartgwt.client.widgets.events.FocusChangedHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
-import com.spicstome.client.ui.widget.ImageListPanel.Mode;
+import com.spicstome.client.ui.widget.ImageTileGrid.Mode;
 
 
 public class Book extends VLayout{
 	
-	protected ArrayList<ImageListPanel> listPage= new ArrayList<ImageListPanel>();
+	protected ArrayList<ImageTileGrid> listPage= new ArrayList<ImageTileGrid>();
 	protected HLayout horizontalPagePanel = new HLayout();
 	protected HLayout horizontalNextPrevPanel = new HLayout();
 	protected IconButton buttonNext = new IconButton("");
 	protected IconButton buttonPrev = new IconButton("");
-
+	protected int imageSize;
 	
 	int nbRowPerPage=2;
 	int nbColPerPage=2;
@@ -26,11 +28,12 @@ public class Book extends VLayout{
 	int iLeftPage=0;
 	int lastPage=0;
 	
-	public Book() {
+	public Book(int imageSize) {
 		
 		super();
 		
 		setMargin(20);
+		this.imageSize=imageSize;
 		
 		buttonNext.setIcon("next-icon.png");
 		buttonPrev.setIcon("prev-icon.png");
@@ -87,20 +90,29 @@ public class Book extends VLayout{
 		
 		for(int i=0;i<lastPage;i++)
 		{
-			int imageSize = 50;
+			
 			
 			int tileWidth  = imageSize+20;
 			int tileHeight = imageSize+20;
 			
-			ImageListPanel imageList = new ImageListPanel(Mode.DRAG,tileWidth,tileHeight,imageSize){
+			final ImageTileGrid imageList = new ImageTileGrid(Mode.DRAG,tileWidth,tileHeight,imageSize){};
 			
+			imageList.addFocusChangedHandler(new FocusChangedHandler() {
+				
 				@Override
-				public void selectChanged(ImageRecord imageRecord) {
-					// TODO Auto-generated method stub
-					
-				};
-			};
-			
+				public void onFocusChanged(FocusChangedEvent event) {
+
+					if(!event.getHasFocus())
+					{
+						if(imageList.getSelectedItem()!=null)
+						{
+							imageList.deselectRecord(imageList.getSelectedItem());
+						}			
+					}
+				}
+
+			});
+
 			imageList.setWidth((nbColPerPage*(tileWidth+20)));
 			imageList.setHeight((nbRowPerPage*(tileHeight+20)));
 
@@ -144,8 +156,8 @@ public class Book extends VLayout{
 		horizontalPagePanel.addMember(listPage.get(iLeftPage));
 		horizontalPagePanel.addMember(listPage.get(iLeftPage+1));
 		
-		listPage.get(iLeftPage).animShow();
-		listPage.get(iLeftPage+1).animShow();
+		//listPage.get(iLeftPage).animShow();
+		//listPage.get(iLeftPage+1).animShow();
 	}
 
 }

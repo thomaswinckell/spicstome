@@ -1,9 +1,11 @@
 package com.spicstome.client.ui.widget;
 
 import com.smartgwt.client.widgets.IconButton;
+import com.smartgwt.client.widgets.events.ClickEvent;
+import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
 
-public class ActionPanel extends HLayout{
+public abstract class ActionPanel extends HLayout{
 
 	protected IconButton buttonNew = new IconButton("");
 	protected IconButton buttonDelete = new IconButton("");
@@ -27,7 +29,7 @@ public class ActionPanel extends HLayout{
 		
 
 		
-		int iconsize=32;
+		int iconsize=40;
 		
 		buttonEdit.setIconSize(iconsize);
 		buttonDelete.setIconSize(iconsize);
@@ -49,6 +51,36 @@ public class ActionPanel extends HLayout{
 		
 		setHeight(iconsize);
 		setWidth(4*iconsize);
+		
+		buttonView.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				
+				onVisualize();
+				
+			}
+		});
+		
+		buttonEdit.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				
+				onEdit();
+				
+			}
+		});
+		
+		buttonNew.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				
+				onNew();
+				
+			}
+		});
 	}
 	
 	public IconButton getButtonNew() {
@@ -73,5 +105,9 @@ public class ActionPanel extends HLayout{
 		getButtonEdit().setVisible(b);
 		getButtonView().setVisible(b);
 	}
+	
+	public abstract void onVisualize();
+	public abstract void onEdit();
+	public abstract void onNew();
 	
 }

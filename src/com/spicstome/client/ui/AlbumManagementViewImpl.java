@@ -3,15 +3,13 @@ package com.spicstome.client.ui;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import com.spicstome.client.place.AlbumManagementPlace;
 import com.spicstome.client.place.AlbumPlace;
 import com.spicstome.client.shared.Album;
-import com.spicstome.client.ui.widget.ActionImageListPanel;
+import com.spicstome.client.ui.widget.ActionPanel;
 import com.spicstome.client.ui.widget.Crumb;
-import com.spicstome.client.ui.widget.ImageListPanel;
+import com.spicstome.client.ui.widget.ImageTileGrid;
 import com.spicstome.client.ui.widget.ImageRecord;
-import com.spicstome.client.ui.widget.ImageListPanel.Mode;
+import com.spicstome.client.ui.widget.ImageTileGrid.Mode;
 
 
 
@@ -20,23 +18,14 @@ public class AlbumManagementViewImpl extends UserViewLayout  implements AlbumMan
 	
 	
 
-	ImageListPanel imageList;
-
+	ImageTileGrid imageList;
+	ActionPanel actionPanel;
 	
 	public AlbumManagementViewImpl()
 	{
 		super();
 		
-		addCrumb(new Crumb("Les albums"){
-
-			@Override
-			public void onClickCrumb() {
-				
-				goTo(new AlbumManagementPlace());
-				
-			}
-			
-		});
+		addCrumb(new Crumb("Les albums"){});
 		
 		ArrayList<ImageRecord> modules = new ArrayList<ImageRecord>();
 		modules.add(new ImageRecord(0,"Album general","albumlogo.png"));
@@ -44,17 +33,45 @@ public class AlbumManagementViewImpl extends UserViewLayout  implements AlbumMan
 		modules.add(new ImageRecord(2,"Album de Albert","albumlogo.png"));
 		
 		
-		imageList = new ActionImageListPanel(Mode.CLICK){
+		actionPanel = new ActionPanel() {
+			
 			@Override
 			public void onVisualize() {
-				goTo(new AlbumPlace());
-			};
+				
+				listener.goTo(new AlbumPlace("READ_ONLY"));
+				
+			}
+			
+			@Override
+			public void onNew() {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onEdit() {
+				listener.goTo(new AlbumPlace("EDIT"));
+				
+			}
 		};
 		
+		imageList = new ImageTileGrid(Mode.CLICK,200,150,100){
+			
+
+			@Override
+			public void OnSelectChanged(ImageRecord object) {
+
+	                actionPanel.setActionVisible(selectedRecord!=null);
+				
+			};
+		};
+
+		imageList.setHeight(250);
 		
 		imageList.setItems(modules);
 
 		mainPanel.addMember(imageList);
+		mainPanel.addMember(actionPanel);
 
 	}
 
