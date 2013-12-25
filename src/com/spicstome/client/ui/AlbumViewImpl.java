@@ -4,6 +4,7 @@ import com.spicstome.client.place.AlbumManagementPlace;
 import com.spicstome.client.shared.Album;
 import com.spicstome.client.ui.widget.AlbumBookPanel;
 import com.spicstome.client.ui.widget.AlbumPanel;
+import com.spicstome.client.ui.widget.Book;
 import com.spicstome.client.ui.widget.Crumb;
 
 public class AlbumViewImpl extends UserViewLayout  implements AlbumView{
@@ -26,7 +27,7 @@ public class AlbumViewImpl extends UserViewLayout  implements AlbumView{
 		addCrumb(new Crumb("Album de Albert"){});
 
 		
-		this.albumPanel = new AlbumBookPanel();
+		this.albumPanel = new AlbumBookPanel(new Book(100));
 		
 		mainPanel.addMember(this.albumPanel);
 	}

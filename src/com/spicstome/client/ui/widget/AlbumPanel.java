@@ -27,10 +27,7 @@ public abstract class AlbumPanel extends VLayout{
 	public AlbumPanel()
 	{
 		super();
-		
-		this.setHeight(350);
 
-		
 
 	    treeGrid.setShowOpenIcons(false);
 	    treeGrid.setShowDropIcons(false);
@@ -60,7 +57,7 @@ public abstract class AlbumPanel extends VLayout{
 	    setStyleName("album");
 	    
 	    verticalLayout.setWidth(350);
-	    verticalLayout.setHeight(350);
+	    
 	    
 	   
 	    verticalLayout.addMember(treeGrid);

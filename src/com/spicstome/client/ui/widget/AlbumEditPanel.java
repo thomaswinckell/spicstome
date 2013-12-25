@@ -2,12 +2,10 @@ package com.spicstome.client.ui.widget;
 
 import java.util.ArrayList;
 
-import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.types.VerticalAlignment;
 import com.smartgwt.client.widgets.IconButton;
 import com.smartgwt.client.widgets.Img;
 import com.smartgwt.client.widgets.Label;
-import com.smartgwt.client.widgets.Window;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.events.DropEvent;
@@ -134,44 +132,9 @@ public class AlbumEditPanel extends AlbumPanel{
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				 final Window winModal = new Window();
-		            winModal.setWidth(1000);
-		            winModal.setHeight(600);
-		            winModal.setTitle("Import image from other album");
-		            winModal.setShowMinimizeButton(false);
-		            winModal.setIsModal(true);
-		            winModal.setShowModalMask(true);
-		            winModal.centerInPage();
+				 ImagePickerWindow win = new ImagePickerWindow();
 		            
-		            AlbumBookPanel albmBook =  new AlbumBookPanel();
-		            albmBook.setAlbum(new Album());
-		            winModal.addItem(albmBook);
-		            
-		            HLayout hLayout = new HLayout();
-		            
-		            
-		            
-		            IconButton importButton = new IconButton("Importer");
-		            importButton.setIcon("check.png");
-		            importButton.setIconSize(64);
-		            
-		            importButton.addClickHandler(new ClickHandler() {
-						
-						@Override
-						public void onClick(ClickEvent event) {
-							
-							
-									winModal.destroy();
-							
-						}
-					});
-		            
-		            DropZone dropZone = new DropZone(50);
-		            hLayout.addMember(dropZone);
-		            hLayout.addMember(importButton);
-		            
-		            winModal.addItem(hLayout);
-		            winModal.show();
+		         win.show();
 				
 			}
 		});
@@ -234,8 +197,7 @@ public class AlbumEditPanel extends AlbumPanel{
 	    
 	    
 	    
-	    detailLayout.setHeight(350);
-	    detailLayout.setWidth(500);
+	 
 
 	    int iconsize=32;
 	    
@@ -266,6 +228,9 @@ public class AlbumEditPanel extends AlbumPanel{
 	    
 	    articleVerticalPanel.addMember(importPanel);
 	    
+	    detailLayout.setHeight(350);
+	    detailLayout.setWidth(500);
+	    verticalLayout.setHeight(350);
 	    articleVerticalPanel.setHeight(350);
 	    
 	    horizontalLayout.addMember(articleVerticalPanel);

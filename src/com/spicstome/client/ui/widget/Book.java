@@ -21,6 +21,11 @@ public class Book extends VLayout{
 	protected IconButton buttonNext = new IconButton("");
 	protected IconButton buttonPrev = new IconButton("");
 	public int imageSize;
+	public int heightPage; 
+	public int widthPage;
+	public int tileWidth;
+	public int tileHeight;
+			
 	
 	int nbRowPerPage=2;
 	int nbColPerPage=2;
@@ -34,6 +39,12 @@ public class Book extends VLayout{
 		
 		setMargin(20);
 		this.imageSize=imageSize;
+		
+		tileWidth  = imageSize+20;
+		tileHeight = imageSize+20;
+		
+		widthPage =(nbColPerPage*(tileWidth+20));
+		heightPage = (nbRowPerPage*(tileHeight+20));
 		
 		buttonNext.setIcon("next-icon.png");
 		buttonPrev.setIcon("prev-icon.png");
@@ -88,14 +99,24 @@ public class Book extends VLayout{
 			lastPage++;
 
 		
+		
+		
 		for(int i=0;i<lastPage;i++)
 		{
 			
 			
-			int tileWidth  = imageSize+20;
-			int tileHeight = imageSize+20;
 			
-			final ImageTileGrid imageList = new ImageTileGrid(Mode.DRAG,tileWidth,tileHeight,imageSize){};
+			
+			final Book book=this;
+			
+			final ImageTileGrid imageList = new ImageTileGrid(Mode.DRAG,tileWidth,tileHeight,imageSize){
+				
+				@Override
+				public void OnSelectChanged(ImageRecord object)
+				{
+					book.onSelectChangeBook(object);
+				}
+			};
 			
 			imageList.addFocusChangedHandler(new FocusChangedHandler() {
 				
@@ -110,11 +131,10 @@ public class Book extends VLayout{
 						}			
 					}
 				}
-
 			});
-
-			imageList.setWidth((nbColPerPage*(tileWidth+20)));
-			imageList.setHeight((nbRowPerPage*(tileHeight+20)));
+			
+			imageList.setWidth(widthPage);
+			imageList.setHeight(heightPage);
 
 			imageList.setStyleName("page");
 			
@@ -158,6 +178,11 @@ public class Book extends VLayout{
 		
 		//listPage.get(iLeftPage).animShow();
 		//listPage.get(iLeftPage+1).animShow();
+	}
+	
+	public void onSelectChangeBook(ImageRecord image)
+	{
+		
 	}
 
 }

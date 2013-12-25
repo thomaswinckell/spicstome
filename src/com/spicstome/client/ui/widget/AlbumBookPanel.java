@@ -12,20 +12,22 @@ public class AlbumBookPanel extends AlbumPanel{
 	public Book book;
 	public Label titre = new Label();
 	
-	public AlbumBookPanel() {
+	public AlbumBookPanel(Book book) {
 		super();
 		
 		
-		int bookSize=100;
 	    	
-	    book = new Book(bookSize);
-	    book.setList(new ArrayList<ImageRecord>());
+	    this.book = book;
+	   
 	    
 	    horizontalLayout.addMember(book);
+	    verticalLayout.setHeight(book.heightPage);
 	    
 	    titre.setContents("Album de Robert"); 
 	    titre.setHeight(30);
 	    titleLayout.addMember(titre);
+	    
+	    setAlbum(new Album());
 	}
 	
 	@Override
