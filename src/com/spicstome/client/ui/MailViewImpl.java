@@ -1,17 +1,16 @@
 package com.spicstome.client.ui;
 
-
 import com.spicstome.client.shared.Album;
 import com.spicstome.client.ui.widget.AlbumBookPanel;
 import com.spicstome.client.ui.widget.Crumb;
-import com.spicstome.client.ui.widget.ImageTileGrid;
-import com.spicstome.client.ui.widget.ImageTileGrid.Mode;
+import com.spicstome.client.ui.widget.DropZone;
+
 
 public class MailViewImpl extends UserViewLayout  implements MailView{
 	
 	
 	AlbumBookPanel album;
-	ImageTileGrid dropZone;
+	DropZone dropZone;
 	
 	public MailViewImpl()
 	{
@@ -22,16 +21,14 @@ public class MailViewImpl extends UserViewLayout  implements MailView{
 		
 		addCrumb(new Crumb("Mail"){});
 		
-		dropZone = new ImageTileGrid(Mode.DRAG_AND_DROP, 120, 120, 100){};
+	
 		
-		dropZone.setWidth100();
-		dropZone.setHeight(270);
 		
-		dropZone.setStyleName("album");
 		
-		dropZone.removeOnDragOver();
-		
-        album = new AlbumBookPanel(new Album());
+        album = new AlbumBookPanel();
+        album.setAlbum(new Album());
+        
+    	dropZone = new DropZone(album.book.imageSize);
         
         mainPanel.addMember(album);
         mainPanel.addMember(dropZone);

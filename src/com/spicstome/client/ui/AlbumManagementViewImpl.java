@@ -3,6 +3,8 @@ package com.spicstome.client.ui;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.spicstome.client.place.AlbumEditPlace;
 import com.spicstome.client.place.AlbumPlace;
 import com.spicstome.client.shared.Album;
 import com.spicstome.client.ui.widget.ActionPanel;
@@ -38,7 +40,7 @@ public class AlbumManagementViewImpl extends UserViewLayout  implements AlbumMan
 			@Override
 			public void onVisualize() {
 				
-				listener.goTo(new AlbumPlace("READ_ONLY"));
+				listener.goTo(new AlbumPlace());
 				
 			}
 			
@@ -50,7 +52,7 @@ public class AlbumManagementViewImpl extends UserViewLayout  implements AlbumMan
 			
 			@Override
 			public void onEdit() {
-				listener.goTo(new AlbumPlace("EDIT"));
+				listener.goTo(new AlbumEditPlace());
 				
 			}
 		};

@@ -1,6 +1,7 @@
 package com.spicstome.client.ui;
 
 
+
 import com.smartgwt.client.types.VerticalAlignment;
 import com.smartgwt.client.widgets.Button;
 import com.smartgwt.client.widgets.Img;
@@ -78,9 +79,9 @@ public class LoginViewImpl extends VLayout implements LoginView
 		
 		
 		addMember(viewPanel);
+		
+		
 	}
-
-
 
 	@Override
 	public void setPresenter(Presenter listener)

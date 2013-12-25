@@ -1,9 +1,6 @@
 package com.spicstome.client.ui.widget;
 
-
-
 import com.smartgwt.client.types.TreeModelType;
-import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.smartgwt.client.widgets.tree.Tree;
@@ -16,99 +13,95 @@ import com.spicstome.client.shared.Album;
 
 public abstract class AlbumPanel extends VLayout{
 
-	
-	
-	Album album;
 
-	Label titre = new Label();
+	Album album;
+	protected HLayout titleLayout = new HLayout();
+	
 	TreeGrid treeGrid = new TreeGrid();
 	HLayout horizontalLayout = new HLayout();
 	VLayout verticalLayout = new VLayout();
-
-	int selectFolderId=-1;
+	int selectFolderId;
 	TreeNode selectFolderNode;
-	
 	Tree tree;
-	
-	
-	
-	public AlbumPanel(Album album)
+
+	public AlbumPanel()
 	{
 		super();
 		
 		this.setHeight(350);
+
 		
-
-		tree = new Tree();
-	    tree.setModelType(TreeModelType.PARENT);
-	    tree.setIdField("id_folder");
-	    tree.setParentIdField("parent");
-	    tree.setTitleProperty("title");
-	    
-	    tree.setRootValue(1);
-	    
-	    TreeNode[] employeeData = new TreeNode[] {
-	  	      new AlbumTreeNode("2", "1", "Tout","tout.png"),
-	  	      new AlbumTreeNode("3", "2", "Qui ?","qui.gif"),
-	  	      new AlbumTreeNode("4", "2", "Quoi ?","quoi.gif"),
-	  	      new AlbumTreeNode("5", "2", "Comment ?","comment.gif")
-	  	      };
-	    
-	    tree.setData(employeeData);
-
 
 	    treeGrid.setShowOpenIcons(false);
 	    treeGrid.setShowDropIcons(false);
 	    treeGrid.setShowHeader(false);
 	    treeGrid.setShowEdges(false);
 	  
-	    
-	    
 	    TreeGridField field = new TreeGridField();
 	    field.setName("title");
 	    field.setTreeField(true);
 	    treeGrid.setFields(field);
-	    
 
-	    treeGrid.setData(tree);
 	    treeGrid.setIconSize(30);
-	    
 	    treeGrid.setWidth100();
 	    treeGrid.setHeight100();
-	    
-	    treeGrid.getData().openAll();
 	    
 	    //pas defini , ne sert qu'a masquer les bords
 	    treeGrid.setStyleName("album");
 
-	    treeGrid.addNodeClickHandler(new NodeClickHandler() {
-			
+	    treeGrid.addNodeClickHandler(new NodeClickHandler() {	
 			@Override
 			public void onNodeClick(NodeClickEvent event) {
-
 					onFolderClick(event);
-
 				}
-	
-			
 		});
 	    
 
 	    setStyleName("album");
 	    
-
-	    titre.setContents("Album de Albert"); 
-	    titre.setHeight(30);
-	    verticalLayout.setWidth(300);
+	    verticalLayout.setWidth(350);
+	    verticalLayout.setHeight(350);
+	    
+	   
 	    verticalLayout.addMember(treeGrid);
 
 	    horizontalLayout.addMember(verticalLayout);
-	  
-	    addMember(titre);
+	    addMember(titleLayout);
 		addMember(horizontalLayout);
-
 	  }
 
+	public void setAlbum(Album album)
+	{
+		
+		System.out.println("setAlbum Panel");
+		this.album = album;
+		
+		selectFolderId=-1;
+		selectFolderNode=null;
+	
+		tree = new Tree();
+	    tree.setModelType(TreeModelType.PARENT);
+	    tree.setIdField("id_folder");
+	    tree.setParentIdField("parent");
+	    tree.setTitleProperty("title");
+	    tree.setIsFolderProperty("is_folder");
+   
+	    tree.setRootValue(1);
+		
+		TreeNode[] employeeData = new TreeNode[] {
+				new AlbumTreeNode("2", "1", "Tout","tout.png"),
+				new AlbumTreeNode("3", "2", "Qui ?","qui.gif"),
+				new AlbumTreeNode("4", "2", "Quoi ?","quoi.gif"),
+				new AlbumTreeNode("5", "2", "Comment ?","comment.gif")
+		};
+
+		tree.setData(employeeData);
+		
+		treeGrid.setData(tree);
+		
+		treeGrid.getData().openAll();
+	}
+	
 	public static class AlbumTreeNode extends TreeNode 
 	{
 	    public AlbumTreeNode(String id_folder, String parent, String name,String image) 
@@ -117,7 +110,7 @@ public abstract class AlbumPanel extends VLayout{
 	      setAttribute("parent", parent);
 	      setAttribute("title", name);
 	      setAttribute("icon", image);
-   
+	      setAttribute("is_folder", true);
 	    }
 	}
 

@@ -2,17 +2,18 @@ package com.spicstome.client.ui.widget;
 
 import java.util.ArrayList;
 
+import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.tree.events.NodeClickEvent;
 import com.spicstome.client.shared.Album;
 
 public class AlbumBookPanel extends AlbumPanel{
 
 	
-	Book book;
+	public Book book;
+	public Label titre = new Label();
 	
-	
-	public AlbumBookPanel(Album album) {
-		super(album);
+	public AlbumBookPanel() {
+		super();
 		
 		
 		int bookSize=100;
@@ -21,6 +22,18 @@ public class AlbumBookPanel extends AlbumPanel{
 	    book.setList(new ArrayList<ImageRecord>());
 	    
 	    horizontalLayout.addMember(book);
+	    
+	    titre.setContents("Album de Robert"); 
+	    titre.setHeight(30);
+	    titleLayout.addMember(titre);
+	}
+	
+	@Override
+	public void setAlbum(Album album)
+	{
+		super.setAlbum(album);
+		
+		book.setList(new ArrayList<ImageRecord>());
 	}
 	
 	@Override

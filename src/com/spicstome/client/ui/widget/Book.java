@@ -20,7 +20,7 @@ public class Book extends VLayout{
 	protected HLayout horizontalNextPrevPanel = new HLayout();
 	protected IconButton buttonNext = new IconButton("");
 	protected IconButton buttonPrev = new IconButton("");
-	protected int imageSize;
+	public int imageSize;
 	
 	int nbRowPerPage=2;
 	int nbColPerPage=2;

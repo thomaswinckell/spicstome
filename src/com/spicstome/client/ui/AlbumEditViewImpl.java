@@ -2,16 +2,16 @@ package com.spicstome.client.ui;
 
 import com.spicstome.client.place.AlbumManagementPlace;
 import com.spicstome.client.shared.Album;
-import com.spicstome.client.ui.widget.AlbumBookPanel;
+import com.spicstome.client.ui.widget.AlbumEditPanel;
 import com.spicstome.client.ui.widget.AlbumPanel;
 import com.spicstome.client.ui.widget.Crumb;
 
-public class AlbumViewImpl extends UserViewLayout  implements AlbumView{
+public class AlbumEditViewImpl extends UserViewLayout  implements AlbumEditView{
 	
 	
 	AlbumPanel albumPanel;
 	
-	public AlbumViewImpl()
+	public AlbumEditViewImpl()
 	{
 		
 		super();
@@ -23,18 +23,19 @@ public class AlbumViewImpl extends UserViewLayout  implements AlbumView{
 			}
 		});
 		
-		addCrumb(new Crumb("Album de Albert"){});
+		addCrumb(new Crumb("Album de Albert (edit)"){});
 
 		
-		this.albumPanel = new AlbumBookPanel();
+		this.albumPanel = new AlbumEditPanel();
+		
 		
 		mainPanel.addMember(this.albumPanel);
 	}
 
 	@Override
 	public void setAlbum(Album a) {
-	
-		albumPanel.setAlbum(a);
+		
+		this.albumPanel.setAlbum(a);
 		
 	}
 }

@@ -2,6 +2,8 @@ package com.spicstome.client;
 
 import com.google.gwt.place.shared.PlaceController;
 import com.google.web.bindery.event.shared.SimpleEventBus;
+import com.spicstome.client.ui.AlbumEditView;
+import com.spicstome.client.ui.AlbumEditViewImpl;
 import com.spicstome.client.ui.AlbumManagementView;
 import com.spicstome.client.ui.AlbumManagementViewImpl;
 import com.spicstome.client.ui.AlbumView;
@@ -31,6 +33,7 @@ public class ClientFactory
 	private static final MainMenuView mainMenuView = new MainMenuViewImpl();
 	private static final AlbumManagementView albumManagementView = new AlbumManagementViewImpl();
 	private static final AlbumView albumView = new AlbumViewImpl();
+	private static final AlbumEditView albumEditView = new AlbumEditViewImpl();
 	private static final MailView mailView = new MailViewImpl();
 
 	public SimpleEventBus getEventBus()
@@ -60,6 +63,11 @@ public class ClientFactory
 	public AlbumView getAlbumView()
 	{
 		return albumView;
+	}
+	
+	public AlbumEditView getAlbumEditView()
+	{
+		return albumEditView;
 	}
 	
 	public MailView getMailView()
