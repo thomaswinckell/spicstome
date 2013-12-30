@@ -63,7 +63,7 @@ public class AlbumManagementViewImpl extends UserViewLayout  implements AlbumMan
 			@Override
 			public void OnSelectChanged(ImageRecord object) {
 
-	                actionPanel.setActionVisible(selectedRecord!=null);
+	                actionPanel.setActionVisible(getSelectedItem()!=null);
 				
 			};
 		};

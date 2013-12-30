@@ -1,7 +1,6 @@
 package com.spicstome.client.ui.widget;
 
 import java.util.ArrayList;
-
 import com.smartgwt.client.types.VerticalAlignment;
 import com.smartgwt.client.widgets.IconButton;
 import com.smartgwt.client.widgets.Img;
@@ -132,14 +131,19 @@ public class AlbumEditPanel extends AlbumPanel{
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				 ImagePickerWindow win = new ImagePickerWindow();
-		            
+				 ImagePickerWindow win = new ImagePickerWindow(new ArrayList<Album>());    
 		         win.show();
-				
 			}
 		});
 	    
-	   
+		buttonImportAlbum.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				 ImagePickerWindow win = new ImagePickerWindow(new ArrayList<Album>());    
+		         win.show();
+			}
+		});
 	    
 	    verticalLayout.addMember(actionFoldersPanel);
 	    

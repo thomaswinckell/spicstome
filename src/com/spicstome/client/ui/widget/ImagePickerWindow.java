@@ -1,6 +1,6 @@
 package com.spicstome.client.ui.widget;
 
-import com.smartgwt.client.types.Alignment;
+import java.util.ArrayList;
 import com.smartgwt.client.widgets.IconButton;
 import com.smartgwt.client.widgets.Window;
 import com.smartgwt.client.widgets.events.ClickEvent;
@@ -9,7 +9,9 @@ import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.ComboBoxItem;
 import com.smartgwt.client.widgets.form.fields.events.ChangeEvent;
 import com.smartgwt.client.widgets.form.fields.events.ChangeHandler;
+import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
+import com.smartgwt.client.widgets.tree.events.NodeClickEvent;
 import com.spicstome.client.shared.Album;
 
 public class ImagePickerWindow extends Window{
@@ -19,8 +21,10 @@ public class ImagePickerWindow extends Window{
 	ComboBoxItem comboBox = new ComboBoxItem("owner","Album");
     IconButton validButton = new IconButton("");
     VLayout verticalLayout = new VLayout();
+    HLayout bottomLayout = new HLayout();
+    Book book;
 	
-	public ImagePickerWindow() {
+	public ImagePickerWindow(ArrayList<Album> listAlbum) {
 		super();
 		
 		setWidth(1000);
@@ -52,15 +56,35 @@ public class ImagePickerWindow extends Window{
         form.setFields(comboBox);
         
         
-        Book book = new Book(50){
+        book = new Book(50){
         	@Override
         	public void onSelectChangeBook(ImageRecord image)
         	{
-        		//if(book)
+        		super.onSelectChangeBook(image);
+        		
+        		UpdateValidButton();
+        	}
+        	
+        	@Override
+        	public void onChangePage()
+        	{
+        		super.onChangePage();
+        		
+        		UpdateValidButton();
         	}
         };
         
-        albmBook =  new AlbumBookPanel(book);
+        albmBook =  new AlbumBookPanel(book){
+        	@Override
+        	public boolean onFolderClick(NodeClickEvent event)
+        	{
+        		boolean res = super.onFolderClick(event);
+        		
+        		UpdateValidButton();
+        			
+        		return res;
+        	}
+        };
         
   
         validButton.setIcon("check.png");
@@ -68,7 +92,7 @@ public class ImagePickerWindow extends Window{
         validButton.setIconSize(iconsize);
 
         
-        validButton.setLayoutAlign(Alignment.RIGHT);
+        
         
         validButton.addClickHandler(new ClickHandler() {
 			
@@ -78,14 +102,24 @@ public class ImagePickerWindow extends Window{
 			}
 		});
         
+        validButton.setVisible(false);
+        
+      
+        bottomLayout.setHeight(iconsize);
+        bottomLayout.setWidth100();
+        bottomLayout.addMember(validButton);
+
         
         verticalLayout.addMember(form);
         verticalLayout.addMember(albmBook);
-        verticalLayout.addMember(validButton);
+        verticalLayout.addMember(bottomLayout);
         
         addItem(verticalLayout);
        
 	}
 	
-	
+	public void UpdateValidButton()
+	{
+		validButton.setVisible(book.selectedImage!=null);
+	}
 }

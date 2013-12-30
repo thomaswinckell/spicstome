@@ -69,8 +69,6 @@ public abstract class AlbumPanel extends VLayout{
 
 	public void setAlbum(Album album)
 	{
-		
-		System.out.println("setAlbum Panel");
 		this.album = album;
 		
 		selectFolderId=-1;

@@ -21,7 +21,7 @@ public class AlbumBookPanel extends AlbumPanel{
 	   
 	    
 	    horizontalLayout.addMember(book);
-	    verticalLayout.setHeight(book.heightPage);
+	    verticalLayout.setHeight(book.heightPage+40);
 	    
 	    titre.setContents("Album de Robert"); 
 	    titre.setHeight(30);
