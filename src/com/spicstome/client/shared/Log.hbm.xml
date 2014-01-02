@@ -10,8 +10,8 @@
 		<generator class="increment" />
 	</id>
 	
-	<many-to-one name="user" class="User" fetch="select">
-        <column name="id_user" not-null="true" />
+	<many-to-one name="student" class="Student" fetch="select">
+        <column name="id_student" not-null="true" />
     </many-to-one>
     
 	<property name="emailRecipient" type="string" column="email_recipient" />

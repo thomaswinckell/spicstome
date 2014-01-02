@@ -17,13 +17,13 @@ public class Test {
 	public static void main(String[] args) {
 		
 		/* Sauvegarde étudiant */
-		Folder mFolder = new Folder("nom", 0, null, new Image("Test.jpg"));
+		/*Folder mFolder = new Folder("nom", 0, null, new Image("Test.jpg"));
 		
 		Album mAlbum = new Album(mFolder);
 		
 		Student mStudent = new Student(new Date(), "login", "password", new Image("image.jpg"), mAlbum);
 		
-		HibernateManager.getInstance().save(mStudent);
+		HibernateManager.getInstance().save(mStudent);*/
 		
 		
 	}

@@ -1,22 +1,35 @@
 package com.spicstome.client.shared;
 
-import java.util.Date;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Teacher extends User {
+import com.spicstome.client.dto.StudentDTO;
+import com.spicstome.client.dto.TeacherDTO;
+
+public class Teacher extends User implements Serializable {
+	
+	private static final long serialVersionUID = -4260648157475947590L;
 	
 	private Set<Student> students;
 	
-	public Teacher()
-	{
-		students = new HashSet<Student>();
+	public Teacher() {
 	}
 
-	public Teacher(Date subscriptionDate, String login, String password, Image image)
-	{
-		super(subscriptionDate, login, password, image);
-		students = new HashSet<Student>();
+	public Teacher(Long id) {
+		super(id);
+	}
+	
+	public Teacher(TeacherDTO teacherDTO) {
+		super(teacherDTO);
+		Set<StudentDTO> studentDTOs = teacherDTO.getStudents();
+		if (studentDTOs != null) {
+			Set<Student> students = new HashSet<Student>(studentDTOs.size());
+			for (StudentDTO studentDTO : studentDTOs) {
+				students.add(new Student(studentDTO));
+			}
+			this.students = students;
+		}
 	}
 	
 	public Set<Student> getStudents() {
@@ -27,13 +40,17 @@ public class Teacher extends User {
 		this.students = students;
 	}
 
-	public void addStudent(Student student)
-	{
+	public void addStudent(Student student) {
+		if (students == null) {
+			students = new HashSet<Student>();
+		}
 		students.add(student);
 	}
 	
-	public void removeStudent(Student student)
-	{
+	public void removeStudent(Student student) {
+		if (students == null) {
+			return;
+		}
 		students.remove(student);
 	}
 

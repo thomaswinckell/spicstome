@@ -1,25 +1,24 @@
-package com.spicstome.client.shared;
+package com.spicstome.client.dto;
 
 import java.io.Serializable;
 
-import com.spicstome.client.dto.ImageDTO;
-
-public class Image implements Serializable {
+public class ImageDTO implements Serializable {
 	
 	private static final long serialVersionUID = 7007503420498291843L;
+	
 	private Long id;
 	private String filename;
 	
-	public Image() {		
+	public ImageDTO() {		
 	}
 	
-	public Image(Long id) {
+	public ImageDTO(Long id) {
 		this.id = id;
 	}
 	
-	public Image(ImageDTO imageDTO) {
-		id = imageDTO.getId();
-		filename = imageDTO.getFilename();
+	public ImageDTO(Long id, String filename) {
+		this.id = id;
+		this.filename = filename;
 	}
 
 	public Long getId() {
