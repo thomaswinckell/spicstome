@@ -15,12 +15,12 @@
 package com.spicstome.client.services;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.spicstome.client.shared.User;
+import com.spicstome.client.dto.UserDTO;
 
 
 public interface SpicsToMeServicesAsync {
 	
-	void Login(String userName, String password, AsyncCallback<User> callback);
-	void CurrentUser(AsyncCallback<User> callback);
-	
+	void getUser(String userName, String password, AsyncCallback<UserDTO> callback);
+	void getCurrentUser(AsyncCallback<UserDTO> callback);
+	void disconnectCurrentUser(AsyncCallback<Boolean> callback);
 }

@@ -1,14 +1,15 @@
 package com.spicstome.client.activity;
 
 import com.google.gwt.activity.shared.AbstractActivity;
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
-
 import com.spicstome.client.services.SpicsToMeServices;
-import com.spicstome.client.shared.User;
 import com.spicstome.client.ClientFactory;
+import com.spicstome.client.dto.UserDTO;
 import com.spicstome.client.place.MainMenuPlace;
 import com.spicstome.client.place.LoginPlace;
 import com.spicstome.client.ui.LoginView;
@@ -38,6 +39,24 @@ public class LoginActivity extends AbstractActivity implements
 	 */
 	@Override
 	public void start(AcceptsOneWidget containerWidget, EventBus eventBus) {
+		Scheduler.get().scheduleFinally(new ScheduledCommand() {
+			public void execute() {
+				SpicsToMeServices.Util.getInstance().getCurrentUser(new AsyncCallback<UserDTO>() {
+					@Override
+					public void onSuccess(UserDTO user) {
+						
+						if(user!=null) 
+							goTo(new MainMenuPlace());
+						
+					}
+					@Override
+					public void onFailure(Throwable caught) {
+						System.out.println(caught);
+					}
+				});
+			}
+		});
+		
 		LoginView loginView = clientFactory.getLoginView();
 		loginView.setPresenter(this);
 		containerWidget.setWidget(loginView.asWidget());
@@ -54,19 +73,16 @@ public class LoginActivity extends AbstractActivity implements
 	public void login(String login, String password) {
 		
 		
-		SpicsToMeServices.Util.getInstance().Login(login, password, new AsyncCallback<User>() {
+		SpicsToMeServices.Util.getInstance().getUser(login, password, new AsyncCallback<UserDTO>() {
 			@Override
-			public void onSuccess(User user) {
-				/*
+			public void onSuccess(UserDTO user) {
+				
 				if(user!=null) 
 				{
 					goTo(new MainMenuPlace());
-				}	
+				}
 				else
 					clientFactory.getLoginView().setWrongLogin();
-
-				*/
-				goTo(new MainMenuPlace());
 				
 			}
 			@Override

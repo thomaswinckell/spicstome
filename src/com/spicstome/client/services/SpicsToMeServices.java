@@ -18,9 +18,7 @@ package com.spicstome.client.services;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
-import com.spicstome.client.shared.User;
-
-
+import com.spicstome.client.dto.UserDTO;
 
 @RemoteServiceRelativePath("SpicsToMeServices")
 public interface SpicsToMeServices extends RemoteService {
@@ -37,9 +35,7 @@ public interface SpicsToMeServices extends RemoteService {
 		}
 	}
 	
-	User Login(String userName, String password);
-	User CurrentUser();
-	
-	
-
+	public UserDTO getUser(String userName, String password);
+	public UserDTO getCurrentUser();
+	public boolean disconnectCurrentUser();
 }

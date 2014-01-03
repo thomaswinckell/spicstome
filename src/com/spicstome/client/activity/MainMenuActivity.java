@@ -10,8 +10,6 @@ import com.spicstome.client.ui.UserViewLayout;
 
 public class MainMenuActivity extends UserActivity{
 
-
-
 	public MainMenuActivity(MainMenuPlace place, ClientFactory clientFactory) {
 		super(place,clientFactory,(UserViewLayout)clientFactory.getMainMenuView());
 	}
@@ -29,6 +27,4 @@ public class MainMenuActivity extends UserActivity{
 		clientFactory.getPlaceController().goTo(place);
 		
 	}
-	
-	
 }

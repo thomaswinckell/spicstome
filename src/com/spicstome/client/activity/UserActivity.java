@@ -1,13 +1,16 @@
 package com.spicstome.client.activity;
 
 import com.google.gwt.activity.shared.AbstractActivity;
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.spicstome.client.ClientFactory;
+import com.spicstome.client.dto.UserDTO;
+import com.spicstome.client.place.LoginPlace;
 import com.spicstome.client.services.SpicsToMeServices;
-import com.spicstome.client.shared.User;
 import com.spicstome.client.ui.UserView;
 import com.spicstome.client.ui.UserViewLayout;
 
@@ -26,18 +29,23 @@ public class UserActivity extends AbstractActivity implements UserView.Presenter
 	@Override
 	public void start(AcceptsOneWidget panel, EventBus eventBus) {
 		
-		SpicsToMeServices.Util.getInstance().CurrentUser(new AsyncCallback<User>() {
-			@Override
-			public void onSuccess(User user) {
-
-				if(user!=null) 
-				{
-					userView.setName(user.getLogin());
-				}	
-			}
-			@Override
-			public void onFailure(Throwable caught) {
-				System.out.println(caught);
+		Scheduler.get().scheduleFinally(new ScheduledCommand() {
+			public void execute() {
+				SpicsToMeServices.Util.getInstance().getCurrentUser(new AsyncCallback<UserDTO>() {
+					@Override
+					public void onSuccess(UserDTO user) {
+						
+						if(user!=null) {
+							userView.setName(user.getLogin());
+						} else {
+							goTo(new LoginPlace());
+						}
+					}
+					@Override
+					public void onFailure(Throwable caught) {
+						System.out.println(caught);
+					}
+				});
 			}
 		});
 		
