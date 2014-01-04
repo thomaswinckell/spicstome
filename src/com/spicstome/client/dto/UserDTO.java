@@ -9,6 +9,9 @@ public class UserDTO implements Serializable {
 	
 	private Long id;
 	private Date subscriptionDate;
+	private String firstName;
+	private String name;
+	private String email;
 	private String login;
 	private String password;
 	private ImageDTO image;
@@ -20,9 +23,13 @@ public class UserDTO implements Serializable {
 		this.id = id;
 	}
 	
-	public UserDTO(Long id, Date subscriptionDate, String login, String password, ImageDTO image)	{
+	public UserDTO(Long id, Date subscriptionDate, String firstName, String name, 
+			String email, String login, String password, ImageDTO image)	{
 		this.id = id;
 		this.subscriptionDate = subscriptionDate;
+		this.firstName = firstName;
+		this.name = name;
+		this.email = email;
 		this.login = login;
 		this.password = password;
 		this.image = image;
@@ -42,6 +49,30 @@ public class UserDTO implements Serializable {
 
 	public void setSubscriptionDate(Date subscriptionDate) {
 		this.subscriptionDate = subscriptionDate;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getLogin() {

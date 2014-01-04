@@ -11,6 +11,9 @@ public abstract class User implements Serializable {
 	
 	private Long id;
 	private Date subscriptionDate;
+	private String firstName;
+	private String name;
+	private String email;
 	private String login;
 	private String password;
 	private Image image;
@@ -25,6 +28,9 @@ public abstract class User implements Serializable {
 	public User(UserDTO userDTO) {
 		id = userDTO.getId();
 		subscriptionDate = userDTO.getSubscriptionDate();
+		firstName = userDTO.getFirstName();
+		name = userDTO.getName();
+		email = userDTO.getEmail();
 		login = userDTO.getLogin();
 		password = userDTO.getPassword();
 		image = new Image(userDTO.getImage());
@@ -44,6 +50,30 @@ public abstract class User implements Serializable {
 
 	public void setSubscriptionDate(Date subscriptionDate) {
 		this.subscriptionDate = subscriptionDate;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getLogin() {

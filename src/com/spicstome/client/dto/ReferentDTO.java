@@ -17,8 +17,8 @@ public class ReferentDTO extends UserDTO implements Serializable {
 		super(id);
 	}
 
-	public ReferentDTO(Long id, Date subscriptionDate, String login, String password, ImageDTO image, Set<StudentDTO> students) {
-		super(id, subscriptionDate, login, password, image);
+	public ReferentDTO(Long id, Date subscriptionDate, String firstName, String name, String email, String login, String password, ImageDTO image, Set<StudentDTO> students) {
+		super(id, subscriptionDate, firstName, name, email, login, password, image);
 		this.students = students;
 	}
 	

@@ -20,9 +20,9 @@ public class StudentDTO extends UserDTO implements Serializable {
 		super(id);
 	}
 	
-	public StudentDTO(Long id, Date subscriptionDate, String login, String password, ImageDTO image, AlbumDTO album, 
+	public StudentDTO(Long id, Date subscriptionDate, String firstName, String name, String email, String login, String password, ImageDTO image, AlbumDTO album, 
 			Set<LogDTO> logs, Set<ReferentDTO> referents, Set<TeacherDTO> teachers) {
-		super(id, subscriptionDate, login, password, image);
+		super(id, subscriptionDate, firstName, name, email, login, password, image);
 		this.album = album;
 		this.logs = logs;
 		this.referents = referents;
