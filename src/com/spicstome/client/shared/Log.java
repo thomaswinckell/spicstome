@@ -1,33 +1,53 @@
 package com.spicstome.client.shared;
 
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Log {
+import com.spicstome.client.dto.ArticleDTO;
+import com.spicstome.client.dto.LogDTO;
 
-	private long id;
-	private User user;
+public class Log implements Serializable {
+
+	private static final long serialVersionUID = 8544863337442780335L;
+	
+	private Long id;
+	private Student student;
 	private String emailRecipient;
 	private Date date;
 	private Set<Article> articles;
 	
 	public Log() {
-		articles = new HashSet<Article>();
 	}
 	
-	public Log(User user, String emailRecipient, Date date) {
-		this.user = user;
-		this.emailRecipient = emailRecipient;
-		this.date = date;
+	public Log(Long id) {
+		this.id = id;
 	}
 	
-	public User getUser() {
-		return user;
+	public Log(LogDTO logDTO) {
+		
+		id = logDTO.getId();
+		student = new Student(logDTO.getStudent());
+		emailRecipient = logDTO.getEmailRecipient();
+		date = logDTO.getDate();
+		
+		Set<ArticleDTO> articleDTOs = logDTO.getArticles();
+		if (articleDTOs != null) {
+			Set<Article> articles = new HashSet<Article>(articleDTOs.size());
+			for (ArticleDTO articleDTO : articleDTOs) {
+				articles.add(new Article(articleDTO));
+			}
+			this.articles = articles;
+		}
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public Student getStudent() {
+		return student;
+	}
+
+	public void setStudent(Student student) {
+		this.student = student;
 	}
 
 	public String getEmailRecipient() {
@@ -46,11 +66,11 @@ public class Log {
 		this.date = date;
 	}
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	
@@ -62,13 +82,17 @@ public class Log {
 		this.articles = articles;
 	}
 
-	public void addArticle(Article article)
-	{
+	public void addArticle(Article article) {
+		if (articles == null) {
+		      articles = new HashSet<Article>();
+		}
 		articles.add(article);
 	}
 	
-	public void removeLog(Article article)
-	{
+	public void removeLog(Article article) {
+		if (articles == null) {
+		      return;
+		}
 		articles.remove(article);
 	}
 

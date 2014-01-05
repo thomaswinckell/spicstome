@@ -1,39 +1,38 @@
-package com.spicstome.client.shared;
+package com.spicstome.client.dto;
 
 import java.io.Serializable;
 
-import com.spicstome.client.dto.PecsDTO;
-
-public abstract class Pecs implements Serializable {
+public abstract class PecsDTO implements Serializable {
 	
 	private static final long serialVersionUID = 739051315384634937L;
 	
 	private Long id;
 	private String name;
 	private int order;
-	private Folder folder;
-	private Image image;
+	private FolderDTO folder;
+	private ImageDTO image;
 	
-	public Pecs() {		
+	public PecsDTO() {
+		
 	}
-	
-	public Pecs(Long id) {
+
+	public PecsDTO(Long id) {
 		this.id = id;
 	}
 	
-	public Pecs(PecsDTO pecsDTO) {
-		id = pecsDTO.getId();
-		name = pecsDTO.getName();
-		order = pecsDTO.getOrder();
-		folder = new Folder(pecsDTO.getFolder());
-		image = new Image(pecsDTO.getImage());
+	public PecsDTO(Long id, String name, int order, FolderDTO folder, ImageDTO image) {
+		this.id = id;
+		this.name = name;
+		this.order = order;
+		this.folder = folder;
+		this.image = image;
 	}
 
-	public Image getImage() {
+	public ImageDTO getImage() {
 		return image;
 	}
 
-	public void setImage(Image image) {
+	public void setImage(ImageDTO image) {
 		this.image = image;
 	}
 
@@ -61,11 +60,11 @@ public abstract class Pecs implements Serializable {
 		this.order = order;
 	}
 
-	public Folder getFolder() {
+	public FolderDTO getFolder() {
 		return folder;
 	}
 
-	public void setFolder(Folder folder) {
+	public void setFolder(FolderDTO folder) {
 		this.folder = folder;
 	}
 

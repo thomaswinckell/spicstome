@@ -3,19 +3,24 @@ package com.spicstome.client.mvp;
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.activity.shared.ActivityMapper;
 import com.google.gwt.place.shared.Place;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.spicstome.client.ClientFactory;
 import com.spicstome.client.activity.AlbumActivity;
 import com.spicstome.client.activity.AlbumEditActivity;
 import com.spicstome.client.activity.AlbumManagementActivity;
+import com.spicstome.client.activity.LogoutActivity;
 import com.spicstome.client.activity.MailActivity;
 import com.spicstome.client.activity.MainMenuActivity;
 import com.spicstome.client.activity.LoginActivity;
+import com.spicstome.client.dto.UserDTO;
 import com.spicstome.client.place.AlbumEditPlace;
 import com.spicstome.client.place.AlbumManagementPlace;
 import com.spicstome.client.place.AlbumPlace;
+import com.spicstome.client.place.LogoutPlace;
 import com.spicstome.client.place.MailPlace;
 import com.spicstome.client.place.MainMenuPlace;
 import com.spicstome.client.place.LoginPlace;
+import com.spicstome.client.services.SpicsToMeServices;
 
 public class AppActivityMapper implements ActivityMapper {
 
@@ -39,7 +44,7 @@ public class AppActivityMapper implements ActivityMapper {
 	 */
 	@Override
 	public Activity getActivity(Place place) 
-	{
+	{		
 		if (place instanceof LoginPlace)
 			return new LoginActivity((LoginPlace) place, clientFactory);
 		else if (place instanceof MainMenuPlace)
@@ -52,7 +57,8 @@ public class AppActivityMapper implements ActivityMapper {
 			return new AlbumEditActivity((AlbumEditPlace) place, clientFactory);
 		else if (place instanceof MailPlace)
 			return new MailActivity((MailPlace) place, clientFactory);
+		else if (place instanceof LogoutPlace)
+			return new LogoutActivity((LogoutPlace) place, clientFactory);
 		return null;
 	}
-
 }

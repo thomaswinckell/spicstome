@@ -4,7 +4,10 @@ import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.widgets.IconButton;
 import com.smartgwt.client.widgets.Img;
 import com.smartgwt.client.widgets.Label;
+import com.smartgwt.client.widgets.events.ClickEvent;
+import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
+import com.spicstome.client.place.LogoutPlace;
 import com.spicstome.client.place.MainMenuPlace;
 import com.spicstome.client.ui.UserViewLayout;
 
@@ -31,6 +34,12 @@ public class MenuTopPanel extends HLayout{
 		
 		buttonLogout.setIcon("exit.png");
 		buttonLogout.setIconSize(64);
+		
+		buttonLogout.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {				
+				mainView.goTo(new LogoutPlace());
+			}
+		});
 		
 		image.setLayoutAlign(Alignment.LEFT);
 		buttonLogout.setLayoutAlign(Alignment.RIGHT);

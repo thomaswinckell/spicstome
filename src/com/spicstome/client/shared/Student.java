@@ -1,26 +1,55 @@
 package com.spicstome.client.shared;
 
-import java.util.Date;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Student extends User {
+import com.spicstome.client.dto.LogDTO;
+import com.spicstome.client.dto.ReferentDTO;
+import com.spicstome.client.dto.StudentDTO;
+import com.spicstome.client.dto.TeacherDTO;
+
+public class Student extends User implements Serializable {
 	
+	private static final long serialVersionUID = 5196763171962166568L;
 	private Album album;
 	private Set<Log> logs;
 	private Set<Referent> referents;
 	private Set<Teacher> teachers;
 	
-	public Student() {
-		
+	public Student() {		
 	}
 	
-	public Student(Date subscriptionDate, String login, String password, Image image, Album album) {
-		super(subscriptionDate, login, password, image);
-		this.album = album;
-		this.logs = new HashSet<Log>();
-		this.referents = new HashSet<Referent>();
-		this.teachers = new HashSet<Teacher>();
+	public Student(Long id) {
+		super(id);
+	}
+	
+	public Student(StudentDTO studentDTO) {
+		super(studentDTO);
+		Set<LogDTO> logDTOs = studentDTO.getLogs();
+		if (logDTOs != null) {
+			Set<Log> logs = new HashSet<Log>(logDTOs.size());
+			for (LogDTO logDTO : logDTOs) {
+				logs.add(new Log(logDTO));
+			}
+			this.logs = logs;
+		}		
+		Set<ReferentDTO> referentDTOs = studentDTO.getReferents();
+		if (referentDTOs != null) {
+			Set<Referent> referents = new HashSet<Referent>(referentDTOs.size());
+			for (ReferentDTO referentDTO : referentDTOs) {
+				referents.add(new Referent(referentDTO));
+			}
+			this.referents = referents;
+		}
+		Set<TeacherDTO> teacherDTOs = studentDTO.getTeachers();
+		if (teacherDTOs != null) {
+			Set<Teacher> teachers = new HashSet<Teacher>(teacherDTOs.size());
+			for (TeacherDTO teacherDTO : teacherDTOs) {
+				teachers.add(new Teacher(teacherDTO));
+			}
+			this.teachers = teachers;
+		}
 	}
 
 	public Album getAlbum() {
@@ -32,27 +61,45 @@ public class Student extends User {
 	}
 
 	public void addLog(Log log) {
-		this.logs.add(log);
+		if (logs == null) {
+			logs = new HashSet<Log>();
+		}
+		logs.add(log);
 	}
 	
 	public void removeLog(Log log) {
-		this.logs.remove(log);
+		if (logs == null) {
+			return;
+		}
+		logs.remove(log);
 	}
 	
 	public void addTeacher(Teacher teacher) {
-		this.teachers.add(teacher);
+		if (teachers == null) {
+			teachers = new HashSet<Teacher>();
+		}
+		teachers.add(teacher);
 	}
 	
 	public void removeTeacher(Teacher teacher) {
-		this.teachers.remove(teacher);
+		if (teachers == null) {
+			return;
+		}
+		teachers.remove(teacher);
 	}
 	
 	public void addReferent(Referent referent) {
-		this.referents.add(referent);
+		if (referents == null) {
+			referents = new HashSet<Referent>();
+		}
+		referents.add(referent);
 	}
 	
 	public void removeReferent(Referent referent) {
-		this.referents.remove(referent);
+		if (referents == null) {
+			return;
+		}
+		referents.remove(referent);
 	}
 	
 	public Set<Referent> getReferents() {

@@ -1,11 +1,9 @@
-package com.spicstome.client.shared;
+package com.spicstome.client.dto;
 
 import java.io.Serializable;
 import java.util.Date;
 
-import com.spicstome.client.dto.UserDTO;
-
-public abstract class User implements Serializable {
+public class UserDTO implements Serializable {
 	
 	private static final long serialVersionUID = 3555772168779223497L;
 	
@@ -16,24 +14,25 @@ public abstract class User implements Serializable {
 	private String email;
 	private String login;
 	private String password;
-	private Image image;
+	private ImageDTO image;
 	
-	public User() {		
+	public UserDTO() {		
 	}
 	
-	public User(Long id)	{
+	public UserDTO(Long id) {
 		this.id = id;
 	}
 	
-	public User(UserDTO userDTO) {
-		id = userDTO.getId();
-		subscriptionDate = userDTO.getSubscriptionDate();
-		firstName = userDTO.getFirstName();
-		name = userDTO.getName();
-		email = userDTO.getEmail();
-		login = userDTO.getLogin();
-		password = userDTO.getPassword();
-		image = new Image(userDTO.getImage());
+	public UserDTO(Long id, Date subscriptionDate, String firstName, String name, 
+			String email, String login, String password, ImageDTO image)	{
+		this.id = id;
+		this.subscriptionDate = subscriptionDate;
+		this.firstName = firstName;
+		this.name = name;
+		this.email = email;
+		this.login = login;
+		this.password = password;
+		this.image = image;
 	}
 
 	public Long getId() {
@@ -92,11 +91,11 @@ public abstract class User implements Serializable {
 		this.password = password;
 	}
 
-	public Image getImage() {
+	public ImageDTO getImage() {
 		return image;
 	}
 
-	public void setImage(Image image) {
+	public void setImage(ImageDTO image) {
 		this.image = image;
 	}
 
