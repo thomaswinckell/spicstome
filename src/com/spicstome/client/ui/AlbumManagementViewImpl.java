@@ -32,7 +32,7 @@ public class AlbumManagementViewImpl extends UserViewLayout  implements AlbumMan
 		
 		
 		
-		actionPanel = new ActionPanel() {
+		actionPanel = new ActionPanel(true) {
 			
 			@Override
 			public void onVisualize() {
@@ -50,6 +50,12 @@ public class AlbumManagementViewImpl extends UserViewLayout  implements AlbumMan
 			@Override
 			public void onEdit() {
 				listener.goTo(new AlbumEditPlace());
+				
+			}
+
+			@Override
+			public void onDelete() {
+				// TODO Auto-generated method stub
 				
 			}
 		};

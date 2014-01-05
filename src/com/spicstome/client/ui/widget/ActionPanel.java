@@ -12,39 +12,50 @@ public abstract class ActionPanel extends HLayout{
 	protected IconButton buttonEdit = new IconButton("");
 	protected IconButton buttonView = new IconButton("");
 	
+	private boolean readAction = false;
+	
 	protected HLayout CRUDPanel = new HLayout();
 	
-	public ActionPanel()
+	public ActionPanel(boolean readAction)
 	{
 		super();
 		
+		this.readAction=readAction;
+		
+		buttonNew.setVisible(true);
 		buttonEdit.setVisible(false);
-		buttonDelete.setVisible(false);
+		buttonDelete.setVisible(false);	
 		buttonView.setVisible(false);
-		
-		buttonEdit.setIcon("edit.png");
-		buttonDelete.setIcon("delete.png");
-		buttonView.setIcon("visualize.png");
-		buttonNew.setIcon("new.png");
-		
-
 		
 		int iconsize=40;
 		
-		buttonEdit.setIconSize(iconsize);
-		buttonDelete.setIconSize(iconsize);
-		buttonView.setIconSize(iconsize);
+		buttonNew.setIcon("new.png");
 		buttonNew.setIconSize(iconsize);
 		
+		if(readAction)
+		{	
+			buttonView.setIcon("visualize.png");
+			buttonView.setIconSize(iconsize);
+		}
+			
+		buttonEdit.setIcon("edit.png");
+		buttonEdit.setIconSize(iconsize);
+		
+		buttonDelete.setIcon("delete.png");
+		buttonDelete.setIconSize(iconsize);
 
-		CRUDPanel.addMember(buttonView);
+		if(readAction)
+		{
+			CRUDPanel.addMember(buttonView);
+			CRUDPanel.setWidth(3*iconsize);
+		}
+		
 		CRUDPanel.addMember(buttonEdit);
 		CRUDPanel.addMember(buttonDelete);
 		
-		CRUDPanel.setWidth(3*iconsize);
+		CRUDPanel.setWidth(2*iconsize);
 		
-		
-		
+
 		addMember(buttonNew);
 		addMember(CRUDPanel);
 		
@@ -81,6 +92,16 @@ public abstract class ActionPanel extends HLayout{
 				
 			}
 		});
+		
+		buttonDelete.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				
+				onDelete();
+				
+			}
+		});
 	}
 	
 	public IconButton getButtonNew() {
@@ -101,6 +122,9 @@ public abstract class ActionPanel extends HLayout{
 
 	public void setActionVisible(boolean b)
 	{
+		if(readAction)
+			getButtonEdit().setVisible(b);
+		
 		getButtonDelete().setVisible(b);
 		getButtonEdit().setVisible(b);
 		getButtonView().setVisible(b);
@@ -109,5 +133,6 @@ public abstract class ActionPanel extends HLayout{
 	public abstract void onVisualize();
 	public abstract void onEdit();
 	public abstract void onNew();
+	public abstract void onDelete();
 	
 }

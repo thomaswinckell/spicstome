@@ -2,111 +2,54 @@ package com.spicstome.client.ui.widget;
 
 import java.util.ArrayList;
 
-import com.smartgwt.client.types.VerticalAlignment;
 import com.smartgwt.client.util.BooleanCallback;
 import com.smartgwt.client.util.SC;
-import com.smartgwt.client.widgets.IButton;
-import com.smartgwt.client.widgets.IconButton;
-import com.smartgwt.client.widgets.Img;
-import com.smartgwt.client.widgets.Label;
-import com.smartgwt.client.widgets.events.ClickEvent;
-import com.smartgwt.client.widgets.events.ClickHandler;
-import com.smartgwt.client.widgets.events.DropEvent;
-import com.smartgwt.client.widgets.events.DropHandler;
 import com.smartgwt.client.widgets.form.DynamicForm;
-import com.smartgwt.client.widgets.form.fields.CheckboxItem;
 import com.smartgwt.client.widgets.form.fields.ComboBoxItem;
-import com.smartgwt.client.widgets.form.fields.RadioGroupItem;
-import com.smartgwt.client.widgets.form.fields.TextItem;
-import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.smartgwt.client.widgets.tree.events.NodeClickEvent;
 import com.spicstome.client.shared.Album;
 import com.spicstome.client.ui.widget.ImageTileGrid.Mode;
 
+/*
+ * Folder new 
+ * 	on peut importer un dossier depuis base , example (on a son image , nom et tout les fils en copie)
+ * 	 ou pc (on cherche l'image sur pc)
+ * Folder edit
+ * 	(on cherche l'image sur pc) , pas d'autre import car va ecrasé les fils
+ * Article new
+ * 	on peut importer une image (article!) depuis base , example ou pc
+ * Article edit
+ * 	on peut importer une image (article!) depuis base , example ou pc
+ */
+
 public class AlbumEditPanel extends AlbumPanel{
 
 	ActionPanel actionFoldersPanel;
+	ActionPanel actionArticlePanel;
 	ImageTileGrid articlesGrid;
 	
 
-	IconButton buttonImportBase = new IconButton("Import from general base");
-	IconButton buttonImportAlbum = new IconButton("Import from other album");
-	IconButton buttonImportComputer = new IconButton("Import from PC");
-	IconButton buttonDeleteArticle = new IconButton("");
-	
-	
-	HLayout importPanel = new HLayout();
-	
 	VLayout articleVerticalPanel = new VLayout();
-	
-	
-	VLayout detailLayout = new VLayout();
-	HLayout detailContentLayout = new HLayout();
-	
 
-	Img imgDetail = new Img();
-	IconButton buttonFavorite = new IconButton("");
-	private DynamicForm formDetail = new DynamicForm();
-	
-	RadioGroupItem radioGroupType = new RadioGroupItem();
-	RadioGroupItem radioGroupGroup = new RadioGroupItem();
-	CheckboxItem checkBoxFavorite = new CheckboxItem("favorite","Favoris");
-	TextItem nameDetail = new TextItem("name","Titre");
 	ComboBoxItem comboBoxOwner = new ComboBoxItem("owner","Album de");
-
-	private DynamicForm formOwner = new DynamicForm();
+	DynamicForm formOwner = new DynamicForm();
 	
 	
 	public AlbumEditPanel() {
 		super();
 		
-		treeGrid.setCanEdit(true); 
-		
-	    treeGrid.setCanReorderRecords(true);  
-	   // treeGrid.setCanAcceptDroppedRecords(true); 
-	    treeGrid.setCanReparentNodes(true);
-        
-        treeGrid.setShowOpenIcons(false);  
-        treeGrid.setDropIconSuffix("into");  
-
-        /*
-	    treeGrid.addFolderDropHandler(new FolderDropHandler() {
-	    	  @Override
-	    	  public void onFolderDrop(FolderDropEvent folderDropEvent) {
-	    		  
-	    		  
-	    		  
-	    		  Canvas src = folderDropEvent.getSourceWidget();
-	    		  folderDropEvent.getNodes()[0].setAttribute("title", "prout");
-	    	      //System.out.println("drop into folder"+src.);
-	    	      
-	    	  }
-	    	});*/
-	    
-        /*
-	    treeGrid.addDropHandler(new DropHandler() {
-			
-			@Override
-			public void onDrop(DropEvent event) {
-				
-				System.out.println("drop ");
-				System.out.println(event.getSource());
-				if(event.getSource() instanceof ImageRecord)
-				{
-					System.out.println("drop ImageRecord");
-				}
-				
-			}
-		});*/
+		folderTree.AllowReorder();
 	    
 	    comboBoxOwner.setValueMap("Albert","Jean","Robert");
 	    comboBoxOwner.setValue("Albert");
 	    formOwner.setFields(comboBoxOwner);
 	    titleLayout.addMember(formOwner);
 	    
-	    actionFoldersPanel = new ActionPanel() {
+	    actionArticlePanel = new ActionPanel(false) {
 			
+	    	
+	    
 			@Override
 			public void onVisualize() {
 				// TODO Auto-generated method stub
@@ -114,168 +57,99 @@ public class AlbumEditPanel extends AlbumPanel{
 			}
 			
 			@Override
-			public void onEdit() {
-				// TODO Auto-generated method stub
+			public void onNew() {
+				ArticleFormWindow articleFormWindow = new ArticleFormWindow();
+				articleFormWindow.show();
 				
+				
+			}
+			
+			@Override
+			public void onEdit() {
+				ArticleFormWindow articleFormWindow = new ArticleFormWindow();
+				articleFormWindow.show();
+				
+			}
+
+			@Override
+			public void onDelete() {
+				SC.confirm("Êtes vous sure de vouloir supprimer cet article ?", new BooleanCallback() {
+					public void execute(Boolean value) {
+						if (value != null && value) 
+						{
+							articlesGrid.removeData(articlesGrid.getSelectedItem());
+							Update();
+						}
+					}
+				});
+				
+			}
+		};
+	    
+	    actionFoldersPanel = new ActionPanel(false) {
+			
+			@Override
+			public void onVisualize() {
+				
+				
+			}
+			
+			@Override
+			public void onEdit() {
+				PecsFormWindow folderFormWindow = new PecsFormWindow();
+				folderFormWindow.show();
 			}
 
 			@Override
 			public void onNew() {
 				
-				if(selectFolderNode!=null)
+				PecsFormWindow folderFormWindow = new PecsFormWindow();
+				folderFormWindow.show();
+				
+				/*
+				if(folderTree.selectFolderNode!=null)
 				{
-					tree.add(new AlbumTreeNode("42", selectFolderNode.getAttribute("id_folder"), "Foo","tout.png"), selectFolderNode);
-					treeGrid.setData(tree);
+					folderTree.tree.add(new AlbumTreeNode("42", folderTree.selectFolderNode.getAttribute("id_folder"), "Foo","tout.png"), folderTree.selectFolderNode);
+					folderTree.treeGrid.setData(folderTree.tree);
 					
-					treeGrid.getData().openAll();
+					folderTree.treeGrid.getData().openAll();
 				}
+				*/
+				
+			}
+
+			@Override
+			public void onDelete() {
+				// TODO Auto-generated method stub
 				
 			}
 		};
 		
-		buttonImportBase.addClickHandler(new ClickHandler() {
-			
-			@Override
-			public void onClick(ClickEvent event) {
-				ImagePickerWindow win = new ImagePickerWindow(new ArrayList<Album>()){
-					 @Override
-					 public void onDestroy()
-					 {
-						 // todo traitement 
-						 //System.out.println(win.book.selectedImage.toString());
-						 articlesGrid.addItem(book.selectedImage);
-					 }
-				 };			 
-		         win.show();
-			}
-		});
-	    
-		buttonImportAlbum.addClickHandler(new ClickHandler() {
-			
-			@Override
-			public void onClick(ClickEvent event) 
-			{
-				 ImagePickerWindow win = new ImagePickerWindow(new ArrayList<Album>()){
-					 @Override
-					 public void onDestroy()
-					 {
-						 // todo traitement 
-						 //System.out.println(win.book.selectedImage.toString());
-						 articlesGrid.addItem(book.selectedImage);
-					 }
-				 };			 
-		         win.show();
-			}
-		});
+		
 	    
 	    verticalLayout.addMember(actionFoldersPanel);
 	    
 	    verticalLayout.setStyleName("album");
-	    detailLayout.setStyleName("album");
 	    articleVerticalPanel.setStyleName("album");
 	    
-	    
 	    articlesGrid = new ImageTileGrid(Mode.DRAG_AND_DROP,70,70,50){
-
-			@Override
+	    	
+	    	@Override
 			public void OnSelectChanged(ImageRecord object) {
-		
-				
-				nameDetail.setValue(object.getAttribute(ImageRecord.PICTURE_NAME));
-				imgDetail.setSrc(object.getAttribute(ImageRecord.PICTURE_PATH));
+
 				Update();
 			}
 	    	
 	    };
 	    
-	   
-	    
-	   
-	    nameDetail.setHeight(20);
-	   
-	    
-	    imgDetail.setSize(200);
-	    imgDetail.setLayoutAlign(VerticalAlignment.TOP);
-	    
-	    buttonFavorite.setIcon("favorite_on.png");
-	    buttonFavorite.setIconSize(50);
-	    
-	   
-	    
-	    
-	    radioGroupType.setValueMap("Noun", "Verb");
-	    radioGroupType.setTitle("Word type");
-	    
-	    radioGroupGroup.setValueMap("1st group", "2nd group","3rd group","other");
-	    radioGroupGroup.setTitle("Group");
-	    
-	    formDetail.setFields(nameDetail,checkBoxFavorite,radioGroupType,radioGroupGroup);
-	   
-	    int iconsize=32;
-	    
-	   
-	    buttonDeleteArticle.setIcon("delete.png");
-	    buttonDeleteArticle.setIconSize(iconsize);
-	    
-	    buttonDeleteArticle.addClickHandler(new ClickHandler() {
-			
-			@Override
-		      public void onClick(ClickEvent event) {
-		        SC.confirm("Êtes vous sure de vouloir supprimer cet article ?", new BooleanCallback() {
-		          public void execute(Boolean value) {
-		            if (value != null && value) 
-		            {
-		            	 articlesGrid.removeData(articlesGrid.getSelectedItem());
-		            	 Update();
-		            }
-		             
-		           
-		          }
-		        });
-		  
-				
-			}
-		});
-	    
-	    detailContentLayout.addMember(formDetail);
-	    detailContentLayout.addMember(imgDetail);
-	    detailContentLayout.addMember(buttonDeleteArticle);
-	    
-	    
-	    detailLayout.addMember(detailContentLayout);
 
+	    articleVerticalPanel.addMember(actionArticlePanel);
+	   
 	    
-    
-	    buttonImportBase.setIcon("import_general_base.png");
-	    buttonImportBase.setIconSize(iconsize);
-	    buttonImportBase.setOrientation("vertical");
-	    buttonImportBase.setMargin(5);
-	    
-	    buttonImportAlbum.setIcon("import_other_album.png");
-	    buttonImportAlbum.setIconSize(iconsize);
-	    buttonImportAlbum.setOrientation("vertical");
-	    buttonImportAlbum.setMargin(5);
-
-	    buttonImportComputer.setIcon("import_computer.png");
-	    buttonImportComputer.setIconSize(iconsize);
-	    buttonImportComputer.setOrientation("vertical");
-	    buttonImportComputer.setMargin(5);
-	    
-	    importPanel.addMember(buttonImportBase);
-	    importPanel.addMember(buttonImportAlbum);
-	    importPanel.addMember(buttonImportComputer);
-	    
-	    importPanel.setHeight(68);
-
-	    articleVerticalPanel.addMember(importPanel);
-	    
-	    detailLayout.setHeight(350);
-	    detailLayout.setWidth(500);
 	    verticalLayout.setHeight(350);
 	    articleVerticalPanel.setHeight(350);
 	    
 	    horizontalLayout.addMember(articleVerticalPanel);
-	    horizontalLayout.addMember(detailLayout);
 	    
 	    Update();
 	    
@@ -283,11 +157,9 @@ public class AlbumEditPanel extends AlbumPanel{
 	
 	public void Update()
 	{
-		
-		detailContentLayout.setVisible(articlesGrid.getSelectedRecord()!=null);
-		
-		importPanel.setVisible(selectFolderId!=-1);
-		actionFoldersPanel.setActionVisible(selectFolderId!=-1);
+		actionArticlePanel.setActionVisible(articlesGrid.getSelectedRecord()!=null);
+		actionArticlePanel.setVisible(folderTree.selectFolderId!=-1);
+		actionFoldersPanel.setActionVisible(folderTree.selectFolderId!=-1);
 	}
 	
 	@Override
@@ -310,7 +182,7 @@ public class AlbumEditPanel extends AlbumPanel{
 		
 		if(changed)
 		{
-			switch(selectFolderId)
+			switch(folderTree.selectFolderId)
 			{
 			case 3:
 				articles.add(new ImageRecord(0,"Je","albumlogo.png"));

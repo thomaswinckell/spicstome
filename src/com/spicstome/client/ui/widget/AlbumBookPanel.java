@@ -45,7 +45,7 @@ public class AlbumBookPanel extends AlbumPanel{
 		
 		if(super.onFolderClick(event))
 		{
-			switch(selectFolderId)
+			switch(folderTree.selectFolderId)
 			{
 			case 3:
 				articles.add(new ImageRecord(0,"Je","albumlogo.png"));

@@ -14,7 +14,10 @@ import com.smartgwt.client.widgets.layout.VLayout;
 import com.smartgwt.client.widgets.tree.events.NodeClickEvent;
 import com.spicstome.client.shared.Album;
 
-public class ImagePickerWindow extends Window{
+
+
+
+public class ArticleFolderPickerWindow extends Window{
 
 	public AlbumBookPanel albmBook;
 	DynamicForm form = new DynamicForm();
@@ -23,10 +26,13 @@ public class ImagePickerWindow extends Window{
     VLayout verticalLayout = new VLayout();
     HLayout bottomLayout = new HLayout();
     Book book;
+    
+    public enum Mode{ARTICLE, FOLDER}
+    Mode mode;
 	
-	public ImagePickerWindow(ArrayList<Album> listAlbum) {
+	public ArticleFolderPickerWindow(ArrayList<Album> listAlbum,Mode mode) {
 		super();
-		
+				
 		setWidth(1000);
         setHeight(450);
         
@@ -107,6 +113,7 @@ public class ImagePickerWindow extends Window{
         
         validButton.setVisible(false);
         
+        setMode(mode);
       
         bottomLayout.setHeight(iconsize);
         bottomLayout.setWidth100();
@@ -121,10 +128,21 @@ public class ImagePickerWindow extends Window{
        
 	}
 	
-
+	public void setMode(Mode mode)
+	{
+		this.mode=mode;
+		
+		if(mode==Mode.ARTICLE)
+			validButton.setTitle("Importer cet article");
+		else if(mode==Mode.FOLDER)
+			validButton.setTitle("Importer ce dossier");
+	}
 	
 	public void UpdateValidButton()
 	{
-		validButton.setVisible(book.selectedImage!=null);
+		if(mode==Mode.ARTICLE)
+			validButton.setVisible(book.selectedImage!=null);
+		else if(mode==Mode.FOLDER)
+			validButton.setVisible(albmBook.folderTree.selectFolderId!=-1);
 	}
 }
