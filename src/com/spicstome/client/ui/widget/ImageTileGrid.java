@@ -113,7 +113,9 @@ public abstract class ImageTileGrid extends TileGrid {
 		addData(record);
 	}
 
-
+	public void removeItem(ImageRecord record){
+		removeData(record);
+	}
 
 	public ImageRecord getSelectedItem() {
 		return (ImageRecord)getSelectedRecord();

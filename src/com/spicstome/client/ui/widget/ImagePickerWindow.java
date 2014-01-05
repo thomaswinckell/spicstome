@@ -36,7 +36,7 @@ public class ImagePickerWindow extends Window{
         setShowModalMask(true);
         centerInPage();
         
-       
+        setDismissOnOutsideClick(true);
         
         
         comboBox.setValueMap("Général","Albert","Robert");
@@ -98,6 +98,9 @@ public class ImagePickerWindow extends Window{
 			
 			@Override
 			public void onClick(ClickEvent event) {
+				
+				
+						
 						destroy();					
 			}
 		});
@@ -117,6 +120,8 @@ public class ImagePickerWindow extends Window{
         addItem(verticalLayout);
        
 	}
+	
+
 	
 	public void UpdateValidButton()
 	{

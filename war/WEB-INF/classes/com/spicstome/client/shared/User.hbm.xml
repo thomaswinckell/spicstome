@@ -12,9 +12,15 @@
 	
 	<property name="subscriptionDate" type="timestamp" column="subscription_date" />
 
+	<property name="firstName" type="string" column="first_name" />
+	
+	<property name="name" type="string" column="name" />
+	
 	<property name="login" type="string" column="login" />
 
 	<property name="password" type="string" column="password" />
+	
+	<property name="email" type="string" column="email" />
 
 	<many-to-one name="image" class="Image" column="id_image" unique="true" cascade="all" />
 	

@@ -83,7 +83,7 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	}
 	
 	private UserDTO createUserDTO(User user) {
-		return new UserDTO(user.getId(), user.getSubscriptionDate(), user.getLogin(), user.getPassword(), createImageDTO(user.getImage()));
+		return new UserDTO(user.getId(), user.getSubscriptionDate(), user.getFirstName(), user.getName(), user.getEmail(), user.getLogin(), user.getPassword(), createImageDTO(user.getImage()));
 	}
 	
 	/*@Override

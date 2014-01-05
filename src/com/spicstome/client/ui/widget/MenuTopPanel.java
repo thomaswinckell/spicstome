@@ -59,6 +59,7 @@ public class MenuTopPanel extends HLayout{
 
 		
 		addMember(image);
+		addMember(labelUser);
 		addMember(breadcrumb);
 		addMember(buttonLogout);
 		

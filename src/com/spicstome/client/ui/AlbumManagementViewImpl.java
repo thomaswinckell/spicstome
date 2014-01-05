@@ -29,10 +29,7 @@ public class AlbumManagementViewImpl extends UserViewLayout  implements AlbumMan
 		
 		addCrumb(new Crumb("Les albums"){});
 		
-		ArrayList<ImageRecord> modules = new ArrayList<ImageRecord>();
-		modules.add(new ImageRecord(0,"Album general","albumlogo.png"));
-		modules.add(new ImageRecord(1,"Album exemple","albumlogo.png"));
-		modules.add(new ImageRecord(2,"Album de Albert","albumlogo.png"));
+		
 		
 		
 		actionPanel = new ActionPanel() {
@@ -70,16 +67,24 @@ public class AlbumManagementViewImpl extends UserViewLayout  implements AlbumMan
 
 		imageList.setHeight(250);
 		
-		imageList.setItems(modules);
+		
 
 		mainPanel.addMember(imageList);
 		mainPanel.addMember(actionPanel);
+		
+		setAlbum(null);
 
 	}
 
 	@Override
 	public void setAlbum(List<Album> list) {
-			
+		
+		ArrayList<ImageRecord> modules = new ArrayList<ImageRecord>();
+		modules.add(new ImageRecord(0,"Album general","albumlogo.png"));
+		modules.add(new ImageRecord(1,"Album exemple","albumlogo.png"));
+		modules.add(new ImageRecord(2,"Album de Albert","albumlogo.png"));
+		
+		imageList.setItems(modules);
 	}
 
 

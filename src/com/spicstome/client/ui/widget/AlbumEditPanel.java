@@ -1,7 +1,11 @@
 package com.spicstome.client.ui.widget;
 
 import java.util.ArrayList;
+
 import com.smartgwt.client.types.VerticalAlignment;
+import com.smartgwt.client.util.BooleanCallback;
+import com.smartgwt.client.util.SC;
+import com.smartgwt.client.widgets.IButton;
 import com.smartgwt.client.widgets.IconButton;
 import com.smartgwt.client.widgets.Img;
 import com.smartgwt.client.widgets.Label;
@@ -29,6 +33,8 @@ public class AlbumEditPanel extends AlbumPanel{
 	IconButton buttonImportBase = new IconButton("Import from general base");
 	IconButton buttonImportAlbum = new IconButton("Import from other album");
 	IconButton buttonImportComputer = new IconButton("Import from PC");
+	IconButton buttonDeleteArticle = new IconButton("");
+	
 	
 	HLayout importPanel = new HLayout();
 	
@@ -38,7 +44,6 @@ public class AlbumEditPanel extends AlbumPanel{
 	VLayout detailLayout = new VLayout();
 	HLayout detailContentLayout = new HLayout();
 	
-	Label titleDetail = new Label("Details");
 
 	Img imgDetail = new Img();
 	IconButton buttonFavorite = new IconButton("");
@@ -59,7 +64,7 @@ public class AlbumEditPanel extends AlbumPanel{
 		treeGrid.setCanEdit(true); 
 		
 	    treeGrid.setCanReorderRecords(true);  
-	    treeGrid.setCanAcceptDroppedRecords(true); 
+	   // treeGrid.setCanAcceptDroppedRecords(true); 
 	    treeGrid.setCanReparentNodes(true);
         
         treeGrid.setShowOpenIcons(false);  
@@ -79,6 +84,7 @@ public class AlbumEditPanel extends AlbumPanel{
 	    	  }
 	    	});*/
 	    
+        /*
 	    treeGrid.addDropHandler(new DropHandler() {
 			
 			@Override
@@ -92,7 +98,7 @@ public class AlbumEditPanel extends AlbumPanel{
 				}
 				
 			}
-		});
+		});*/
 	    
 	    comboBoxOwner.setValueMap("Albert","Jean","Robert");
 	    comboBoxOwner.setValue("Albert");
@@ -131,7 +137,15 @@ public class AlbumEditPanel extends AlbumPanel{
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				 ImagePickerWindow win = new ImagePickerWindow(new ArrayList<Album>());    
+				ImagePickerWindow win = new ImagePickerWindow(new ArrayList<Album>()){
+					 @Override
+					 public void onDestroy()
+					 {
+						 // todo traitement 
+						 //System.out.println(win.book.selectedImage.toString());
+						 articlesGrid.addItem(book.selectedImage);
+					 }
+				 };			 
 		         win.show();
 			}
 		});
@@ -139,8 +153,17 @@ public class AlbumEditPanel extends AlbumPanel{
 		buttonImportAlbum.addClickHandler(new ClickHandler() {
 			
 			@Override
-			public void onClick(ClickEvent event) {
-				 ImagePickerWindow win = new ImagePickerWindow(new ArrayList<Album>());    
+			public void onClick(ClickEvent event) 
+			{
+				 ImagePickerWindow win = new ImagePickerWindow(new ArrayList<Album>()){
+					 @Override
+					 public void onDestroy()
+					 {
+						 // todo traitement 
+						 //System.out.println(win.book.selectedImage.toString());
+						 articlesGrid.addItem(book.selectedImage);
+					 }
+				 };			 
 		         win.show();
 			}
 		});
@@ -167,8 +190,7 @@ public class AlbumEditPanel extends AlbumPanel{
 	    
 	   
 	    
-	    
-	    titleDetail.setHeight(20);
+	   
 	    nameDetail.setHeight(20);
 	   
 	    
@@ -189,24 +211,41 @@ public class AlbumEditPanel extends AlbumPanel{
 	    
 	    formDetail.setFields(nameDetail,checkBoxFavorite,radioGroupType,radioGroupGroup);
 	   
-	    
-	    
-	   
-	    detailContentLayout.addMember(formDetail);
-	    detailContentLayout.addMember(imgDetail);
-	    
-	    detailLayout.addMember(detailContentLayout);
-	    
-
-	    
-	    
-	    
-	 
-
 	    int iconsize=32;
 	    
 	   
+	    buttonDeleteArticle.setIcon("delete.png");
+	    buttonDeleteArticle.setIconSize(iconsize);
 	    
+	    buttonDeleteArticle.addClickHandler(new ClickHandler() {
+			
+			@Override
+		      public void onClick(ClickEvent event) {
+		        SC.confirm("Êtes vous sure de vouloir supprimer cet article ?", new BooleanCallback() {
+		          public void execute(Boolean value) {
+		            if (value != null && value) 
+		            {
+		            	 articlesGrid.removeData(articlesGrid.getSelectedItem());
+		            	 Update();
+		            }
+		             
+		           
+		          }
+		        });
+		  
+				
+			}
+		});
+	    
+	    detailContentLayout.addMember(formDetail);
+	    detailContentLayout.addMember(imgDetail);
+	    detailContentLayout.addMember(buttonDeleteArticle);
+	    
+	    
+	    detailLayout.addMember(detailContentLayout);
+
+	    
+    
 	    buttonImportBase.setIcon("import_general_base.png");
 	    buttonImportBase.setIconSize(iconsize);
 	    buttonImportBase.setOrientation("vertical");
@@ -227,9 +266,7 @@ public class AlbumEditPanel extends AlbumPanel{
 	    importPanel.addMember(buttonImportComputer);
 	    
 	    importPanel.setHeight(68);
-	   
-	    
-	    
+
 	    articleVerticalPanel.addMember(importPanel);
 	    
 	    detailLayout.setHeight(350);
