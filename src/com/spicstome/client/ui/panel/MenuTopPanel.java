@@ -1,4 +1,4 @@
-package com.spicstome.client.ui.widget;
+package com.spicstome.client.ui.panel;
 
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.widgets.IconButton;
@@ -10,6 +10,8 @@ import com.smartgwt.client.widgets.layout.HLayout;
 import com.spicstome.client.place.LogoutPlace;
 import com.spicstome.client.place.MainMenuPlace;
 import com.spicstome.client.ui.UserViewLayout;
+import com.spicstome.client.ui.widget.BreadCrumb;
+import com.spicstome.client.ui.widget.Crumb;
 
 public class MenuTopPanel extends HLayout{
 

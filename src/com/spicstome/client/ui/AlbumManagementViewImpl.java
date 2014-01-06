@@ -7,7 +7,7 @@ import java.util.List;
 import com.spicstome.client.place.AlbumEditPlace;
 import com.spicstome.client.place.AlbumPlace;
 import com.spicstome.client.shared.Album;
-import com.spicstome.client.ui.widget.ActionPanel;
+import com.spicstome.client.ui.panel.ActionPanel;
 import com.spicstome.client.ui.widget.Crumb;
 import com.spicstome.client.ui.widget.ImageTileGrid;
 import com.spicstome.client.ui.widget.ImageRecord;

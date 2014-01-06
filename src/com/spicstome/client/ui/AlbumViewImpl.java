@@ -2,9 +2,9 @@ package com.spicstome.client.ui;
 
 import com.spicstome.client.place.AlbumManagementPlace;
 import com.spicstome.client.shared.Album;
-import com.spicstome.client.ui.widget.AlbumBookPanel;
-import com.spicstome.client.ui.widget.AlbumPanel;
-import com.spicstome.client.ui.widget.Book;
+import com.spicstome.client.ui.panel.AlbumBookPanel;
+import com.spicstome.client.ui.panel.AlbumPanel;
+import com.spicstome.client.ui.panel.Book;
 import com.spicstome.client.ui.widget.Crumb;
 
 public class AlbumViewImpl extends UserViewLayout  implements AlbumView{

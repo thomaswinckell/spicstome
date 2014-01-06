@@ -1,10 +1,11 @@
-package com.spicstome.client.ui.widget;
+package com.spicstome.client.ui.panel;
 
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.smartgwt.client.widgets.tree.events.NodeClickEvent;
 import com.smartgwt.client.widgets.tree.events.NodeClickHandler;
 import com.spicstome.client.shared.Album;
+import com.spicstome.client.ui.widget.FolderTree;
 
 public abstract class AlbumPanel extends VLayout{
 
@@ -14,7 +15,7 @@ public abstract class AlbumPanel extends VLayout{
 		
 	HLayout horizontalLayout = new HLayout();
 	VLayout verticalLayout = new VLayout();
-	FolderTree folderTree;
+	public FolderTree folderTree;
 
 	public AlbumPanel()
 	{

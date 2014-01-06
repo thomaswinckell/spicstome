@@ -1,10 +1,11 @@
-package com.spicstome.client.ui.widget;
+package com.spicstome.client.ui.panel;
 
 import java.util.ArrayList;
 
 import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.tree.events.NodeClickEvent;
 import com.spicstome.client.shared.Album;
+import com.spicstome.client.ui.widget.ImageRecord;
 
 public class AlbumBookPanel extends AlbumPanel{
 

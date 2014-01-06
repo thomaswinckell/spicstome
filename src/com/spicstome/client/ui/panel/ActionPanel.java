@@ -1,4 +1,4 @@
-package com.spicstome.client.ui.widget;
+package com.spicstome.client.ui.panel;
 
 import com.smartgwt.client.widgets.IconButton;
 import com.smartgwt.client.widgets.events.ClickEvent;

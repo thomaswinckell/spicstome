@@ -1,4 +1,4 @@
-package com.spicstome.client.ui.widget;
+package com.spicstome.client.ui.panel;
 
 import java.util.ArrayList;
 
@@ -10,6 +10,8 @@ import com.smartgwt.client.widgets.events.FocusChangedEvent;
 import com.smartgwt.client.widgets.events.FocusChangedHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
+import com.spicstome.client.ui.widget.ImageRecord;
+import com.spicstome.client.ui.widget.ImageTileGrid;
 import com.spicstome.client.ui.widget.ImageTileGrid.Mode;
 
 

@@ -1,4 +1,4 @@
-package com.spicstome.client.ui.widget;
+package com.spicstome.client.ui.panel;
 
 import java.util.ArrayList;
 
@@ -9,6 +9,13 @@ import com.smartgwt.client.widgets.form.fields.ComboBoxItem;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.smartgwt.client.widgets.tree.events.NodeClickEvent;
 import com.spicstome.client.shared.Album;
+import com.spicstome.client.ui.form.ArticleFormWindow;
+import com.spicstome.client.ui.form.FolderFormWindow;
+import com.spicstome.client.ui.picker.ArticlePickerWindow;
+import com.spicstome.client.ui.picker.FolderPickerWindow;
+import com.spicstome.client.ui.widget.FolderTree;
+import com.spicstome.client.ui.widget.ImageRecord;
+import com.spicstome.client.ui.widget.ImageTileGrid;
 import com.spicstome.client.ui.widget.ImageTileGrid.Mode;
 
 
@@ -56,7 +63,7 @@ public class AlbumEditPanel extends AlbumPanel{
 			@Override
 			public void onImport()
 			{
-				ArticleFolderPickerWindow win = new ArticleFolderPickerWindow(new ArrayList<Album>(), ArticleFolderPickerWindow.Mode.ARTICLE){
+				ArticlePickerWindow win = new ArticlePickerWindow(new ArrayList<Album>()){
 					@Override
 					public void onDestroy()
 					{
@@ -87,14 +94,14 @@ public class AlbumEditPanel extends AlbumPanel{
 
 			@Override
 			public void onEdit() {
-				ImageDescriptionFormWindow folderFormWindow = new ImageDescriptionFormWindow(ArticleFormWindow.Mode.EDIT);
+				FolderFormWindow folderFormWindow = new FolderFormWindow(FolderFormWindow.Mode.EDIT);
 				folderFormWindow.show();
 			}
 
 			@Override
 			public void onNew() {
 				
-				ImageDescriptionFormWindow folderFormWindow = new ImageDescriptionFormWindow(ArticleFormWindow.Mode.NEW);
+				FolderFormWindow folderFormWindow = new FolderFormWindow(FolderFormWindow.Mode.NEW);
 				folderFormWindow.show();
 				
 				/*
@@ -112,7 +119,7 @@ public class AlbumEditPanel extends AlbumPanel{
 			@Override
 			public void onImport()
 			{
-				ArticleFolderPickerWindow win = new ArticleFolderPickerWindow(new ArrayList<Album>(),ArticleFolderPickerWindow.Mode.FOLDER){
+				FolderPickerWindow win = new FolderPickerWindow(new ArrayList<Album>()){
 					@Override
 					public void onDestroy()
 					{
@@ -121,8 +128,8 @@ public class AlbumEditPanel extends AlbumPanel{
 						
 						folderTree.tree.add(new FolderTree.AlbumTreeNode("42",
 								folderTree.selectFolderNode.getAttribute("id_folder"), 
-								albmBook.folderTree.selectFolderNode.getAttribute("title"),
-								albmBook.folderTree.selectFolderNode.getAttribute("icon")), 
+								albumPanel.folderTree.selectFolderNode.getAttribute("title"),
+								albumPanel.folderTree.selectFolderNode.getAttribute("icon")), 
 								folderTree.selectFolderNode);
 						folderTree.treeGrid.setData(folderTree.tree);
 						
