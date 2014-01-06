@@ -24,6 +24,7 @@ public class MainMenuViewImpl extends UserViewLayout implements MainMenuView {
 		modules.add(new ImageRecord(0,"Gestion album","albumlogo.png"));
 		modules.add(new ImageRecord(1,"Gestion des utilisateurs","userlogo.png"));
 		modules.add(new ImageRecord(2,"Mail","mail.png"));
+		modules.add(new ImageRecord(3,"Historique","history.png"));
 		
 		
 		imageList = new ImageTileGrid(Mode.CLICK,200,150,100){

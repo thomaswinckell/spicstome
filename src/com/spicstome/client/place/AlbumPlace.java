@@ -18,7 +18,7 @@ public class AlbumPlace extends Place
 
 		@Override
 		public String getToken(AlbumPlace place) {
-			return "";
+			return "album";
 		}
 
 		@Override

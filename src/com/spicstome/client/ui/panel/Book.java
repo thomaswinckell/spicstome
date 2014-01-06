@@ -1,4 +1,4 @@
-package com.spicstome.client.ui.widget;
+package com.spicstome.client.ui.panel;
 
 import java.util.ArrayList;
 
@@ -10,6 +10,8 @@ import com.smartgwt.client.widgets.events.FocusChangedEvent;
 import com.smartgwt.client.widgets.events.FocusChangedHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
+import com.spicstome.client.ui.widget.ImageRecord;
+import com.spicstome.client.ui.widget.ImageTileGrid;
 import com.spicstome.client.ui.widget.ImageTileGrid.Mode;
 
 
@@ -26,6 +28,7 @@ public class Book extends VLayout{
 	public int tileWidth;
 	public int tileHeight;
 			
+	public ImageRecord selectedImage=null;
 	
 	int nbRowPerPage=2;
 	int nbColPerPage=2;
@@ -73,6 +76,8 @@ public class Book extends VLayout{
 		horizontalNextPrevPanel.addMember(buttonPrev);
 		horizontalNextPrevPanel.addMember(buttonNext);
 		
+		horizontalNextPrevPanel.setHeight(28);
+		
 		addMember(horizontalPagePanel);
 		addMember(horizontalNextPrevPanel);
 		
@@ -83,6 +88,8 @@ public class Book extends VLayout{
 
 	public void setList(ArrayList<ImageRecord> list)
 	{
+		selectedImage=null;
+		
 		listPage.clear();
 		iLeftPage=0;
 		int nbElementPerPage = nbColPerPage*nbRowPerPage;
@@ -103,10 +110,7 @@ public class Book extends VLayout{
 		
 		for(int i=0;i<lastPage;i++)
 		{
-			
-			
-			
-			
+
 			final Book book=this;
 			
 			final ImageTileGrid imageList = new ImageTileGrid(Mode.DRAG,tileWidth,tileHeight,imageSize){
@@ -176,13 +180,22 @@ public class Book extends VLayout{
 		horizontalPagePanel.addMember(listPage.get(iLeftPage));
 		horizontalPagePanel.addMember(listPage.get(iLeftPage+1));
 		
+		
+		onChangePage();
+		
 		//listPage.get(iLeftPage).animShow();
 		//listPage.get(iLeftPage+1).animShow();
 	}
 	
+	public void onChangePage()
+	{
+		selectedImage=null;
+	}
+	
 	public void onSelectChangeBook(ImageRecord image)
 	{
-		
+		if(image!=null)
+			selectedImage=image;
 	}
 
 }

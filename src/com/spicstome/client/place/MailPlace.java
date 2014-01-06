@@ -17,7 +17,7 @@ public class MailPlace extends Place{
 
 		@Override
 		public String getToken(MailPlace place) {
-			return "";
+			return "mail";
 		}
 
 		@Override

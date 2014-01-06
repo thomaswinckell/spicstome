@@ -7,7 +7,7 @@ import java.util.List;
 import com.spicstome.client.place.AlbumEditPlace;
 import com.spicstome.client.place.AlbumPlace;
 import com.spicstome.client.shared.Album;
-import com.spicstome.client.ui.widget.ActionPanel;
+import com.spicstome.client.ui.panel.ActionPanel;
 import com.spicstome.client.ui.widget.Crumb;
 import com.spicstome.client.ui.widget.ImageTileGrid;
 import com.spicstome.client.ui.widget.ImageRecord;
@@ -29,13 +29,10 @@ public class AlbumManagementViewImpl extends UserViewLayout  implements AlbumMan
 		
 		addCrumb(new Crumb("Les albums"){});
 		
-		ArrayList<ImageRecord> modules = new ArrayList<ImageRecord>();
-		modules.add(new ImageRecord(0,"Album general","albumlogo.png"));
-		modules.add(new ImageRecord(1,"Album exemple","albumlogo.png"));
-		modules.add(new ImageRecord(2,"Album de Albert","albumlogo.png"));
 		
 		
-		actionPanel = new ActionPanel() {
+		
+		actionPanel = new ActionPanel(true,false,true,true,true) {
 			
 			@Override
 			public void onVisualize() {
@@ -55,6 +52,12 @@ public class AlbumManagementViewImpl extends UserViewLayout  implements AlbumMan
 				listener.goTo(new AlbumEditPlace());
 				
 			}
+
+			@Override
+			public void onDelete() {
+				// TODO Auto-generated method stub
+				
+			}
 		};
 		
 		imageList = new ImageTileGrid(Mode.CLICK,200,150,100){
@@ -63,23 +66,31 @@ public class AlbumManagementViewImpl extends UserViewLayout  implements AlbumMan
 			@Override
 			public void OnSelectChanged(ImageRecord object) {
 
-	                actionPanel.setActionVisible(selectedRecord!=null);
+	                actionPanel.setHiddenActionVisible(getSelectedItem()!=null);
 				
 			};
 		};
 
 		imageList.setHeight(250);
 		
-		imageList.setItems(modules);
+		
 
 		mainPanel.addMember(imageList);
 		mainPanel.addMember(actionPanel);
+		
+		setAlbum(null);
 
 	}
 
 	@Override
 	public void setAlbum(List<Album> list) {
-			
+		
+		ArrayList<ImageRecord> modules = new ArrayList<ImageRecord>();
+		modules.add(new ImageRecord(0,"Album general","albumlogo.png"));
+		modules.add(new ImageRecord(1,"Album exemple","albumlogo.png"));
+		modules.add(new ImageRecord(2,"Album de Albert","albumlogo.png"));
+		
+		imageList.setItems(modules);
 	}
 
 

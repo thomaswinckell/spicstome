@@ -14,6 +14,8 @@
         <property name="hibernate.show_sql">true</property>
     	<property name="hibernate.hbm2ddl.auto">update</property>
     	
+    	<property name="current_session_context_class">thread</property>
+    	
 	    <mapping resource="com/spicstome/client/shared/User.hbm.xml" />
 		<mapping resource="com/spicstome/client/shared/Pecs.hbm.xml" />
 		<mapping resource="com/spicstome/client/shared/Album.hbm.xml" />

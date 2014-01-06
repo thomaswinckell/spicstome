@@ -1,10 +1,11 @@
-package com.spicstome.client.ui.widget;
+package com.spicstome.client.ui.panel;
 
 import java.util.ArrayList;
 
 import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.tree.events.NodeClickEvent;
 import com.spicstome.client.shared.Album;
+import com.spicstome.client.ui.widget.ImageRecord;
 
 public class AlbumBookPanel extends AlbumPanel{
 
@@ -21,13 +22,12 @@ public class AlbumBookPanel extends AlbumPanel{
 	   
 	    
 	    horizontalLayout.addMember(book);
-	    verticalLayout.setHeight(book.heightPage);
+	    verticalLayout.setHeight(book.heightPage+40);
 	    
 	    titre.setContents("Album de Robert"); 
 	    titre.setHeight(30);
 	    titleLayout.addMember(titre);
 	    
-	    setAlbum(new Album());
 	}
 	
 	@Override
@@ -45,7 +45,7 @@ public class AlbumBookPanel extends AlbumPanel{
 		
 		if(super.onFolderClick(event))
 		{
-			switch(selectFolderId)
+			switch(folderTree.selectFolderId)
 			{
 			case 3:
 				articles.add(new ImageRecord(0,"Je","albumlogo.png"));

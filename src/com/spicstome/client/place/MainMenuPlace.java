@@ -17,7 +17,7 @@ public class MainMenuPlace extends Place
 
 		@Override
 		public String getToken(MainMenuPlace place) {
-			return "";
+			return "mainmenu";
 		}
 
 		@Override

@@ -2,8 +2,8 @@ package com.spicstome.client.ui;
 
 import com.spicstome.client.place.AlbumManagementPlace;
 import com.spicstome.client.shared.Album;
-import com.spicstome.client.ui.widget.AlbumEditPanel;
-import com.spicstome.client.ui.widget.AlbumPanel;
+import com.spicstome.client.ui.panel.AlbumEditPanel;
+import com.spicstome.client.ui.panel.AlbumPanel;
 import com.spicstome.client.ui.widget.Crumb;
 
 public class AlbumEditViewImpl extends UserViewLayout  implements AlbumEditView{
