@@ -19,7 +19,7 @@ import com.spicstome.client.shared.Album;
 
 public class ArticleFolderPickerWindow extends Window{
 
-	public AlbumBookPanel albmBook;
+	public AlbumPanel albmBook;
 	DynamicForm form = new DynamicForm();
 	ComboBoxItem comboBox = new ComboBoxItem("owner","Album");
     IconButton validButton = new IconButton("");
@@ -33,10 +33,21 @@ public class ArticleFolderPickerWindow extends Window{
 	public ArticleFolderPickerWindow(ArrayList<Album> listAlbum,Mode mode) {
 		super();
 				
-		setWidth(1000);
-        setHeight(450);
+		
+		if(mode==Mode.ARTICLE)
+		{
+			 setWidth(1000);
+			 setHeight(450);
+		}
+		else if(mode==Mode.FOLDER)
+		{
+			 setWidth(400);
+			 setHeight(500);
+		}
+		
+         
         
-        setTitle("Import image");
+        setTitle("Import depuis autre album");
         setShowMinimizeButton(false);
         setIsModal(true);
         setShowModalMask(true);
@@ -80,26 +91,44 @@ public class ArticleFolderPickerWindow extends Window{
         	}
         };
         
-        albmBook =  new AlbumBookPanel(book){
-        	@Override
-        	public boolean onFolderClick(NodeClickEvent event)
-        	{
-        		boolean res = super.onFolderClick(event);
-        		
-        		UpdateValidButton();
-        			
-        		return res;
-        	}
-        };
+        if(mode==Mode.FOLDER)
+        {
+        	albmBook = new AlbumPanel() {
+        		@Override
+            	public boolean onFolderClick(NodeClickEvent event)
+            	{
+            		boolean res = super.onFolderClick(event);
+            		
+            		UpdateValidButton();
+            			
+            		return res;
+            	}
+			};
+		
+        }
+        else if(mode==Mode.ARTICLE)
+        {
+        	albmBook =  new AlbumBookPanel(book){
+            	@Override
+            	public boolean onFolderClick(NodeClickEvent event)
+            	{
+            		boolean res = super.onFolderClick(event);
+            		
+            		UpdateValidButton();
+            			
+            		return res;
+            	}
+            };
+            
+           
+        }
         
+        albmBook.setAlbum(new Album());
   
         validButton.setIcon("check.png");
         int iconsize=32;
         validButton.setIconSize(iconsize);
 
-        
-        
-        
         validButton.addClickHandler(new ClickHandler() {
 			
 			@Override

@@ -32,8 +32,8 @@ public abstract class AlbumPanel extends VLayout{
 
 
 		setStyleName("album");
-
-		verticalLayout.setWidth(350);
+		verticalLayout.setHeight(300);
+		verticalLayout.setWidth(300);
 		verticalLayout.addMember(folderTree);
 
 		horizontalLayout.addMember(verticalLayout);

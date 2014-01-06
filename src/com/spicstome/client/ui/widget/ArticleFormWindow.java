@@ -4,7 +4,8 @@ import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.CheckboxItem;
 import com.smartgwt.client.widgets.form.fields.RadioGroupItem;
 
-public class ArticleFormWindow extends PecsFormWindow{
+public class ArticleFormWindow extends ImageDescriptionFormWindow{
+
 
 	RadioGroupItem radioGroupType = new RadioGroupItem();
 	RadioGroupItem radioGroupGroup = new RadioGroupItem();
@@ -12,15 +13,16 @@ public class ArticleFormWindow extends PecsFormWindow{
 	
 	DynamicForm articleForm = new DynamicForm();
 	
-	public ArticleFormWindow()
+	public ArticleFormWindow(Mode mode)
 	{
-		super();
+		super(mode);
+		
+		if(mode==Mode.NEW)
+			setTitle("Création d'un nouvel article");
+		else if(mode==Mode.EDIT)
+			setTitle("Edition d'un article");
 
-	
-		setTitle("Article edit");
-		
-		
-		
+
 		radioGroupType.setValueMap("Noun", "Verb");
 		radioGroupType.setTitle("Word type");
 

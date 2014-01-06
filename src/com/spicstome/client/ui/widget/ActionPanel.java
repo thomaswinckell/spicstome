@@ -8,131 +8,159 @@ import com.smartgwt.client.widgets.layout.HLayout;
 public abstract class ActionPanel extends HLayout{
 
 	protected IconButton buttonNew = new IconButton("");
-	protected IconButton buttonDelete = new IconButton("");
+	protected IconButton buttonImport = new IconButton("");
+	
+	protected IconButton buttonRead = new IconButton("");
 	protected IconButton buttonEdit = new IconButton("");
-	protected IconButton buttonView = new IconButton("");
+	protected IconButton buttonDelete = new IconButton("");
+	
 	
 	private boolean readAction = false;
+	private boolean createAction = false;
+	private boolean editAction = false;
+	private boolean deleteAction = false;
+	private boolean importAction = false;
 	
-	protected HLayout CRUDPanel = new HLayout();
 	
-	public ActionPanel(boolean readAction)
+	protected HLayout hiddenPanel = new HLayout();
+	
+	public ActionPanel(boolean createAction,boolean importAction,boolean readAction
+			,boolean editAction,boolean deleteAction)
 	{
 		super();
 		
 		this.readAction=readAction;
+		this.editAction=editAction;
+		this.deleteAction=deleteAction;
+		this.importAction=importAction;
+		this.createAction=createAction;
 		
+		buttonImport.setVisible(true);
 		buttonNew.setVisible(true);
 		buttonEdit.setVisible(false);
 		buttonDelete.setVisible(false);	
-		buttonView.setVisible(false);
+		buttonRead.setVisible(false);
 		
 		int iconsize=40;
 		
-		buttonNew.setIcon("new.png");
-		buttonNew.setIconSize(iconsize);
+		if(this.createAction)
+		{
+			buttonNew.setIcon("new.png");
+			buttonNew.setIconSize(iconsize);
+			
+			buttonNew.addClickHandler(new ClickHandler() {
+				
+				@Override
+				public void onClick(ClickEvent event) {
+					
+					onNew();
+					
+				}
+			});
+		}
 		
-		if(readAction)
+		if(this.importAction)
+		{
+			buttonImport.setIcon("import.png");
+			buttonImport.setIconSize(iconsize);
+			
+			
+			buttonImport.addClickHandler(new ClickHandler() {
+				
+				@Override
+				public void onClick(ClickEvent event) {
+					
+					onImport();
+					
+				}
+			});
+		}
+	
+		
+		if(this.readAction)
 		{	
-			buttonView.setIcon("visualize.png");
-			buttonView.setIconSize(iconsize);
+			buttonRead.setIcon("visualize.png");
+			buttonRead.setIconSize(iconsize);
+			hiddenPanel.addMember(buttonRead);
+			
+			buttonRead.addClickHandler(new ClickHandler() {
+				
+				@Override
+				public void onClick(ClickEvent event) {
+					
+					onVisualize();
+					
+				}
+			});
+			
+		}
+		
+		if(this.editAction)
+		{
+			buttonEdit.setIcon("edit.png");
+			buttonEdit.setIconSize(iconsize);
+			hiddenPanel.addMember(buttonEdit);
+			
+			buttonEdit.addClickHandler(new ClickHandler() {
+				
+				@Override
+				public void onClick(ClickEvent event) {
+					
+					onEdit();
+					
+				}
+			});
 		}
 			
-		buttonEdit.setIcon("edit.png");
-		buttonEdit.setIconSize(iconsize);
-		
-		buttonDelete.setIcon("delete.png");
-		buttonDelete.setIconSize(iconsize);
-
-		if(readAction)
+		if(this.deleteAction)
 		{
-			CRUDPanel.addMember(buttonView);
-			CRUDPanel.setWidth(3*iconsize);
+			buttonDelete.setIcon("delete.png");
+			buttonDelete.setIconSize(iconsize);
+			hiddenPanel.addMember(buttonDelete);
+			
+			buttonDelete.addClickHandler(new ClickHandler() {
+				
+				@Override
+				public void onClick(ClickEvent event) {
+					
+					onDelete();
+					
+				}
+			});
 		}
 		
-		CRUDPanel.addMember(buttonEdit);
-		CRUDPanel.addMember(buttonDelete);
-		
-		CRUDPanel.setWidth(2*iconsize);
-		
 
-		addMember(buttonNew);
-		addMember(CRUDPanel);
+		hiddenPanel.setWidth(3*iconsize);
+		
+		if(createAction)
+			addMember(buttonNew);
+		if(importAction)
+			addMember(buttonImport);
+		
+		addMember(hiddenPanel);
 		
 		
 		setHeight(iconsize);
-		setWidth(4*iconsize);
-		
-		buttonView.addClickHandler(new ClickHandler() {
-			
-			@Override
-			public void onClick(ClickEvent event) {
-				
-				onVisualize();
-				
-			}
-		});
-		
-		buttonEdit.addClickHandler(new ClickHandler() {
-			
-			@Override
-			public void onClick(ClickEvent event) {
-				
-				onEdit();
-				
-			}
-		});
-		
-		buttonNew.addClickHandler(new ClickHandler() {
-			
-			@Override
-			public void onClick(ClickEvent event) {
-				
-				onNew();
-				
-			}
-		});
-		
-		buttonDelete.addClickHandler(new ClickHandler() {
-			
-			@Override
-			public void onClick(ClickEvent event) {
-				
-				onDelete();
-				
-			}
-		});
+		setWidth(5*iconsize);
+	
 	}
 	
-	public IconButton getButtonNew() {
-		return buttonNew;
-	}
 
-	public IconButton getButtonDelete() {
-		return buttonDelete;
-	}
 
-	public IconButton getButtonEdit() {
-		return buttonEdit;
-	}
-
-	public IconButton getButtonView() {
-		return buttonView;
-	}
-
-	public void setActionVisible(boolean b)
+	public void setHiddenActionVisible(boolean b)
 	{
 		if(readAction)
-			getButtonEdit().setVisible(b);
-		
-		getButtonDelete().setVisible(b);
-		getButtonEdit().setVisible(b);
-		getButtonView().setVisible(b);
+			buttonRead.setVisible(b);
+		if(createAction)
+			buttonEdit.setVisible(b);	
+		if(deleteAction)
+			buttonDelete.setVisible(b);
 	}
-	
-	public abstract void onVisualize();
-	public abstract void onEdit();
-	public abstract void onNew();
-	public abstract void onDelete();
-	
+
+	public void onVisualize(){};
+	public void onEdit(){};
+	public void onNew(){};
+	public void onDelete(){};
+	public void onImport(){};
+
 }

@@ -11,17 +11,6 @@ import com.smartgwt.client.widgets.tree.events.NodeClickEvent;
 import com.spicstome.client.shared.Album;
 import com.spicstome.client.ui.widget.ImageTileGrid.Mode;
 
-/*
- * Folder new 
- * 	on peut importer un dossier depuis base , example (on a son image , nom et tout les fils en copie)
- * 	 ou pc (on cherche l'image sur pc)
- * Folder edit
- * 	(on cherche l'image sur pc) , pas d'autre import car va ecrasé les fils
- * Article new
- * 	on peut importer une image (article!) depuis base , example ou pc
- * Article edit
- * 	on peut importer une image (article!) depuis base , example ou pc
- */
 
 public class AlbumEditPanel extends AlbumPanel{
 
@@ -46,19 +35,12 @@ public class AlbumEditPanel extends AlbumPanel{
 	    formOwner.setFields(comboBoxOwner);
 	    titleLayout.addMember(formOwner);
 	    
-	    actionArticlePanel = new ActionPanel(false) {
-			
-	    	
-	    
-			@Override
-			public void onVisualize() {
-				// TODO Auto-generated method stub
-				
-			}
-			
+	    actionArticlePanel = new ActionPanel(true,true,false,true,true)
+	    {
+
 			@Override
 			public void onNew() {
-				ArticleFormWindow articleFormWindow = new ArticleFormWindow();
+				ArticleFormWindow articleFormWindow = new ArticleFormWindow(ArticleFormWindow.Mode.NEW);
 				articleFormWindow.show();
 				
 				
@@ -66,9 +48,24 @@ public class AlbumEditPanel extends AlbumPanel{
 			
 			@Override
 			public void onEdit() {
-				ArticleFormWindow articleFormWindow = new ArticleFormWindow();
+				ArticleFormWindow articleFormWindow = new ArticleFormWindow(ArticleFormWindow.Mode.EDIT);
 				articleFormWindow.show();
 				
+			}
+			
+			@Override
+			public void onImport()
+			{
+				ArticleFolderPickerWindow win = new ArticleFolderPickerWindow(new ArrayList<Album>(), ArticleFolderPickerWindow.Mode.ARTICLE){
+					@Override
+					public void onDestroy()
+					{
+						// todo traitement 
+						//System.out.println(win.book.selectedImage.toString());
+						articlesGrid.addItem(book.selectedImage);
+					}
+				};			 
+				win.show();
 			}
 
 			@Override
@@ -86,24 +83,18 @@ public class AlbumEditPanel extends AlbumPanel{
 			}
 		};
 	    
-	    actionFoldersPanel = new ActionPanel(false) {
-			
-			@Override
-			public void onVisualize() {
-				
-				
-			}
-			
+	    actionFoldersPanel = new ActionPanel(true,true,false,true,true) {
+
 			@Override
 			public void onEdit() {
-				PecsFormWindow folderFormWindow = new PecsFormWindow();
+				ImageDescriptionFormWindow folderFormWindow = new ImageDescriptionFormWindow(ArticleFormWindow.Mode.EDIT);
 				folderFormWindow.show();
 			}
 
 			@Override
 			public void onNew() {
 				
-				PecsFormWindow folderFormWindow = new PecsFormWindow();
+				ImageDescriptionFormWindow folderFormWindow = new ImageDescriptionFormWindow(ArticleFormWindow.Mode.NEW);
 				folderFormWindow.show();
 				
 				/*
@@ -116,6 +107,29 @@ public class AlbumEditPanel extends AlbumPanel{
 				}
 				*/
 				
+			}
+			
+			@Override
+			public void onImport()
+			{
+				ArticleFolderPickerWindow win = new ArticleFolderPickerWindow(new ArrayList<Album>(),ArticleFolderPickerWindow.Mode.FOLDER){
+					@Override
+					public void onDestroy()
+					{
+						// todo traitement 
+						//System.out.println(win.book.selectedImage.toString());
+						
+						folderTree.tree.add(new FolderTree.AlbumTreeNode("42",
+								folderTree.selectFolderNode.getAttribute("id_folder"), 
+								albmBook.folderTree.selectFolderNode.getAttribute("title"),
+								albmBook.folderTree.selectFolderNode.getAttribute("icon")), 
+								folderTree.selectFolderNode);
+						folderTree.treeGrid.setData(folderTree.tree);
+						
+						folderTree.treeGrid.getData().openAll();
+					}
+				};			 
+				win.show();
 			}
 
 			@Override
@@ -157,9 +171,9 @@ public class AlbumEditPanel extends AlbumPanel{
 	
 	public void Update()
 	{
-		actionArticlePanel.setActionVisible(articlesGrid.getSelectedRecord()!=null);
+		actionArticlePanel.setHiddenActionVisible(articlesGrid.getSelectedRecord()!=null);
 		actionArticlePanel.setVisible(folderTree.selectFolderId!=-1);
-		actionFoldersPanel.setActionVisible(folderTree.selectFolderId!=-1);
+		actionFoldersPanel.setHiddenActionVisible(folderTree.selectFolderId!=-1);
 	}
 	
 	@Override

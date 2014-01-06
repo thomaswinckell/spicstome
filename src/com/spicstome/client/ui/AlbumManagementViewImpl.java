@@ -32,7 +32,7 @@ public class AlbumManagementViewImpl extends UserViewLayout  implements AlbumMan
 		
 		
 		
-		actionPanel = new ActionPanel(true) {
+		actionPanel = new ActionPanel(true,false,true,true,true) {
 			
 			@Override
 			public void onVisualize() {
@@ -66,7 +66,7 @@ public class AlbumManagementViewImpl extends UserViewLayout  implements AlbumMan
 			@Override
 			public void OnSelectChanged(ImageRecord object) {
 
-	                actionPanel.setActionVisible(getSelectedItem()!=null);
+	                actionPanel.setHiddenActionVisible(getSelectedItem()!=null);
 				
 			};
 		};

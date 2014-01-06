@@ -27,7 +27,6 @@ public class AlbumBookPanel extends AlbumPanel{
 	    titre.setHeight(30);
 	    titleLayout.addMember(titre);
 	    
-	    setAlbum(new Album());
 	}
 	
 	@Override
