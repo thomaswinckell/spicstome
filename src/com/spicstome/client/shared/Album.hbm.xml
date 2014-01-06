@@ -10,7 +10,7 @@
 		<generator class="increment" />
 	</id>
 
-	<many-to-one name="folder" class="Folder" column="id_folder" unique="true" cascade="all"/>
+	<many-to-one name="folder" class="Folder" column="id_folder" unique="true" cascade="delete" />
 
 </class>
         

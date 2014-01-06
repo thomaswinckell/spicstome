@@ -25,7 +25,9 @@ public abstract class Pecs implements Serializable {
 		id = pecsDTO.getId();
 		name = pecsDTO.getName();
 		order = pecsDTO.getOrder();
-		folder = new Folder(pecsDTO.getFolder());
+		folder = null;
+		if (pecsDTO.getFolder() != null)
+			folder = new Folder(pecsDTO.getFolder());
 		image = new Image(pecsDTO.getImage());
 	}
 

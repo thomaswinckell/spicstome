@@ -22,11 +22,11 @@
 	
 	<property name="email" type="string" column="email" />
 
-	<many-to-one name="image" class="Image" column="id_image" unique="true" cascade="all" />
+	<many-to-one name="image" class="Image" column="id_image" unique="true" cascade="delete" />
 	
 	<union-subclass name="Student" table="student" extends="User">
 	    
-		<many-to-one name="album" class="Album" column="id_album" unique="true" cascade="all"/>
+		<many-to-one name="album" class="Album" column="id_album" unique="true" cascade="delete"/>
 		
 		<set name="logs" table="logs">
 			<key>

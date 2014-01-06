@@ -14,9 +14,9 @@
 	
 	<property name="order" type="int" column="order_in_folder" />
 
-	<many-to-one name="folder" class="Folder" column="id_folder_parent" not-null="false" unique="true" />
+	<many-to-one name="folder" class="Folder" column="id_folder_parent" not-null="false" unique="true" cascade="delete" />
 	
-	<many-to-one name="image" column="id_image" class="Image" unique="true" cascade="all" />
+	<many-to-one name="image" column="id_image" class="Image" unique="true" cascade="delete" />
 
 	<union-subclass name="Article" table="article" extends="Pecs">
 	    <set name="logs" table="logs_articles" lazy="false">
@@ -26,7 +26,7 @@
 	</union-subclass>
 
 	<union-subclass name="Folder" table="folder" extends="Pecs">
-	   <set name="content" inverse="false" lazy="true" fetch="select" cascade="all">
+	   <set name="content" inverse="false" lazy="true" fetch="select" cascade="delete">
             <key>
                 <column name="id_folder_parent" not-null="true" />
             </key>

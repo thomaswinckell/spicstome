@@ -26,6 +26,9 @@ public class Student extends User implements Serializable {
 	
 	public Student(StudentDTO studentDTO) {
 		super(studentDTO);
+		
+		this.album = new Album(studentDTO.getAlbum());
+		
 		Set<LogDTO> logDTOs = studentDTO.getLogs();
 		if (logDTOs != null) {
 			Set<Log> logs = new HashSet<Log>(logDTOs.size());

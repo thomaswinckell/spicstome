@@ -20,17 +20,10 @@ public class UserViewLayout extends VLayout implements UserView{
 		
 		connectPanel=new MenuTopPanel(this);
 		
-	
-		
-		
 		addMember(connectPanel);
 		addMember(mainPanel);
 		
 		setWidth100();
-	
-		
-		
-		
 		
 		mainPanel.setStyleName("mainPanel");
 	}

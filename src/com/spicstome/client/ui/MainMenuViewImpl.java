@@ -5,22 +5,19 @@ import java.util.ArrayList;
 
 
 
+
 import com.spicstome.client.place.AlbumManagementPlace;
 import com.spicstome.client.place.MailPlace;
+import com.spicstome.client.place.UsersManagementPlace;
 import com.spicstome.client.ui.widget.ImageTileGrid;
 import com.spicstome.client.ui.widget.ImageRecord;
 import com.spicstome.client.ui.widget.ImageTileGrid.Mode;
 
-public class MainMenuViewImpl extends UserViewLayout implements MainMenuView
-{
-
+public class MainMenuViewImpl extends UserViewLayout implements MainMenuView {
 	
+	ImageTileGrid imageList;	
 	
-	ImageTileGrid imageList;
-	
-	
-	public MainMenuViewImpl()
-	{
+	public MainMenuViewImpl() {
 		super();
 		
 		ArrayList<ImageRecord> modules = new ArrayList<ImageRecord>();
@@ -32,18 +29,18 @@ public class MainMenuViewImpl extends UserViewLayout implements MainMenuView
 		imageList = new ImageTileGrid(Mode.CLICK,200,150,100){
 			@Override
 			public void OnSelectChanged(ImageRecord object) {
-
-				if(object.getAttributeAsInt(ImageRecord.PICTURE_ID)==0)
-				{
-					goTo(new AlbumManagementPlace());
-				}
-
-				if(object.getAttributeAsInt(ImageRecord.PICTURE_ID)==2)
-				{
-					goTo(new MailPlace());
-				}
 				
-				
+				switch (object.getAttributeAsInt(ImageRecord.PICTURE_ID)) {
+					case 0 :
+						goTo(new AlbumManagementPlace());
+						break;
+					case 1 :
+						goTo(new UsersManagementPlace());
+						break;
+					case 2 :
+						goTo(new MailPlace());
+						break;
+				}
 			}
 		};
 		
