@@ -90,6 +90,12 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	}
 	
 	@Override
+	public Long saveArticle(ArticleDTO articleDTO) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
 	public Long saveAlbum(AlbumDTO albumDTO) {
 		Album album = new Album(albumDTO);
 	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
@@ -322,6 +328,8 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 		// null null => le mec qui en a eu marre mais c'est la liste des referent et des teacher donc methode
 		// pour transcrire teacher , list de teacher ...
 	}
+
+	
 	
 	
 }

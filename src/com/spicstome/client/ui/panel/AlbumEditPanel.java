@@ -1,17 +1,17 @@
 package com.spicstome.client.ui.panel;
 
 import java.util.ArrayList;
-
+import java.util.HashSet;
 import com.smartgwt.client.util.BooleanCallback;
 import com.smartgwt.client.util.SC;
-import com.smartgwt.client.widgets.IconButton;
-import com.smartgwt.client.widgets.events.ClickEvent;
-import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.ComboBoxItem;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.smartgwt.client.widgets.tree.events.NodeClickEvent;
 import com.spicstome.client.dto.AlbumDTO;
+import com.spicstome.client.dto.ArticleDTO;
+import com.spicstome.client.dto.ImageDTO;
+import com.spicstome.client.dto.LogDTO;
 import com.spicstome.client.ui.form.ArticleFormWindow;
 import com.spicstome.client.ui.form.FolderFormWindow;
 import com.spicstome.client.ui.picker.ArticlePickerWindow;
@@ -21,12 +21,10 @@ import com.spicstome.client.ui.widget.ImageRecord;
 import com.spicstome.client.ui.widget.ImageTileGrid;
 import com.spicstome.client.ui.widget.ImageTileGrid.Mode;
 
-
 public abstract class AlbumEditPanel extends AlbumPanel{
 
 	ActionPanel actionFoldersPanel;
 	ActionPanel actionArticlePanel;
-	IconButton buttonValidate = new IconButton("");
 	ImageTileGrid articlesGrid;
 	
 
@@ -51,10 +49,24 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 
 			@Override
 			public void onNew() {
-				ArticleFormWindow articleFormWindow = new ArticleFormWindow(ArticleFormWindow.Mode.NEW);
+				ArticleFormWindow articleFormWindow = new ArticleFormWindow(ArticleFormWindow.Mode.NEW){
+					@Override
+					public void onDestroy()
+					{
+						
+						ArticleDTO artcileDTO = new ArticleDTO((long)-1,
+								form.getValueAsString("name"),
+								0,
+								album.getFolder(),
+								new ImageDTO(),
+								new HashSet<LogDTO>());
+						
+						album.getFolder().getContent().add(artcileDTO);
+						onValidateChange();
+					}
+				};
 				articleFormWindow.show();
-				
-				
+
 			}
 			
 			@Override
@@ -176,22 +188,7 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 	    articleVerticalPanel.setHeight(350);
 	    
 	    horizontalLayout.addMember(articleVerticalPanel);
-	    
-	    
-	    buttonValidate.setIconSize(42);
-	    buttonValidate.setIcon("check.png");
-	    
-	    buttonValidate.addClickHandler(new ClickHandler() {
-			
-			@Override
-			public void onClick(ClickEvent event) {
-				onValidateChange();
-				
-			}
-		});
-	    
-	    addMember(buttonValidate);
-	    
+
 	    Update();
 	    
 	}

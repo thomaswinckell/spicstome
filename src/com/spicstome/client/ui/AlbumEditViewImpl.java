@@ -3,7 +3,6 @@ package com.spicstome.client.ui;
 import java.util.List;
 
 import com.spicstome.client.dto.AlbumDTO;
-import com.spicstome.client.dto.ArticleDTO;
 import com.spicstome.client.dto.FolderDTO;
 import com.spicstome.client.place.AlbumManagementPlace;
 import com.spicstome.client.ui.panel.AlbumEditPanel;
@@ -35,7 +34,7 @@ public class AlbumEditViewImpl extends UserViewLayout  implements AlbumEditView{
 			@Override
 			public void onValidateChange() 
 			{
-				albumEditPanel.album.getFolder().getContent().add(new ArticleDTO());
+				
 				((AlbumEditView.Presenter)(listener)).save();
 				listener.goTo(new AlbumManagementPlace());
 			}

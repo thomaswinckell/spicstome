@@ -1,8 +1,11 @@
 package com.spicstome.client.ui.form;
 
 import com.smartgwt.client.types.Alignment;
+import com.smartgwt.client.widgets.IconButton;
 import com.smartgwt.client.widgets.Img;
 import com.smartgwt.client.widgets.Window;
+import com.smartgwt.client.widgets.events.ClickEvent;
+import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.CheckboxItem;
 import com.smartgwt.client.widgets.form.fields.FileItem;
@@ -13,6 +16,8 @@ import com.smartgwt.client.widgets.layout.VLayout;
 public class ArticleFormWindow extends Window{
 	
 	VLayout verticalLayout = new VLayout();
+	
+	IconButton buttonValidate = new IconButton("");
 
 	TextItem nameDetail = new TextItem("name");
 	Img imgDetail = new Img();
@@ -22,7 +27,7 @@ public class ArticleFormWindow extends Window{
 	RadioGroupItem radioGroupGroup = new RadioGroupItem();
 	CheckboxItem checkBoxFavorite = new CheckboxItem("favorite","Favoris");
 	
-	DynamicForm form = new DynamicForm();
+	public DynamicForm form = new DynamicForm();
 	
 	public enum Mode{NEW, EDIT}
 	
@@ -59,8 +64,21 @@ public class ArticleFormWindow extends Window{
 		
 		form.setFields(nameDetail,fileItem,checkBoxFavorite,radioGroupType,radioGroupGroup);
 		
+		buttonValidate.setIconSize(42);
+		buttonValidate.setIcon("check.png");
+		buttonValidate.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				
+				destroy();
+				
+			}
+		});
+		
 		verticalLayout.addMember(imgDetail);
 		verticalLayout.addMember(form);
+		verticalLayout.addMember(buttonValidate);
 		
 		addItem(verticalLayout);
 	}

@@ -18,6 +18,7 @@ import java.util.List;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.spicstome.client.dto.AlbumDTO;
+import com.spicstome.client.dto.ArticleDTO;
 import com.spicstome.client.dto.FolderDTO;
 import com.spicstome.client.dto.ImageDTO;
 import com.spicstome.client.dto.StudentDTO;
@@ -37,5 +38,6 @@ public interface SpicsToMeServicesAsync {
 	void saveFolder(FolderDTO folderDTO, AsyncCallback<Long> callback);
 	void saveAlbum(AlbumDTO albumDTO, AsyncCallback<Long> callback);
 	void saveStudent(StudentDTO studentDTO, AsyncCallback<Long> callback);
+	void saveArticle(ArticleDTO articleDTO, AsyncCallback<Long> callback);
 
 }
