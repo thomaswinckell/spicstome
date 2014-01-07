@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.tree.events.NodeClickEvent;
-import com.spicstome.client.shared.Album;
+import com.spicstome.client.dto.AlbumDTO;
 import com.spicstome.client.ui.widget.ImageRecord;
 
 public class AlbumBookPanel extends AlbumPanel{
@@ -31,7 +31,7 @@ public class AlbumBookPanel extends AlbumPanel{
 	}
 	
 	@Override
-	public void setAlbum(Album album)
+	public void setAlbum(AlbumDTO album)
 	{
 		super.setAlbum(album);
 		

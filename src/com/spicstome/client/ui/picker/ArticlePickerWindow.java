@@ -3,7 +3,7 @@ package com.spicstome.client.ui.picker;
 import java.util.ArrayList;
 
 import com.smartgwt.client.widgets.tree.events.NodeClickEvent;
-import com.spicstome.client.shared.Album;
+import com.spicstome.client.dto.AlbumDTO;
 import com.spicstome.client.ui.panel.AlbumBookPanel;
 import com.spicstome.client.ui.panel.Book;
 import com.spicstome.client.ui.widget.ImageRecord;
@@ -12,7 +12,7 @@ public class ArticlePickerWindow extends PickerWindow {
 
     public Book book;
 	
-	public ArticlePickerWindow(ArrayList<Album> listAlbum) {
+	public ArticlePickerWindow(ArrayList<AlbumDTO> listAlbum) {
 		super(listAlbum, 1000, 450);
 		
 	}

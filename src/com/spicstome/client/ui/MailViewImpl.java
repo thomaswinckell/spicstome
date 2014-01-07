@@ -1,6 +1,5 @@
 package com.spicstome.client.ui;
 
-import com.spicstome.client.shared.Album;
 import com.spicstome.client.ui.panel.AlbumBookPanel;
 import com.spicstome.client.ui.panel.Book;
 import com.spicstome.client.ui.widget.Crumb;
@@ -15,19 +14,12 @@ public class MailViewImpl extends UserViewLayout  implements MailView{
 	
 	public MailViewImpl()
 	{
-		
 		super();
-		
-		
-		
+
 		addCrumb(new Crumb("Mail"){});
-		
-	
-		
-		
-		
+
         album = new AlbumBookPanel(new Book(100));
-        album.setAlbum(new Album());
+        //album.setAlbum(new AlbumDTO());
         
     	dropZone = new DropZone(album.book.imageSize);
         

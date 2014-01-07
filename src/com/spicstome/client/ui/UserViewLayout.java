@@ -1,13 +1,9 @@
 package com.spicstome.client.ui;
 
-
-
 import com.google.gwt.place.shared.Place;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.spicstome.client.ui.panel.MenuTopPanel;
 import com.spicstome.client.ui.widget.Crumb;
-
-
 
 public class UserViewLayout extends VLayout implements UserView{
 

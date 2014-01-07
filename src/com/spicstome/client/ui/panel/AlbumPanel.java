@@ -4,13 +4,13 @@ import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.smartgwt.client.widgets.tree.events.NodeClickEvent;
 import com.smartgwt.client.widgets.tree.events.NodeClickHandler;
-import com.spicstome.client.shared.Album;
+import com.spicstome.client.dto.AlbumDTO;
 import com.spicstome.client.ui.widget.FolderTree;
 
 public abstract class AlbumPanel extends VLayout{
 
 
-	Album album;
+	public AlbumDTO album;
 	protected HLayout titleLayout = new HLayout();
 		
 	HLayout horizontalLayout = new HLayout();
@@ -42,18 +42,15 @@ public abstract class AlbumPanel extends VLayout{
 		addMember(horizontalLayout);
 	}
 
-	public void setAlbum(Album album)
+	public void setAlbum(AlbumDTO album)
 	{
 		this.album = album;
-		
-		folderTree.setAlbum(album);
-		
 	}
-	
-	
+
 
 	public boolean onFolderClick(NodeClickEvent event)
 	{
+		System.out.println("click");
 		int newSelectedFolderId = Integer.valueOf(event.getNode().getAttribute("id_folder"));
 		
 		if(folderTree.selectFolderId != newSelectedFolderId)

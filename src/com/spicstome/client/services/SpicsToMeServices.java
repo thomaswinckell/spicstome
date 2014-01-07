@@ -15,6 +15,8 @@
 package com.spicstome.client.services;
 
 
+import java.util.List;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteService;
@@ -43,6 +45,9 @@ public interface SpicsToMeServices extends RemoteService {
 	public UserDTO getUser(String userName, String password);
 	public UserDTO getCurrentUser();
 	public boolean disconnectCurrentUser();
+	public List<AlbumDTO> getReferentAlbums();
+	public List<FolderDTO> getFoldersAlbum(AlbumDTO albumDTO);
+	public StudentDTO getAlbumOwner(AlbumDTO albumDTO);
 	
 	public Long saveImage(ImageDTO imageDTO);
 	public Long saveFolder(FolderDTO folderDTO);

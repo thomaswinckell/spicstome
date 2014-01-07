@@ -12,7 +12,7 @@ import com.smartgwt.client.widgets.form.fields.events.ChangeEvent;
 import com.smartgwt.client.widgets.form.fields.events.ChangeHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
-import com.spicstome.client.shared.Album;
+import com.spicstome.client.dto.AlbumDTO;
 import com.spicstome.client.ui.panel.AlbumPanel;
 
 /**
@@ -33,7 +33,7 @@ public abstract class PickerWindow extends Window{
 
 
 	
-	public PickerWindow(ArrayList<Album> listAlbum,int width,int height) {
+	public PickerWindow(ArrayList<AlbumDTO> listAlbum,int width,int height) {
 		super();
 				
 		setWidth(width);
@@ -56,7 +56,7 @@ public abstract class PickerWindow extends Window{
 			public void onChange(ChangeEvent event) {
 			
 		          //String selectedItem = (String) event.getValue();  
-		          albumPanel.setAlbum(new Album());
+		          albumPanel.setAlbum(new AlbumDTO());
 				
 			}
 		});
@@ -65,7 +65,7 @@ public abstract class PickerWindow extends Window{
 
         InitAlbumPanel();
         
-        albumPanel.setAlbum(new Album());
+        albumPanel.setAlbum(new AlbumDTO());
   
         validButton.setIcon("check.png");
         int iconsize=32;

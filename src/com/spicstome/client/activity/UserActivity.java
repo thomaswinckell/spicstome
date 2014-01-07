@@ -19,11 +19,10 @@ public class UserActivity extends AbstractActivity implements UserView.Presenter
 	protected UserViewLayout userView;
 	protected ClientFactory clientFactory;
 	
-	public UserActivity(Place place, ClientFactory clientFactory,UserViewLayout userView) {
+	public UserActivity(Place place, ClientFactory clientFactory,UserViewLayout userView) 
+	{
 		this.clientFactory = clientFactory;
-		
 		this.userView = userView;
-		
 	}
 	
 	@Override

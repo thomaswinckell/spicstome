@@ -31,6 +31,6 @@ public class FolderDTO extends PecsDTO implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Folder [content=" + content + "]";
+		return "Folder ("+this.getName()+" "+this.getImage().toString()+") [content=" + content + "]";
 	}
 }

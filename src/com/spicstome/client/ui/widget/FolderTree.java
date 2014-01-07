@@ -1,14 +1,17 @@
 package com.spicstome.client.ui.widget;
 
+import java.util.List;
 import com.smartgwt.client.types.TreeModelType;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.tree.Tree;
 import com.smartgwt.client.widgets.tree.TreeGrid;
 import com.smartgwt.client.widgets.tree.TreeGridField;
 import com.smartgwt.client.widgets.tree.TreeNode;
-import com.spicstome.client.shared.Album;
+import com.spicstome.client.dto.FolderDTO;
 
-public class FolderTree extends HLayout{
+public class FolderTree extends HLayout
+{
+	
 	public int selectFolderId;
 	public TreeNode selectFolderNode;
 	public Tree tree;
@@ -39,7 +42,7 @@ public class FolderTree extends HLayout{
 		addMember(treeGrid);
 	}
 	
-	public void setAlbum(Album album)
+	public void setFolders(List<FolderDTO> folders)
 	{
 		selectFolderId=-1;
 		selectFolderNode=null;
@@ -53,12 +56,24 @@ public class FolderTree extends HLayout{
    
 	    tree.setRootValue(1);
 		
-		TreeNode[] employeeData = new TreeNode[] {
-				new AlbumTreeNode("2", "1", "Tout","tout.png"),
-				new AlbumTreeNode("3", "2", "Qui ?","qui.gif"),
-				new AlbumTreeNode("4", "2", "Quoi ?","quoi.gif"),
-				new AlbumTreeNode("5", "2", "Comment ?","comment.gif")
-		};
+	    //parcours des dossier de l'album
+	   
+	    
+	    TreeNode[] employeeData = new TreeNode[folders.size()];
+	    
+
+	    for(int i=0;i<folders.size();i++)
+	    {
+	    	FolderDTO f = folders.get(i);
+	    	
+	    	String p;
+	    	if(f.getFolder()==null)
+	    		p="-1";
+	    	else
+	    		p=f.getFolder().getId().toString();
+	    	
+	    	employeeData[i]= new AlbumTreeNode(f.getId().toString(),p , f.getName(),"tout.png");
+	    }
 
 		tree.setData(employeeData);
 		
@@ -66,6 +81,8 @@ public class FolderTree extends HLayout{
 		
 		treeGrid.getData().openAll();
 	}
+	
+	
 	
 	public void AllowReorder()
 	{

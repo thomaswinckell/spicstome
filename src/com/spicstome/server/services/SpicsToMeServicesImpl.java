@@ -1,7 +1,10 @@
 package com.spicstome.server.services;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.ServletException;
 
@@ -10,16 +13,21 @@ import org.hibernate.criterion.Restrictions;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.spicstome.client.dto.AlbumDTO;
+import com.spicstome.client.dto.ArticleDTO;
 import com.spicstome.client.dto.FolderDTO;
 import com.spicstome.client.dto.ImageDTO;
+import com.spicstome.client.dto.LogDTO;
 import com.spicstome.client.dto.PecsDTO;
 import com.spicstome.client.dto.StudentDTO;
 import com.spicstome.client.dto.UserDTO;
 import com.spicstome.client.hibernate.HibernateUtil;
 import com.spicstome.client.services.SpicsToMeServices;
 import com.spicstome.client.shared.Album;
+import com.spicstome.client.shared.Article;
 import com.spicstome.client.shared.Folder;
 import com.spicstome.client.shared.Image;
+import com.spicstome.client.shared.Log;
+import com.spicstome.client.shared.Pecs;
 import com.spicstome.client.shared.Student;
 import com.spicstome.client.shared.User;
 
@@ -37,7 +45,8 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	public UserDTO getUser(String login, String password) {		
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 	    session.beginTransaction();
-	    List<User> users = session.createCriteria(User.class).add(Restrictions.eq("login",login)).add(Restrictions.eq("password",password)).list();
+	    @SuppressWarnings("unchecked")
+		List<User> users = session.createCriteria(User.class).add(Restrictions.eq("login",login)).add(Restrictions.eq("password",password)).list();
 	    session.getTransaction().commit();
 	    
 	    if (users.isEmpty())
@@ -119,12 +128,200 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	    return student.getId();
 	}	
 
+	
+	@Override
+	public List<AlbumDTO> getReferentAlbums() {
+
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		session.beginTransaction();
+
+		@SuppressWarnings("unchecked")
+		List<Album> list = session.createCriteria(Album.class).list();
+
+		List<AlbumDTO> listAlbumDTO=new ArrayList<>();
+
+		if(!list.isEmpty())
+		{ 
+			for(int i=0;i<list.size();i++)
+			{
+				listAlbumDTO.add(createAlbumDTO(list.get(i)));
+			}
+		}
+
+
+		session.getTransaction().commit();
+
+		if (list.isEmpty())
+			return null;
+		else 
+		{
+			return listAlbumDTO;
+		}
+
+	}
+	
+	private List<FolderDTO> GetFoldersFolder(FolderDTO folder)
+	{
+		List<FolderDTO> res = new ArrayList<FolderDTO>();
+		
+		res.add(folder);
+
+		Iterator<PecsDTO> i=folder.getContent().iterator(); // on crée un Iterator pour parcourir notre HashSet
+		while(i.hasNext()) // tant qu'on a un suivant
+		{
+			if(i instanceof Folder)
+			{
+				res.addAll(GetFoldersFolder((FolderDTO)i));
+				
+			}
+				
+			
+			i.next();
+		}	
+		
+		return res;
+	}
+	
+
+	@Override
+	public List<FolderDTO> getFoldersAlbum(AlbumDTO albumDTO) {
+		
+		if(albumDTO.getFolder()!=null)
+		{
+			return GetFoldersFolder(albumDTO.getFolder());
+		}
+		else
+		{
+			return null;
+		}
+	}
+
+	@Override
+	public StudentDTO getAlbumOwner(AlbumDTO albumDTO) {
+		
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+	    session.beginTransaction();
+	    @SuppressWarnings("unchecked")
+		List<Student> users = session.createCriteria(Student.class).list();
+	    session.getTransaction().commit();
+	    
+	    for(int i=0;i<users.size();i++)
+	    {
+	    	if(users.get(i).getAlbum().getId()==albumDTO.getId())
+	    		return createStudentDTO(users.get(i));
+	    }
+	    
+	    return null;
+	}
+	
+	
+	/* ***********************************************
+	 * FONCTION DE TRANSTYPAGE
+	 * 
+	 * *************************************************/
+	
 	private ImageDTO createImageDTO(Image image) {
 		return new ImageDTO(image.getId(), image.getFilename());
 	}
+	
+	private AlbumDTO createAlbumDTO(Album album)
+	{
+		return new AlbumDTO(album.getId(),createFolderDTO(album.getFolder()));
+	}
+	
+	private FolderDTO createFolderDTO(Folder folder)
+	{
+		if(folder!=null)
+		{
+			return new FolderDTO(folder.getId(),folder.getName(),folder.getOrder(),createFolderDTO(folder.getFolder()),createImageDTO(folder.getImage()),createListPecsDTO(folder.getContent()));
+		}
+		else
+		{
+			return null;
+		}
+		
+	}
+	
+	private ArticleDTO createArticleDTO(Article article)
+	{
+		return new ArticleDTO(article.getId(),article.getName(),article.getOrder(),createFolderDTO(article.getFolder()),createImageDTO(article.getImage()),null);
+	}
+	
+	private LogDTO createLogDTO(Log log)
+	{
+		return new LogDTO(log.getId(),createStudentDTO(log.getStudent()),
+				log.getEmailRecipient(),log.getDate(),createListArticleDTO(log.getArticles()));
+	}
+	
+	private Set<LogDTO> createListLogDTO(Set<Log> list)
+	{
+		Set<LogDTO> listDTO=new HashSet<>();
+		
+		Iterator<LogDTO> i=listDTO.iterator(); // on crée un Iterator pour parcourir notre HashSet
+		while(i.hasNext()) // tant qu'on a un suivant
+		{		
+			listDTO.add(createLogDTO((Log)i));
+			i.next();
+		}
+
+		return listDTO;
+	}
+	
+	private Set<ArticleDTO> createListArticleDTO(Set<Article> list)
+	{
+		Set<ArticleDTO> listDTO=new HashSet<>();
+		
+		Iterator<ArticleDTO> i=listDTO.iterator(); // on crée un Iterator pour parcourir notre HashSet
+		while(i.hasNext()) // tant qu'on a un suivant
+		{		
+			listDTO.add(createArticleDTO((Article)i));
+			i.next();
+		}
+
+		return listDTO;
+	}
+	
+	private Set<PecsDTO> createListPecsDTO(Set<Pecs> list)
+	{
+		Set<PecsDTO> listDTO=new HashSet<>();
+		
+		Iterator<PecsDTO> i=listDTO.iterator(); // on crée un Iterator pour parcourir notre HashSet
+		while(i.hasNext()) // tant qu'on a un suivant
+		{
+			if(i instanceof Article)
+				listDTO.add(createArticleDTO((Article)i));
+			if(i instanceof Folder)
+				listDTO.add(createFolderDTO((Folder)i));
+			
+			i.next();
+		}
+
+		return listDTO;
+	}
+	
+	
 
 	private UserDTO createUserDTO(User user) {
 		return new UserDTO(user.getId(), user.getSubscriptionDate(), user.getFirstName(), 
 				user.getName(), user.getEmail(), user.getLogin(), user.getPassword(), createImageDTO(user.getImage()));
 	}
+
+	private StudentDTO createStudentDTO(Student student)
+	{
+		return new StudentDTO(student.getId(),
+				student.getSubscriptionDate(),
+				student.getFirstName(),
+				student.getName(),	 
+				student.getEmail(), 
+				student.getLogin(), 
+				student.getPassword(), 
+				createImageDTO(student.getImage()),
+				createAlbumDTO(student.getAlbum()),
+				createListLogDTO(student.getLogs()),null,null);
+			
+		// null null => le mec qui en a eu marre mais c'est la liste des referent et des teacher donc methode
+		// pour transcrire teacher , list de teacher ...
+	}
+	
+	
 }

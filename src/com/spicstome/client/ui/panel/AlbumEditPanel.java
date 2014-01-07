@@ -4,11 +4,14 @@ import java.util.ArrayList;
 
 import com.smartgwt.client.util.BooleanCallback;
 import com.smartgwt.client.util.SC;
+import com.smartgwt.client.widgets.IconButton;
+import com.smartgwt.client.widgets.events.ClickEvent;
+import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.ComboBoxItem;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.smartgwt.client.widgets.tree.events.NodeClickEvent;
-import com.spicstome.client.shared.Album;
+import com.spicstome.client.dto.AlbumDTO;
 import com.spicstome.client.ui.form.ArticleFormWindow;
 import com.spicstome.client.ui.form.FolderFormWindow;
 import com.spicstome.client.ui.picker.ArticlePickerWindow;
@@ -19,16 +22,17 @@ import com.spicstome.client.ui.widget.ImageTileGrid;
 import com.spicstome.client.ui.widget.ImageTileGrid.Mode;
 
 
-public class AlbumEditPanel extends AlbumPanel{
+public abstract class AlbumEditPanel extends AlbumPanel{
 
 	ActionPanel actionFoldersPanel;
 	ActionPanel actionArticlePanel;
+	IconButton buttonValidate = new IconButton("");
 	ImageTileGrid articlesGrid;
 	
 
 	VLayout articleVerticalPanel = new VLayout();
 
-	ComboBoxItem comboBoxOwner = new ComboBoxItem("owner","Album de");
+	public ComboBoxItem comboBoxOwner = new ComboBoxItem("owner","Album de");
 	DynamicForm formOwner = new DynamicForm();
 	
 	
@@ -63,7 +67,7 @@ public class AlbumEditPanel extends AlbumPanel{
 			@Override
 			public void onImport()
 			{
-				ArticlePickerWindow win = new ArticlePickerWindow(new ArrayList<Album>()){
+				ArticlePickerWindow win = new ArticlePickerWindow(new ArrayList<AlbumDTO>()){
 					@Override
 					public void onDestroy()
 					{
@@ -119,7 +123,7 @@ public class AlbumEditPanel extends AlbumPanel{
 			@Override
 			public void onImport()
 			{
-				FolderPickerWindow win = new FolderPickerWindow(new ArrayList<Album>()){
+				FolderPickerWindow win = new FolderPickerWindow(new ArrayList<AlbumDTO>()){
 					@Override
 					public void onDestroy()
 					{
@@ -141,7 +145,8 @@ public class AlbumEditPanel extends AlbumPanel{
 
 			@Override
 			public void onDelete() {
-				// TODO Auto-generated method stub
+				
+				
 				
 			}
 		};
@@ -172,6 +177,21 @@ public class AlbumEditPanel extends AlbumPanel{
 	    
 	    horizontalLayout.addMember(articleVerticalPanel);
 	    
+	    
+	    buttonValidate.setIconSize(42);
+	    buttonValidate.setIcon("check.png");
+	    
+	    buttonValidate.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				onValidateChange();
+				
+			}
+		});
+	    
+	    addMember(buttonValidate);
+	    
 	    Update();
 	    
 	}
@@ -184,7 +204,7 @@ public class AlbumEditPanel extends AlbumPanel{
 	}
 	
 	@Override
-	public void setAlbum(Album album)
+	public void setAlbum(AlbumDTO album)
 	{
 		super.setAlbum(album);
 		
@@ -203,38 +223,8 @@ public class AlbumEditPanel extends AlbumPanel{
 		
 		if(changed)
 		{
-			switch(folderTree.selectFolderId)
-			{
-			case 3:
-				articles.add(new ImageRecord(0,"Je","albumlogo.png"));
-				articles.add(new ImageRecord(0,"Tu","albumlogo.png"));
-				articles.add(new ImageRecord(0,"Il","albumlogo.png"));
-				articles.add(new ImageRecord(0,"Nous","albumlogo.png"));
-				articles.add(new ImageRecord(0,"Vous","albumlogo.png"));
-				articles.add(new ImageRecord(0,"Ils","albumlogo.png"));
-				articles.add(new ImageRecord(0,"Moi","albumlogo.png"));
-				articles.add(new ImageRecord(0,"Toi","albumlogo.png"));
-				articles.add(new ImageRecord(0,"Autre","albumlogo.png"));
-				articles.add(new ImageRecord(0,"Riri","albumlogo.png"));
-				articles.add(new ImageRecord(0,"Fifi","albumlogo.png"));
-				articles.add(new ImageRecord(0,"LouLou","albumlogo.png"));
-				articles.add(new ImageRecord(0,"Toto","albumlogo.png"));
-				articles.add(new ImageRecord(0,"titi","albumlogo.png"));
-				articles.add(new ImageRecord(0,"tata","albumlogo.png"));
-	
 			
-				break;
-			case 4:
-				articles.add(new ImageRecord(0,"Je","albumlogo.png"));
-				articles.add(new ImageRecord(0,"Tu","albumlogo.png"));
-			break;
-			case 5:
-				
-			break;
-			}
-		
-			
-			
+			System.out.println(folderTree.selectFolderId);
 			
 			articlesGrid.setItems(articles);
 			articleVerticalPanel.addMember(articlesGrid,0);
@@ -248,5 +238,7 @@ public class AlbumEditPanel extends AlbumPanel{
 		
 		
 	}
+	
+	public abstract void onValidateChange();
 
 }

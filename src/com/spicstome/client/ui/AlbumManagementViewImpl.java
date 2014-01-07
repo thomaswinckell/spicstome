@@ -1,24 +1,18 @@
 package com.spicstome.client.ui;
 
-
 import java.util.ArrayList;
 import java.util.List;
-
+import com.spicstome.client.dto.AlbumDTO;
 import com.spicstome.client.place.AlbumEditPlace;
 import com.spicstome.client.place.AlbumPlace;
-import com.spicstome.client.shared.Album;
 import com.spicstome.client.ui.panel.ActionPanel;
 import com.spicstome.client.ui.widget.Crumb;
 import com.spicstome.client.ui.widget.ImageTileGrid;
 import com.spicstome.client.ui.widget.ImageRecord;
 import com.spicstome.client.ui.widget.ImageTileGrid.Mode;
 
-
-
 public class AlbumManagementViewImpl extends UserViewLayout  implements AlbumManagementView
 {
-	
-	
 
 	ImageTileGrid imageList;
 	ActionPanel actionPanel;
@@ -28,10 +22,7 @@ public class AlbumManagementViewImpl extends UserViewLayout  implements AlbumMan
 		super();
 		
 		addCrumb(new Crumb("Les albums"){});
-		
-		
-		
-		
+
 		actionPanel = new ActionPanel(true,false,true,true,true) {
 			
 			@Override
@@ -49,7 +40,9 @@ public class AlbumManagementViewImpl extends UserViewLayout  implements AlbumMan
 			
 			@Override
 			public void onEdit() {
-				listener.goTo(new AlbumEditPlace());
+				
+				AlbumDTO a = (AlbumDTO)imageList.getSelectedItem().getAttributeAsObject(ImageRecord.DATA);
+				listener.goTo(new AlbumEditPlace(a));
 				
 			}
 
@@ -72,24 +65,23 @@ public class AlbumManagementViewImpl extends UserViewLayout  implements AlbumMan
 		};
 
 		imageList.setHeight(250);
-		
-		
 
 		mainPanel.addMember(imageList);
 		mainPanel.addMember(actionPanel);
-		
-		setAlbum(null);
 
 	}
 
 	@Override
-	public void setAlbum(List<Album> list) {
+	public void setAlbum(List<AlbumDTO> list) {
 		
 		ArrayList<ImageRecord> modules = new ArrayList<ImageRecord>();
-		modules.add(new ImageRecord(0,"Album general","albumlogo.png"));
-		modules.add(new ImageRecord(1,"Album exemple","albumlogo.png"));
-		modules.add(new ImageRecord(2,"Album de Albert","albumlogo.png"));
 		
+		
+		for(int i=0;i<list.size();i++)
+		{
+			modules.add(new ImageRecord(list.get(i)));
+		}
+
 		imageList.setItems(modules);
 	}
 

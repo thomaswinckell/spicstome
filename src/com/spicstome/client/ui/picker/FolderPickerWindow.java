@@ -3,12 +3,12 @@ package com.spicstome.client.ui.picker;
 import java.util.ArrayList;
 
 import com.smartgwt.client.widgets.tree.events.NodeClickEvent;
-import com.spicstome.client.shared.Album;
+import com.spicstome.client.dto.AlbumDTO;
 import com.spicstome.client.ui.panel.AlbumPanel;
 
 public class FolderPickerWindow extends PickerWindow{
 
-	public FolderPickerWindow(ArrayList<Album> listAlbum) {
+	public FolderPickerWindow(ArrayList<AlbumDTO> listAlbum) {
 		super(listAlbum, 400, 500);
 		
 	}

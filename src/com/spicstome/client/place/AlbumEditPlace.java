@@ -2,12 +2,15 @@ package com.spicstome.client.place;
 
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceTokenizer;
+import com.spicstome.client.dto.AlbumDTO;
 
 public class AlbumEditPlace extends Place
 {
 
-	public AlbumEditPlace() {
-		
+	public AlbumDTO album;
+	
+	public AlbumEditPlace(AlbumDTO a) {
+		this.album=a;
 	}
 	
 
@@ -23,7 +26,7 @@ public class AlbumEditPlace extends Place
 
 		@Override
 		public AlbumEditPlace getPlace(String token) {
-			return new AlbumEditPlace();
+			return new AlbumEditPlace(null);
 		}
 
 	}

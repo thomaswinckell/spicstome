@@ -14,6 +14,8 @@
  *******************************************************************************/
 package com.spicstome.client.services;
 
+import java.util.List;
+
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.spicstome.client.dto.AlbumDTO;
 import com.spicstome.client.dto.FolderDTO;
@@ -27,9 +29,13 @@ public interface SpicsToMeServicesAsync {
 	void getUser(String userName, String password, AsyncCallback<UserDTO> callback);
 	void getCurrentUser(AsyncCallback<UserDTO> callback);
 	void disconnectCurrentUser(AsyncCallback<Boolean> callback);
+	void getReferentAlbums(AsyncCallback<List<AlbumDTO>> callback);
+	void getFoldersAlbum(AlbumDTO albumDTO,AsyncCallback<List<FolderDTO>> callback);
+	void getAlbumOwner(AlbumDTO albumDTO,AsyncCallback<StudentDTO> callback);
 	
 	void saveImage(ImageDTO imageDTO, AsyncCallback<Long> callback);
 	void saveFolder(FolderDTO folderDTO, AsyncCallback<Long> callback);
 	void saveAlbum(AlbumDTO albumDTO, AsyncCallback<Long> callback);
 	void saveStudent(StudentDTO studentDTO, AsyncCallback<Long> callback);
+
 }
