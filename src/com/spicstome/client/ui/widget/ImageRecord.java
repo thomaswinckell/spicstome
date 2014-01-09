@@ -3,6 +3,7 @@ package com.spicstome.client.ui.widget;
 
 import com.smartgwt.client.widgets.tile.TileRecord;
 import com.spicstome.client.dto.AlbumDTO;
+import com.spicstome.client.dto.ArticleDTO;
 
 public class ImageRecord extends TileRecord {
 
@@ -26,6 +27,15 @@ public class ImageRecord extends TileRecord {
 		setAttribute(PICTURE_NAME, "Album numéro "+albumDTO.getId().toString());
 		setAttribute(PICTURE_PATH, "albumlogo.png");
 		setAttribute(DATA, albumDTO);
+	}
+	
+	public ImageRecord(ArticleDTO articleDTO)
+	{
+		System.out.println(articleDTO.getName());
+		setAttribute(PICTURE_ID, articleDTO.getId());
+		setAttribute(PICTURE_NAME, articleDTO.getName());
+		setAttribute(PICTURE_PATH, "albumlogo.png");
+		setAttribute(DATA, articleDTO);
 	}
 	
 	public ImageRecord(int id,String name,String image,Object o){

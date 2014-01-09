@@ -7,6 +7,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.spicstome.client.ClientFactory;
 import com.spicstome.client.dto.AlbumDTO;
+import com.spicstome.client.dto.ArticleDTO;
 import com.spicstome.client.dto.FolderDTO;
 import com.spicstome.client.dto.StudentDTO;
 import com.spicstome.client.place.AlbumEditPlace;
@@ -59,9 +60,10 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 	}
 
 	@Override
-	public void save() {
+	public void save(ArticleDTO a) {
 		
-		SpicsToMeServices.Util.getInstance().saveAlbum(album, new AsyncCallback<Long>() {
+
+		SpicsToMeServices.Util.getInstance().saveArticle(a, new AsyncCallback<Long>() {
 
 		
 			@Override

@@ -2,15 +2,11 @@ package com.spicstome.server.services;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-
 import javax.servlet.ServletException;
-
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
-
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.spicstome.client.dto.AlbumDTO;
 import com.spicstome.client.dto.ArticleDTO;
@@ -91,8 +87,18 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	
 	@Override
 	public Long saveArticle(ArticleDTO articleDTO) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		ImageDTO imageArticle = articleDTO.getImage();
+		Long id = saveImage(imageArticle);
+		imageArticle.setId(id);
+		
+		Article article = new Article(articleDTO);
+	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+	    
+	    session.beginTransaction();
+	    session.save(article);
+	    session.getTransaction().commit();
+	    return article.getId();
 	}
 	
 	@Override
@@ -140,10 +146,10 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
-
 		@SuppressWarnings("unchecked")
 		List<Album> list = session.createCriteria(Album.class).list();
-
+		session.getTransaction().commit();
+		
 		List<AlbumDTO> listAlbumDTO=new ArrayList<>();
 
 		if(!list.isEmpty())
@@ -154,15 +160,8 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 			}
 		}
 
-
-		session.getTransaction().commit();
-
-		if (list.isEmpty())
-			return null;
-		else 
-		{
-			return listAlbumDTO;
-		}
+		return listAlbumDTO;
+	
 
 	}
 	
@@ -172,17 +171,13 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 		
 		res.add(folder);
 
-		Iterator<PecsDTO> i=folder.getContent().iterator(); // on crée un Iterator pour parcourir notre HashSet
-		while(i.hasNext()) // tant qu'on a un suivant
+		for(PecsDTO p:folder.getContent())
 		{
-			if(i instanceof Folder)
+			if(p instanceof FolderDTO)
 			{
-				res.addAll(GetFoldersFolder((FolderDTO)i));
+				res.addAll(GetFoldersFolder((FolderDTO)p));
 				
 			}
-				
-			
-			i.next();
 		}	
 		
 		return res;
@@ -237,20 +232,12 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	
 	private FolderDTO createFolderDTO(Folder folder)
 	{
-		if(folder!=null)
-		{
-			return new FolderDTO(folder.getId(),folder.getName(),folder.getOrder(),createFolderDTO(folder.getFolder()),createImageDTO(folder.getImage()),createListPecsDTO(folder.getContent()));
-		}
-		else
-		{
-			return null;
-		}
-		
+		return new FolderDTO(folder.getId(),folder.getName(),folder.getOrder(),null,createImageDTO(folder.getImage()),createListPecsDTO(folder.getContent()));
 	}
 	
 	private ArticleDTO createArticleDTO(Article article)
 	{
-		return new ArticleDTO(article.getId(),article.getName(),article.getOrder(),createFolderDTO(article.getFolder()),createImageDTO(article.getImage()),null);
+		return new ArticleDTO(article.getId(),article.getName(),article.getOrder(),null,createImageDTO(article.getImage()),null);
 	}
 	
 	private LogDTO createLogDTO(Log log)
@@ -263,11 +250,8 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	{
 		Set<LogDTO> listDTO=new HashSet<>();
 		
-		Iterator<LogDTO> i=listDTO.iterator(); // on crée un Iterator pour parcourir notre HashSet
-		while(i.hasNext()) // tant qu'on a un suivant
-		{		
-			listDTO.add(createLogDTO((Log)i));
-			i.next();
+		for(Log log:list){		
+			listDTO.add(createLogDTO(log));
 		}
 
 		return listDTO;
@@ -277,11 +261,8 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	{
 		Set<ArticleDTO> listDTO=new HashSet<>();
 		
-		Iterator<ArticleDTO> i=listDTO.iterator(); // on crée un Iterator pour parcourir notre HashSet
-		while(i.hasNext()) // tant qu'on a un suivant
-		{		
-			listDTO.add(createArticleDTO((Article)i));
-			i.next();
+		for(Article article:list){	
+			listDTO.add(createArticleDTO(article));
 		}
 
 		return listDTO;
@@ -291,15 +272,12 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	{
 		Set<PecsDTO> listDTO=new HashSet<>();
 		
-		Iterator<PecsDTO> i=listDTO.iterator(); // on crée un Iterator pour parcourir notre HashSet
-		while(i.hasNext()) // tant qu'on a un suivant
+		for(Pecs p:list)
 		{
-			if(i instanceof Article)
-				listDTO.add(createArticleDTO((Article)i));
-			if(i instanceof Folder)
-				listDTO.add(createFolderDTO((Folder)i));
-			
-			i.next();
+			if(p instanceof Article)
+				listDTO.add(createArticleDTO((Article)p));
+			if(p instanceof Folder)
+				listDTO.add(createFolderDTO((Folder)p));
 		}
 
 		return listDTO;

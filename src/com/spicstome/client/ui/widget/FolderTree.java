@@ -72,7 +72,7 @@ public class FolderTree extends HLayout
 	    	else
 	    		p=f.getFolder().getId().toString();
 	    	
-	    	employeeData[i]= new AlbumTreeNode(f.getId().toString(),p , f.getName(),"tout.png");
+	    	employeeData[i]= new AlbumTreeNode(f.getId().toString(),p , f.getName(),"tout.png",f);
 	    }
 
 		tree.setData(employeeData);
@@ -128,13 +128,14 @@ public class FolderTree extends HLayout
 	
 	public static class AlbumTreeNode extends TreeNode 
 	{
-	    public AlbumTreeNode(String id_folder, String parent, String name,String image) 
+	    public AlbumTreeNode(String id_folder, String parent, String name,String image,FolderDTO f) 
 	    {
 	      setAttribute("id_folder", id_folder);
 	      setAttribute("parent", parent);
 	      setAttribute("title", name);
 	      setAttribute("icon", image);
 	      setAttribute("is_folder", true);
+	      setAttribute("data",f);
 	    }
 	}
 }

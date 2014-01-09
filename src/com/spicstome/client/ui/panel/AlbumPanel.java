@@ -50,7 +50,6 @@ public abstract class AlbumPanel extends VLayout{
 
 	public boolean onFolderClick(NodeClickEvent event)
 	{
-		System.out.println("click");
 		int newSelectedFolderId = Integer.valueOf(event.getNode().getAttribute("id_folder"));
 		
 		if(folderTree.selectFolderId != newSelectedFolderId)

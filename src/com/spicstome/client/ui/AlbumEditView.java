@@ -1,8 +1,10 @@
 package com.spicstome.client.ui;
 
 import java.util.List;
+
 import com.google.gwt.user.client.ui.IsWidget;
 import com.spicstome.client.dto.AlbumDTO;
+import com.spicstome.client.dto.ArticleDTO;
 import com.spicstome.client.dto.FolderDTO;
 
 public interface AlbumEditView extends IsWidget{
@@ -13,6 +15,6 @@ public interface AlbumEditView extends IsWidget{
 	
 	public interface Presenter 
 	{
-		void save();
+		void save(ArticleDTO a);
 	}
 }

@@ -1,7 +1,7 @@
 package com.spicstome.client.ui.panel;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+
 import com.smartgwt.client.util.BooleanCallback;
 import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.form.DynamicForm;
@@ -10,8 +10,8 @@ import com.smartgwt.client.widgets.layout.VLayout;
 import com.smartgwt.client.widgets.tree.events.NodeClickEvent;
 import com.spicstome.client.dto.AlbumDTO;
 import com.spicstome.client.dto.ArticleDTO;
-import com.spicstome.client.dto.ImageDTO;
-import com.spicstome.client.dto.LogDTO;
+import com.spicstome.client.dto.FolderDTO;
+import com.spicstome.client.dto.PecsDTO;
 import com.spicstome.client.ui.form.ArticleFormWindow;
 import com.spicstome.client.ui.form.FolderFormWindow;
 import com.spicstome.client.ui.picker.ArticlePickerWindow;
@@ -53,7 +53,7 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 					@Override
 					public void onDestroy()
 					{
-						
+						/*
 						ArticleDTO artcileDTO = new ArticleDTO((long)-1,
 								form.getValueAsString("name"),
 								0,
@@ -61,7 +61,7 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 								new ImageDTO(),
 								new HashSet<LogDTO>());
 						
-						album.getFolder().getContent().add(artcileDTO);
+						album.getFolder().getContent().add(artcileDTO);*/
 						onValidateChange();
 					}
 				};
@@ -145,7 +145,7 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 						folderTree.tree.add(new FolderTree.AlbumTreeNode("42",
 								folderTree.selectFolderNode.getAttribute("id_folder"), 
 								albumPanel.folderTree.selectFolderNode.getAttribute("title"),
-								albumPanel.folderTree.selectFolderNode.getAttribute("icon")), 
+								albumPanel.folderTree.selectFolderNode.getAttribute("icon"),null), 
 								folderTree.selectFolderNode);
 						folderTree.treeGrid.setData(folderTree.tree);
 						
@@ -204,9 +204,6 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 	public void setAlbum(AlbumDTO album)
 	{
 		super.setAlbum(album);
-		
-		articlesGrid.setItems(new ArrayList<ImageRecord>());
-		
 		Update();
 	}
 	
@@ -220,8 +217,19 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 		
 		if(changed)
 		{
+			FolderDTO folder = (FolderDTO)folderTree.selectFolderNode.getAttributeAsObject("data");
 			
-			System.out.println(folderTree.selectFolderId);
+			
+			
+			for(PecsDTO pecsDTO:folder.getContent())
+			{
+				if(pecsDTO instanceof ArticleDTO)
+				{
+					System.out.println("ajout article");
+					articles.add(new ImageRecord((ArticleDTO)pecsDTO));
+				}
+					
+			}
 			
 			articlesGrid.setItems(articles);
 			articleVerticalPanel.addMember(articlesGrid,0);
