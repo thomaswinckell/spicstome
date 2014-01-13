@@ -44,8 +44,9 @@ public interface SpicsToMeServices extends RemoteService {
 	public UserDTO getCurrentUser();
 	public boolean disconnectCurrentUser();
 	public List<AlbumDTO> getReferentAlbums();
-	public List<FolderDTO> getFoldersAlbum(AlbumDTO albumDTO);
-	public StudentDTO getAlbumOwner(AlbumDTO albumDTO);
+	public List<FolderDTO> getFoldersAlbum(long id);
+	public StudentDTO getAlbumOwner(long id);
+	public AlbumDTO getAlbum(long id);
 	
 	public Long saveImage(ImageDTO imageDTO);
 	public Long saveFolder(FolderDTO folderDTO);

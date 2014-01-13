@@ -27,8 +27,8 @@ public class AlbumManagementViewImpl extends UserViewLayout  implements AlbumMan
 			
 			@Override
 			public void onVisualize() {
-				
-				listener.goTo(new AlbumPlace());
+				AlbumDTO a = (AlbumDTO)imageList.getSelectedItem().getAttributeAsObject(ImageRecord.DATA);
+				listener.goTo(new AlbumPlace(a.getId()));
 				
 			}
 			
@@ -42,7 +42,7 @@ public class AlbumManagementViewImpl extends UserViewLayout  implements AlbumMan
 			public void onEdit() {
 				
 				AlbumDTO a = (AlbumDTO)imageList.getSelectedItem().getAttributeAsObject(ImageRecord.DATA);
-				listener.goTo(new AlbumEditPlace(a));
+				listener.goTo(new AlbumEditPlace(a.getId()));
 				
 			}
 

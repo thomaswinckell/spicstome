@@ -26,7 +26,7 @@
 	</union-subclass>
 
 	<union-subclass name="Folder" table="folder" extends="Pecs">
-	   <set name="content"  lazy="false" inverse="false" fetch="select">
+	   <set name="content"  lazy="false" inverse="true" fetch="select">
             <key>
                 <column name="id_folder_parent" not-null="false" />
             </key>

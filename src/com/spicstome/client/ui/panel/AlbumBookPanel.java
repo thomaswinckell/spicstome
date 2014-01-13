@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.tree.events.NodeClickEvent;
 import com.spicstome.client.dto.AlbumDTO;
+import com.spicstome.client.dto.ArticleDTO;
+import com.spicstome.client.dto.FolderDTO;
+import com.spicstome.client.dto.PecsDTO;
 import com.spicstome.client.ui.widget.ImageRecord;
 
 public class AlbumBookPanel extends AlbumPanel{
@@ -35,7 +38,6 @@ public class AlbumBookPanel extends AlbumPanel{
 	{
 		super.setAlbum(album);
 		
-		book.setList(new ArrayList<ImageRecord>());
 	}
 	
 	@Override
@@ -45,27 +47,17 @@ public class AlbumBookPanel extends AlbumPanel{
 		
 		if(super.onFolderClick(event))
 		{
-			switch(folderTree.selectFolderId)
-			{
-			case 3:
-				articles.add(new ImageRecord(0,"Je","albumlogo.png"));
-				articles.add(new ImageRecord(0,"Tu","albumlogo.png"));
-				articles.add(new ImageRecord(0,"Il","albumlogo.png"));
-				articles.add(new ImageRecord(0,"Nous","albumlogo.png"));
-				articles.add(new ImageRecord(0,"Vous","albumlogo.png"));
-				articles.add(new ImageRecord(0,"Ils","albumlogo.png"));
-				articles.add(new ImageRecord(0,"Moi","albumlogo.png"));
-				articles.add(new ImageRecord(0,"Toi","albumlogo.png"));
-				articles.add(new ImageRecord(0,"Autre","albumlogo.png"));
+			FolderDTO folder = (FolderDTO)folderTree.selectFolderNode.getAttributeAsObject("data");
 			
-				break;
-			case 4:
-				articles.add(new ImageRecord(0,"Je","albumlogo.png"));
-				articles.add(new ImageRecord(0,"Tu","albumlogo.png"));
-			break;
-			case 5:
-				
-			break;
+			
+			for(PecsDTO pecsDTO:folder.getContent())
+			{
+				if(pecsDTO instanceof ArticleDTO)
+				{
+					System.out.println("ajout article");
+					articles.add(new ImageRecord((ArticleDTO)pecsDTO));
+				}
+					
 			}
 		
 			book.setList(articles);

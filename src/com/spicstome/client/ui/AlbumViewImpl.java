@@ -1,6 +1,9 @@
 package com.spicstome.client.ui;
 
+import java.util.List;
+
 import com.spicstome.client.dto.AlbumDTO;
+import com.spicstome.client.dto.FolderDTO;
 import com.spicstome.client.place.AlbumManagementPlace;
 import com.spicstome.client.ui.panel.AlbumBookPanel;
 import com.spicstome.client.ui.panel.Book;
@@ -35,6 +38,12 @@ public class AlbumViewImpl extends UserViewLayout  implements AlbumView{
 	public void setAlbum(AlbumDTO a) {
 	
 		albumBookPanel.setAlbum(a);
+		
+	}
+
+	@Override
+	public void setFolders(List<FolderDTO> folders) {
+		this.albumBookPanel.folderTree.setFolders(folders);
 		
 	}
 }

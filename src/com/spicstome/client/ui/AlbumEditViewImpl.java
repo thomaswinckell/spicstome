@@ -8,6 +8,7 @@ import com.spicstome.client.dto.ArticleDTO;
 import com.spicstome.client.dto.FolderDTO;
 import com.spicstome.client.dto.ImageDTO;
 import com.spicstome.client.dto.LogDTO;
+import com.spicstome.client.dto.PecsDTO;
 import com.spicstome.client.place.AlbumManagementPlace;
 import com.spicstome.client.ui.panel.AlbumEditPanel;
 import com.spicstome.client.ui.widget.Crumb;
@@ -47,6 +48,17 @@ public class AlbumEditViewImpl extends UserViewLayout  implements AlbumEditView{
 						new HashSet<LogDTO>());
 				
 				((AlbumEditView.Presenter)(listener)).save(a);
+				
+				/*
+				FolderDTO f = new FolderDTO((long)-1,
+						"nomDossier",
+						0,
+						album.getFolder(),
+						new ImageDTO((long)-1,"all.png"),
+						new HashSet<PecsDTO>());
+				
+				((AlbumEditView.Presenter)(listener)).save(f);*/
+				
 				listener.goTo(new AlbumManagementPlace());
 			}
 			

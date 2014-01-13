@@ -24,33 +24,42 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 	public AlbumEditActivity(AlbumEditPlace place, ClientFactory clientFactory) {
 		super(place, clientFactory,(UserViewLayout)clientFactory.getAlbumEditView());
 
-		System.out.println(place.album);
-		
-		this.album=place.album;
-		
-		clientFactory.getAlbumEditView().setAlbum(album);
-		
 		this.editview = clientFactory.getAlbumEditView();
-		
-		SpicsToMeServices.Util.getInstance().getFoldersAlbum(place.album, new AsyncCallback<List<FolderDTO>>() {
+
+		SpicsToMeServices.Util.getInstance().getAlbum(place.idAlbum, new AsyncCallback<AlbumDTO>() {
 
 			@Override
-			public void onSuccess(List<FolderDTO> result) {
-				editview.setFolders(result);	
+			public void onFailure(Throwable caught) {
+				
 			}
+
 			@Override
-			public void onFailure(Throwable caught) {}	
+			public void onSuccess(AlbumDTO result) {
+				album=result;
+				editview.setAlbum(album);
+				
+				SpicsToMeServices.Util.getInstance().getFoldersAlbum(album.getId(), new AsyncCallback<List<FolderDTO>>() {
+
+					@Override
+					public void onSuccess(List<FolderDTO> result) {
+						editview.setFolders(result);	
+					}
+					@Override
+					public void onFailure(Throwable caught) {}	
+				});
+				
+				SpicsToMeServices.Util.getInstance().getAlbumOwner(album.getId(), new AsyncCallback<StudentDTO>() {
+
+					@Override
+					public void onSuccess(StudentDTO result) {
+						editview.setOwner(result.getName());
+					}
+					@Override
+					public void onFailure(Throwable caught) {}			
+				});	
+			}
 		});
-		
-		SpicsToMeServices.Util.getInstance().getAlbumOwner(place.album, new AsyncCallback<StudentDTO>() {
 
-			@Override
-			public void onSuccess(StudentDTO result) {
-				editview.setOwner(result.getName());
-			}
-			@Override
-			public void onFailure(Throwable caught) {}			
-		});	
 	}
 
 	@Override
@@ -78,6 +87,25 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 		});
 		
 		System.out.println("save !");
+	}
+
+	@Override
+	public void save(FolderDTO f) {
+		SpicsToMeServices.Util.getInstance().saveFolder(f,new AsyncCallback<Long>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onSuccess(Long result) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
 	}
 
 }

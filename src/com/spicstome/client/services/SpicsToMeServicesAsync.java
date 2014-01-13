@@ -31,8 +31,9 @@ public interface SpicsToMeServicesAsync {
 	void getCurrentUser(AsyncCallback<UserDTO> callback);
 	void disconnectCurrentUser(AsyncCallback<Boolean> callback);
 	void getReferentAlbums(AsyncCallback<List<AlbumDTO>> callback);
-	void getFoldersAlbum(AlbumDTO albumDTO,AsyncCallback<List<FolderDTO>> callback);
-	void getAlbumOwner(AlbumDTO albumDTO,AsyncCallback<StudentDTO> callback);
+	void getFoldersAlbum(long id,AsyncCallback<List<FolderDTO>> callback);
+	void getAlbumOwner(long id,AsyncCallback<StudentDTO> callback);
+	void getAlbum(long id,AsyncCallback<AlbumDTO> callback);
 	
 	void saveImage(ImageDTO imageDTO, AsyncCallback<Long> callback);
 	void saveFolder(FolderDTO folderDTO, AsyncCallback<Long> callback);

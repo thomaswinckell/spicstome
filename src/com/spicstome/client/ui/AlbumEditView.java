@@ -16,5 +16,6 @@ public interface AlbumEditView extends IsWidget{
 	public interface Presenter 
 	{
 		void save(ArticleDTO a);
+		void save(FolderDTO f);
 	}
 }

@@ -1,5 +1,14 @@
 package com.spicstome.client.ui;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+
+import com.spicstome.client.dto.AlbumDTO;
+import com.spicstome.client.dto.ArticleDTO;
+import com.spicstome.client.dto.FolderDTO;
+import com.spicstome.client.dto.ImageDTO;
+import com.spicstome.client.dto.PecsDTO;
 import com.spicstome.client.ui.panel.AlbumBookPanel;
 import com.spicstome.client.ui.panel.Book;
 import com.spicstome.client.ui.widget.Crumb;
@@ -19,7 +28,20 @@ public class MailViewImpl extends UserViewLayout  implements MailView{
 		addCrumb(new Crumb("Mail"){});
 
         album = new AlbumBookPanel(new Book(100));
-        //album.setAlbum(new AlbumDTO());
+        
+
+        FolderDTO f = new FolderDTO((long)0);
+        f.setContent(new HashSet<PecsDTO>());
+        f.setImage(new ImageDTO((long)0));
+        f.getImage().setFilename("tout.png");
+        f.setName("tout");
+        ArticleDTO art = new ArticleDTO((long)0);
+        art.setName("essai");
+        f.getContent().add(art);
+        List<FolderDTO> listFodler = new ArrayList<FolderDTO>();
+        listFodler.add(f);
+        album.setAlbum(new AlbumDTO());
+        album.folderTree.setFolders(listFodler);
         
     	dropZone = new DropZone(album.book.imageSize);
         

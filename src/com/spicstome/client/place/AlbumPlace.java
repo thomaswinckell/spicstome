@@ -5,9 +5,10 @@ import com.google.gwt.place.shared.PlaceTokenizer;
 
 public class AlbumPlace extends Place
 {
-
-	public AlbumPlace() {
-		
+	public long idAlbum;
+	
+	public AlbumPlace(long idAlbum) {
+		this.idAlbum=idAlbum;
 	}
 	
 
@@ -18,12 +19,16 @@ public class AlbumPlace extends Place
 
 		@Override
 		public String getToken(AlbumPlace place) {
-			return "album";
+			return "Album:"+place.idAlbum;
 		}
 
 		@Override
 		public AlbumPlace getPlace(String token) {
-			return new AlbumPlace();
+			String[] split = token.split(":");
+			long id = Long.valueOf(split[1]);
+		
+			return new AlbumPlace(id);
+		
 		}
 
 	}

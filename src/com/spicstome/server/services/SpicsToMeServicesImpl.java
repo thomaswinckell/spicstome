@@ -140,6 +140,23 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	    return student.getId();
 	}	
 
+	@Override
+	public AlbumDTO getAlbum(long id) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		session.beginTransaction();
+		@SuppressWarnings("unchecked")
+		List<Album> list = session.createCriteria(Album.class).add(Restrictions.eq("id",id)).list();
+		session.getTransaction().commit();
+		
+		if(list.size()>0)
+		{
+			return createAlbumDTO(list.get(0));
+		}
+		else
+		{
+			return null;
+		}
+	}
 	
 	@Override
 	public List<AlbumDTO> getReferentAlbums() {
@@ -185,8 +202,9 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	
 
 	@Override
-	public List<FolderDTO> getFoldersAlbum(AlbumDTO albumDTO) {
+	public List<FolderDTO> getFoldersAlbum(long id) {
 		
+		AlbumDTO albumDTO = getAlbum(id);
 		if(albumDTO.getFolder()!=null)
 		{
 			return GetFoldersFolder(albumDTO.getFolder());
@@ -198,21 +216,23 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	}
 
 	@Override
-	public StudentDTO getAlbumOwner(AlbumDTO albumDTO) {
+	public StudentDTO getAlbumOwner(long id) {
 		
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 	    session.beginTransaction();
-	    @SuppressWarnings("unchecked")
-		List<Student> users = session.createCriteria(Student.class).list();
+	    
+	    @SuppressWarnings("unchecked")    
+	    List<Album> list = session.createCriteria(Album.class).add(Restrictions.eq("id",id)).list();
+	    if(list.size()==0) return null;
+	    @SuppressWarnings("unchecked") 
+		List<Student> users = session.createCriteria(Student.class).add(Restrictions.eq("album",list.get(0))).list();
 	    session.getTransaction().commit();
 	    
-	    for(int i=0;i<users.size();i++)
-	    {
-	    	if(users.get(i).getAlbum().getId()==albumDTO.getId())
-	    		return createStudentDTO(users.get(i));
-	    }
-	    
-	    return null;
+	    if(users.size()>0)
+	    	return createStudentDTO(users.get(0));
+	    else
+	    	return null;
+
 	}
 	
 	
@@ -306,6 +326,8 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 		// null null => le mec qui en a eu marre mais c'est la liste des referent et des teacher donc methode
 		// pour transcrire teacher , list de teacher ...
 	}
+
+
 
 	
 	
