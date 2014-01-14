@@ -5,35 +5,35 @@
 <hibernate-mapping package="com.spicstome.client.shared" default-lazy="false">
 
 <class name="Pecs" abstract="true" select-before-update="true">
-
+    
 	<id name="id" type="long" column="id">
 		<generator class="increment" />
 	</id>
-
 	<property name="name" type="string" column="name" />
-	
 	<property name="order" type="int" column="order_in_folder" />
-
-	<many-to-one name="folder" class="Folder" column="id_folder_parent" not-null="false" unique="false"/>
 	
-	<many-to-one name="image" column="id_image" class="Image" unique="true" cascade="delete" />
-
+	<many-to-one name="folder" class="Folder" column="id_folder_parent"
+		not-null="false" unique="false" cascade="delete" />
+	
+	<many-to-one name="image" column="id_image" class="Image"
+		unique="true" cascade="delete" />
+	
 	<union-subclass name="Article" table="article" extends="Pecs">
-	    <set name="logs" table="logs_articles" lazy="false">
-	        <key column="id_article" />
-	        <many-to-many class="Log" column="id_log" />
-	    </set>
+		<set name="logs" table="logs_articles" lazy="true">
+			<key column="id_article" />
+			<many-to-many class="Log" column="id_log" />
+		</set>
 	</union-subclass>
-
+	
 	<union-subclass name="Folder" table="folder" extends="Pecs">
-	   <set name="content"  lazy="false" inverse="true" fetch="select">
-            <key>
-                <column name="id_folder_parent" not-null="false" />
-            </key>
-            <one-to-many class="Pecs" />
-        </set>
+		<set name="content" inverse="false" lazy="false" fetch="select"
+			cascade="delete">
+			<key>
+				<column name="id_folder_parent" not-null="true" />
+			</key>
+			<one-to-many class="Pecs" />
+		</set>
 	</union-subclass>
-        
 </class>
         
 </hibernate-mapping>
