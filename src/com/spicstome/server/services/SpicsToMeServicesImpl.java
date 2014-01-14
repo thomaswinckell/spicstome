@@ -78,7 +78,8 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 		Long id = saveImage(imageFolder);
 		imageFolder.setId(id);
 		
-		Folder folder = new Folder(folderDTO,new Folder(folderDTO.getFolder(),null));
+		Folder parent = (folderDTO.getFolder()==null?null:new Folder(folderDTO.getFolder(),null));
+		Folder folder = new Folder(folderDTO,parent);
 	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 	    session.beginTransaction();
 	    session.save(folder);
