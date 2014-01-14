@@ -23,6 +23,7 @@ public class ImageRecord extends TileRecord {
 	
 	public ImageRecord(AlbumDTO albumDTO)
 	{
+		super();
 		setAttribute(PICTURE_ID, albumDTO.getId());
 		setAttribute(PICTURE_NAME, "Album numéro "+albumDTO.getId().toString());
 		setAttribute(PICTURE_PATH, "albumlogo.png");
@@ -31,7 +32,7 @@ public class ImageRecord extends TileRecord {
 	
 	public ImageRecord(ArticleDTO articleDTO)
 	{
-		System.out.println(articleDTO.getName());
+		super();
 		setAttribute(PICTURE_ID, articleDTO.getId());
 		setAttribute(PICTURE_NAME, articleDTO.getName());
 		setAttribute(PICTURE_PATH, "albumlogo.png");

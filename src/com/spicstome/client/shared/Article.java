@@ -20,8 +20,8 @@ public class Article extends Pecs implements Serializable {
 		super(id);
 	}
 
-	public Article(ArticleDTO articleDTO) {
-		super(articleDTO);
+	public Article(ArticleDTO articleDTO,Folder parent) {
+		super(articleDTO,parent);
 		Set<LogDTO> logDTOs = articleDTO.getLogs();
 		if (logDTOs != null) {
 			Set<Log> logs = new HashSet<Log>(logDTOs.size());

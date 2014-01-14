@@ -37,29 +37,39 @@ public class AlbumEditViewImpl extends UserViewLayout  implements AlbumEditView{
 		this.albumEditPanel = new AlbumEditPanel(){
 
 			@Override
-			public void onValidateChange() 
+			public void onSaveArticle() 
 			{
 	
+				FolderDTO parent = (FolderDTO)folderTree.selectFolderNode.getAttributeAsObject("data");
+				
 				ArticleDTO a = new ArticleDTO((long)-1,
 						"articleNom",
 						0,
-						album.getFolder(),
+						parent,
 						new ImageDTO((long) -1, "all.png"),
 						new HashSet<LogDTO>());
 				
 				((AlbumEditView.Presenter)(listener)).save(a);
+		
+				listener.goTo(new AlbumManagementPlace());
+			}
+
+			@Override
+			public void onSaveFolder() {
 				
-				/*
+				FolderDTO parent = (FolderDTO)folderTree.selectFolderNode.getAttributeAsObject("data");
+				
 				FolderDTO f = new FolderDTO((long)-1,
 						"nomDossier",
 						0,
-						album.getFolder(),
+						parent,
 						new ImageDTO((long)-1,"all.png"),
 						new HashSet<PecsDTO>());
 				
-				((AlbumEditView.Presenter)(listener)).save(f);*/
+				((AlbumEditView.Presenter)(listener)).save(f);
 				
 				listener.goTo(new AlbumManagementPlace());
+				
 			}
 			
 		};

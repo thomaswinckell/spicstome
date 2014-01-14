@@ -21,16 +21,16 @@ public class Folder extends Pecs implements Serializable {
 		super(id);
 	}
 	
-	public Folder(FolderDTO folderDTO) {
-		super(folderDTO);
+	public Folder(FolderDTO folderDTO,Folder parent) {
+		super(folderDTO,parent);
 		Set<PecsDTO> pecsDTOs = folderDTO.getContent();
 		if (pecsDTOs != null) {
 			Set<Pecs> pecs = new HashSet<Pecs>(pecsDTOs.size());
 			for (PecsDTO pecsDTO : pecsDTOs) {
-				if (pecsDTO.getClass().getName() == "FolderDTO")
-					pecs.add(new Folder((FolderDTO) pecsDTO));
+				if (pecsDTO instanceof FolderDTO)
+					pecs.add(new Folder((FolderDTO) pecsDTO,this));
 				else
-					pecs.add(new Article((ArticleDTO) pecsDTO));
+					pecs.add(new Article((ArticleDTO) pecsDTO,this));
 			}
 			this.content = pecs;
 		}

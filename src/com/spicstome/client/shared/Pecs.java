@@ -21,13 +21,11 @@ public abstract class Pecs implements Serializable {
 		this.id = id;
 	}
 	
-	public Pecs(PecsDTO pecsDTO) {
+	public Pecs(PecsDTO pecsDTO,Folder parent) {
 		id = pecsDTO.getId();
 		name = pecsDTO.getName();
 		order = pecsDTO.getOrder();
-		folder = null;
-		if (pecsDTO.getFolder() != null)
-			folder = new Folder(pecsDTO.getFolder());
+		folder = parent;
 		image = new Image(pecsDTO.getImage());
 	}
 

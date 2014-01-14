@@ -36,7 +36,7 @@ public class Log implements Serializable {
 		if (articleDTOs != null) {
 			Set<Article> articles = new HashSet<Article>(articleDTOs.size());
 			for (ArticleDTO articleDTO : articleDTOs) {
-				articles.add(new Article(articleDTO));
+				articles.add(new Article(articleDTO,null));
 			}
 			this.articles = articles;
 		}

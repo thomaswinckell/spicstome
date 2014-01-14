@@ -73,36 +73,25 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 		
 
 		SpicsToMeServices.Util.getInstance().saveArticle(a, new AsyncCallback<Long>() {
-
-		
 			@Override
-			public void onSuccess(Long result) {
-				
-				
-				
-			}
-			
+			public void onSuccess(Long result) {}			
 			@Override
 			public void onFailure(Throwable caught) {}
 		});
 		
-		System.out.println("save !");
 	}
 
 	@Override
 	public void save(FolderDTO f) {
 		SpicsToMeServices.Util.getInstance().saveFolder(f,new AsyncCallback<Long>() {
-
 			@Override
 			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
-				
+				// TODO Auto-generated method stub		
 			}
 
 			@Override
 			public void onSuccess(Long result) {
-				// TODO Auto-generated method stub
-				
+				// TODO Auto-generated method stub			
 			}
 		});
 		

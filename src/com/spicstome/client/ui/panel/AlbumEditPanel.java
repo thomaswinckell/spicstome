@@ -62,7 +62,7 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 								new HashSet<LogDTO>());
 						
 						album.getFolder().getContent().add(artcileDTO);*/
-						onValidateChange();
+						onSaveArticle();
 					}
 				};
 				articleFormWindow.show();
@@ -117,7 +117,13 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 			@Override
 			public void onNew() {
 				
-				FolderFormWindow folderFormWindow = new FolderFormWindow(FolderFormWindow.Mode.NEW);
+				FolderFormWindow folderFormWindow = new FolderFormWindow(FolderFormWindow.Mode.NEW){
+					@Override
+					public void onDestroy()
+					{
+						onSaveFolder();
+					}};
+
 				folderFormWindow.show();
 				
 				/*
@@ -225,7 +231,6 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 			{
 				if(pecsDTO instanceof ArticleDTO)
 				{
-					System.out.println("ajout article");
 					articles.add(new ImageRecord((ArticleDTO)pecsDTO));
 				}
 					
@@ -244,6 +249,7 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 		
 	}
 	
-	public abstract void onValidateChange();
+	public abstract void onSaveArticle();
+	public abstract void onSaveFolder();
 
 }

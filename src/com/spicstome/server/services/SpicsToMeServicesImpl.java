@@ -3,7 +3,6 @@ package com.spicstome.server.services;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import javax.servlet.ServletException;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
@@ -12,7 +11,6 @@ import com.spicstome.client.dto.AlbumDTO;
 import com.spicstome.client.dto.ArticleDTO;
 import com.spicstome.client.dto.FolderDTO;
 import com.spicstome.client.dto.ImageDTO;
-import com.spicstome.client.dto.LogDTO;
 import com.spicstome.client.dto.PecsDTO;
 import com.spicstome.client.dto.StudentDTO;
 import com.spicstome.client.dto.UserDTO;
@@ -22,8 +20,6 @@ import com.spicstome.client.shared.Album;
 import com.spicstome.client.shared.Article;
 import com.spicstome.client.shared.Folder;
 import com.spicstome.client.shared.Image;
-import com.spicstome.client.shared.Log;
-import com.spicstome.client.shared.Pecs;
 import com.spicstome.client.shared.Student;
 import com.spicstome.client.shared.User;
 
@@ -48,7 +44,7 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	    if (users.isEmpty())
 	    	return null;
 	    else {
-	    	UserDTO userDTO = createUserDTO(users.get(0));	    	
+	    	UserDTO userDTO = Transtypage.createUserDTO(users.get(0));	    	
 	    	getThreadLocalRequest().getSession().setAttribute("currentUser", userDTO);	    
 	    	return userDTO;
 	    }
@@ -77,7 +73,12 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	
 	@Override
 	public Long saveFolder(FolderDTO folderDTO) {
-		Folder folder = new Folder(folderDTO);
+		
+		ImageDTO imageFolder = folderDTO.getImage();
+		Long id = saveImage(imageFolder);
+		imageFolder.setId(id);
+		
+		Folder folder = new Folder(folderDTO,new Folder(folderDTO.getFolder(),null));
 	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 	    session.beginTransaction();
 	    session.save(folder);
@@ -92,7 +93,7 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 		Long id = saveImage(imageArticle);
 		imageArticle.setId(id);
 		
-		Article article = new Article(articleDTO);
+		Article article = new Article(articleDTO,new Folder(articleDTO.getFolder(),null));
 	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 	    
 	    session.beginTransaction();
@@ -150,7 +151,7 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 		
 		if(list.size()>0)
 		{
-			return createAlbumDTO(list.get(0));
+			return Transtypage.createAlbumDTO(list.get(0));
 		}
 		else
 		{
@@ -173,7 +174,7 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 		{ 
 			for(int i=0;i<list.size();i++)
 			{
-				listAlbumDTO.add(createAlbumDTO(list.get(i)));
+				listAlbumDTO.add(Transtypage.createAlbumDTO(list.get(i)));
 			}
 		}
 
@@ -229,106 +230,14 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	    session.getTransaction().commit();
 	    
 	    if(users.size()>0)
-	    	return createStudentDTO(users.get(0));
+	    	return Transtypage.createStudentDTO(users.get(0));
 	    else
 	    	return null;
 
 	}
 	
 	
-	/* ***********************************************
-	 * FONCTION DE TRANSTYPAGE
-	 * 
-	 * *************************************************/
 	
-	private ImageDTO createImageDTO(Image image) {
-		return new ImageDTO(image.getId(), image.getFilename());
-	}
-	
-	private AlbumDTO createAlbumDTO(Album album)
-	{
-		return new AlbumDTO(album.getId(),createFolderDTO(album.getFolder()));
-	}
-	
-	private FolderDTO createFolderDTO(Folder folder)
-	{
-		return new FolderDTO(folder.getId(),folder.getName(),folder.getOrder(),null,createImageDTO(folder.getImage()),createListPecsDTO(folder.getContent()));
-	}
-	
-	private ArticleDTO createArticleDTO(Article article)
-	{
-		return new ArticleDTO(article.getId(),article.getName(),article.getOrder(),null,createImageDTO(article.getImage()),null);
-	}
-	
-	private LogDTO createLogDTO(Log log)
-	{
-		return new LogDTO(log.getId(),createStudentDTO(log.getStudent()),
-				log.getEmailRecipient(),log.getDate(),createListArticleDTO(log.getArticles()));
-	}
-	
-	private Set<LogDTO> createListLogDTO(Set<Log> list)
-	{
-		Set<LogDTO> listDTO=new HashSet<>();
-		
-		for(Log log:list){		
-			listDTO.add(createLogDTO(log));
-		}
-
-		return listDTO;
-	}
-	
-	private Set<ArticleDTO> createListArticleDTO(Set<Article> list)
-	{
-		Set<ArticleDTO> listDTO=new HashSet<>();
-		
-		for(Article article:list){	
-			listDTO.add(createArticleDTO(article));
-		}
-
-		return listDTO;
-	}
-	
-	private Set<PecsDTO> createListPecsDTO(Set<Pecs> list)
-	{
-		Set<PecsDTO> listDTO=new HashSet<>();
-		
-		for(Pecs p:list)
-		{
-			if(p instanceof Article)
-				listDTO.add(createArticleDTO((Article)p));
-			if(p instanceof Folder)
-				listDTO.add(createFolderDTO((Folder)p));
-		}
-
-		return listDTO;
-	}
-	
-	
-
-	private UserDTO createUserDTO(User user) {
-		return new UserDTO(user.getId(), user.getSubscriptionDate(), user.getFirstName(), 
-				user.getName(), user.getEmail(), user.getLogin(), user.getPassword(), createImageDTO(user.getImage()));
-	}
-
-	private StudentDTO createStudentDTO(Student student)
-	{
-		return new StudentDTO(student.getId(),
-				student.getSubscriptionDate(),
-				student.getFirstName(),
-				student.getName(),	 
-				student.getEmail(), 
-				student.getLogin(), 
-				student.getPassword(), 
-				createImageDTO(student.getImage()),
-				createAlbumDTO(student.getAlbum()),
-				createListLogDTO(student.getLogs()),null,null);
-			
-		// null null => le mec qui en a eu marre mais c'est la liste des referent et des teacher donc methode
-		// pour transcrire teacher , list de teacher ...
-	}
-
-
-
 	
 	
 	

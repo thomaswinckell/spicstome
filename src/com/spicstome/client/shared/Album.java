@@ -21,7 +21,7 @@ public class Album implements Serializable {
 
 	public Album(AlbumDTO albumDTO) {
 		id = albumDTO.getId();
-		folder = new Folder(albumDTO.getFolder());
+		folder = new Folder(albumDTO.getFolder(),null);
 	}
 
 	public Long getId() {
