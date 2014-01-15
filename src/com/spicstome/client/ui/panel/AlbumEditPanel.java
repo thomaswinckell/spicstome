@@ -49,7 +49,7 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 
 			@Override
 			public void onNew() {
-				ArticleFormWindow articleFormWindow = new ArticleFormWindow(ArticleFormWindow.Mode.NEW){
+				ArticleFormWindow articleFormWindow = new ArticleFormWindow(ArticleFormWindow.Mode.NEW,null){
 					@Override
 					public void onDestroy()
 					{
@@ -69,9 +69,13 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 
 			}
 			
+		
+			
 			@Override
 			public void onEdit() {
-				ArticleFormWindow articleFormWindow = new ArticleFormWindow(ArticleFormWindow.Mode.EDIT);
+				
+				ArticleDTO article = getSelectedArticle();
+				ArticleFormWindow articleFormWindow = new ArticleFormWindow(ArticleFormWindow.Mode.EDIT,article);
 				articleFormWindow.show();
 				
 			}
@@ -110,14 +114,14 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 
 			@Override
 			public void onEdit() {
-				FolderFormWindow folderFormWindow = new FolderFormWindow(FolderFormWindow.Mode.EDIT);
+				FolderDTO folder = getSelectedFolder();
+				FolderFormWindow folderFormWindow = new FolderFormWindow(FolderFormWindow.Mode.EDIT,folder);
 				folderFormWindow.show();
 			}
 
 			@Override
 			public void onNew() {
-				
-				FolderFormWindow folderFormWindow = new FolderFormWindow(FolderFormWindow.Mode.NEW){
+				FolderFormWindow folderFormWindow = new FolderFormWindow(FolderFormWindow.Mode.NEW,null){
 					@Override
 					public void onDestroy()
 					{
@@ -199,6 +203,16 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 	    
 	}
 	
+	public ArticleDTO getSelectedArticle()
+	{
+		return (ArticleDTO)((ImageRecord)(articlesGrid.getSelectedRecord())).getAttributeAsObject(ImageRecord.DATA);
+	}
+	
+	public FolderDTO getSelectedFolder()
+	{
+		return (FolderDTO)folderTree.selectFolderNode.getAttributeAsObject("data");
+	}
+	
 	public void Update()
 	{
 		actionArticlePanel.setHiddenActionVisible(articlesGrid.getSelectedRecord()!=null);
@@ -223,8 +237,8 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 		
 		if(changed)
 		{
-			FolderDTO folder = (FolderDTO)folderTree.selectFolderNode.getAttributeAsObject("data");
 			
+			FolderDTO folder = getSelectedFolder();
 			
 			
 			for(PecsDTO pecsDTO:folder.getContent())

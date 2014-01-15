@@ -13,11 +13,11 @@ import com.spicstome.client.place.AlbumManagementPlace;
 import com.spicstome.client.ui.panel.AlbumEditPanel;
 import com.spicstome.client.ui.widget.Crumb;
 
-public class AlbumEditViewImpl extends UserViewLayout  implements AlbumEditView{
+public class AlbumEditViewImpl extends UserViewImpl  implements AlbumEditView{
 	
 	
 	AlbumEditPanel albumEditPanel;
-
+	Crumb crumb;
 	
 	public AlbumEditViewImpl()
 	{
@@ -31,8 +31,14 @@ public class AlbumEditViewImpl extends UserViewLayout  implements AlbumEditView{
 			}
 		});
 		
-		addCrumb(new Crumb("Album de Albert (edit)"){});
-
+		crumb = new Crumb(""){
+			@Override
+			public void onClickCrumb() {}
+		};
+		
+		addCrumb(crumb);
+		
+		System.out.println(crumb);
 		
 		this.albumEditPanel = new AlbumEditPanel(){
 
@@ -96,7 +102,9 @@ public class AlbumEditViewImpl extends UserViewLayout  implements AlbumEditView{
 	public void setOwner(String name) {
 		
 		albumEditPanel.comboBoxOwner.setValue(name);
-		
+		String crumbText = "Album de "+name+" (administration)";
+		crumb.setCrumbTitle(crumbText);
+
 	}
 
 	

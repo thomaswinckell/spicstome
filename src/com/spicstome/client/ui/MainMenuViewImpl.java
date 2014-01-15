@@ -13,7 +13,7 @@ import com.spicstome.client.ui.widget.ImageTileGrid;
 import com.spicstome.client.ui.widget.ImageRecord;
 import com.spicstome.client.ui.widget.ImageTileGrid.Mode;
 
-public class MainMenuViewImpl extends UserViewLayout implements MainMenuView {
+public class MainMenuViewImpl extends UserViewImpl implements MainMenuView {
 	
 	ImageTileGrid imageList;	
 	

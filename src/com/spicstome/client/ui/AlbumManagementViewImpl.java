@@ -11,7 +11,7 @@ import com.spicstome.client.ui.widget.ImageTileGrid;
 import com.spicstome.client.ui.widget.ImageRecord;
 import com.spicstome.client.ui.widget.ImageTileGrid.Mode;
 
-public class AlbumManagementViewImpl extends UserViewLayout  implements AlbumManagementView
+public class AlbumManagementViewImpl extends UserViewImpl  implements AlbumManagementView
 {
 
 	ImageTileGrid imageList;

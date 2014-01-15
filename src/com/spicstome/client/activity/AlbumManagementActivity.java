@@ -10,14 +10,14 @@ import com.spicstome.client.ClientFactory;
 import com.spicstome.client.dto.AlbumDTO;
 import com.spicstome.client.place.AlbumManagementPlace;
 import com.spicstome.client.services.SpicsToMeServices;
-import com.spicstome.client.ui.UserViewLayout;
+import com.spicstome.client.ui.UserViewImpl;
 
 
 public class AlbumManagementActivity extends UserActivity {
 
 	public AlbumManagementActivity(AlbumManagementPlace place, ClientFactory clientFactory) {
 
-		super(place, clientFactory,(UserViewLayout)clientFactory.getAlbumManagementView());
+		super(place, clientFactory,(UserViewImpl)clientFactory.getAlbumManagementView());
 	}
 	
 	@Override

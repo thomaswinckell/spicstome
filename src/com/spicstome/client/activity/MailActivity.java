@@ -4,12 +4,12 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.spicstome.client.ClientFactory;
 import com.spicstome.client.place.MailPlace;
-import com.spicstome.client.ui.UserViewLayout;
+import com.spicstome.client.ui.UserViewImpl;
 
 public class MailActivity extends UserActivity{
 
 	public MailActivity(MailPlace place, ClientFactory clientFactory) {
-		super(place, clientFactory,(UserViewLayout)clientFactory.getMailView());		
+		super(place, clientFactory,(UserViewImpl)clientFactory.getMailView());		
 	}
 
 	@Override

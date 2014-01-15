@@ -9,7 +9,7 @@ import com.spicstome.client.ui.panel.AlbumBookPanel;
 import com.spicstome.client.ui.panel.Book;
 import com.spicstome.client.ui.widget.Crumb;
 
-public class AlbumViewImpl extends UserViewLayout  implements AlbumView{
+public class AlbumViewImpl extends UserViewImpl  implements AlbumView{
 	
 	
 	AlbumBookPanel albumBookPanel;

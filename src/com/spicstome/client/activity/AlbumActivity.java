@@ -11,7 +11,7 @@ import com.spicstome.client.dto.FolderDTO;
 import com.spicstome.client.place.AlbumPlace;
 import com.spicstome.client.services.SpicsToMeServices;
 import com.spicstome.client.ui.AlbumView;
-import com.spicstome.client.ui.UserViewLayout;
+import com.spicstome.client.ui.UserViewImpl;
 
 public class AlbumActivity extends UserActivity{
 
@@ -20,7 +20,7 @@ public class AlbumActivity extends UserActivity{
 	AlbumView albumView;
 	
 	public AlbumActivity(AlbumPlace place, ClientFactory clientFactory) {
-		super(place, clientFactory,(UserViewLayout)clientFactory.getAlbumView());
+		super(place, clientFactory,(UserViewImpl)clientFactory.getAlbumView());
 
 		this.albumView = clientFactory.getAlbumView();
 

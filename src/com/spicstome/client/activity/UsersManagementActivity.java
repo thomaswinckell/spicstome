@@ -3,7 +3,7 @@ package com.spicstome.client.activity;
 
 import com.spicstome.client.ClientFactory;
 import com.spicstome.client.place.UsersManagementPlace;
-import com.spicstome.client.ui.UserViewLayout;
+import com.spicstome.client.ui.UserViewImpl;
 import com.spicstome.client.ui.UsersManagementView;
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.event.shared.EventBus;
@@ -16,7 +16,7 @@ import com.google.gwt.user.client.ui.AcceptsOneWidget;
 public class UsersManagementActivity extends UserActivity {
 
 	public UsersManagementActivity(UsersManagementPlace place, ClientFactory clientFactory) {
-		super(place, clientFactory,(UserViewLayout)clientFactory.getUsersManagementView());
+		super(place, clientFactory,(UserViewImpl)clientFactory.getUsersManagementView());
 	}
 
 	@Override

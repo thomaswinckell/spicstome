@@ -12,6 +12,7 @@ import com.smartgwt.client.widgets.form.fields.FileItem;
 import com.smartgwt.client.widgets.form.fields.RadioGroupItem;
 import com.smartgwt.client.widgets.form.fields.TextItem;
 import com.smartgwt.client.widgets.layout.VLayout;
+import com.spicstome.client.dto.ArticleDTO;
 
 public class ArticleFormWindow extends Window{
 	
@@ -31,15 +32,12 @@ public class ArticleFormWindow extends Window{
 	
 	public enum Mode{NEW, EDIT}
 	
-	public ArticleFormWindow(Mode mode)
+	public ArticleFormWindow(Mode mode,ArticleDTO article)
 	{
 		setWidth(500);
 		setHeight(500);
 
-		if(mode==Mode.NEW)
-			setTitle("Création d'un nouvel article");
-		else if(mode==Mode.EDIT)
-			setTitle("Edition d'un article");
+		
 		
 		setShowMinimizeButton(false);
 		setIsModal(true);
@@ -66,6 +64,7 @@ public class ArticleFormWindow extends Window{
 		
 		buttonValidate.setIconSize(42);
 		buttonValidate.setIcon("check.png");
+		buttonValidate.setLayoutAlign(Alignment.CENTER);
 		buttonValidate.addClickHandler(new ClickHandler() {
 			
 			@Override
@@ -81,5 +80,16 @@ public class ArticleFormWindow extends Window{
 		verticalLayout.addMember(buttonValidate);
 		
 		addItem(verticalLayout);
+		
+		
+		if(mode==Mode.NEW)
+			setTitle("Création d'un nouvel article");
+		else if(mode==Mode.EDIT)
+		{
+			setTitle("Edition d'un article");
+			nameDetail.setValue(article.getName());
+		}
+			
 	}
+	
 }

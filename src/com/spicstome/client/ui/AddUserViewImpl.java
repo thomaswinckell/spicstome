@@ -34,7 +34,7 @@ import com.spicstome.client.shared.Album;
 import com.spicstome.client.shared.Image;
 import com.spicstome.client.ui.widget.Crumb;
 
-public class AddUserViewImpl extends UserViewLayout  implements AddUserView {
+public class AddUserViewImpl extends UserViewImpl  implements AddUserView {
 
 	public AddUserViewImpl () {
 		super();
@@ -50,7 +50,7 @@ public class AddUserViewImpl extends UserViewLayout  implements AddUserView {
 	    dataSource.setID("newUser");
 	    
 	    DataSourceTextField firstNameTextField = new DataSourceTextField("first_name");
-	    firstNameTextField.setTitle("Prénom");
+	    firstNameTextField.setTitle("Prï¿½nom");
 	    firstNameTextField.setRequired(true);
 	    
 	    DataSourceTextField nameTextField = new DataSourceTextField("name");

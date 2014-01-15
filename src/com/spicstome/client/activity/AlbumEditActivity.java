@@ -13,7 +13,7 @@ import com.spicstome.client.dto.StudentDTO;
 import com.spicstome.client.place.AlbumEditPlace;
 import com.spicstome.client.services.SpicsToMeServices;
 import com.spicstome.client.ui.AlbumEditView;
-import com.spicstome.client.ui.UserViewLayout;
+import com.spicstome.client.ui.UserViewImpl;
 
 public class AlbumEditActivity extends UserActivity implements AlbumEditView.Presenter{
 	
@@ -22,7 +22,7 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 	
 
 	public AlbumEditActivity(AlbumEditPlace place, ClientFactory clientFactory) {
-		super(place, clientFactory,(UserViewLayout)clientFactory.getAlbumEditView());
+		super(place, clientFactory,(UserViewImpl)clientFactory.getAlbumEditView());
 
 		this.editview = clientFactory.getAlbumEditView();
 

@@ -24,7 +24,7 @@ import com.spicstome.client.ui.widget.Crumb;
 /**
  * Sample implementation of {@link UsersManagementView}.
  */
-public class UsersManagementViewImpl extends UserViewLayout implements UsersManagementView {
+public class UsersManagementViewImpl extends UserViewImpl implements UsersManagementView {
 
 	public UsersManagementViewImpl() {
 

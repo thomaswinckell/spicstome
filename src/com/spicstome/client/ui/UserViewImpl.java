@@ -5,14 +5,14 @@ import com.smartgwt.client.widgets.layout.VLayout;
 import com.spicstome.client.ui.panel.MenuTopPanel;
 import com.spicstome.client.ui.widget.Crumb;
 
-public class UserViewLayout extends VLayout implements UserView{
+public class UserViewImpl extends VLayout implements UserView{
 
 	
 	protected VLayout mainPanel = new VLayout();
 	protected Presenter listener;
 	protected MenuTopPanel connectPanel;
 	
-	public UserViewLayout() {
+	public UserViewImpl() {
 		
 		connectPanel=new MenuTopPanel(this);
 		

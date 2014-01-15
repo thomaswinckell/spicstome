@@ -12,14 +12,14 @@ import com.spicstome.client.dto.UserDTO;
 import com.spicstome.client.place.LoginPlace;
 import com.spicstome.client.services.SpicsToMeServices;
 import com.spicstome.client.ui.UserView;
-import com.spicstome.client.ui.UserViewLayout;
+import com.spicstome.client.ui.UserViewImpl;
 
 public class UserActivity extends AbstractActivity implements UserView.Presenter{
 
-	protected UserViewLayout userView;
+	protected UserViewImpl userView;
 	protected ClientFactory clientFactory;
 	
-	public UserActivity(Place place, ClientFactory clientFactory,UserViewLayout userView) 
+	public UserActivity(Place place, ClientFactory clientFactory,UserViewImpl userView) 
 	{
 		this.clientFactory = clientFactory;
 		this.userView = userView;

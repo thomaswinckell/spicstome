@@ -15,7 +15,7 @@ import com.spicstome.client.ui.widget.Crumb;
 import com.spicstome.client.ui.widget.DropZone;
 
 
-public class MailViewImpl extends UserViewLayout  implements MailView{
+public class MailViewImpl extends UserViewImpl  implements MailView{
 	
 	
 	AlbumBookPanel album;

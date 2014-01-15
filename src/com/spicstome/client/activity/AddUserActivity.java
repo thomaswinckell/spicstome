@@ -4,12 +4,12 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.spicstome.client.ClientFactory;
 import com.spicstome.client.place.AddUserPlace;
-import com.spicstome.client.ui.UserViewLayout;
+import com.spicstome.client.ui.UserViewImpl;
 
 public class AddUserActivity extends UserActivity {
 
 	public AddUserActivity(AddUserPlace place, ClientFactory clientFactory) {
-		super(place, clientFactory,(UserViewLayout)clientFactory.getAddUserView());
+		super(place, clientFactory,(UserViewImpl)clientFactory.getAddUserView());
 	}
 
 	@Override

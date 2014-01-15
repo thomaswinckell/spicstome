@@ -10,6 +10,7 @@ import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.FileItem;
 import com.smartgwt.client.widgets.form.fields.TextItem;
 import com.smartgwt.client.widgets.layout.VLayout;
+import com.spicstome.client.dto.FolderDTO;
 
 public class FolderFormWindow extends Window{
 
@@ -24,17 +25,14 @@ public class FolderFormWindow extends Window{
 	
 	public enum Mode{NEW, EDIT}
 	
-	public FolderFormWindow(Mode mode) 
+	public FolderFormWindow(Mode mode,FolderDTO folder) 
 	{
 		super();
 
 		setWidth(500);
 		setHeight(300);
 
-		if(mode==Mode.NEW)
-			setTitle("Création d'un nouveau dossier");
-		else if(mode==Mode.EDIT)
-			setTitle("Edition d'un dossier");
+	
 		
 		setShowMinimizeButton(false);
 		setIsModal(true);
@@ -56,6 +54,7 @@ public class FolderFormWindow extends Window{
 		
 		buttonValidate.setIconSize(42);
 		buttonValidate.setIcon("check.png");
+		buttonValidate.setLayoutAlign(Alignment.CENTER);
 		buttonValidate.addClickHandler(new ClickHandler() {
 			
 			@Override
@@ -72,7 +71,15 @@ public class FolderFormWindow extends Window{
 		verticalLayout.addMember(buttonValidate);
 		
 		addItem(verticalLayout);
-				
+		
+		if(mode==Mode.NEW)
+			setTitle("Création d'un nouveau dossier");
+		else if(mode==Mode.EDIT)
+		{
+			setTitle("Edition d'un dossier");
+			nameDetail.setValue(folder.getName());
+		}
+			
 		
 	}
 }

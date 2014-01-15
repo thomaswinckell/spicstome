@@ -18,13 +18,13 @@ import com.smartgwt.client.widgets.layout.HLayout;
 public abstract class Crumb extends HLayout{
 
 
-	Label button = new Label();
+	private Label label = new Label();
 	
 	public Crumb(String s)
 	{
-		this.button=new Label(s);
+		this.label=new Label(s);
 		
-		this.button.addClickHandler(new ClickHandler() {
+		this.label.addClickHandler(new ClickHandler() {
 			
 			@Override
 			public void onClick(ClickEvent event) {
@@ -34,11 +34,16 @@ public abstract class Crumb extends HLayout{
 		
 		
 		setWidth(150);
-		button.setWidth100();
+		label.setWidth100();
 		
-		button.setStyleName("crumb");
+		label.setStyleName("crumb");
 		
-		addMember(button);
+		addMember(label);
+	}
+	
+	public void setCrumbTitle(String s)
+	{
+		this.label.setContents(s);
 	}
 	
 	public void onClickCrumb()
