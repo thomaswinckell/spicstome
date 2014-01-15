@@ -40,5 +40,8 @@ public interface SpicsToMeServicesAsync {
 	void saveAlbum(AlbumDTO albumDTO, AsyncCallback<Long> callback);
 	void saveStudent(StudentDTO studentDTO, AsyncCallback<Long> callback);
 	void saveArticle(ArticleDTO articleDTO, AsyncCallback<Long> callback);
+	
+	void deleteArticle(ArticleDTO articleDTO,AsyncCallback<Boolean> callback);
+	void deleteFolder(FolderDTO folderDTO,AsyncCallback<Boolean> callback);
 
 }

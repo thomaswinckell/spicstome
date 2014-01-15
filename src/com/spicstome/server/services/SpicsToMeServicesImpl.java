@@ -103,6 +103,8 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	    return article.getId();
 	}
 	
+	
+	
 	@Override
 	public Long saveAlbum(AlbumDTO albumDTO) {
 		Album album = new Album(albumDTO);
@@ -141,6 +143,30 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	    
 	    return student.getId();
 	}	
+	
+	@Override
+	public boolean deleteArticle(ArticleDTO articleDTO) {
+	
+		Article article = new Article(articleDTO,new Folder(articleDTO.getFolder(),null));
+	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();    
+	    session.beginTransaction();
+	    session.delete(article);
+	    session.getTransaction().commit();
+	    return true;
+		
+	}
+	
+	@Override
+	public boolean deleteFolder(FolderDTO folderDTO) {
+
+		Folder parent = (folderDTO.getFolder()==null?null:new Folder(folderDTO.getFolder(),null));
+		Folder folder = new Folder(folderDTO,parent);
+	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();    
+	    session.beginTransaction();
+	    session.delete(folder);
+	    session.getTransaction().commit();
+	    return true;
+	}
 
 	@Override
 	public AlbumDTO getAlbum(long id) {
@@ -236,6 +262,10 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	    	return null;
 
 	}
+
+	
+
+	
 	
 	
 	

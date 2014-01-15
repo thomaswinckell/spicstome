@@ -77,6 +77,20 @@ public class AlbumEditViewImpl extends UserViewImpl  implements AlbumEditView{
 				listener.goTo(new AlbumManagementPlace());
 				
 			}
+
+			@Override
+			public void onDeleteArticle(ArticleDTO a) {
+				
+				((AlbumEditView.Presenter)(listener)).delete(a);
+				listener.goTo(new AlbumManagementPlace());
+			}
+
+			@Override
+			public void onDeleteFolder(FolderDTO f) {
+				
+				((AlbumEditView.Presenter)(listener)).delete(f);			
+				listener.goTo(new AlbumManagementPlace());		
+			}
 			
 		};
 		
