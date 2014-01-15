@@ -10,8 +10,15 @@ import com.google.gwt.place.shared.PlaceTokenizer;
  * {@link Place} in your app.
  */
 public class AddUserPlace extends Place {
+	
+	private String idUser;
 
-	public AddUserPlace() {
+	public AddUserPlace(String idUser) {
+		this.idUser = idUser;
+	}
+	
+	public String getIdUser() {
+		return idUser;
 	}
 
 	/**
@@ -21,12 +28,21 @@ public class AddUserPlace extends Place {
 
 		@Override
 		public String getToken(AddUserPlace place) {
-			return "adduser";
+			if (place.getIdUser() == null)
+				return "adduser";
+			else
+				return "edituser:"+place.getIdUser();
 		}
 
 		@Override
 		public AddUserPlace getPlace(String token) {
-			return new AddUserPlace();
+			
+			String [] s = token.split(":");
+			
+			if (s[0].equals("adduser"))
+				return new AddUserPlace(null);
+			else
+				return new AddUserPlace(s[1]);
 		}
 
 	}
