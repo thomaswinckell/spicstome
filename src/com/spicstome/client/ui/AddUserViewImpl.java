@@ -2,11 +2,9 @@ package com.spicstome.client.ui;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.spicstome.client.dto.UserDTO;
-import com.spicstome.client.place.AddUserPlace;
 import com.spicstome.client.place.UsersManagementPlace;
 import com.spicstome.client.ui.form.FormUtils;
 import com.spicstome.client.ui.form.UserForm;
-import com.spicstome.client.ui.widget.Crumb;
 
 public class AddUserViewImpl extends UserViewImpl  implements AddUserView {
 
