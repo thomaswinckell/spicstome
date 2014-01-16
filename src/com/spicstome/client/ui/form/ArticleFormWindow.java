@@ -54,7 +54,7 @@ public class ArticleFormWindow extends Window{
 					"nom de l'article",
 					0,
 					parent,
-					new ImageDTO((long) -1, ""),
+					new ImageDTO((long) -1, "default_article.png"),
 					new HashSet<LogDTO>());
 		}
 		else if(mode==Mode.EDIT)

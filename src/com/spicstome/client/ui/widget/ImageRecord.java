@@ -35,7 +35,7 @@ public class ImageRecord extends TileRecord {
 		super();
 		setAttribute(PICTURE_ID, articleDTO.getId());
 		setAttribute(PICTURE_NAME, articleDTO.getName());
-		setAttribute(PICTURE_PATH, "albumlogo.png");
+		setAttribute(PICTURE_PATH, "upload/"+articleDTO.getImage().getFilename());
 		setAttribute(DATA, articleDTO);
 	}
 	

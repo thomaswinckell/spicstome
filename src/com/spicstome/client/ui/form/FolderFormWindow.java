@@ -46,7 +46,7 @@ public class FolderFormWindow extends Window{
 					"nom du dossier",
 					0,
 					parent,
-					new ImageDTO((long)-1,""),
+					new ImageDTO((long)-1,"default_folder.png"),
 					new HashSet<PecsDTO>());
 		}
 			
