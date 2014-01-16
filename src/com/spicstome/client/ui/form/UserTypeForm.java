@@ -70,19 +70,18 @@ public class UserTypeForm extends DynamicForm {
 		if (mode == FormUtils.Mode.NEW) {
 	        userTypeSelectItem.setDefaultValue("student");
 	        userTypeSelectItem.enable();
+	        setStudentMode();
 		} else {
 	    	if (userDTO instanceof StudentDTO) {
 	    		userTypeSelectItem.setDefaultValue("student");
+	    		setStudentMode();
 	    	} else {
 	    		if (userDTO instanceof TeacherDTO)
 		    		userTypeSelectItem.setDefaultValue("teacher");
 		    	else
 		    		userTypeSelectItem.setDefaultValue("referent");
 		    	
-	    		linkedStudentsForm.getLinkedStudentsSelectItem().show(); 
-	    		linkedStudentsForm.getRemoveStudentButtonItem().show(); 
-	    		linkedStudentsForm.getNonLinkedStudentsSelectItem().show();  
-	    		linkedStudentsForm.getAddStudentButtonItem().show();
+	    		setTeacherOrReferentMode();
 	    	}
 	    }
 	}

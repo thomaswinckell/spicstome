@@ -87,7 +87,7 @@ public class BasicUserForm extends DynamicForm{
 		
 		if (validate) {
 		
-			if ((mode == FormUtils.Mode.NEW) || (!getValueAsString("pasword").isEmpty())) {
+			if ((mode == FormUtils.Mode.NEW) || (!getValueAsString("password").isEmpty())) {
 				if (!getValueAsString("password").equals(getValueAsString("password2"))) {
 					SC.warn("La confirmation du mot de passe n'est pas bonne.");
 					return false;
@@ -108,7 +108,7 @@ public class BasicUserForm extends DynamicForm{
 		userDTO.setEmail(getValueAsString("email"));
 		userDTO.setLogin(getValueAsString("login"));
 		
-		if ((mode == FormUtils.Mode.NEW) || (!getValueAsString("pasword").isEmpty()))
-			userDTO.setPassword(getValueAsString("pasword"));
+		if ((mode == FormUtils.Mode.NEW) || (!getValueAsString("password").isEmpty()))
+			userDTO.setPassword(getValueAsString("password"));
 	}
 }

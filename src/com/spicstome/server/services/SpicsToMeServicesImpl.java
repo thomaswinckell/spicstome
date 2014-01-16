@@ -222,6 +222,10 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 
 	@Override
 	public Long saveUser(UserDTO userDTO) {
+		
+		Long idImageUser = saveImage(userDTO.getImage());
+		userDTO.getImage().setId(idImageUser);
+		
 		if (userDTO instanceof StudentDTO)
 			return saveStudent((StudentDTO) userDTO);
 		else if (userDTO instanceof TeacherDTO)
@@ -274,7 +278,7 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	
 	/* SAVE */
 	
-public Long saveFolder(FolderDTO folderDTO) {
+	public Long saveFolder(FolderDTO folderDTO) {
 		
 		ImageDTO imageFolder = folderDTO.getImage();
 		Long id = saveImage(imageFolder);
@@ -333,9 +337,6 @@ public Long saveFolder(FolderDTO folderDTO) {
 		Long idAlbum = saveAlbum(album);
 		album.setId(idAlbum);
 		studentDTO.setAlbum(album);
-		
-		Long idImageUser = saveImage(studentDTO.getImage());
-		studentDTO.getImage().setId(idImageUser);
 		
 		Student student = new Student(studentDTO);		
 	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
