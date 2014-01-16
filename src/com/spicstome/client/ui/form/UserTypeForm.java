@@ -99,7 +99,7 @@ public class UserTypeForm extends DynamicForm {
 		if (userTypeSelectItem.getValueAsString().equals("student")) {
 			if (mode == FormUtils.Mode.NEW) {
 				return new StudentDTO((long) -1, null, null, null, null, null, null, null, null, 
-						new HashSet<LogDTO>(), new HashSet<ReferentDTO>(), new HashSet<TeacherDTO>());
+						new HashSet<LogDTO>());
 			} else {
 				
 				return userDTO;

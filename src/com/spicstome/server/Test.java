@@ -1,5 +1,6 @@
 package com.spicstome.server;
 
+import com.google.gwt.dev.util.collect.HashSet;
 import com.spicstome.client.shared.Album;
 import com.spicstome.client.shared.Folder;
 import com.spicstome.client.shared.Image;
@@ -10,7 +11,7 @@ import com.spicstome.client.shared.Student;
 public class Test {
 	
 	
-	public static void populateWithStudent(String name,String firstname,String login,String password)
+	public static Student populateWithStudent(String name,String firstname,String login,String password)
 	{
 		Image imageRacine = new Image((long)-1);
 		imageRacine.setFilename("all.png");
@@ -28,10 +29,7 @@ public class Test {
 		
 		HibernateManager.getInstance().save(album);
 		
-		Image imageUser = new Image((long)-1);
-		imageUser.setFilename("default_user.png");
-		
-		HibernateManager.getInstance().save(imageUser);
+		Image imageUser = populateWithImageUser();
 		
 		Student student = new Student((long)-1);
 		student.setName(name);
@@ -43,6 +41,18 @@ public class Test {
 		student.setAlbum(album);
 		
 		HibernateManager.getInstance().save(student);
+		
+		return student;
+	}
+	
+	public static Image populateWithImageUser()
+	{
+		Image imageUser = new Image((long)-1);
+		imageUser.setFilename("default_user.png");
+		
+		HibernateManager.getInstance().save(imageUser);
+		
+		return imageUser;
 	}
 	
 	public static void main(String[] args) {
@@ -51,10 +61,7 @@ public class Test {
 		HibernateManager.getInstance().ClearAll();
 		
 		/* Super Admin */
-		Image imageAdmin = new Image((long)-1);
-		imageAdmin.setFilename("default_user.png");
-		
-		HibernateManager.getInstance().save(imageAdmin);
+		Image imageAdmin = populateWithImageUser();
 		
 		Referent superAdmin = new Referent((long)-1);
 		superAdmin.setName("admin");
@@ -67,9 +74,27 @@ public class Test {
 		HibernateManager.getInstance().save(superAdmin);
 		
 		/* Student */
-		populateWithStudent("Dagobert", "Albert", "albert", "albert");
-		populateWithStudent("Hass", "Maxime", "mofo", "mofo");
-		populateWithStudent("Winckell", "Thomas", "tomtom", "tomtom");
+		Student dagobert = populateWithStudent("Dagobert", "Albert", "albert", "albert");
+		Student maxime = populateWithStudent("Hass", "Maxime", "mofo", "mofo");
+		Student thomas = populateWithStudent("Winckell", "Thomas", "tomtom", "tomtom");
+		
+		/* Referant */
+		Image imageReferant = populateWithImageUser();
+		
+		Referent referent = new Referent((long)-1);
+		referent.setName("La Fripouile");
+		referent.setFirstName("Jaquouille");
+		referent.setEmail("visiteur@gmail.com");
+		referent.setLogin("referent");
+		referent.setPassword("referent");
+		referent.setImage(imageReferant);
+		
+		referent.setStudents(new HashSet<Student>());
+		referent.addStudent(dagobert);
+		referent.addStudent(maxime);
+		referent.addStudent(thomas);
+		
+		HibernateManager.getInstance().save(referent);
 		
 
 	}

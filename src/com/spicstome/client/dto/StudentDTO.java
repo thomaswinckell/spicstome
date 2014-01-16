@@ -10,8 +10,6 @@ public class StudentDTO extends UserDTO implements Serializable {
 	
 	private AlbumDTO album;
 	private Set<LogDTO> logs;
-	private Set<ReferentDTO> referents;
-	private Set<TeacherDTO> teachers;
 	
 	public StudentDTO() {		
 	}
@@ -21,12 +19,10 @@ public class StudentDTO extends UserDTO implements Serializable {
 	}
 	
 	public StudentDTO(Long id, Date subscriptionDate, String firstName, String name, String email, String login, String password, ImageDTO image, AlbumDTO album, 
-			Set<LogDTO> logs, Set<ReferentDTO> referents, Set<TeacherDTO> teachers) {
+			Set<LogDTO> logs) {
 		super(id, subscriptionDate, firstName, name, email, login, password, image);
 		this.album = album;
 		this.logs = logs;
-		this.referents = referents;
-		this.teachers = teachers;
 	}
 
 	public AlbumDTO getAlbum() {
@@ -35,22 +31,6 @@ public class StudentDTO extends UserDTO implements Serializable {
 
 	public void setAlbum(AlbumDTO album) {
 		this.album = album;
-	}
-	
-	public Set<ReferentDTO> getReferents() {
-		return referents;
-	}
-
-	public void setReferents(Set<ReferentDTO> referents) {
-		this.referents = referents;
-	}
-
-	public Set<TeacherDTO> getTeachers() {
-		return teachers;
-	}
-
-	public void setTeachers(Set<TeacherDTO> teachers) {
-		this.teachers = teachers;
 	}
 
 	public Set<LogDTO> getLogs() {

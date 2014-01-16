@@ -14,8 +14,6 @@ public class Student extends User implements Serializable {
 	private static final long serialVersionUID = 5196763171962166568L;
 	private Album album;
 	private Set<Log> logs;
-	private Set<Referent> referents;
-	private Set<Teacher> teachers;
 	
 	public Student() {		
 	}
@@ -37,22 +35,6 @@ public class Student extends User implements Serializable {
 			}
 			this.logs = logs;
 		}		
-		Set<ReferentDTO> referentDTOs = studentDTO.getReferents();
-		if (referentDTOs != null) {
-			Set<Referent> referents = new HashSet<Referent>(referentDTOs.size());
-			for (ReferentDTO referentDTO : referentDTOs) {
-				referents.add(new Referent(referentDTO));
-			}
-			this.referents = referents;
-		}
-		Set<TeacherDTO> teacherDTOs = studentDTO.getTeachers();
-		if (teacherDTOs != null) {
-			Set<Teacher> teachers = new HashSet<Teacher>(teacherDTOs.size());
-			for (TeacherDTO teacherDTO : teacherDTOs) {
-				teachers.add(new Teacher(teacherDTO));
-			}
-			this.teachers = teachers;
-		}
 	}
 
 	public Album getAlbum() {
@@ -75,50 +57,6 @@ public class Student extends User implements Serializable {
 			return;
 		}
 		logs.remove(log);
-	}
-	
-	public void addTeacher(Teacher teacher) {
-		if (teachers == null) {
-			teachers = new HashSet<Teacher>();
-		}
-		teachers.add(teacher);
-	}
-	
-	public void removeTeacher(Teacher teacher) {
-		if (teachers == null) {
-			return;
-		}
-		teachers.remove(teacher);
-	}
-	
-	public void addReferent(Referent referent) {
-		if (referents == null) {
-			referents = new HashSet<Referent>();
-		}
-		referents.add(referent);
-	}
-	
-	public void removeReferent(Referent referent) {
-		if (referents == null) {
-			return;
-		}
-		referents.remove(referent);
-	}
-	
-	public Set<Referent> getReferents() {
-		return referents;
-	}
-
-	public void setReferents(Set<Referent> referents) {
-		this.referents = referents;
-	}
-
-	public Set<Teacher> getTeachers() {
-		return teachers;
-	}
-
-	public void setTeachers(Set<Teacher> teachers) {
-		this.teachers = teachers;
 	}
 
 	public Set<Log> getLogs() {

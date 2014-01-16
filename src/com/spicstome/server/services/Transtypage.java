@@ -162,23 +162,7 @@ public class Transtypage {
 	}
 	
 	public static StudentDTO createStudentDTO(Student student) {
-		
-		Set<Referent> referents = student.getReferents();
-		Set<ReferentDTO> referentDTOs = new HashSet<ReferentDTO>(referents != null ? referents.size() : 0);
-		if (referents != null) {
-			for (Referent referent : referents) {
-				referentDTOs.add(createReferentDTO(referent));
-			}
-		}
-		
-		Set<Teacher> teachers = student.getTeachers();
-		Set<TeacherDTO> teacherDTOs = new HashSet<TeacherDTO>(teachers != null ? teachers.size() : 0);
-		if (teachers != null) {
-			for (Teacher teacher : teachers) {
-				teacherDTOs.add(createTeacherDTO(teacher));
-			}
-		}
-		
+				
 		Set<Log> logs = student.getLogs();
 		Set<LogDTO> logDTOs = new HashSet<LogDTO>(logs != null ? logs.size() : 0);
 		if (logs != null) {
@@ -189,6 +173,6 @@ public class Transtypage {
 		
 		return new StudentDTO(student.getId(), student.getSubscriptionDate(), student.getFirstName(), 
 				student.getName(), student.getEmail(), student.getLogin(), student.getPassword(), createImageDTO(student.getImage()), 
-				createAlbumDTO(student.getAlbum()), logDTOs, referentDTOs, teacherDTOs);
+				createAlbumDTO(student.getAlbum()), logDTOs);
 	}
 }
