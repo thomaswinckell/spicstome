@@ -16,8 +16,6 @@ import com.spicstome.client.dto.UserDTO;
 
 public class UserTypeForm extends DynamicForm {
 	
-	final UserTypeForm userTypeForm = this;
-	
 	private FormUtils.Mode mode;
 	
 	private SelectItem userTypeSelectItem;
@@ -37,16 +35,16 @@ public class UserTypeForm extends DynamicForm {
         userTypeSelectItem.setValueMap(valueMap);
         userTypeSelectItem.setRequired(true);
         
-        setFields(userTypeSelectItem);
+        //setFields(userTypeSelectItem);
         
         userTypeSelectItem.addChangeHandler(new ChangeHandler() {
 
 			@Override
 			public void onChange(ChangeEvent event) {
 				if (event.getValue().equals("teacher") || event.getValue().equals("referent")) {
-					userTypeForm.setTeacherOrReferentMode();
+					setTeacherOrReferentMode();
 				} else {
-					userTypeForm.setStudentMode();
+					setStudentMode();
 				}
 			}
         });
@@ -57,6 +55,11 @@ public class UserTypeForm extends DynamicForm {
 				linkedStudentsForm.getRemoveStudentButtonItem(), 
 				linkedStudentsForm.getNonLinkedStudentsSelectItem(), 
 				linkedStudentsForm.getAddStudentButtonItem());
+		
+		linkedStudentsForm.getLinkedStudentsSelectItem().setVisible(false);
+		linkedStudentsForm.getRemoveStudentButtonItem().setVisible(false);  
+		linkedStudentsForm.getNonLinkedStudentsSelectItem().setVisible(false); 
+		linkedStudentsForm.getAddStudentButtonItem().setVisible(false);
 	}
 	
 	public void setUserDTO(UserDTO userDTO, FormUtils.Mode mode) {
@@ -67,32 +70,46 @@ public class UserTypeForm extends DynamicForm {
 		if (mode == FormUtils.Mode.NEW) {
 	        userTypeSelectItem.setDefaultValue("student");
 	        userTypeSelectItem.enable();
+	        setStudentMode();
 		} else {
-	    	if (userDTO instanceof StudentDTO)
+	    	if (userDTO instanceof StudentDTO) {
 	    		userTypeSelectItem.setDefaultValue("student");
-	    	else if (userDTO instanceof TeacherDTO)
-	    		userTypeSelectItem.setDefaultValue("teacher");
-	    	else
-	    		userTypeSelectItem.setDefaultValue("referent");
-	    	
-	    	userTypeSelectItem.disable();
+	    		setStudentMode();
+	    	} else {
+	    		if (userDTO instanceof TeacherDTO)
+		    		userTypeSelectItem.setDefaultValue("teacher");
+		    	else
+		    		userTypeSelectItem.setDefaultValue("referent");
+		    	
+	    		setTeacherOrReferentMode();
+	    	}
 	    }
 	}
 	
 	public void setTeacherOrReferentMode() {
 		
-		Set<StudentDTO> students;
+		Set<StudentDTO> students = new HashSet<StudentDTO>();
         
-        if (userDTO instanceof TeacherDTO)
-        	students = ((TeacherDTO) userDTO).getStudents();
-        else /* we assume userDTO is an instance of ReferentDTO if it's not an instance of TeacherDTO */
-        	students = ((ReferentDTO) userDTO).getStudents();
+		if (mode == FormUtils.Mode.EDIT) {
+	        if (userDTO instanceof TeacherDTO)
+	        	students = ((TeacherDTO) userDTO).getStudents();
+	        else /* we assume userDTO is an instance of ReferentDTO if it's not an instance of TeacherDTO */
+	        	students = ((ReferentDTO) userDTO).getStudents();
+		}
 		
         linkedStudentsForm.setLinkedStudents(students, mode);
+        
+        linkedStudentsForm.getLinkedStudentsSelectItem().show(); 
+		linkedStudentsForm.getRemoveStudentButtonItem().show(); 
+		linkedStudentsForm.getNonLinkedStudentsSelectItem().show();  
+		linkedStudentsForm.getAddStudentButtonItem().show();
 	}
 	
 	public void setStudentMode() {
-		
+		linkedStudentsForm.getLinkedStudentsSelectItem().hide();
+		linkedStudentsForm.getRemoveStudentButtonItem().hide();
+		linkedStudentsForm.getNonLinkedStudentsSelectItem().hide();
+		linkedStudentsForm.getAddStudentButtonItem().hide();
 	}
 	
 	public UserDTO getUserDTO() {

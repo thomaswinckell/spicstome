@@ -1,28 +1,14 @@
 package com.spicstome.client.ui.form;
 
-import gwtupload.client.IUploader;
-import gwtupload.client.SingleUploader;
-import gwtupload.client.Utils;
-import gwtupload.client.IFileInput.FileInputType;
-import gwtupload.client.IUploadStatus.Status;
-import gwtupload.client.IUploader.OnCancelUploaderHandler;
-import gwtupload.client.IUploader.OnFinishUploaderHandler;
-
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.xml.client.Document;
-import com.google.gwt.xml.client.XMLParser;
-import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.IButton;
 import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
-import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.spicstome.client.dto.ImageDTO;
 import com.spicstome.client.dto.UserDTO;
 import com.spicstome.client.services.SpicsToMeServices;
-import com.spicstome.client.ui.strings.MyUploaderConstants;
 
 public class UserForm {
 	
