@@ -93,14 +93,16 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 			return null;
 		}
 	}
-	
+	/*
 	@Override
-	public List<AlbumDTO> getReferentAlbums() {
+	public List<StudentDTO> getStudentsOfReferent() {
 
+		Referent referent = (Referent)
+		
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
 		@SuppressWarnings("unchecked")
-		List<Album> list = session.createCriteria(Album.class).list();
+		List<Album> list = session.createCriteria(Studen.class).list();
 		
 		
 		List<AlbumDTO> listAlbumDTO=new ArrayList<>();
@@ -118,7 +120,7 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 		return listAlbumDTO;
 	
 
-	}
+	}*/
 	
 	private List<FolderDTO> GetFoldersFolder(FolderDTO folder)
 	{
@@ -173,7 +175,11 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	}
 
 	
-
+	@Override
+	public ReferentDTO getReferentConnected() {
+		
+		return (ReferentDTO) getCurrentUser();
+	}
 	
 	
 	@Override
@@ -365,4 +371,6 @@ public Long saveFolder(FolderDTO folderDTO) {
 	    session.getTransaction().commit();
 	    return true;
 	}
+
+	
 }

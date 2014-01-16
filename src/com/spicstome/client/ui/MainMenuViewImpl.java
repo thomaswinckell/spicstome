@@ -21,7 +21,7 @@ public class MainMenuViewImpl extends UserViewImpl implements MainMenuView {
 		super();
 		
 		ArrayList<ImageRecord> modules = new ArrayList<ImageRecord>();
-		modules.add(new ImageRecord(0,"Gestion album","albumlogo.png"));
+		modules.add(new ImageRecord(0,"Gestion des albums","albumlogo.png"));
 		modules.add(new ImageRecord(1,"Gestion des utilisateurs","userlogo.png"));
 		modules.add(new ImageRecord(2,"Mail","mail.png"));
 		modules.add(new ImageRecord(3,"Historique","history.png"));

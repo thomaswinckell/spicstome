@@ -49,11 +49,11 @@ public interface SpicsToMeServices extends RemoteService {
 	public boolean disconnectCurrentUser();
 	
 	/* GET */
-	public List<AlbumDTO> getReferentAlbums();
-	public List<FolderDTO> getFoldersAlbum(long id);
 	public StudentDTO getAlbumOwner(long id);
+	public List<FolderDTO> getFoldersAlbum(long id);
 	public AlbumDTO getAlbum(long id);
 	public StudentDTO getStudent(Long idStudent);
+	public ReferentDTO getReferentConnected();
 	public List<StudentDTO> getAllStudents();
 	
 	/* SAVE */

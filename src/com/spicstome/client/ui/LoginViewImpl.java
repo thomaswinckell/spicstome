@@ -2,6 +2,7 @@ package com.spicstome.client.ui;
 
 
 
+import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.types.VerticalAlignment;
 import com.smartgwt.client.widgets.Button;
 import com.smartgwt.client.widgets.Img;
@@ -18,7 +19,7 @@ import com.smartgwt.client.widgets.layout.VLayout;
 public class LoginViewImpl extends VLayout implements LoginView
 {
 	
-
+	private Label title = new Label(".:SpicsToMe:.");
 	private Presenter listener;
 	private TextItem textLogin;
 	private PasswordItem textPassword;
@@ -32,8 +33,13 @@ public class LoginViewImpl extends VLayout implements LoginView
 
 	public LoginViewImpl()
 	{
+		
+		title.setWidth100();
+		title.setHeight(30);
+		
 		image = new Img("logo.png");
-		image.setSize(60);
+		image.setSize(100);
+		image.setMargin(10);
 		
 		wrongLabel  = new Label("Connexion refusée");
 		wrongLabel.setStyleName("errorMessage");
@@ -52,6 +58,7 @@ public class LoginViewImpl extends VLayout implements LoginView
 		textPassword.setName("Password");
 		
 		form.setFields(textLogin,textPassword);
+		form.setMargin(20);
 		
 		button.addClickHandler(new ClickHandler() {
             @Override
@@ -59,23 +66,21 @@ public class LoginViewImpl extends VLayout implements LoginView
             	listener.login(textLogin.getValueAsString(), textPassword.getValueAsString());           	
             }
         });
+
 		
-		
-		
-		
+		title.setLayoutAlign(VerticalAlignment.CENTER);
 		image.setLayoutAlign(VerticalAlignment.CENTER);
 		button.setLayoutAlign(VerticalAlignment.CENTER);
 		form.setLayoutAlign(VerticalAlignment.CENTER);
 		
 		wrongPanel.addMember(wrongLabel);
 		
-		
-		
+		viewPanel.addMember(title);
 		viewPanel.addMember(image);
-		viewPanel.addMember(form);
-		
+		viewPanel.addMember(form);	
 		viewPanel.addMember(button);
 		viewPanel.addMember(wrongPanel);
+		
 		
 		
 		addMember(viewPanel);

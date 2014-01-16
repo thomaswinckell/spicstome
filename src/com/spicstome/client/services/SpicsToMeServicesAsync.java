@@ -35,14 +35,14 @@ public interface SpicsToMeServicesAsync {
 	void disconnectCurrentUser(AsyncCallback<Boolean> callback);
 	
 	/* GET */
-	void getReferentAlbums(AsyncCallback<List<AlbumDTO>> callback);
-	void getFoldersAlbum(long id,AsyncCallback<List<FolderDTO>> callback);
 	void getAlbumOwner(long id,AsyncCallback<StudentDTO> callback);
+	void getFoldersAlbum(long id,AsyncCallback<List<FolderDTO>> callback);
 	void getAlbum(long id,AsyncCallback<AlbumDTO> callback);
 	void getStudent(Long idStudent, AsyncCallback<StudentDTO> callback); 
+	void getReferentConnected(AsyncCallback<ReferentDTO> callback); 
 	void getAllStudents(AsyncCallback<List<StudentDTO>> callback);
 	
-	/*SAVE */
+	/* SAVE */
 	void saveImage(ImageDTO imageDTO, AsyncCallback<Long> callback);
 	void saveFolder(FolderDTO folderDTO, AsyncCallback<Long> callback);
 	void saveAlbum(AlbumDTO albumDTO, AsyncCallback<Long> callback);

@@ -21,11 +21,11 @@ public class ImageRecord extends TileRecord {
 
 	}
 	
-	public ImageRecord(AlbumDTO albumDTO)
+	public ImageRecord(AlbumDTO albumDTO,String owner)
 	{
 		super();
 		setAttribute(PICTURE_ID, albumDTO.getId());
-		setAttribute(PICTURE_NAME, "Album numéro "+albumDTO.getId().toString());
+		setAttribute(PICTURE_NAME, "Album de "+owner);
 		setAttribute(PICTURE_PATH, "albumlogo.png");
 		setAttribute(DATA, albumDTO);
 	}

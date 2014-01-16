@@ -38,8 +38,6 @@ public class AlbumEditViewImpl extends UserViewImpl  implements AlbumEditView{
 		
 		addCrumb(crumb);
 		
-		System.out.println(crumb);
-		
 		this.albumEditPanel = new AlbumEditPanel(){
 
 			@Override
