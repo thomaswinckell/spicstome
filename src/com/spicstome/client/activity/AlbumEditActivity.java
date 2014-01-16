@@ -46,7 +46,7 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 				SpicsToMeServices.Util.getInstance().getAlbumOwner(album.getId(), new AsyncCallback<StudentDTO>() {
 					@Override
 					public void onSuccess(StudentDTO result) {
-						editview.setOwner(result.getName());
+						editview.setOwner(result.getFirstName());
 					}
 					@Override
 					public void onFailure(Throwable caught) {}			
@@ -89,7 +89,7 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 	@Override
 	public void delete(ArticleDTO a) {
 		
-		SpicsToMeServices.Util.getInstance().deleteArticle(a, new AsyncCallback<Boolean>() {
+		SpicsToMeServices.Util.getInstance().deleteArticle(a.getId(), new AsyncCallback<Boolean>() {
 			@Override
 			public void onFailure(Throwable caught) {}
 			@Override
@@ -99,7 +99,7 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 
 	@Override
 	public void delete(FolderDTO f) {
-		SpicsToMeServices.Util.getInstance().deleteFolder(f, new AsyncCallback<Boolean>() {
+		SpicsToMeServices.Util.getInstance().deleteFolder(f.getId(), new AsyncCallback<Boolean>() {
 			@Override
 			public void onFailure(Throwable caught) {}
 			@Override

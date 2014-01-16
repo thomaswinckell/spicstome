@@ -3,25 +3,33 @@ package com.spicstome.server.services;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 import javax.servlet.ServletException;
+
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
+
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.spicstome.client.dto.AlbumDTO;
 import com.spicstome.client.dto.ArticleDTO;
 import com.spicstome.client.dto.FolderDTO;
 import com.spicstome.client.dto.ImageDTO;
 import com.spicstome.client.dto.PecsDTO;
+import com.spicstome.client.dto.ReferentDTO;
 import com.spicstome.client.dto.StudentDTO;
+import com.spicstome.client.dto.TeacherDTO;
 import com.spicstome.client.dto.UserDTO;
-import com.spicstome.client.hibernate.HibernateUtil;
 import com.spicstome.client.services.SpicsToMeServices;
 import com.spicstome.client.shared.Album;
 import com.spicstome.client.shared.Article;
 import com.spicstome.client.shared.Folder;
 import com.spicstome.client.shared.Image;
+import com.spicstome.client.shared.Referent;
 import com.spicstome.client.shared.Student;
+import com.spicstome.client.shared.Teacher;
 import com.spicstome.client.shared.User;
+import com.spicstome.server.HibernateUtil;
 
 public class SpicsToMeServicesImpl extends RemoteServiceServlet implements SpicsToMeServices {
 	private static final long serialVersionUID = 1L;
@@ -33,19 +41,22 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 		super.init();
 	}
 	
+	/* SESSION */
+	
 	@Override
 	public UserDTO getUser(String login, String password) {		
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 	    session.beginTransaction();
 	    @SuppressWarnings("unchecked")
 		List<User> users = session.createCriteria(User.class).add(Restrictions.eq("login",login)).add(Restrictions.eq("password",password)).list();
-	    session.getTransaction().commit();
 	    
-	    if (users.isEmpty())
+	    if (users.isEmpty()) {
+	    	session.getTransaction().commit();
 	    	return null;
-	    else {
+	    } else {
 	    	UserDTO userDTO = Transtypage.createUserDTO(users.get(0));	    	
-	    	getThreadLocalRequest().getSession().setAttribute("currentUser", userDTO);	    
+	    	getThreadLocalRequest().getSession().setAttribute("currentUser", userDTO);
+	    	session.getTransaction().commit();
 	    	return userDTO;
 	    }
 	}
@@ -61,16 +72,9 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 		return (getCurrentUser()==null);
 	}
 	
-	@Override
-	public Long saveImage(ImageDTO imageDTO) {
-		Image image = new Image(imageDTO);
-	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-	    session.beginTransaction();
-	    session.save(image);
-	    session.getTransaction().commit();
-	    return image.getId();
-	}
+	/* GET */
 	
+
 	@Override
 	public Long saveFolder(FolderDTO folderDTO) {
 		
@@ -145,11 +149,12 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	}	
 	
 	@Override
-	public boolean deleteArticle(ArticleDTO articleDTO) {
+	public boolean deleteArticle(long id) {
 	
-		Article article = new Article(articleDTO,new Folder(articleDTO.getFolder(),null));
+		
 	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();    
 	    session.beginTransaction();
+	    Article article = (Article) session.load(Article.class, id);	
 	    session.delete(article);
 	    session.getTransaction().commit();
 	    return true;
@@ -157,33 +162,35 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	}
 	
 	@Override
-	public boolean deleteFolder(FolderDTO folderDTO) {
+	public boolean deleteFolder(long id) {
 
-		Folder parent = (folderDTO.getFolder()==null?null:new Folder(folderDTO.getFolder(),null));
-		Folder folder = new Folder(folderDTO,parent);
 	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();    
 	    session.beginTransaction();
+	    Folder folder = (Folder) session.load(Folder.class, id);	
 	    session.delete(folder);
 	    session.getTransaction().commit();
 	    return true;
 	}
 
+
+	
+	
 	@Override
-	public AlbumDTO getAlbum(long id) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		session.beginTransaction();
-		@SuppressWarnings("unchecked")
-		List<Album> list = session.createCriteria(Album.class).add(Restrictions.eq("id",id)).list();
-		session.getTransaction().commit();
+	public AlbumDTO getAlbum(long id) 
+	{
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession(); 
+		session.beginTransaction(); 
+		@SuppressWarnings("unchecked") 
+		List<Album> list = session.createCriteria(Album.class).add(Restrictions.eq("id",id)).list(); 
+		if(list.size()>0) 
+		{ 
+			AlbumDTO albumDTO = Transtypage.createAlbumDTO(list.get(0)); session.getTransaction().commit(); return albumDTO; 
+		} 
+		else 
+		{ 
+			session.getTransaction().commit(); return null; 
+		} 
 		
-		if(list.size()>0)
-		{
-			return Transtypage.createAlbumDTO(list.get(0));
-		}
-		else
-		{
-			return null;
-		}
 	}
 	
 	@Override
@@ -193,7 +200,7 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 		session.beginTransaction();
 		@SuppressWarnings("unchecked")
 		List<Album> list = session.createCriteria(Album.class).list();
-		session.getTransaction().commit();
+		
 		
 		List<AlbumDTO> listAlbumDTO=new ArrayList<>();
 
@@ -204,6 +211,8 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 				listAlbumDTO.add(Transtypage.createAlbumDTO(list.get(i)));
 			}
 		}
+		
+		session.getTransaction().commit();
 
 		return listAlbumDTO;
 	
@@ -249,27 +258,110 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 	    session.beginTransaction();
 	    
-	    @SuppressWarnings("unchecked")    
-	    List<Album> list = session.createCriteria(Album.class).add(Restrictions.eq("id",id)).list();
-	    if(list.size()==0) return null;
+	    Album album = (Album) session.load(Album.class, id);	
 	    @SuppressWarnings("unchecked") 
-		List<Student> users = session.createCriteria(Student.class).add(Restrictions.eq("album",list.get(0))).list();
-	    session.getTransaction().commit();
+		List<Student> users = session.createCriteria(Student.class).add(Restrictions.eq("album",album)).list();
 	    
+	    StudentDTO student = Transtypage.createStudentDTO(users.get(0));
+	    session.getTransaction().commit();
+	   
 	    if(users.size()>0)
-	    	return Transtypage.createStudentDTO(users.get(0));
+	    	return student;
 	    else
 	    	return null;
-
 	}
 
 	
 
 	
 	
+	@Override
+	public StudentDTO getStudent(Long idStudent) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		session.beginTransaction();
+		Student student = (Student) session.load(Student.class, idStudent);		
+		StudentDTO studentDTO = Transtypage.createStudentDTO(student);
+		session.getTransaction().commit();
+		return studentDTO;
+	}
 	
+	@Override
+	public List<StudentDTO> getAllStudents() {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		session.beginTransaction();
+		List<Student> students = new ArrayList<Student>(session.createCriteria(Student.class).list());
+		List<StudentDTO> studentDTOs = new ArrayList<StudentDTO>(students != null ? students.size() : 0);
+		if (students != null) {
+			for (Student student : students) {
+				studentDTOs.add(Transtypage.createStudentDTO(student));
+			}
+		}
+		session.getTransaction().commit();
+		return studentDTOs;
+	}
 	
+	/* SAVE */
 	
+	@Override
+	public Long saveImage(ImageDTO imageDTO) {
+		Image image = new Image(imageDTO);
+	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+	    session.beginTransaction();
+	    session.save(image);
+	    session.getTransaction().commit();
+	    return image.getId();
+	}
 	
+
+	@Override
+	public Long saveUser(UserDTO userDTO) {
+		if (userDTO instanceof StudentDTO)
+			return saveStudent((StudentDTO) userDTO);
+		else if (userDTO instanceof TeacherDTO)
+			return saveTeacher((TeacherDTO) userDTO);
+		else if (userDTO instanceof ReferentDTO)
+			return saveReferent((ReferentDTO) userDTO);
+		else
+			return null;
+	}
+
 	
+	@Override
+	public Long saveTeacher(TeacherDTO teacherDTO) {
+		
+		Long idImageUser = saveImage(teacherDTO.getImage());
+		teacherDTO.getImage().setId(idImageUser);
+			
+	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+	    session.beginTransaction();
+	    
+	    Set<StudentDTO> students = new HashSet<StudentDTO>(teacherDTO.getStudents().size());	
+		for(StudentDTO student : teacherDTO.getStudents()) {
+			students.add(Transtypage.createStudentDTO((Student) session.load(Student.class, student.getId())));
+		}
+		
+		teacherDTO.setStudents(students);		
+		
+		Teacher teacher = new Teacher(teacherDTO);	
+		
+	    session.save(teacher);
+	    session.getTransaction().commit();
+	    
+	    return teacher.getId();
+	}
+	
+	@Override
+	public Long saveReferent(ReferentDTO referentDTO) {
+		
+		Long idImageUser = saveImage(referentDTO.getImage());
+		referentDTO.getImage().setId(idImageUser);
+		
+		Referent referent = new Referent(referentDTO);		
+	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+	    session.beginTransaction();
+	    session.save(referent);
+	    session.getTransaction().commit();
+	    
+	    return referent.getId();
+	}
 }

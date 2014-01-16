@@ -1,30 +1,78 @@
 package com.spicstome.server;
 
-
-import java.util.Date;
-
-import com.spicstome.client.hibernate.HibernateManager;
 import com.spicstome.client.shared.Album;
-import com.spicstome.client.shared.Article;
 import com.spicstome.client.shared.Folder;
 import com.spicstome.client.shared.Image;
-import com.spicstome.client.shared.Pecs;
+import com.spicstome.client.shared.Referent;
 import com.spicstome.client.shared.Student;
-import com.spicstome.client.shared.User;
+
 
 public class Test {
 	
+	
+	public static void populateWithStudent(String name,String firstname,String login,String password)
+	{
+		Image imageRacine = new Image((long)-1);
+		imageRacine.setFilename("all.png");
+		
+		HibernateManager.getInstance().save(imageRacine);
+		
+		Folder folderRacine = new Folder((long)-1);
+		folderRacine.setName("Tout");
+		folderRacine.setImage(imageRacine);
+		
+		HibernateManager.getInstance().save(folderRacine);
+		
+		Album album = new Album((long)-1);
+		album.setFolder(folderRacine);
+		
+		HibernateManager.getInstance().save(album);
+		
+		Image imageUser = new Image((long)-1);
+		imageUser.setFilename("default_user.png");
+		
+		HibernateManager.getInstance().save(imageUser);
+		
+		Student student = new Student((long)-1);
+		student.setName(name);
+		student.setFirstName(firstname);
+		student.setEmail(name+"."+firstname+"@gmail.com");
+		student.setLogin(login);
+		student.setPassword(password);
+		student.setImage(imageUser);
+		student.setAlbum(album);
+		
+		HibernateManager.getInstance().save(student);
+	}
+	
 	public static void main(String[] args) {
 		
-		/* Sauvegarde étudiant */
-		/*Folder mFolder = new Folder("nom", 0, null, new Image("Test.jpg"));
+		/* Clear All */
+		HibernateManager.getInstance().ClearAll();
 		
-		Album mAlbum = new Album(mFolder);
+		/* Super Admin */
+		Image imageAdmin = new Image((long)-1);
+		imageAdmin.setFilename("default_user.png");
 		
-		Student mStudent = new Student(new Date(), "login", "password", new Image("image.jpg"), mAlbum);
+		HibernateManager.getInstance().save(imageAdmin);
 		
-		HibernateManager.getInstance().save(mStudent);*/
+		Referent superAdmin = new Referent((long)-1);
+		superAdmin.setName("admin");
+		superAdmin.setFirstName("admin");
+		superAdmin.setEmail("maxime.hass@gmail.com");
+		superAdmin.setLogin("admin");
+		superAdmin.setPassword("admin");
+		superAdmin.setImage(imageAdmin);
 		
+		HibernateManager.getInstance().save(superAdmin);
 		
+		/* Student */
+		populateWithStudent("Dagobert", "Albert", "albert", "albert");
+		populateWithStudent("Hass", "Maxime", "mofo", "mofo");
+		populateWithStudent("Winckell", "Thomas", "tomtom", "tomtom");
+		
+
 	}
+	
+	
 }

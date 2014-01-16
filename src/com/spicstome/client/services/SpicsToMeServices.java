@@ -15,6 +15,7 @@
 package com.spicstome.client.services;
 
 import java.util.List;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
@@ -22,7 +23,9 @@ import com.spicstome.client.dto.AlbumDTO;
 import com.spicstome.client.dto.ArticleDTO;
 import com.spicstome.client.dto.FolderDTO;
 import com.spicstome.client.dto.ImageDTO;
+import com.spicstome.client.dto.ReferentDTO;
 import com.spicstome.client.dto.StudentDTO;
+import com.spicstome.client.dto.TeacherDTO;
 import com.spicstome.client.dto.UserDTO;
 
 @RemoteServiceRelativePath("SpicsToMeServices")
@@ -40,20 +43,32 @@ public interface SpicsToMeServices extends RemoteService {
 		}
 	}
 	
+	/* SESSION */
 	public UserDTO getUser(String userName, String password);
 	public UserDTO getCurrentUser();
 	public boolean disconnectCurrentUser();
+	
+	/* GET */
 	public List<AlbumDTO> getReferentAlbums();
 	public List<FolderDTO> getFoldersAlbum(long id);
 	public StudentDTO getAlbumOwner(long id);
 	public AlbumDTO getAlbum(long id);
+	public StudentDTO getStudent(Long idStudent);
+	public List<StudentDTO> getAllStudents();
 	
+	/* SAVE */
 	public Long saveImage(ImageDTO imageDTO);
 	public Long saveFolder(FolderDTO folderDTO);
 	public Long saveAlbum(AlbumDTO albumDTO);
-	public Long saveStudent(StudentDTO studentDTO);
 	public Long saveArticle(ArticleDTO articleDTO);
+
 	
-	public boolean deleteArticle(ArticleDTO articleDTO);
-	public boolean deleteFolder(FolderDTO folderDTO);
+	public boolean deleteArticle(long id);
+	public boolean deleteFolder(long id);
+
+	public Long saveUser(UserDTO userDTO);
+	public Long saveStudent(StudentDTO studentDTO);
+	public Long saveTeacher(TeacherDTO teacherDTO);
+	public Long saveReferent(ReferentDTO referentDTO);
+
 }

@@ -1,11 +1,14 @@
-package com.spicstome.client.hibernate;
+package com.spicstome.server;
 
 import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.cfg.Configuration;
 
+import com.spicstome.client.shared.Album;
 import com.spicstome.client.shared.Article;
+import com.spicstome.client.shared.Image;
+import com.spicstome.client.shared.Pecs;
 import com.spicstome.client.shared.Student;
 import com.spicstome.client.shared.User;
 
@@ -34,18 +37,34 @@ public class HibernateManager {
 		}
 	}
 	
-	public void save(User object){
-		synchronized (User.class) {
+	public void save(Album album){
+		synchronized (Album.class) {
 			session.beginTransaction();
-			session.saveOrUpdate(object);
+			session.save(album);
 			session.getTransaction().commit();
 		}
 	}
 	
-	public void save(Article article){
-		synchronized (Article.class) {
+	public void save(User user){
+		synchronized (User.class) {
 			session.beginTransaction();
-			session.saveOrUpdate(article);
+			session.save(user);
+			session.getTransaction().commit();
+		}
+	}
+	
+	public void save(Image img){
+		synchronized (User.class) {
+			session.beginTransaction();
+			session.save(img);
+			session.getTransaction().commit();
+		}
+	}
+	
+	public void save(Pecs pecs){
+		synchronized (Pecs.class) {
+			session.beginTransaction();
+			session.save(pecs);
 			session.getTransaction().commit();
 		}
 	}
@@ -58,17 +77,18 @@ public class HibernateManager {
 		return (Article)session.load(Article.class, id);
 	}
 	
-	public User login(String login,String password)
+	public void ClearAll()
 	{
-		/*
-		List<User> list = session.createQuery("FROM User WHERE login = '" + login + "' AND password = '"+password+"'").list();
+		session.beginTransaction();
 		
-		if(list.isEmpty()) 
-			return null;
-		else
-			return list.get(0);
-		*/
-		return null;
+		@SuppressWarnings("unchecked")
+		List<User> users = session.createCriteria(User.class).list();
+		for (User user : users) {
+			session.delete(user);
+		}
+		session.getTransaction().commit();
 	}
+	
+	
 }
 

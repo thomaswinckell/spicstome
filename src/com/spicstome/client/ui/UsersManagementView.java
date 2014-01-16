@@ -14,7 +14,10 @@
  *******************************************************************************/
 package com.spicstome.client.ui;
 
+import java.util.List;
+
 import com.google.gwt.user.client.ui.IsWidget;
+import com.spicstome.client.dto.StudentDTO;
 
 /**
  * View base interface.
@@ -22,5 +25,5 @@ import com.google.gwt.user.client.ui.IsWidget;
  */
 public interface UsersManagementView extends IsWidget {
 
-
+	public void setStudents (List<StudentDTO> students);
 }
