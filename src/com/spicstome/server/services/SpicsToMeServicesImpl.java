@@ -80,14 +80,16 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 		session.beginTransaction();
 		@SuppressWarnings("unchecked")
 		List<Album> list = session.createCriteria(Album.class).add(Restrictions.eq("id",id)).list();
-		session.getTransaction().commit();
 		
 		if(list.size()>0)
 		{
-			return Transtypage.createAlbumDTO(list.get(0));
+			AlbumDTO albumDTO = Transtypage.createAlbumDTO(list.get(0));
+			session.getTransaction().commit();
+			return albumDTO;
 		}
 		else
 		{
+			session.getTransaction().commit();
 			return null;
 		}
 	}
