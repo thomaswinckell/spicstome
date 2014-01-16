@@ -4,7 +4,7 @@
 
 <hibernate-mapping package="com.spicstome.client.shared" default-lazy="false">
 
-<class name="Pecs" abstract="true" select-before-update="true">
+<class name="Pecs" select-before-update="true" table="pecs" polymorphism="implicit">
     
 	<id name="id" type="long" column="id">
 		<generator class="increment" />
@@ -13,27 +13,29 @@
 	<property name="order" type="int" column="order_in_folder" />
 	
 	<many-to-one name="folder" class="Folder" column="id_folder_parent"
-		not-null="false" unique="false" cascade="delete"  />
+		not-null="false" unique="false"  />
 	
 	<many-to-one name="image" column="id_image" class="Image"
 		unique="true" cascade="delete" />
 	
-	<union-subclass name="Article" table="article" extends="Pecs">
+	<joined-subclass name="Article" table="article" extends="Pecs">
+	    <key column="id"/>
 		<set name="logs" table="logs_articles" lazy="true">
 			<key column="id_article" />
 			<many-to-many class="Log" column="id_log" />
 		</set>
-	</union-subclass>
+	</joined-subclass>
 	
-	<union-subclass name="Folder" table="folder" extends="Pecs">
-		<set name="content" inverse="false" lazy="false" fetch="select"
-			cascade="delete">
+	<joined-subclass name="Folder" table="folder" extends="Pecs">
+	    <key column="id"/>
+		<set name="content" inverse="false" lazy="true" fetch="select"
+			cascade="delete" >
 			<key>
 				<column name="id_folder_parent" not-null="true" />
 			</key>
 			<one-to-many class="Pecs" />
 		</set>
-	</union-subclass>
+	</joined-subclass>
 </class>
         
 </hibernate-mapping>

@@ -17,5 +17,7 @@ public interface AlbumEditView extends IsWidget{
 	{
 		void save(ArticleDTO a);
 		void save(FolderDTO f);
+		void delete(ArticleDTO a);
+		void delete(FolderDTO f);
 	}
 }

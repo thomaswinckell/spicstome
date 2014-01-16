@@ -6,7 +6,7 @@
     <session-factory>
         <property name="hibernate.connection.driver_class">org.gjt.mm.mysql.Driver</property>
   
-        <property name="hibernate.connection.url">jdbc:mysql://localhost/spicstome</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost/spics</property>
         <property name="hibernate.connection.username">root</property>
         <property name="hibernate.connection.password"></property>
         

@@ -27,19 +27,14 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 		this.editview = clientFactory.getAlbumEditView();
 
 		SpicsToMeServices.Util.getInstance().getAlbum(place.idAlbum, new AsyncCallback<AlbumDTO>() {
-
 			@Override
-			public void onFailure(Throwable caught) {
-				
-			}
-
+			public void onFailure(Throwable caught) {}
 			@Override
 			public void onSuccess(AlbumDTO result) {
 				album=result;
 				editview.setAlbum(album);
 				
 				SpicsToMeServices.Util.getInstance().getFoldersAlbum(album.getId(), new AsyncCallback<List<FolderDTO>>() {
-
 					@Override
 					public void onSuccess(List<FolderDTO> result) {
 						editview.setFolders(result);	
@@ -49,10 +44,9 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 				});
 				
 				SpicsToMeServices.Util.getInstance().getAlbumOwner(album.getId(), new AsyncCallback<StudentDTO>() {
-
 					@Override
 					public void onSuccess(StudentDTO result) {
-						editview.setOwner(result.getName());
+						editview.setOwner(result.getFirstName());
 					}
 					@Override
 					public void onFailure(Throwable caught) {}			
@@ -85,14 +79,31 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 	public void save(FolderDTO f) {
 		SpicsToMeServices.Util.getInstance().saveFolder(f,new AsyncCallback<Long>() {
 			@Override
-			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub		
-			}
-
+			public void onFailure(Throwable caught) {}
 			@Override
-			public void onSuccess(Long result) {
-				// TODO Auto-generated method stub			
-			}
+			public void onSuccess(Long result) {}
+		});
+		
+	}
+
+	@Override
+	public void delete(ArticleDTO a) {
+		
+		SpicsToMeServices.Util.getInstance().deleteArticle(a.getId(), new AsyncCallback<Boolean>() {
+			@Override
+			public void onFailure(Throwable caught) {}
+			@Override
+			public void onSuccess(Boolean result) {}
+		});
+	}
+
+	@Override
+	public void delete(FolderDTO f) {
+		SpicsToMeServices.Util.getInstance().deleteFolder(f.getId(), new AsyncCallback<Boolean>() {
+			@Override
+			public void onFailure(Throwable caught) {}
+			@Override
+			public void onSuccess(Boolean result) {}
 		});
 		
 	}

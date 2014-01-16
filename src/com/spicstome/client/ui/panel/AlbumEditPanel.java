@@ -101,7 +101,16 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 					public void execute(Boolean value) {
 						if (value != null && value) 
 						{
+							
+							ArticleDTO articleDTO = getSelectedArticle();
+							
+							//suppression métier
+							onDeleteArticle(articleDTO);
+							
+							//suppression graphique
 							articlesGrid.removeData(articlesGrid.getSelectedItem());
+							
+							//mis à jour graphique
 							Update();
 						}
 					}
@@ -168,7 +177,9 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 			@Override
 			public void onDelete() {
 				
+				FolderDTO folderDTO = getSelectedFolder();
 				
+				onDeleteFolder(folderDTO);
 				
 			}
 		};
@@ -265,5 +276,7 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 	
 	public abstract void onSaveArticle();
 	public abstract void onSaveFolder();
+	public abstract void onDeleteArticle(ArticleDTO a);
+	public abstract void onDeleteFolder(FolderDTO f);
 
 }

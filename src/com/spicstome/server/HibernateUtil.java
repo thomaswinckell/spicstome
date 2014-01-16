@@ -1,4 +1,4 @@
-package com.spicstome.client.hibernate;
+package com.spicstome.server;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
