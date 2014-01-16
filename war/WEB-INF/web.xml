@@ -17,6 +17,14 @@
 		<servlet-name>SpicsToMeServices</servlet-name>
 		<url-pattern>/spicstome/SpicsToMeServices</url-pattern>
 	</servlet-mapping>
+	<servlet>
+	  <servlet-name>imageUploadImpl</servlet-name>
+	  <servlet-class>com.spicstome.server.services.ImageUploadImpl</servlet-class>
+	</servlet>
+	<servlet-mapping>
+	  <servlet-name>imageUploadImpl</servlet-name>
+	  <url-pattern>/spicstome/imageUpload</url-pattern>
+	</servlet-mapping>
 
 </web-app>
 
