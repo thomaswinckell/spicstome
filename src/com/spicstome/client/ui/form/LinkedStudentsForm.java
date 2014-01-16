@@ -10,9 +10,6 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.widgets.form.fields.ButtonItem;
 import com.smartgwt.client.widgets.form.fields.SelectItem;
 import com.spicstome.client.dto.StudentDTO;
-import com.spicstome.client.dto.TeacherDTO;
-import com.spicstome.client.dto.ReferentDTO;
-import com.spicstome.client.dto.UserDTO;
 import com.spicstome.client.services.SpicsToMeServices;
 
 public class LinkedStudentsForm {
@@ -28,41 +25,11 @@ public class LinkedStudentsForm {
         linkedStudentsValueMap = new LinkedHashMap<String, String>();
         linkedStudentsImagesValueMap = new LinkedHashMap<String, String>();
         
-        /*String firstStudentId = null;
-        
-	    if (mode == FormUtils.Mode.EDIT) {
-	    	
-	    	Set<StudentDTO> students;
-	        
-	        if (userDTO instanceof TeacherDTO)
-	        	students = ((TeacherDTO) userDTO).getStudents();
-	        else 
-	        	students = ((ReferentDTO) userDTO).getStudents();
-	        
-	        for(StudentDTO student : students) {
-				if (firstStudentId == null)
-					firstStudentId = student.getId().toString();
-					
-				linkedStudentsValueMap.put(student.getId().toString(), student.getFirstName()+" "+student.getName());
-				linkedStudentsImagesValueMap.put(student.getId().toString(), student.getImage().getFilename());
-			}
-	    }*/
-        
         removeStudentButtonItem = new ButtonItem("btn_unlink_student", "D&eacute;lier");
 		
 		linkedStudentsSelectItem = new SelectItem("linked_students", "Etudiants li&eacute;s");
         linkedStudentsSelectItem.setValueMap(linkedStudentsValueMap);
         linkedStudentsSelectItem.setValueIcons(linkedStudentsImagesValueMap);
-        
-        /*if (firstStudentId == null) {
-	        linkedStudentsSelectItem.setDefaultValue("Aucun");
-	        linkedStudentsSelectItem.disable();
-	        removeStudentButtonItem.disable();
-        } else {
-        	linkedStudentsSelectItem.setDefaultValue(firstStudentId);
-	        linkedStudentsSelectItem.enable();
-	        removeStudentButtonItem.enable();
-        }*/
 	        
         linkedStudentsSelectItem.setImageURLPrefix(FormUtils.UPLOAD_IMAGE_PATH);
         
@@ -162,6 +129,11 @@ public class LinkedStudentsForm {
 	}
 	
 	public void setLinkedStudents(Set<StudentDTO> students, FormUtils.Mode mode) {
+		
+        linkedStudentsValueMap.clear();
+        linkedStudentsImagesValueMap.clear();
+        nonLinkedStudentsValueMap.clear();
+        nonLinkedStudentsImagesValueMap.clear();
 		
 		String firstStudentId = null;
         
