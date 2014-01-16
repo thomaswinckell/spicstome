@@ -122,38 +122,6 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 
 	}*/
 	
-	private List<FolderDTO> GetFoldersFolder(FolderDTO folder)
-	{
-		List<FolderDTO> res = new ArrayList<FolderDTO>();
-		
-		res.add(folder);
-
-		for(PecsDTO p:folder.getContent())
-		{
-			if(p instanceof FolderDTO)
-			{
-				res.addAll(GetFoldersFolder((FolderDTO)p));
-				
-			}
-		}	
-		
-		return res;
-	}
-	
-
-	@Override
-	public List<FolderDTO> getFoldersAlbum(long id) {
-		
-		AlbumDTO albumDTO = getAlbum(id);
-		if(albumDTO.getFolder()!=null)
-		{
-			return GetFoldersFolder(albumDTO.getFolder());
-		}
-		else
-		{
-			return null;
-		}
-	}
 
 	@Override
 	public StudentDTO getAlbumOwner(long id) {

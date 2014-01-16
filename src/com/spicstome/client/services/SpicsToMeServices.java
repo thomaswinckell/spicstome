@@ -50,7 +50,6 @@ public interface SpicsToMeServices extends RemoteService {
 	
 	/* GET */
 	public StudentDTO getAlbumOwner(long id);
-	public List<FolderDTO> getFoldersAlbum(long id);
 	public AlbumDTO getAlbum(long id);
 	public StudentDTO getStudent(Long idStudent);
 	public ReferentDTO getReferentConnected();

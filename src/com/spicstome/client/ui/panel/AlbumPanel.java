@@ -1,16 +1,19 @@
 package com.spicstome.client.ui.panel;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.smartgwt.client.widgets.tree.events.NodeClickEvent;
 import com.smartgwt.client.widgets.tree.events.NodeClickHandler;
 import com.spicstome.client.dto.AlbumDTO;
+import com.spicstome.client.dto.FolderDTO;
+import com.spicstome.client.dto.PecsDTO;
 import com.spicstome.client.ui.widget.FolderTree;
 
 public abstract class AlbumPanel extends VLayout{
 
-
-	public AlbumDTO album;
 	protected HLayout titleLayout = new HLayout();
 		
 	HLayout horizontalLayout = new HLayout();
@@ -41,26 +44,38 @@ public abstract class AlbumPanel extends VLayout{
 		addMember(titleLayout);
 		addMember(horizontalLayout);
 	}
-
-	public void setAlbum(AlbumDTO album)
+	
+	private List<FolderDTO> GetFoldersFolder(FolderDTO folder)
 	{
-		this.album = album;
+		List<FolderDTO> res = new ArrayList<FolderDTO>();
+		
+		res.add(folder);
+
+		for(PecsDTO p:folder.getContent())
+		{
+			if(p instanceof FolderDTO)
+			{
+				res.addAll(GetFoldersFolder((FolderDTO)p));
+				
+			}
+		}	
+		
+		return res;
 	}
 
 
-	public boolean onFolderClick(NodeClickEvent event)
+	public void setAlbum(AlbumDTO album)
 	{
-		int newSelectedFolderId = Integer.valueOf(event.getNode().getAttribute("id_folder"));
+		List<FolderDTO> folders =  GetFoldersFolder(album.getFolder());
 		
-		if(folderTree.selectFolderId != newSelectedFolderId)
-		{
-			folderTree.selectFolderId = newSelectedFolderId;
-			folderTree.selectFolderNode = event.getNode();
-			
-			return true;
-		}
+		this.folderTree.setFolders(folders);
+	}
+
+	public void onFolderClick(NodeClickEvent event)
+	{
+	
+		folderTree.selectFolderNode = event.getNode();		
 		
-		return false;
 	}
 }
 

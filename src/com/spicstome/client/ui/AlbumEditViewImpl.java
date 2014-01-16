@@ -1,14 +1,8 @@
 package com.spicstome.client.ui;
 
-import java.util.HashSet;
-import java.util.List;
-
 import com.spicstome.client.dto.AlbumDTO;
 import com.spicstome.client.dto.ArticleDTO;
 import com.spicstome.client.dto.FolderDTO;
-import com.spicstome.client.dto.ImageDTO;
-import com.spicstome.client.dto.LogDTO;
-import com.spicstome.client.dto.PecsDTO;
 import com.spicstome.client.place.AlbumManagementPlace;
 import com.spicstome.client.ui.panel.AlbumEditPanel;
 import com.spicstome.client.ui.widget.Crumb;
@@ -41,53 +35,31 @@ public class AlbumEditViewImpl extends UserViewImpl  implements AlbumEditView{
 		this.albumEditPanel = new AlbumEditPanel(){
 
 			@Override
-			public void onSaveArticle() 
-			{
+			public void onSaveArticle(ArticleDTO articleDTO) {
 	
-				FolderDTO parent = (FolderDTO)folderTree.selectFolderNode.getAttributeAsObject("data");
-				
-				ArticleDTO a = new ArticleDTO((long)-1,
-						"articleNom",
-						0,
-						parent,
-						new ImageDTO((long) -1, "all.png"),
-						new HashSet<LogDTO>());
-				
-				((AlbumEditView.Presenter)(listener)).save(a);
-		
-				listener.goTo(new AlbumManagementPlace());
+				((AlbumEditView.Presenter)(listener)).save(articleDTO);	
+
 			}
 
 			@Override
-			public void onSaveFolder() {
-				
-				FolderDTO parent = (FolderDTO)folderTree.selectFolderNode.getAttributeAsObject("data");
-				
-				FolderDTO f = new FolderDTO((long)-1,
-						"nomDossier",
-						0,
-						parent,
-						new ImageDTO((long)-1,"all.png"),
-						new HashSet<PecsDTO>());
-				
-				((AlbumEditView.Presenter)(listener)).save(f);
-				
-				listener.goTo(new AlbumManagementPlace());
-				
+			public void onSaveFolder(FolderDTO folderDTO) {
+	
+				((AlbumEditView.Presenter)(listener)).save(folderDTO);				
+
 			}
 
 			@Override
 			public void onDeleteArticle(ArticleDTO a) {
 				
 				((AlbumEditView.Presenter)(listener)).delete(a);
-				listener.goTo(new AlbumManagementPlace());
+
 			}
 
 			@Override
 			public void onDeleteFolder(FolderDTO f) {
 				
 				((AlbumEditView.Presenter)(listener)).delete(f);			
-				listener.goTo(new AlbumManagementPlace());		
+					
 			}
 			
 		};
@@ -96,27 +68,45 @@ public class AlbumEditViewImpl extends UserViewImpl  implements AlbumEditView{
 		mainPanel.addMember(this.albumEditPanel);
 	}
 
-	@Override
-	public void setAlbum(AlbumDTO a) {
-		
-		this.albumEditPanel.setAlbum(a);
-
-	}
 
 	@Override
-	public void setFolders(List<FolderDTO> folders) {
-		
-		this.albumEditPanel.folderTree.setFolders(folders);
-		
+	public void setAlbum(AlbumDTO album)
+	{
+		albumEditPanel.setAlbum(album);
 	}
 
 	@Override
 	public void setOwner(String name) {
 		
 		albumEditPanel.comboBoxOwner.setValue(name);
-		String crumbText = "Album de "+name+" (administration)";
-		crumb.setCrumbTitle(crumbText);
+		crumb.setCrumbTitle("Album de "+name+" (administration)");
 
+	}
+
+	@Override
+	public void insertArticle(ArticleDTO articleDTO) {
+		
+		albumEditPanel.insertArticleIntoGrid(articleDTO);
+	}
+
+	@Override
+	public void deleteArticle(ArticleDTO articleDTO) {
+
+		albumEditPanel.removeArticleFromGrid(articleDTO);
+	}
+
+
+	@Override
+	public void insertFolder(FolderDTO folder) {
+		
+		albumEditPanel.insertFolderIntoTree(folder);	
+	}
+
+
+	@Override
+	public void deleteFolder(FolderDTO folder) {
+		
+		albumEditPanel.removeFolderFromTree(folder);		
 	}
 
 	

@@ -1,7 +1,6 @@
 package com.spicstome.client.ui.panel;
 
 import java.util.ArrayList;
-
 import com.smartgwt.client.util.BooleanCallback;
 import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.form.DynamicForm;
@@ -49,33 +48,32 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 
 			@Override
 			public void onNew() {
-				ArticleFormWindow articleFormWindow = new ArticleFormWindow(ArticleFormWindow.Mode.NEW,null){
+				
+				FolderDTO parent = getSelectedFolder();
+				
+				ArticleFormWindow articleFormWindow = new ArticleFormWindow(ArticleFormWindow.Mode.NEW,null,parent){
 					@Override
 					public void onDestroy()
 					{
-						/*
-						ArticleDTO artcileDTO = new ArticleDTO((long)-1,
-								form.getValueAsString("name"),
-								0,
-								album.getFolder(),
-								new ImageDTO(),
-								new HashSet<LogDTO>());
+					
+						/* getting the new article */
+						ArticleDTO a = this.article;
 						
-						album.getFolder().getContent().add(artcileDTO);*/
-						onSaveArticle();
+						/* saving business data */
+						onSaveArticle(a);
+
 					}
 				};
 				articleFormWindow.show();
 
 			}
 			
-		
-			
 			@Override
 			public void onEdit() {
 				
+				FolderDTO parent = getSelectedFolder();
 				ArticleDTO article = getSelectedArticle();
-				ArticleFormWindow articleFormWindow = new ArticleFormWindow(ArticleFormWindow.Mode.EDIT,article);
+				ArticleFormWindow articleFormWindow = new ArticleFormWindow(ArticleFormWindow.Mode.EDIT,article,parent);
 				articleFormWindow.show();
 				
 			}
@@ -87,8 +85,6 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 					@Override
 					public void onDestroy()
 					{
-						// todo traitement 
-						//System.out.println(win.book.selectedImage.toString());
 						articlesGrid.addItem(book.selectedImage);
 					}
 				};			 
@@ -97,21 +93,18 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 
 			@Override
 			public void onDelete() {
+				
 				SC.confirm("Êtes vous sure de vouloir supprimer cet article ?", new BooleanCallback() {
+					
 					public void execute(Boolean value) {
 						if (value != null && value) 
 						{
 							
 							ArticleDTO articleDTO = getSelectedArticle();
 							
-							//suppression métier
+							/* delete business data */
 							onDeleteArticle(articleDTO);
-							
-							//suppression graphique
-							articlesGrid.removeData(articlesGrid.getSelectedItem());
-							
-							//mis à jour graphique
-							Update();
+
 						}
 					}
 				});
@@ -124,31 +117,34 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 			@Override
 			public void onEdit() {
 				FolderDTO folder = getSelectedFolder();
-				FolderFormWindow folderFormWindow = new FolderFormWindow(FolderFormWindow.Mode.EDIT,folder);
+				FolderFormWindow folderFormWindow = new FolderFormWindow(FolderFormWindow.Mode.EDIT,folder,null);
 				folderFormWindow.show();
 			}
 
 			@Override
 			public void onNew() {
-				FolderFormWindow folderFormWindow = new FolderFormWindow(FolderFormWindow.Mode.NEW,null){
-					@Override
-					public void onDestroy()
-					{
-						onSaveFolder();
-					}};
-
-				folderFormWindow.show();
 				
-				/*
-				if(folderTree.selectFolderNode!=null)
+				FolderDTO parent = getSelectedFolder();
+				
+				if(parent!=null)
 				{
-					folderTree.tree.add(new AlbumTreeNode("42", folderTree.selectFolderNode.getAttribute("id_folder"), "Foo","tout.png"), folderTree.selectFolderNode);
-					folderTree.treeGrid.setData(folderTree.tree);
-					
-					folderTree.treeGrid.getData().openAll();
+					FolderFormWindow folderFormWindow = new FolderFormWindow(FolderFormWindow.Mode.NEW,null,parent){
+						@Override
+						public void onDestroy()
+						{	
+							FolderDTO f= this.folder;	
+							
+							/* save business data */
+							onSaveFolder(f);
+						}};
+
+					folderFormWindow.show();
 				}
-				*/
-				
+				else
+				{
+					SC.warn("Aucun dossier parent séléctionné");
+				}
+
 			}
 			
 			@Override
@@ -161,14 +157,7 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 						// todo traitement 
 						//System.out.println(win.book.selectedImage.toString());
 						
-						folderTree.tree.add(new FolderTree.AlbumTreeNode("42",
-								folderTree.selectFolderNode.getAttribute("id_folder"), 
-								albumPanel.folderTree.selectFolderNode.getAttribute("title"),
-								albumPanel.folderTree.selectFolderNode.getAttribute("icon"),null), 
-								folderTree.selectFolderNode);
-						folderTree.treeGrid.setData(folderTree.tree);
-						
-						folderTree.treeGrid.getData().openAll();
+					
 					}
 				};			 
 				win.show();
@@ -177,9 +166,26 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 			@Override
 			public void onDelete() {
 				
-				FolderDTO folderDTO = getSelectedFolder();
+				final FolderDTO folderDTO = getSelectedFolder();
 				
-				onDeleteFolder(folderDTO);
+				if(folderDTO.getFolder()!=null)
+				{
+					SC.confirm("Êtes vous sure de vouloir supprimer ce dossier ainsi que son contenu ?", new BooleanCallback() {
+						
+						public void execute(Boolean value) {
+							if (value != null && value) 
+							{
+								onDeleteFolder(folderDTO);
+							}
+						}
+					});
+				
+				}
+				else
+				{
+					SC.warn("Vous ne pouvez pas supprimer la racine");
+				}
+				
 				
 			}
 		};
@@ -196,22 +202,53 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 	    	@Override
 			public void OnSelectChanged(ImageRecord object) {
 
-				Update();
+				UpdateActionPanels();
 			}
 	    	
 	    };
 	    
-
 	    articleVerticalPanel.addMember(actionArticlePanel);
-	   
-	    
+	       
 	    verticalLayout.setHeight(350);
 	    articleVerticalPanel.setHeight(350);
 	    
 	    horizontalLayout.addMember(articleVerticalPanel);
 
-	    Update();
+	    UpdateActionPanels();
 	    
+	}
+	
+	public void removeFolderFromTree(FolderDTO folderDTO)
+	{
+		folderTree.tree.remove(folderTree.selectFolderNode);
+		folderTree.treeGrid.setData(folderTree.tree);		
+		folderTree.treeGrid.getData().openAll();
+		
+		articlesGrid.deselectAllRecords();	
+		folderTree.selectFolderNode=null;
+		folderTree.treeGrid.deselectAllRecords();
+		
+		articlesGrid.clearItems();
+		UpdateActionPanels();
+	}
+	
+	public void insertFolderIntoTree(FolderDTO folderDTO)
+	{
+		folderTree.tree.add(new FolderTree.AlbumTreeNode(folderDTO),folderTree.selectFolderNode);
+		folderTree.treeGrid.setData(folderTree.tree);		
+		folderTree.treeGrid.getData().openAll();
+	}
+	
+	public void insertArticleIntoGrid(ArticleDTO articleDTO)
+	{
+		articlesGrid.addItem(new ImageRecord(articleDTO));
+	}
+	
+	public void removeArticleFromGrid(ArticleDTO articleDTO)
+	{
+		articlesGrid.removeItem((ImageRecord)articlesGrid.getSelectedRecord());
+		articlesGrid.deselectAllRecords();	
+		UpdateActionPanels();
 	}
 	
 	public ArticleDTO getSelectedArticle()
@@ -221,62 +258,61 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 	
 	public FolderDTO getSelectedFolder()
 	{
+		if(folderTree.selectFolderNode==null) return null;
 		return (FolderDTO)folderTree.selectFolderNode.getAttributeAsObject("data");
 	}
 	
-	public void Update()
+	public void UpdateActionPanels()
 	{
 		actionArticlePanel.setHiddenActionVisible(articlesGrid.getSelectedRecord()!=null);
-		actionArticlePanel.setVisible(folderTree.selectFolderId!=-1);
-		actionFoldersPanel.setHiddenActionVisible(folderTree.selectFolderId!=-1);
+		actionArticlePanel.setVisible(folderTree.selectFolderNode!=null);
+		actionFoldersPanel.setHiddenActionVisible(folderTree.selectFolderNode!=null);
 	}
-	
+
 	@Override
 	public void setAlbum(AlbumDTO album)
 	{
 		super.setAlbum(album);
-		Update();
+		
+		articlesGrid.clearItems();
+		
+		UpdateActionPanels();
 	}
 	
-	@Override
-	public boolean onFolderClick(NodeClickEvent event)
+	private void UpdateGrid()
 	{
-		boolean changed = super.onFolderClick(event);
-
+		FolderDTO folder = getSelectedFolder();
 		
 		ArrayList<ImageRecord> articles = new ArrayList<ImageRecord>();
 		
-		if(changed)
+		for(PecsDTO pecsDTO:folder.getContent())
 		{
-			
-			FolderDTO folder = getSelectedFolder();
-			
-			
-			for(PecsDTO pecsDTO:folder.getContent())
+			if(pecsDTO instanceof ArticleDTO)
 			{
-				if(pecsDTO instanceof ArticleDTO)
-				{
-					articles.add(new ImageRecord((ArticleDTO)pecsDTO));
-				}
-					
+				articles.add(new ImageRecord((ArticleDTO)pecsDTO));
 			}
-			
-			articlesGrid.setItems(articles);
-			articleVerticalPanel.addMember(articlesGrid,0);
-			
-			Update();
-			
-			return true;
+				
 		}
 		
-		return false;
-		
-		
+		articlesGrid.setItems(articles);
+		articleVerticalPanel.addMember(articlesGrid,0);
 	}
 	
-	public abstract void onSaveArticle();
-	public abstract void onSaveFolder();
+	@Override
+	public void onFolderClick(NodeClickEvent event)
+	{
+		super.onFolderClick(event);
+
+	
+		UpdateGrid();	
+		UpdateActionPanels();
+
+	}
+	
+	public abstract void onSaveArticle(ArticleDTO articleDTO);
+	public abstract void onSaveFolder(FolderDTO folderDTO);
 	public abstract void onDeleteArticle(ArticleDTO a);
 	public abstract void onDeleteFolder(FolderDTO f);
+
 
 }

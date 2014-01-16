@@ -56,7 +56,7 @@ public abstract class PickerWindow extends Window{
 			public void onChange(ChangeEvent event) {
 			
 		          //String selectedItem = (String) event.getValue();  
-		          albumPanel.setAlbum(new AlbumDTO());
+		         // albumPanel.setAlbum(new AlbumDTO());
 				
 			}
 		});
@@ -65,7 +65,7 @@ public abstract class PickerWindow extends Window{
 
         InitAlbumPanel();
         
-        albumPanel.setAlbum(new AlbumDTO());
+       // albumPanel.setAlbum(new AlbumDTO());
   
         validButton.setIcon("check.png");
         int iconsize=32;

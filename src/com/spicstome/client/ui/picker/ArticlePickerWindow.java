@@ -39,13 +39,11 @@ public class ArticlePickerWindow extends PickerWindow {
 		
 		albumPanel =  new AlbumBookPanel(book){
         	@Override
-        	public boolean onFolderClick(NodeClickEvent event)
+        	public void onFolderClick(NodeClickEvent event)
         	{
-        		boolean res = super.onFolderClick(event);
-        		
+        		super.onFolderClick(event);       		
         		UpdateValidButton();
-        			
-        		return res;
+        	
         	}
         };
         

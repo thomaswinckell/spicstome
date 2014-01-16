@@ -12,7 +12,6 @@ import com.spicstome.client.dto.FolderDTO;
 public class FolderTree extends HLayout
 {
 	
-	public int selectFolderId;
 	public TreeNode selectFolderNode;
 	public Tree tree;
 	public TreeGrid treeGrid = new TreeGrid();
@@ -44,7 +43,6 @@ public class FolderTree extends HLayout
 	
 	public void setFolders(List<FolderDTO> folders)
 	{
-		selectFolderId=-1;
 		selectFolderNode=null;
 	
 		tree = new Tree();
@@ -65,14 +63,8 @@ public class FolderTree extends HLayout
 	    for(int i=0;i<folders.size();i++)
 	    {
 	    	FolderDTO f = folders.get(i);
-	    	
-	    	String p;
-	    	if(f.getFolder()==null)
-	    		p="-1";
-	    	else
-	    		p=f.getFolder().getId().toString();
-	    	
-	    	employeeData[i]= new AlbumTreeNode(f.getId().toString(),p , f.getName(),"tout.png",f);
+
+	    	employeeData[i]= new AlbumTreeNode(f);
 	    }
 
 		tree.setData(employeeData);
@@ -81,7 +73,6 @@ public class FolderTree extends HLayout
 		
 		treeGrid.getData().openAll();
 	}
-	
 	
 	
 	public void AllowReorder()
@@ -128,14 +119,21 @@ public class FolderTree extends HLayout
 	
 	public static class AlbumTreeNode extends TreeNode 
 	{
-	    public AlbumTreeNode(String id_folder, String parent, String name,String image,FolderDTO f) 
+	    
+	    public AlbumTreeNode(FolderDTO folder)
 	    {
-	      setAttribute("id_folder", id_folder);
-	      setAttribute("parent", parent);
-	      setAttribute("title", name);
-	      setAttribute("icon", image);
-	      setAttribute("is_folder", true);
-	      setAttribute("data",f);
+	    	String p;
+	    	if(folder.getFolder()==null)
+	    		p="-1";
+	    	else
+	    		p=folder.getFolder().getId().toString();
+	    	
+	    	setAttribute("id_folder", folder.getId().toString());
+	    	setAttribute("parent", p);
+	    	setAttribute("title", folder.getName());
+	    	setAttribute("icon", "upload/"+folder.getImage().getFilename());
+	    	setAttribute("is_folder", true);
+	    	setAttribute("data",folder);
 	    }
 	}
 }

@@ -3,8 +3,6 @@ package com.spicstome.client.ui;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-
-import com.spicstome.client.dto.AlbumDTO;
 import com.spicstome.client.dto.ArticleDTO;
 import com.spicstome.client.dto.FolderDTO;
 import com.spicstome.client.dto.ImageDTO;
@@ -40,7 +38,6 @@ public class MailViewImpl extends UserViewImpl  implements MailView{
         f.getContent().add(art);
         List<FolderDTO> listFodler = new ArrayList<FolderDTO>();
         listFodler.add(f);
-        album.setAlbum(new AlbumDTO());
         album.folderTree.setFolders(listFodler);
         
     	dropZone = new DropZone(album.book.imageSize);

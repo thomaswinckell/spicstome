@@ -1,5 +1,7 @@
 package com.spicstome.client.ui.form;
 
+import java.util.HashSet;
+
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.widgets.IconButton;
 import com.smartgwt.client.widgets.Img;
@@ -13,6 +15,9 @@ import com.smartgwt.client.widgets.form.fields.RadioGroupItem;
 import com.smartgwt.client.widgets.form.fields.TextItem;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.spicstome.client.dto.ArticleDTO;
+import com.spicstome.client.dto.FolderDTO;
+import com.spicstome.client.dto.ImageDTO;
+import com.spicstome.client.dto.LogDTO;
 
 public class ArticleFormWindow extends Window{
 	
@@ -24,6 +29,8 @@ public class ArticleFormWindow extends Window{
 	Img imgDetail = new Img();
 	FileItem fileItem = new FileItem();
 	
+	public ArticleDTO article;
+	
 	RadioGroupItem radioGroupType = new RadioGroupItem();
 	RadioGroupItem radioGroupGroup = new RadioGroupItem();
 	CheckboxItem checkBoxFavorite = new CheckboxItem("favorite","Favoris");
@@ -32,12 +39,30 @@ public class ArticleFormWindow extends Window{
 	
 	public enum Mode{NEW, EDIT}
 	
-	public ArticleFormWindow(Mode mode,ArticleDTO article)
+	public ArticleFormWindow(Mode mode,final ArticleDTO articleDTO,FolderDTO parent)
 	{
 		setWidth(500);
 		setHeight(500);
 
 		
+		
+		if(mode==Mode.NEW)
+		{
+			setTitle("Création d'un nouvel article");
+			
+			this.article = new ArticleDTO((long)-1,
+					"nom de l'article",
+					0,
+					parent,
+					new ImageDTO((long) -1, ""),
+					new HashSet<LogDTO>());
+		}
+		else if(mode==Mode.EDIT)
+		{
+			setTitle("Edition d'un article");
+			
+			this.article=articleDTO;
+		}
 		
 		setShowMinimizeButton(false);
 		setIsModal(true);
@@ -70,10 +95,14 @@ public class ArticleFormWindow extends Window{
 			@Override
 			public void onClick(ClickEvent event) {
 				
+				article.setName(nameDetail.getValueAsString());
+				
 				destroy();
 				
 			}
 		});
+		
+		nameDetail.setValue(article.getName());
 		
 		verticalLayout.addMember(imgDetail);
 		verticalLayout.addMember(form);
@@ -82,13 +111,7 @@ public class ArticleFormWindow extends Window{
 		addItem(verticalLayout);
 		
 		
-		if(mode==Mode.NEW)
-			setTitle("Création d'un nouvel article");
-		else if(mode==Mode.EDIT)
-		{
-			setTitle("Edition d'un article");
-			nameDetail.setValue(article.getName());
-		}
+	
 			
 	}
 	

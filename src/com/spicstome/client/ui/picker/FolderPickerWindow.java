@@ -17,13 +17,12 @@ public class FolderPickerWindow extends PickerWindow{
 	{
 		albumPanel = new AlbumPanel() {
     		@Override
-        	public boolean onFolderClick(NodeClickEvent event)
+        	public void onFolderClick(NodeClickEvent event)
         	{
-        		boolean res = super.onFolderClick(event);
+        		super.onFolderClick(event);
         		
         		UpdateValidButton();
-        			
-        		return res;
+
         	}
 		};
 		
@@ -33,6 +32,6 @@ public class FolderPickerWindow extends PickerWindow{
 	@Override
 	public void UpdateValidButton()
 	{
-		validButton.setVisible(albumPanel.folderTree.selectFolderId!=-1);
+		validButton.setVisible(albumPanel.folderTree.selectFolderNode!=null);
 	}
 }
