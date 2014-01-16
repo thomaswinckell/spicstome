@@ -64,9 +64,10 @@ public class UserTypeForm extends DynamicForm {
 		this.userDTO = userDTO;
 		this.mode = mode;
 		
-		if (mode == FormUtils.Mode.NEW)
+		if (mode == FormUtils.Mode.NEW) {
 	        userTypeSelectItem.setDefaultValue("student");
-	    else {
+	        userTypeSelectItem.enable();
+		} else {
 	    	if (userDTO instanceof StudentDTO)
 	    		userTypeSelectItem.setDefaultValue("student");
 	    	else if (userDTO instanceof TeacherDTO)

@@ -1,6 +1,18 @@
 package com.spicstome.client.ui.form;
 
+import gwtupload.client.IUploader;
+import gwtupload.client.SingleUploader;
+import gwtupload.client.Utils;
+import gwtupload.client.IFileInput.FileInputType;
+import gwtupload.client.IUploadStatus.Status;
+import gwtupload.client.IUploader.OnCancelUploaderHandler;
+import gwtupload.client.IUploader.OnFinishUploaderHandler;
+
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.xml.client.Document;
+import com.google.gwt.xml.client.XMLParser;
+import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.IButton;
 import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.events.ClickEvent;
@@ -10,6 +22,7 @@ import com.smartgwt.client.widgets.layout.VLayout;
 import com.spicstome.client.dto.ImageDTO;
 import com.spicstome.client.dto.UserDTO;
 import com.spicstome.client.services.SpicsToMeServices;
+import com.spicstome.client.ui.strings.MyUploaderConstants;
 
 public class UserForm {
 	
@@ -28,11 +41,8 @@ public class UserForm {
 		basicUserForm = new BasicUserForm();
 		
 		Label labelUserImage = new Label("Image de l'utilisateur :");
-	    
-	    VLayout vLayout = new VLayout();
-	    vLayout.addMember(labelUserImage);
 
-		imageUploadForm = new ImageUploadForm(128, 128, vLayout);
+		imageUploadForm = new ImageUploadForm(128, 128);
 		
 		userTypeForm = new UserTypeForm();
 		
@@ -51,44 +61,19 @@ public class UserForm {
 					} else {
 						updateUser();
 					}
-		    		
-		    		// if we need to update the user image
-		    		/*if ((userDTO.getImage() == null) || ((userDTO.getImage() != null) && (userDTO.getImage().getFilename() != imageUploadForm.getImageFileName()))) {
-		    		
-		    			final ImageDTO imageUser = new ImageDTO((long) -1, imageUploadForm.getImageFileName());
-		    			
-		    			SpicsToMeServices.Util.getInstance().saveImage(imageUser, new AsyncCallback<Long> () {
-		    				@Override
-		    				public void onFailure(Throwable caught) {
-		    					System.out.println(caught);
-		    				}
-		    	
-		    				@Override
-		    				public void onSuccess(Long idImage) {
-		    	
-		    					imageUser.setId(idImage);
-		    					
-		    					userDTO.setImage(imageUser);
-		    					
-		    					if (mode == FormUtils.Mode.NEW) {
-		    						saveUser();
-		    					} else {
-		    						updateUser();
-		    					}
-		    				}
-		    		}	*/
 	    		}
 	    	}
 	    });
 	    
-	    HLayout hLayout = new HLayout();
-	    hLayout.addMember(basicUserForm);
-	    hLayout.addMember(vLayout);
+	    VLayout vLayout = new VLayout();
+	    vLayout.addMember(basicUserForm);
+	    vLayout.addMember(labelUserImage);
+	    vLayout.addMember(imageUploadForm.getImage());
+	    vLayout.addMember(imageUploadForm.getUploadButton());
+	    vLayout.addMember(userTypeForm);
+	    vLayout.addMember(validateButton);
 	    
-	    mainPanel.setMembersMargin(10);
-	    mainPanel.addMember(hLayout);
-	    mainPanel.addMember(userTypeForm);
-	    mainPanel.addMember(validateButton);
+	    mainPanel.addMember(vLayout);
 	}
 	
 	public boolean validate() {

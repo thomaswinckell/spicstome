@@ -65,15 +65,19 @@ public class BasicUserForm extends DynamicForm{
 	public void fillForm(UserDTO userDTO, FormUtils.Mode mode) {
 		this.mode = mode;
 		
+		this.clearValues();
+		
 		if (mode == FormUtils.Mode.EDIT) {
 	    	setValue("first_name", userDTO.getFirstName());
 	    	setValue("name", userDTO.getName());
 	    	setValue("email", userDTO.getEmail());
 	    	setValue("login", userDTO.getEmail());
+	    	getField("password").setRequired(false);
+	    	getField("password2").setRequired(false);
+		} else {
+			getField("password").setRequired(true);
+			getField("password2").setRequired(true);
 		}
-		
-		passwordTextField.setRequired(mode == FormUtils.Mode.NEW);
-		password2TextField.setRequired(mode == FormUtils.Mode.NEW);
 	}
 	
 	@Override
