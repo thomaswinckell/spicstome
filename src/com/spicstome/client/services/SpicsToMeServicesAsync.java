@@ -37,27 +37,35 @@ public interface SpicsToMeServicesAsync {
 	/* GET */
 	void getAlbumOwner(long id,AsyncCallback<StudentDTO> callback);
 	void getAlbum(long id,AsyncCallback<AlbumDTO> callback);
+	void getUser(Long idUser, AsyncCallback<UserDTO> callback);
 	void getStudent(Long idStudent, AsyncCallback<StudentDTO> callback); 
 	void getReferentConnected(AsyncCallback<ReferentDTO> callback); 
 	void getAllStudents(AsyncCallback<List<StudentDTO>> callback);
+	void getAllTeachers(AsyncCallback<List<TeacherDTO>> callback);
+	void getAllReferents(AsyncCallback<List<ReferentDTO>> callback);
 	
 	/* SAVE */
 	void saveImage(ImageDTO imageDTO, AsyncCallback<Long> callback);
 	void saveFolder(FolderDTO folderDTO, AsyncCallback<Long> callback);
 	void saveAlbum(AlbumDTO albumDTO, AsyncCallback<Long> callback);
 	void saveArticle(ArticleDTO articleDTO, AsyncCallback<Long> callback);
-
-	
-	void deleteArticle(long id,AsyncCallback<Boolean> callback);
-	void deleteFolder(long id,AsyncCallback<Boolean> callback);
-
-
 	void saveUser(UserDTO userDTO, AsyncCallback<Long> callback);
 	void saveStudent(StudentDTO studentDTO, AsyncCallback<Long> callback);
 	void saveTeacher(TeacherDTO teacherDTO, AsyncCallback<Long> callback);
 	void saveReferent(ReferentDTO referentDTO, AsyncCallback<Long> callback);
 	
+	/* UPDATE */
 	void updateFolder(FolderDTO folderDTO,AsyncCallback<Boolean> callack);
 	void updateArticle(ArticleDTO articleDTO,AsyncCallback<Boolean> callack);
+
+	void updateImage(ImageDTO imageDTO, AsyncCallback<Long> callback);
+	void updateUser(UserDTO userDTO, AsyncCallback<Long> callback);
+	void updateStudent(StudentDTO studentDTO, AsyncCallback<Long> callback);
+	void updateTeacher(TeacherDTO teacherDTO, AsyncCallback<Long> callback);
+	void updateReferent(ReferentDTO referentDTO, AsyncCallback<Long> callback);
+
+	/* DELETE */	
+	void deleteArticle(long id,AsyncCallback<Boolean> callback);
+	void deleteFolder(long id,AsyncCallback<Boolean> callback);
 
 }

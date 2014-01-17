@@ -14,30 +14,27 @@
  *******************************************************************************/
 package com.spicstome.client.ui;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 
 import com.smartgwt.client.widgets.IButton;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
-import com.smartgwt.client.widgets.form.DynamicForm;
-import com.smartgwt.client.widgets.form.fields.ButtonItem;
-import com.smartgwt.client.widgets.form.fields.SelectItem;
+import com.spicstome.client.dto.ReferentDTO;
 import com.spicstome.client.dto.StudentDTO;
+import com.spicstome.client.dto.TeacherDTO;
 import com.spicstome.client.place.AddUserPlace;
-import com.spicstome.client.place.UsersManagementPlace;
-import com.spicstome.client.ui.form.FormUtils;
-import com.spicstome.client.ui.widget.Crumb;
+import com.spicstome.client.ui.form.ReferentsEditForm;
+import com.spicstome.client.ui.form.StudentsEditForm;
+import com.spicstome.client.ui.form.TeachersEditForm;
 
 /**
  * Sample implementation of {@link UsersManagementView}.
  */
 public class UsersManagementViewImpl extends UserViewImpl implements UsersManagementView {
 
-	DynamicForm editUserForm;
-	SelectItem studentsSelectItem;
-	ButtonItem editStudentButtonItem;
-	LinkedHashMap<String, String> studentsValueMap, studentsImagesValueMap;
+	private StudentsEditForm studentsEditForm;
+	private ReferentsEditForm referentsEditForm;
+	private TeachersEditForm teachersEditForm;
 	
 	public UsersManagementViewImpl() {
 
@@ -62,56 +59,24 @@ public class UsersManagementViewImpl extends UserViewImpl implements UsersManage
 		
 		mainPanel.addMember(buttonAddUser);
 		
-		editUserForm = new DynamicForm();
+		studentsEditForm = new StudentsEditForm();
+		teachersEditForm = new TeachersEditForm();
+		referentsEditForm = new ReferentsEditForm();
 		
-		/* Student edit/remove */
-		
-		studentsSelectItem = new SelectItem("students", "Etudiants");
-		editStudentButtonItem = new ButtonItem("btn_edit_student", "Editer");
-		
-		studentsValueMap = new LinkedHashMap<String, String>();
-		studentsImagesValueMap = new LinkedHashMap<String, String>();
-		
-		studentsSelectItem.setImageURLPrefix(FormUtils.UPLOAD_IMAGE_PATH);
-		
-		editUserForm.setFields(studentsSelectItem, editStudentButtonItem);
-		
-		mainPanel.addMember(editUserForm);
+		mainPanel.addMember(studentsEditForm);
+		mainPanel.addMember(teachersEditForm);
+		mainPanel.addMember(referentsEditForm);
 	}
 	
 	public void setStudents (List<StudentDTO> students) {
-		String firstStudentId = null;
-		for(StudentDTO student : students) {
-			
-			if (firstStudentId == null)
-				firstStudentId = student.getId().toString();
-				
-			studentsValueMap.put(student.getId().toString(), student.getFirstName()+" "+student.getName());
-			studentsImagesValueMap.put(student.getId().toString(), student.getImage().getFilename());
-		}
-		
-		if (firstStudentId != null) {
-			studentsSelectItem.setDefaultValue(firstStudentId);
-			editStudentButtonItem.enable();
-		}
-		else {
-			studentsSelectItem.setDefaultValue("Aucun");
-			studentsSelectItem.disable();
-			editStudentButtonItem.disable();
-		}
-		
-		studentsSelectItem.setValueMap(studentsValueMap);
-		studentsSelectItem.setValueIcons(studentsImagesValueMap);
-		
-		editStudentButtonItem.addClickHandler(new com.smartgwt.client.widgets.form.fields.events.ClickHandler() {
-			
-			@Override
-			public void onClick(com.smartgwt.client.widgets.form.fields.events.ClickEvent event) {
-				
-				Long idStudent = Long.parseLong(studentsSelectItem.getValueAsString());
-				
-				goTo(new AddUserPlace(idStudent.toString()));
-			}				
-		});
+		studentsEditForm.setStudents(students, this);
+	}
+	
+	public void setReferents (List<ReferentDTO> referents) {
+		referentsEditForm.setReferents(referents, this);
+	}
+	
+	public void setTeachers (List<TeacherDTO> teachers) {
+		teachersEditForm.setTeachers(teachers, this);
 	}
 }

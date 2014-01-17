@@ -80,6 +80,12 @@ public class BasicUserForm extends DynamicForm{
 		}
 	}
 	
+	private boolean isNewPassword() {
+		return (mode == FormUtils.Mode.NEW) || 
+				((getValueAsString("password") != null) &&  (getValueAsString("password2") != null) &&  
+				!getValueAsString("password").isEmpty());
+	}
+	
 	@Override
 	public boolean validate() {
 		
@@ -87,7 +93,7 @@ public class BasicUserForm extends DynamicForm{
 		
 		if (validate) {
 		
-			if ((mode == FormUtils.Mode.NEW) || (!getValueAsString("password").isEmpty())) {
+			if (isNewPassword()) {
 				if (!getValueAsString("password").equals(getValueAsString("password2"))) {
 					SC.warn("La confirmation du mot de passe n'est pas bonne.");
 					return false;
@@ -108,7 +114,7 @@ public class BasicUserForm extends DynamicForm{
 		userDTO.setEmail(getValueAsString("email"));
 		userDTO.setLogin(getValueAsString("login"));
 		
-		if ((mode == FormUtils.Mode.NEW) || (!getValueAsString("password").isEmpty()))
+		if (isNewPassword())
 			userDTO.setPassword(getValueAsString("password"));
 	}
 }

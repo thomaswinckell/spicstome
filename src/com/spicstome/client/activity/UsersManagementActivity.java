@@ -5,6 +5,8 @@ import java.util.List;
 
 import com.spicstome.client.ClientFactory;
 import com.spicstome.client.dto.StudentDTO;
+import com.spicstome.client.dto.TeacherDTO;
+import com.spicstome.client.dto.ReferentDTO;
 import com.spicstome.client.place.UsersManagementPlace;
 import com.spicstome.client.services.SpicsToMeServices;
 import com.spicstome.client.ui.UserViewImpl;
@@ -35,6 +37,32 @@ public class UsersManagementActivity extends UserActivity {
 			@Override
 			public void onSuccess(List<StudentDTO> students) {
 				view.setStudents(students);
+			}
+		});
+		
+		SpicsToMeServices.Util.getInstance().getAllTeachers(new AsyncCallback<List<TeacherDTO>> () {
+        	
+			@Override
+			public void onFailure(Throwable caught) {
+				System.out.println(caught);
+			}
+
+			@Override
+			public void onSuccess(List<TeacherDTO> teachers) {
+				view.setTeachers(teachers);
+			}
+		});
+		
+		SpicsToMeServices.Util.getInstance().getAllReferents(new AsyncCallback<List<ReferentDTO>> () {
+        	
+			@Override
+			public void onFailure(Throwable caught) {
+				System.out.println(caught);
+			}
+
+			@Override
+			public void onSuccess(List<ReferentDTO> referents) {
+				view.setReferents(referents);
 			}
 		});
 	}
