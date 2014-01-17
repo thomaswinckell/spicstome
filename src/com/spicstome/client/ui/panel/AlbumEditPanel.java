@@ -300,8 +300,6 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 	
 	public void updateArticleIntoGrid(ArticleDTO article)
 	{
-		articlesGrid.getSelectedItem().setAttribute(ImageRecord.PICTURE_NAME,article.getName());
-		
 		UpdateGrid();
 		UpdateActionPanels();
 	}

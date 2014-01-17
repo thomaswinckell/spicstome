@@ -63,8 +63,12 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 
 	@Override
 	public UserDTO getCurrentUser() {
+	
+		Object o  = getThreadLocalRequest().getSession().getAttribute("currentUser");
+		if(o==null)
+			return null;
 		
-		long id = Long.valueOf(getThreadLocalRequest().getSession().getAttribute("currentUser").toString());
+		long id = Long.valueOf(o.toString());
 		
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 	    session.beginTransaction();
