@@ -96,7 +96,6 @@ public class ArticleFormWindow extends Window{
 			public void onClick(ClickEvent event) {
 				
 				article.setName(nameDetail.getValueAsString());
-				
 				destroy();
 				
 			}

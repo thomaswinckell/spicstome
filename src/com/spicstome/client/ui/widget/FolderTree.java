@@ -1,6 +1,7 @@
 package com.spicstome.client.ui.widget;
 
 import java.util.List;
+
 import com.smartgwt.client.types.TreeModelType;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.tree.Tree;
@@ -12,7 +13,7 @@ import com.spicstome.client.dto.FolderDTO;
 public class FolderTree extends HLayout
 {
 	
-	public TreeNode selectFolderNode;
+	public AlbumTreeNode selectFolderNode;
 	public Tree tree;
 	public TreeGrid treeGrid = new TreeGrid();
 	
@@ -66,6 +67,8 @@ public class FolderTree extends HLayout
 
 	    	employeeData[i]= new AlbumTreeNode(f);
 	    }
+	    
+	  
 
 		tree.setData(employeeData);
 		
@@ -85,36 +88,7 @@ public class FolderTree extends HLayout
 
 		treeGrid.setShowOpenIcons(false);  
 
-
-		/*
-			    treeGrid.addFolderDropHandler(new FolderDropHandler() {
-			    	  @Override
-			    	  public void onFolderDrop(FolderDropEvent folderDropEvent) {
-
-
-
-			    		  Canvas src = folderDropEvent.getSourceWidget();
-			    		  folderDropEvent.getNodes()[0].setAttribute("title", "prout");
-			    	      //System.out.println("drop into folder"+src.);
-
-			    	  }
-			    	});*/
-
-		/*
-			    treeGrid.addDropHandler(new DropHandler() {
-
-					@Override
-					public void onDrop(DropEvent event) {
-
-						System.out.println("drop ");
-						System.out.println(event.getSource());
-						if(event.getSource() instanceof ImageRecord)
-						{
-							System.out.println("drop ImageRecord");
-						}
-
-					}
-				});*/
+	
 	}
 	
 	public static class AlbumTreeNode extends TreeNode 
@@ -135,5 +109,12 @@ public class FolderTree extends HLayout
 	    	setAttribute("is_folder", true);
 	    	setAttribute("data",folder);
 	    }
+	    
+	    public FolderDTO getFolderDTO()
+	    {
+	    	return (FolderDTO) getAttributeAsObject("data");
+	    }
 	}
+	
+	
 }

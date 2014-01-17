@@ -69,5 +69,7 @@ public interface SpicsToMeServices extends RemoteService {
 	public Long saveStudent(StudentDTO studentDTO);
 	public Long saveTeacher(TeacherDTO teacherDTO);
 	public Long saveReferent(ReferentDTO referentDTO);
+	
+	public boolean updateFolder(FolderDTO folderDTO);
 
 }

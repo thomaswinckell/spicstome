@@ -61,6 +61,13 @@ public class AlbumEditViewImpl extends UserViewImpl  implements AlbumEditView{
 				((AlbumEditView.Presenter)(listener)).delete(f);			
 					
 			}
+
+			@Override
+			public void onMoveFolder(FolderDTO child, FolderDTO parent) {
+				
+				((AlbumEditView.Presenter)(listener)).move(child,parent);
+				
+			}
 			
 		};
 		

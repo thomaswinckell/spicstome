@@ -3,11 +3,8 @@ package com.spicstome.client.shared;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
-
 import com.spicstome.client.dto.LogDTO;
-import com.spicstome.client.dto.ReferentDTO;
 import com.spicstome.client.dto.StudentDTO;
-import com.spicstome.client.dto.TeacherDTO;
 
 public class Student extends User implements Serializable {
 	

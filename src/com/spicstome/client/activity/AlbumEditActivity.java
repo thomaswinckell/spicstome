@@ -114,4 +114,29 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 		
 	}
 
+	@Override
+	public void move(FolderDTO child, FolderDTO parent) {
+		
+		/* delete old linking */
+		child.getFolder().getContent().remove(child);
+		/* new linking */
+		child.setFolder(parent);
+		parent.getContent().add(child);
+		
+		SpicsToMeServices.Util.getInstance().updateFolder(child, new AsyncCallback<Boolean>() {
+
+			@Override
+			public void onFailure(Throwable caught) {}
+			@Override
+			public void onSuccess(Boolean result) {}
+		});
+		SpicsToMeServices.Util.getInstance().updateFolder(parent, new AsyncCallback<Boolean>() {
+
+			@Override
+			public void onFailure(Throwable caught) {}
+			@Override
+			public void onSuccess(Boolean result) {}
+		});
+	}
+
 }

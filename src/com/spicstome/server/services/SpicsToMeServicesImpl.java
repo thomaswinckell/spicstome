@@ -164,6 +164,7 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	public List<StudentDTO> getAllStudents() {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
+		@SuppressWarnings("unchecked")
 		List<Student> students = new ArrayList<Student>(session.createCriteria(Student.class).list());
 		List<StudentDTO> studentDTOs = new ArrayList<StudentDTO>(students != null ? students.size() : 0);
 		if (students != null) {
@@ -244,8 +245,23 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	    return referent.getId();
 	}
 	
+	/* UPDATE */
+	
+	@Override
+	public boolean updateFolder(FolderDTO folderDTO) {
+		
+		Folder parent = (folderDTO.getFolder()==null?null:new Folder(folderDTO.getFolder(),null));
+		Folder folder = new  Folder(folderDTO,parent);
+	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+	    session.beginTransaction();
+	    session.update(folder);
+	    session.getTransaction().commit();
+	    return true;
+	}
+	
 	/* SAVE */
 	
+	@Override
 	public Long saveFolder(FolderDTO folderDTO) {
 		
 		ImageDTO imageFolder = folderDTO.getImage();
@@ -340,6 +356,8 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	    session.getTransaction().commit();
 	    return true;
 	}
+
+	
 
 	
 }

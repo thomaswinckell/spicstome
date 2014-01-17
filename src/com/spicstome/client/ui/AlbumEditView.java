@@ -20,6 +20,6 @@ public interface AlbumEditView extends IsWidget{
 		void save(FolderDTO f);
 		void delete(ArticleDTO a);
 		void delete(FolderDTO f);
-	
+		void move(FolderDTO child,FolderDTO parent);
 	}
 }

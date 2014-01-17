@@ -56,5 +56,7 @@ public interface SpicsToMeServicesAsync {
 	void saveStudent(StudentDTO studentDTO, AsyncCallback<Long> callback);
 	void saveTeacher(TeacherDTO teacherDTO, AsyncCallback<Long> callback);
 	void saveReferent(ReferentDTO referentDTO, AsyncCallback<Long> callback);
+	
+	void updateFolder(FolderDTO folderDTO,AsyncCallback<Boolean> callack);
 
 }

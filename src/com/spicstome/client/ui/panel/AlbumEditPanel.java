@@ -1,11 +1,14 @@
 package com.spicstome.client.ui.panel;
 
 import java.util.ArrayList;
+
 import com.smartgwt.client.util.BooleanCallback;
 import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.ComboBoxItem;
 import com.smartgwt.client.widgets.layout.VLayout;
+import com.smartgwt.client.widgets.tree.events.FolderDropEvent;
+import com.smartgwt.client.widgets.tree.events.FolderDropHandler;
 import com.smartgwt.client.widgets.tree.events.NodeClickEvent;
 import com.spicstome.client.dto.AlbumDTO;
 import com.spicstome.client.dto.ArticleDTO;
@@ -15,9 +18,9 @@ import com.spicstome.client.ui.form.ArticleFormWindow;
 import com.spicstome.client.ui.form.FolderFormWindow;
 import com.spicstome.client.ui.picker.ArticlePickerWindow;
 import com.spicstome.client.ui.picker.FolderPickerWindow;
-import com.spicstome.client.ui.widget.FolderTree;
 import com.spicstome.client.ui.widget.ImageRecord;
 import com.spicstome.client.ui.widget.ImageTileGrid;
+import com.spicstome.client.ui.widget.FolderTree.AlbumTreeNode;
 import com.spicstome.client.ui.widget.ImageTileGrid.Mode;
 
 public abstract class AlbumEditPanel extends AlbumPanel{
@@ -29,7 +32,7 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 
 	VLayout articleVerticalPanel = new VLayout();
 
-	public ComboBoxItem comboBoxOwner = new ComboBoxItem("owner","Album de");
+	public ComboBoxItem comboBoxOwner = new ComboBoxItem("owner","Album assigné à");
 	DynamicForm formOwner = new DynamicForm();
 	
 	
@@ -37,6 +40,32 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 		super();
 		
 		folderTree.AllowReorder();
+		
+		folderTree.treeGrid.addFolderDropHandler(new FolderDropHandler() {
+
+			@Override
+			public void onFolderDrop(FolderDropEvent event) {
+
+				
+				
+				if(event.getFolder()!=null && (event.getFolder() instanceof AlbumTreeNode))
+				{	
+					FolderDTO parent = ((AlbumTreeNode)(event.getFolder())).getFolderDTO();
+					FolderDTO child = ((AlbumTreeNode)(event.getNodes()[0])).getFolderDTO();
+					onMoveFolder(child,parent);
+				}
+				else
+				{
+					SC.warn("Vos dossiers doivent être dans la racine");
+					
+					event.cancel();
+				}
+				
+				
+			
+			}
+		});
+
 	    
 	    comboBoxOwner.setValueMap("Albert","Jean","Robert");
 	    comboBoxOwner.setValue("Albert");
@@ -234,7 +263,7 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 	
 	public void insertFolderIntoTree(FolderDTO folderDTO)
 	{
-		folderTree.tree.add(new FolderTree.AlbumTreeNode(folderDTO),folderTree.selectFolderNode);
+		folderTree.tree.add(new AlbumTreeNode(folderDTO),folderTree.selectFolderNode);
 		folderTree.treeGrid.setData(folderTree.tree);		
 		folderTree.treeGrid.getData().openAll();
 	}
@@ -259,7 +288,7 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 	public FolderDTO getSelectedFolder()
 	{
 		if(folderTree.selectFolderNode==null) return null;
-		return (FolderDTO)folderTree.selectFolderNode.getAttributeAsObject("data");
+		return (FolderDTO)folderTree.selectFolderNode.getFolderDTO();
 	}
 	
 	public void UpdateActionPanels()
@@ -313,6 +342,7 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 	public abstract void onSaveFolder(FolderDTO folderDTO);
 	public abstract void onDeleteArticle(ArticleDTO a);
 	public abstract void onDeleteFolder(FolderDTO f);
+	public abstract void onMoveFolder(FolderDTO child,FolderDTO parent);
 
 
 }

@@ -11,10 +11,13 @@ import com.spicstome.client.dto.AlbumDTO;
 import com.spicstome.client.dto.FolderDTO;
 import com.spicstome.client.dto.PecsDTO;
 import com.spicstome.client.ui.widget.FolderTree;
+import com.spicstome.client.ui.widget.FolderTree.AlbumTreeNode;
 
 public abstract class AlbumPanel extends VLayout{
 
 	protected HLayout titleLayout = new HLayout();
+	
+	protected AlbumDTO album;
 		
 	HLayout horizontalLayout = new HLayout();
 	VLayout verticalLayout = new VLayout();
@@ -23,7 +26,6 @@ public abstract class AlbumPanel extends VLayout{
 	public AlbumPanel()
 	{
 		super();
-
 
 		folderTree = new FolderTree();
 
@@ -34,10 +36,9 @@ public abstract class AlbumPanel extends VLayout{
 			}
 		});
 
-
 		setStyleName("album");
 		verticalLayout.setHeight(300);
-		verticalLayout.setWidth(300);
+		verticalLayout.setWidth(400);
 		verticalLayout.addMember(folderTree);
 
 		horizontalLayout.addMember(verticalLayout);
@@ -66,6 +67,8 @@ public abstract class AlbumPanel extends VLayout{
 
 	public void setAlbum(AlbumDTO album)
 	{
+		this.album=album;
+		
 		List<FolderDTO> folders =  GetFoldersFolder(album.getFolder());
 		
 		this.folderTree.setFolders(folders);
@@ -74,7 +77,7 @@ public abstract class AlbumPanel extends VLayout{
 	public void onFolderClick(NodeClickEvent event)
 	{
 	
-		folderTree.selectFolderNode = event.getNode();		
+		folderTree.selectFolderNode = (AlbumTreeNode)event.getNode();		
 		
 	}
 }
