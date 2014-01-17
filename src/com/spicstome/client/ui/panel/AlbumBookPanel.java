@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.tree.events.NodeClickEvent;
+import com.spicstome.client.dto.AlbumDTO;
 import com.spicstome.client.dto.ArticleDTO;
 import com.spicstome.client.dto.FolderDTO;
 import com.spicstome.client.dto.PecsDTO;
@@ -32,6 +33,13 @@ public class AlbumBookPanel extends AlbumPanel{
 	    
 	}
 	
+	@Override
+	public void setAlbum(AlbumDTO album)
+	{
+		super.setAlbum(album);
+		
+		book.setList(new ArrayList<ImageRecord>());
+	}
 	
 	@Override
 	public void onFolderClick(NodeClickEvent event)

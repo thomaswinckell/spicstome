@@ -1,6 +1,7 @@
 package com.spicstome.client.ui.picker;
 
-import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Set;
 
 import com.smartgwt.client.widgets.IconButton;
 import com.smartgwt.client.widgets.Window;
@@ -13,6 +14,7 @@ import com.smartgwt.client.widgets.form.fields.events.ChangeHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.spicstome.client.dto.AlbumDTO;
+import com.spicstome.client.dto.StudentDTO;
 import com.spicstome.client.ui.panel.AlbumPanel;
 
 /**
@@ -30,14 +32,16 @@ public abstract class PickerWindow extends Window{
     IconButton validButton = new IconButton("");
     VLayout verticalLayout = new VLayout();
     HLayout bottomLayout = new HLayout();
-
+    Set<StudentDTO> others;
 
 	
-	public PickerWindow(ArrayList<AlbumDTO> listAlbum,int width,int height) {
+	public PickerWindow(Set<StudentDTO> list,int width,int height) {
 		super();
 				
 		setWidth(width);
 		setHeight(height);
+		
+		this.others = list;
   
         setTitle("Import depuis autre album");
         setShowMinimizeButton(false);
@@ -46,26 +50,35 @@ public abstract class PickerWindow extends Window{
         centerInPage();
         
         setDismissOnOutsideClick(true);
-             
-        comboBox.setValueMap("Général","Albert","Robert");
-        comboBox.setValue("Générale");
+        
+        
+       
+     
         
         comboBox.addChangeHandler(new ChangeHandler() {
 			
 			@Override
 			public void onChange(ChangeEvent event) {
-			
-		          //String selectedItem = (String) event.getValue();  
-		         // albumPanel.setAlbum(new AlbumDTO());
 				
+				albumPanel.setAlbum(getAlbumWithOwner(Integer.valueOf(event.getValue().toString())));
 			}
 		});
+        LinkedHashMap<Integer, String> map = new LinkedHashMap<Integer, String>(others.size());
+        for(StudentDTO student : others)
+        {
+        	  map.put(new Integer(student.getId().toString()),student.getFirstName());
+        }
+           
+       
+        comboBox.setValueMap(map);
+        comboBox.setValue(map.values().iterator().next());
         
         form.setFields(comboBox);
 
         InitAlbumPanel();
         
-       // albumPanel.setAlbum(new AlbumDTO());
+        /* setting first album */
+        albumPanel.setAlbum(others.iterator().next().getAlbum());
   
         validButton.setIcon("check.png");
         int iconsize=32;
@@ -93,6 +106,16 @@ public abstract class PickerWindow extends Window{
         addItem(verticalLayout);
 	}
 
+	public AlbumDTO getAlbumWithOwner(int idOwner)
+	{
+		for(StudentDTO student : others)
+		{
+			if(student.getId()==idOwner)
+				return student.getAlbum();
+		}
+		return null;
+	}
+	
 	public void InitAlbumPanel()
 	{
 		

@@ -55,7 +55,7 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	    	return null;
 	    } else {
 	    	UserDTO userDTO = Transtypage.createUserDTO(users.get(0));	    	
-	    	getThreadLocalRequest().getSession().setAttribute("currentUser", userDTO);
+	    	getThreadLocalRequest().getSession().setAttribute("currentUser", userDTO.getId());
 	    	session.getTransaction().commit();
 	    	return userDTO;
 	    }
@@ -63,7 +63,16 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 
 	@Override
 	public UserDTO getCurrentUser() {
-		return (UserDTO)getThreadLocalRequest().getSession().getAttribute("currentUser");
+		
+		long id = Long.valueOf(getThreadLocalRequest().getSession().getAttribute("currentUser").toString());
+		
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+	    session.beginTransaction();
+	    User user = (User) session.load(User.class, id);
+	    UserDTO userDTO = Transtypage.createUserDTO(user);
+	    session.getTransaction().commit();
+	    
+		return userDTO;
 	}
 	
 	@Override
@@ -145,6 +154,8 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	
 	@Override
 	public ReferentDTO getReferentConnected() {
+		
+		
 		
 		return (ReferentDTO) getCurrentUser();
 	}

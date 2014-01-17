@@ -1,5 +1,10 @@
 package com.spicstome.client.activity;
 
+import java.util.HashSet;
+import java.util.Set;
+
+
+
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
@@ -7,6 +12,7 @@ import com.spicstome.client.ClientFactory;
 import com.spicstome.client.dto.AlbumDTO;
 import com.spicstome.client.dto.ArticleDTO;
 import com.spicstome.client.dto.FolderDTO;
+import com.spicstome.client.dto.ReferentDTO;
 import com.spicstome.client.dto.StudentDTO;
 import com.spicstome.client.place.AlbumEditPlace;
 import com.spicstome.client.services.SpicsToMeServices;
@@ -17,7 +23,7 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 	
 	AlbumEditView editview;
 
-	public AlbumEditActivity(AlbumEditPlace place, ClientFactory clientFactory) {
+	public AlbumEditActivity(final AlbumEditPlace place, ClientFactory clientFactory) {
 		super(place, clientFactory,(UserViewImpl)clientFactory.getAlbumEditView());
 
 		this.editview = clientFactory.getAlbumEditView();
@@ -39,6 +45,26 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 					@Override
 					public void onFailure(Throwable caught) {}			
 				});	
+				
+				SpicsToMeServices.Util.getInstance().getReferentConnected( new AsyncCallback<ReferentDTO>() {
+					
+					@Override
+					public void onFailure(Throwable caught) {}
+					@Override
+					public void onSuccess(ReferentDTO result) {
+						Set<StudentDTO> listWithoutCurrent = new HashSet<StudentDTO>();
+						for(StudentDTO student : result.getStudents())
+						{
+							if(student.getAlbum().getId()!=place.idAlbum)
+								listWithoutCurrent.add(student);
+						}
+						
+						editview.setOthersAlbum(listWithoutCurrent);
+						
+					}			
+				});	
+				
+				
 			}
 		});
 

@@ -1,8 +1,11 @@
 package com.spicstome.client.ui;
 
+import java.util.Set;
+
 import com.spicstome.client.dto.AlbumDTO;
 import com.spicstome.client.dto.ArticleDTO;
 import com.spicstome.client.dto.FolderDTO;
+import com.spicstome.client.dto.StudentDTO;
 import com.spicstome.client.place.AlbumManagementPlace;
 import com.spicstome.client.ui.panel.AlbumEditPanel;
 import com.spicstome.client.ui.widget.Crumb;
@@ -114,6 +117,13 @@ public class AlbumEditViewImpl extends UserViewImpl  implements AlbumEditView{
 	public void deleteFolder(FolderDTO folder) {
 		
 		albumEditPanel.removeFolderFromTree(folder);		
+	}
+
+
+	@Override
+	public void setOthersAlbum(Set<StudentDTO> list) {
+		albumEditPanel.setOthersAlbum(list);
+		
 	}
 
 	

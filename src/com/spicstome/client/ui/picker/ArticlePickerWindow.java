@@ -1,9 +1,8 @@
 package com.spicstome.client.ui.picker;
 
-import java.util.ArrayList;
-
+import java.util.Set;
 import com.smartgwt.client.widgets.tree.events.NodeClickEvent;
-import com.spicstome.client.dto.AlbumDTO;
+import com.spicstome.client.dto.StudentDTO;
 import com.spicstome.client.ui.panel.AlbumBookPanel;
 import com.spicstome.client.ui.panel.Book;
 import com.spicstome.client.ui.widget.ImageRecord;
@@ -12,8 +11,8 @@ public class ArticlePickerWindow extends PickerWindow {
 
     public Book book;
 	
-	public ArticlePickerWindow(ArrayList<AlbumDTO> listAlbum) {
-		super(listAlbum, 1000, 450);
+	public ArticlePickerWindow(Set<StudentDTO> list) {
+		super(list, 1000, 450);
 		
 	}
 	@Override
@@ -46,6 +45,7 @@ public class ArticlePickerWindow extends PickerWindow {
         	
         	}
         };
+        
         
         validButton.setTitle("Importer cet article");
 	}

@@ -1,6 +1,7 @@
 package com.spicstome.client.ui.panel;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 import com.smartgwt.client.util.BooleanCallback;
 import com.smartgwt.client.util.SC;
@@ -14,6 +15,7 @@ import com.spicstome.client.dto.AlbumDTO;
 import com.spicstome.client.dto.ArticleDTO;
 import com.spicstome.client.dto.FolderDTO;
 import com.spicstome.client.dto.PecsDTO;
+import com.spicstome.client.dto.StudentDTO;
 import com.spicstome.client.ui.form.ArticleFormWindow;
 import com.spicstome.client.ui.form.FolderFormWindow;
 import com.spicstome.client.ui.picker.ArticlePickerWindow;
@@ -28,7 +30,7 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 	ActionPanel actionFoldersPanel;
 	ActionPanel actionArticlePanel;
 	ImageTileGrid articlesGrid;
-	
+	Set<StudentDTO> others;
 
 	VLayout articleVerticalPanel = new VLayout();
 
@@ -69,6 +71,7 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 	    
 	    comboBoxOwner.setValueMap("Albert","Jean","Robert");
 	    comboBoxOwner.setValue("Albert");
+
 	    formOwner.setFields(comboBoxOwner);
 	    titleLayout.addMember(formOwner);
 	    
@@ -110,7 +113,7 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 			@Override
 			public void onImport()
 			{
-				ArticlePickerWindow win = new ArticlePickerWindow(new ArrayList<AlbumDTO>()){
+				ArticlePickerWindow win = new ArticlePickerWindow(others){
 					@Override
 					public void onDestroy()
 					{
@@ -179,7 +182,7 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 			@Override
 			public void onImport()
 			{
-				FolderPickerWindow win = new FolderPickerWindow(new ArrayList<AlbumDTO>()){
+				FolderPickerWindow win = new FolderPickerWindow(others){
 					@Override
 					public void onDestroy()
 					{
@@ -302,10 +305,20 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 	public void setAlbum(AlbumDTO album)
 	{
 		super.setAlbum(album);
-		
 		articlesGrid.clearItems();
-		
 		UpdateActionPanels();
+	}
+	
+	public void setOthersAlbum(Set<StudentDTO> list)
+	{
+		if(list.size()>0)
+			this.others=list;
+		else
+		{
+		// cacher les boutons import
+		}
+		
+		
 	}
 	
 	private void UpdateGrid()
