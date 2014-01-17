@@ -8,6 +8,7 @@ import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.SelectItem;
 import com.smartgwt.client.widgets.form.fields.events.ChangeEvent;
 import com.smartgwt.client.widgets.form.fields.events.ChangeHandler;
+import com.spicstome.client.dto.ImageDTO;
 import com.spicstome.client.dto.LogDTO;
 import com.spicstome.client.dto.ReferentDTO;
 import com.spicstome.client.dto.StudentDTO;
@@ -34,8 +35,6 @@ public class UserTypeForm extends DynamicForm {
         valueMap.put("referent", "R&eacute;f&eacute;rent");
         userTypeSelectItem.setValueMap(valueMap);
         userTypeSelectItem.setRequired(true);
-        
-        //setFields(userTypeSelectItem);
         
         userTypeSelectItem.addChangeHandler(new ChangeHandler() {
 
@@ -68,18 +67,19 @@ public class UserTypeForm extends DynamicForm {
 		this.mode = mode;
 		
 		if (mode == FormUtils.Mode.NEW) {
-	        userTypeSelectItem.setDefaultValue("student");
+	        userTypeSelectItem.setValue("student");
 	        userTypeSelectItem.enable();
 	        setStudentMode();
 		} else {
+			userTypeSelectItem.disable();
 	    	if (userDTO instanceof StudentDTO) {
-	    		userTypeSelectItem.setDefaultValue("student");
+	    		userTypeSelectItem.setValue("student");
 	    		setStudentMode();
 	    	} else {
 	    		if (userDTO instanceof TeacherDTO)
-		    		userTypeSelectItem.setDefaultValue("teacher");
+		    		userTypeSelectItem.setValue("teacher");
 		    	else
-		    		userTypeSelectItem.setDefaultValue("referent");
+		    		userTypeSelectItem.setValue("referent");
 		    	
 	    		setTeacherOrReferentMode();
 	    	}
@@ -115,8 +115,8 @@ public class UserTypeForm extends DynamicForm {
 	public UserDTO getUserDTO() {
 		if (userTypeSelectItem.getValueAsString().equals("student")) {
 			if (mode == FormUtils.Mode.NEW) {
-				return new StudentDTO((long) -1, null, null, null, null, null, null, null, null, 
-						new HashSet<LogDTO>());
+				return new StudentDTO((long) -1, null, null, null, null, null, null, new ImageDTO((long) -1, 
+						null), null, new HashSet<LogDTO>());
 			} else {
 				
 				return userDTO;
@@ -129,8 +129,8 @@ public class UserTypeForm extends DynamicForm {
 			}
 		} else if (userTypeSelectItem.getValueAsString().equals("teacher")){
 			if (mode == FormUtils.Mode.NEW) {
-				return new TeacherDTO((long) -1, null, null, null, null, null, null, null, 
-						linkedStudentsForm.getLinkedStudents());
+				return new TeacherDTO((long) -1, null, null, null, null, null, null, new ImageDTO((long) -1, 
+						null), linkedStudentsForm.getLinkedStudents());
 			} else {
 				
 				((TeacherDTO) userDTO).setStudents(linkedStudentsForm.getLinkedStudents());
@@ -143,8 +143,8 @@ public class UserTypeForm extends DynamicForm {
 			}
 		} else {
 			if (mode == FormUtils.Mode.NEW) {
-				return new ReferentDTO((long) -1, null, null, null, null, null, null, null, 
-						linkedStudentsForm.getLinkedStudents());
+				return new ReferentDTO((long) -1, null, null, null, null, null, null, new ImageDTO((long) -1, 
+						null), linkedStudentsForm.getLinkedStudents());
 			} else {
 				
 				((ReferentDTO) userDTO).setStudents(linkedStudentsForm.getLinkedStudents());

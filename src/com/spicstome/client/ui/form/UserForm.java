@@ -40,7 +40,7 @@ public class UserForm {
 	    		
 		    		userDTO = userTypeForm.getUserDTO();
 		    		basicUserForm.fillUserDTO(userDTO);
-		    		userDTO.setImage(new ImageDTO((long) -1, imageUploadForm.getImageFileName()));
+		    		userDTO.getImage().setFilename(imageUploadForm.getImageFileName());
 		    		
 		    		if (mode == FormUtils.Mode.NEW) {
 						saveUser();
@@ -81,17 +81,7 @@ public class UserForm {
 	}
 	
 	private void updateUser () {
-		/*SpicsToMeServices.Util.getInstance().updateUser(userDTO, new AsyncCallback<Long> () {
-			@Override
-			public void onFailure(Throwable caught) {
-				System.out.println(caught);
-			}
-
-			@Override
-			public void onSuccess(Long idImage) {
-				goTo(new UsersManagementPlace());
-			}
-		});*/
+		SpicsToMeServices.Util.getInstance().updateUser(userDTO, onSuccess);
 	}
 	
 	private void saveUser () {
