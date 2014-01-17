@@ -5,6 +5,7 @@ import java.util.Set;
 
 
 
+
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
@@ -79,34 +80,55 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 	@Override
 	public void save(final ArticleDTO a) {
 		
-		
-		SpicsToMeServices.Util.getInstance().saveArticle(a, new AsyncCallback<Long>() {
+		SpicsToMeServices.Util.getInstance().saveImage(a.getImage(), new AsyncCallback<Long>() {
+			@Override
+			public void onFailure(Throwable caught) {}
 			@Override
 			public void onSuccess(Long result) {
 				
-				a.setId(result);
-				a.getFolder().getContent().add(a);
-				editview.insertArticle(a);
-			}			
-			@Override
-			public void onFailure(Throwable caught) {}
-		});
+				a.getImage().setId(result);
+				
+				SpicsToMeServices.Util.getInstance().saveArticle(a, new AsyncCallback<Long>() {
+					@Override
+					public void onSuccess(Long result) {
+						
+						a.setId(result);
+						a.getFolder().getContent().add(a);
+						editview.insertArticle(a);
+					}			
+					@Override
+					public void onFailure(Throwable caught) {}
+				});
+			}
+		});	
 		
 	}
 
 	@Override
 	public void save(final FolderDTO f) {
-		SpicsToMeServices.Util.getInstance().saveFolder(f,new AsyncCallback<Long>() {
+		
+		SpicsToMeServices.Util.getInstance().saveImage(f.getImage(), new AsyncCallback<Long>() {
 			@Override
 			public void onFailure(Throwable caught) {}
 			@Override
 			public void onSuccess(Long result) {
 				
-				f.setId(result);
-				f.getFolder().getContent().add(f);
-				editview.insertFolder(f);
+				f.getImage().setId(result);
+				
+				SpicsToMeServices.Util.getInstance().saveFolder(f,new AsyncCallback<Long>() {
+					@Override
+					public void onFailure(Throwable caught) {}
+					@Override
+					public void onSuccess(Long result) {
+						
+						f.setId(result);
+						f.getFolder().getContent().add(f);
+						editview.insertFolder(f);
+					}
+				});
 			}
 		});
+		
 		
 	}
 
@@ -163,6 +185,38 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 			@Override
 			public void onSuccess(Boolean result) {}
 		});
+	}
+
+	@Override
+	public void update(final FolderDTO f) {
+		
+		SpicsToMeServices.Util.getInstance().updateFolder(f, new AsyncCallback<Boolean>() {
+
+			@Override
+			public void onFailure(Throwable caught) {}
+			@Override
+			public void onSuccess(Boolean result) {
+				
+				editview.updateFolder(f);
+			}
+		});
+		
+	}
+
+	@Override
+	public void update(final ArticleDTO a) {
+		SpicsToMeServices.Util.getInstance().updateArticle(a, new AsyncCallback<Boolean>() {
+
+			@Override
+			public void onFailure(Throwable caught) {}
+			@Override
+			public void onSuccess(Boolean result) {
+				
+				editview.updateArticle(a);
+			}
+		});
+		
+		
 	}
 
 }

@@ -2,7 +2,6 @@ package com.spicstome.client.ui.panel;
 
 import java.util.ArrayList;
 import java.util.Set;
-
 import com.smartgwt.client.util.BooleanCallback;
 import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.form.DynamicForm;
@@ -93,7 +92,7 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 						
 						/* saving business data */
 						onSaveArticle(a);
-
+						
 					}
 				};
 				articleFormWindow.show();
@@ -105,7 +104,18 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 				
 				FolderDTO parent = getSelectedFolder();
 				ArticleDTO article = getSelectedArticle();
-				ArticleFormWindow articleFormWindow = new ArticleFormWindow(ArticleFormWindow.Mode.EDIT,article,parent);
+				ArticleFormWindow articleFormWindow = new ArticleFormWindow(ArticleFormWindow.Mode.EDIT,article,parent){
+					@Override
+					public void onDestroy()
+					{	
+						ArticleDTO a= this.article;	
+						
+						/* save business data */
+						onUpdateArticle(a);
+						
+					}
+				};
+				
 				articleFormWindow.show();
 				
 			}
@@ -149,7 +159,17 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 			@Override
 			public void onEdit() {
 				FolderDTO folder = getSelectedFolder();
-				FolderFormWindow folderFormWindow = new FolderFormWindow(FolderFormWindow.Mode.EDIT,folder,null);
+				FolderFormWindow folderFormWindow = new FolderFormWindow(FolderFormWindow.Mode.EDIT,folder,null){
+					@Override
+					public void onDestroy()
+					{	
+						FolderDTO f= this.folder;	
+						
+						/* save business data */
+						onUpdateFolder(f);
+					}
+				};
+			
 				folderFormWindow.show();
 			}
 
@@ -271,6 +291,23 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 		folderTree.treeGrid.getData().openAll();
 	}
 	
+	public void updateFolderIntoTree(FolderDTO folder)
+	{
+		folderTree.tree.getAllNodes(folderTree.selectFolderNode)[0].setAttribute("title",folder.getName());
+		folderTree.treeGrid.setData(folderTree.tree);		
+		folderTree.treeGrid.getData().openAll();
+	}
+	
+	public void updateArticleIntoGrid(ArticleDTO article)
+	{
+		articlesGrid.getSelectedItem().setAttribute(ImageRecord.PICTURE_NAME,article.getName());
+		
+		UpdateGrid();
+		UpdateActionPanels();
+	}
+	
+	
+	
 	public void insertArticleIntoGrid(ArticleDTO articleDTO)
 	{
 		articlesGrid.addItem(new ImageRecord(articleDTO));
@@ -356,6 +393,8 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 	public abstract void onDeleteArticle(ArticleDTO a);
 	public abstract void onDeleteFolder(FolderDTO f);
 	public abstract void onMoveFolder(FolderDTO child,FolderDTO parent);
+	public abstract void onUpdateFolder(FolderDTO folderDTO);
+	public abstract void onUpdateArticle(ArticleDTO articleDTO);
 
 
 }

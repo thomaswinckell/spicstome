@@ -58,5 +58,6 @@ public interface SpicsToMeServicesAsync {
 	void saveReferent(ReferentDTO referentDTO, AsyncCallback<Long> callback);
 	
 	void updateFolder(FolderDTO folderDTO,AsyncCallback<Boolean> callack);
+	void updateArticle(ArticleDTO articleDTO,AsyncCallback<Boolean> callack);
 
 }

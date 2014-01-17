@@ -17,6 +17,8 @@ public interface AlbumEditView extends IsWidget{
 	void deleteFolder(FolderDTO folder);
 	void insertArticle(ArticleDTO articleDTO);
 	void deleteArticle(ArticleDTO articleDTO);
+	void updateArticle(ArticleDTO articleDTO);
+	void updateFolder(FolderDTO folderDTO);
 	
 	public interface Presenter 
 	{
@@ -25,5 +27,7 @@ public interface AlbumEditView extends IsWidget{
 		void delete(ArticleDTO a);
 		void delete(FolderDTO f);
 		void move(FolderDTO child,FolderDTO parent);
+		void update(FolderDTO f);
+		void update(ArticleDTO a);
 	}
 }

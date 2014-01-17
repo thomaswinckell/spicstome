@@ -71,6 +71,19 @@ public class AlbumEditViewImpl extends UserViewImpl  implements AlbumEditView{
 				((AlbumEditView.Presenter)(listener)).move(child,parent);
 				
 			}
+
+			@Override
+			public void onUpdateFolder(FolderDTO f) {
+				
+				((AlbumEditView.Presenter)(listener)).update(f);
+				
+			}
+
+			@Override
+			public void onUpdateArticle(ArticleDTO a) {
+				
+				((AlbumEditView.Presenter)(listener)).update(a);
+			}
 			
 		};
 		
@@ -124,6 +137,20 @@ public class AlbumEditViewImpl extends UserViewImpl  implements AlbumEditView{
 	public void setOthersAlbum(Set<StudentDTO> list) {
 		albumEditPanel.setOthersAlbum(list);
 		
+	}
+
+
+	@Override
+	public void updateArticle(ArticleDTO articleDTO) {
+
+		albumEditPanel.updateArticleIntoGrid(articleDTO);
+	}
+
+
+	@Override
+	public void updateFolder(FolderDTO folderDTO) {
+		
+		albumEditPanel.updateFolderIntoTree(folderDTO);
 	}
 
 	

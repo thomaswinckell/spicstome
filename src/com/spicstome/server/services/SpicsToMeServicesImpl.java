@@ -259,12 +259,29 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	/* UPDATE */
 	
 	@Override
+	public boolean updateArticle(ArticleDTO articleDTO) {
+		
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		session.beginTransaction();	 
+		
+		Article article = new  Article(articleDTO,new Folder(articleDTO.getFolder(),null));
+	    session.update(article);
+	    session.getTransaction().commit();
+	    return true;
+	}
+
+	
+
+	
+	@Override
 	public boolean updateFolder(FolderDTO folderDTO) {
 		
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		session.beginTransaction();
+		    
 		Folder parent = (folderDTO.getFolder()==null?null:new Folder(folderDTO.getFolder(),null));
 		Folder folder = new  Folder(folderDTO,parent);
-	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-	    session.beginTransaction();
+	   
 	    session.update(folder);
 	    session.getTransaction().commit();
 	    return true;
@@ -274,15 +291,13 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	
 	@Override
 	public Long saveFolder(FolderDTO folderDTO) {
-		
-		ImageDTO imageFolder = folderDTO.getImage();
-		Long id = saveImage(imageFolder);
-		imageFolder.setId(id);
+			
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		session.beginTransaction();
 		
 		Folder parent = (folderDTO.getFolder()==null?null:new Folder(folderDTO.getFolder(),null));
 		Folder folder = new Folder(folderDTO,parent);
-	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-	    session.beginTransaction();
+	   
 	    session.save(folder);
 	    session.getTransaction().commit();
 	    return folder.getId();
@@ -290,15 +305,11 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	
 	@Override
 	public Long saveArticle(ArticleDTO articleDTO) {
-		
-		ImageDTO imageArticle = articleDTO.getImage();
-		Long id = saveImage(imageArticle);
-		imageArticle.setId(id);
-		
-		Article article = new Article(articleDTO,new Folder(articleDTO.getFolder(),null));
-	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-	    
+
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();   
 	    session.beginTransaction();
+		
+		Article article = new Article(articleDTO,new Folder(articleDTO.getFolder(),null));	    
 	    session.save(article);
 	    session.getTransaction().commit();
 	    return article.getId();
@@ -308,9 +319,10 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	
 	@Override
 	public Long saveAlbum(AlbumDTO albumDTO) {
-		Album album = new Album(albumDTO);
+		
 	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 	    session.beginTransaction();
+	    Album album = new Album(albumDTO);
 	    session.save(album);
 	    session.getTransaction().commit();
 	    return album.getId();
@@ -369,6 +381,5 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	}
 
 	
-
 	
 }

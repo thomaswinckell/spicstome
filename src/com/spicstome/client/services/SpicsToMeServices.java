@@ -71,5 +71,6 @@ public interface SpicsToMeServices extends RemoteService {
 	public Long saveReferent(ReferentDTO referentDTO);
 	
 	public boolean updateFolder(FolderDTO folderDTO);
+	public boolean updateArticle(ArticleDTO articleDTO);
 
 }

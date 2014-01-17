@@ -45,7 +45,7 @@ public class ImageUploadForm {
 				final Img uploaderImage = new Img(FormUtils.UPLOAD_IMAGE_PATH+FormUtils.DEFAULT_IMAGE_FILENAME, imageWidth, imageHeight);
 
 				final SingleUploader uploader = new SingleUploader(FileInputType.BROWSER_INPUT);
-				uploader.setValidExtensions("jpg","jpeg","png","bmp");
+				uploader.setValidExtensions("jpg","jpeg","png","bmp","gif");
 				uploader.setI18Constants(new MyUploaderConstants());
 				uploader.setAvoidRepeatFiles(true);
 
@@ -111,6 +111,7 @@ public class ImageUploadForm {
 	}
 
 	public void setImageFileName(String imageFileName) {
+		this.imageFileName=imageFileName;
 		image.setSrc(FormUtils.UPLOAD_IMAGE_PATH+imageFileName);
 	}
 
