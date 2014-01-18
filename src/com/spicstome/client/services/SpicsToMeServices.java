@@ -65,19 +65,13 @@ public interface SpicsToMeServices extends RemoteService {
 	public Long saveAlbum(AlbumDTO albumDTO);
 	public Long saveArticle(ArticleDTO articleDTO);
 	public Long saveUser(UserDTO userDTO);
-	public Long saveStudent(StudentDTO studentDTO);
-	public Long saveTeacher(TeacherDTO teacherDTO);
-	public Long saveReferent(ReferentDTO referentDTO);
 
 	/* UPDATE */
 	public boolean updateFolder(FolderDTO folderDTO);
 	public boolean updateArticle(ArticleDTO articleDTO);
 
 	public Long updateImage(ImageDTO imageDTO);
-	public Long updateUser(UserDTO userDTO);
-	public Long updateStudent(StudentDTO studentDTO);
-	public Long updateTeacher(TeacherDTO teacherDTO);
-	public Long updateReferent(ReferentDTO referentDTO);
+	public Long updateUser(UserDTO userDTO, boolean isNewPassword);
 	
 	/* DELETE */
 	public boolean deleteArticle(long id);

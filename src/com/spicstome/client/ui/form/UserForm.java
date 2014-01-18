@@ -94,14 +94,16 @@ public class UserForm {
 					@Override
 					public void onSuccess(UserDTO user) {
 						if (user == null)
-							SpicsToMeServices.Util.getInstance().updateUser(userDTO, onSuccess);
+							SpicsToMeServices.Util.getInstance().updateUser(userDTO, basicUserForm.isNewPassword(), 
+									onSuccess);
 						else {
 							SC.warn("Le login existe d&eacute;j&agrave;. Veuillez en choisir un autre.");
 						}
 					}				
 			});
 		} else {
-			SpicsToMeServices.Util.getInstance().updateUser(userDTO, onSuccess);
+			SpicsToMeServices.Util.getInstance().updateUser(userDTO, basicUserForm.isNewPassword(), 
+					onSuccess);
 		}
 	}
 	

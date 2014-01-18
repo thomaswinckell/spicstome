@@ -36,7 +36,7 @@ public class Test {
 		student.setFirstName(firstname);
 		student.setEmail(name+"."+firstname+"@gmail.com");
 		student.setLogin(login);
-		student.setPassword(password);
+		student.setPassword(Encryption.toSHA256(password));
 		student.setImage(imageUser);
 		student.setAlbum(album);
 		
@@ -68,7 +68,7 @@ public class Test {
 		superAdmin.setFirstName("admin");
 		superAdmin.setEmail("maxime.hass@gmail.com");
 		superAdmin.setLogin("admin");
-		superAdmin.setPassword("admin");
+		superAdmin.setPassword(Encryption.toSHA256("admin"));
 		superAdmin.setImage(imageAdmin);
 		
 		HibernateManager.getInstance().save(superAdmin);
@@ -86,7 +86,7 @@ public class Test {
 		referent.setFirstName("Jaquouille");
 		referent.setEmail("visiteur@gmail.com");
 		referent.setLogin("referent");
-		referent.setPassword("referent");
+		referent.setPassword(Encryption.toSHA256("referent"));
 		referent.setImage(imageReferant);
 		
 		referent.setStudents(new HashSet<Student>());

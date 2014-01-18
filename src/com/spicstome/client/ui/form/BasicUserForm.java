@@ -2,7 +2,6 @@ package com.spicstome.client.ui.form;
 
 import java.util.Date;
 
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.data.DataSource;
 import com.smartgwt.client.data.fields.DataSourceTextField;
 import com.smartgwt.client.types.FieldType;
@@ -10,7 +9,6 @@ import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.validator.RegExpValidator;
 import com.spicstome.client.dto.UserDTO;
-import com.spicstome.client.services.SpicsToMeServices;
 
 public class BasicUserForm extends DynamicForm{
 	
@@ -68,6 +66,7 @@ public class BasicUserForm extends DynamicForm{
 	
 	public void fillForm(UserDTO userDTO, FormUtils.Mode mode) {
 		this.mode = mode;
+		this.userDTO = userDTO;
 		
 		this.clearValues();
 		
@@ -84,7 +83,7 @@ public class BasicUserForm extends DynamicForm{
 		}
 	}
 	
-	private boolean isNewPassword() {
+	public boolean isNewPassword() {
 		return (mode == FormUtils.Mode.NEW) || 
 				((getValueAsString("password") != null) &&  (getValueAsString("password2") != null) &&  
 				!getValueAsString("password").isEmpty());

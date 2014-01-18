@@ -51,19 +51,13 @@ public interface SpicsToMeServicesAsync {
 	void saveAlbum(AlbumDTO albumDTO, AsyncCallback<Long> callback);
 	void saveArticle(ArticleDTO articleDTO, AsyncCallback<Long> callback);
 	void saveUser(UserDTO userDTO, AsyncCallback<Long> callback);
-	void saveStudent(StudentDTO studentDTO, AsyncCallback<Long> callback);
-	void saveTeacher(TeacherDTO teacherDTO, AsyncCallback<Long> callback);
-	void saveReferent(ReferentDTO referentDTO, AsyncCallback<Long> callback);
 	
 	/* UPDATE */
 	void updateFolder(FolderDTO folderDTO,AsyncCallback<Boolean> callack);
 	void updateArticle(ArticleDTO articleDTO,AsyncCallback<Boolean> callack);
 
 	void updateImage(ImageDTO imageDTO, AsyncCallback<Long> callback);
-	void updateUser(UserDTO userDTO, AsyncCallback<Long> callback);
-	void updateStudent(StudentDTO studentDTO, AsyncCallback<Long> callback);
-	void updateTeacher(TeacherDTO teacherDTO, AsyncCallback<Long> callback);
-	void updateReferent(ReferentDTO referentDTO, AsyncCallback<Long> callback);
+	void updateUser(UserDTO userDTO, boolean isNewPassword, AsyncCallback<Long> callback);
 
 	/* DELETE */	
 	void deleteArticle(long id,AsyncCallback<Boolean> callback);

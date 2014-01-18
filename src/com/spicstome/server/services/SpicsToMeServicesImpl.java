@@ -29,6 +29,7 @@ import com.spicstome.client.shared.Referent;
 import com.spicstome.client.shared.Student;
 import com.spicstome.client.shared.Teacher;
 import com.spicstome.client.shared.User;
+import com.spicstome.server.Encryption;
 import com.spicstome.server.HibernateUtil;
 
 public class SpicsToMeServicesImpl extends RemoteServiceServlet implements SpicsToMeServices {
@@ -44,7 +45,10 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	/* SESSION */
 	
 	@Override
-	public UserDTO getUser(String login, String password) {		
+	public UserDTO getUser(String login, String password) {
+		
+		password = Encryption.toSHA256(password);
+		
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 	    session.beginTransaction();
 	    @SuppressWarnings("unchecked")
@@ -231,6 +235,8 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 		Long idImageUser = saveImage(userDTO.getImage());
 		userDTO.getImage().setId(idImageUser);
 		
+		userDTO.setPassword(Encryption.toSHA256(userDTO.getPassword()));
+		
 		if (userDTO instanceof StudentDTO)
 			return saveStudent((StudentDTO) userDTO);
 		else if (userDTO instanceof TeacherDTO)
@@ -241,8 +247,7 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 			return null;
 	}
 
-	@Override
-	public Long saveStudent(StudentDTO studentDTO) {
+	private Long saveStudent(StudentDTO studentDTO) {
 			
 		ImageDTO imageFolder = new ImageDTO((long) -1, "all.png");
 		Long idImage = saveImage(imageFolder);
@@ -266,8 +271,7 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	    return student.getId();
 	}
 	
-	@Override
-	public Long saveTeacher(TeacherDTO teacherDTO) {
+	private Long saveTeacher(TeacherDTO teacherDTO) {
 			
 	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 	    session.beginTransaction();
@@ -287,8 +291,7 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	    return teacher.getId();
 	}
 	
-	@Override
-	public Long saveReferent(ReferentDTO referentDTO) {
+	private Long saveReferent(ReferentDTO referentDTO) {
 			
 	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 	    session.beginTransaction();
@@ -391,9 +394,12 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	
 
 	@Override
-	public Long updateUser(UserDTO userDTO) {
+	public Long updateUser(UserDTO userDTO, boolean isNewPassword) {
 		
 		updateImage(userDTO.getImage());
+		
+		if (isNewPassword)
+			userDTO.setPassword(Encryption.toSHA256(userDTO.getPassword()));
 		
 		if (userDTO instanceof StudentDTO)
 			return updateStudent((StudentDTO) userDTO);
@@ -405,8 +411,7 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 			return null;
 	}
 	
-	@Override
-	public Long updateStudent(StudentDTO studentDTO) {
+	private Long updateStudent(StudentDTO studentDTO) {
 		
 		Student student = new Student(studentDTO);		
 	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
@@ -417,8 +422,7 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	    return student.getId();
 	}
 	
-	@Override
-	public Long updateTeacher(TeacherDTO teacherDTO) {
+	private Long updateTeacher(TeacherDTO teacherDTO) {
 			
 	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 	    session.beginTransaction();
@@ -438,8 +442,7 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	    return teacher.getId();
 	}
 	
-	@Override
-	public Long updateReferent(ReferentDTO referentDTO) {
+	private Long updateReferent(ReferentDTO referentDTO) {
 			
 	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 	    session.beginTransaction();
@@ -526,14 +529,14 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 		    
 		    /* Updating student, teachers and referents */
 	    	
-	    	updateUser(userDTO);
+	    	updateUser(userDTO, false);
 		    
 		    for(ReferentDTO referent : referents) {
-		    	updateReferent(referent);
+		    	updateUser(referent, false);
 		    }
 		    
 		    for(TeacherDTO teacher : teachers) {
-		    	updateTeacher(teacher);
+		    	updateUser(teacher, false);
 		    }
 	    	
 	    } else {
