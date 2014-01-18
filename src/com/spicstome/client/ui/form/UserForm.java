@@ -6,7 +6,6 @@ import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.layout.VLayout;
-import com.spicstome.client.dto.ImageDTO;
 import com.spicstome.client.dto.UserDTO;
 import com.spicstome.client.services.SpicsToMeServices;
 

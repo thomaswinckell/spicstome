@@ -67,5 +67,5 @@ public interface SpicsToMeServicesAsync {
 	/* DELETE */	
 	void deleteArticle(long id,AsyncCallback<Boolean> callback);
 	void deleteFolder(long id,AsyncCallback<Boolean> callback);
-
+	void deleteUser(long id,AsyncCallback<Boolean> callback);
 }

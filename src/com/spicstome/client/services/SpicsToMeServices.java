@@ -81,5 +81,5 @@ public interface SpicsToMeServices extends RemoteService {
 	/* DELETE */
 	public boolean deleteArticle(long id);
 	public boolean deleteFolder(long id);
-
+	public boolean deleteUser(long id);
 }

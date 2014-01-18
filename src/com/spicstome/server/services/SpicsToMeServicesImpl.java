@@ -105,36 +105,7 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 			session.getTransaction().commit();
 			return null;
 		}
-	}
-	/*
-	@Override
-	public List<StudentDTO> getStudentsOfReferent() {
-
-		Referent referent = (Referent)
-		
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		session.beginTransaction();
-		@SuppressWarnings("unchecked")
-		List<Album> list = session.createCriteria(Studen.class).list();
-		
-		
-		List<AlbumDTO> listAlbumDTO=new ArrayList<>();
-
-		if(!list.isEmpty())
-		{ 
-			for(int i=0;i<list.size();i++)
-			{
-				listAlbumDTO.add(Transtypage.createAlbumDTO(list.get(i)));
-			}
-		}
-		
-		session.getTransaction().commit();
-
-		return listAlbumDTO;
-	
-
-	}*/
-	
+	}	
 
 	@Override
 	public StudentDTO getAlbumOwner(long id) {
@@ -154,7 +125,6 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	    else
 	    	return null;
 	}
-
 	
 	@Override
 	public ReferentDTO getReferentConnected() {
@@ -500,4 +470,66 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	    return true;
 	}
 
+	@Override
+	public boolean deleteUser(long id) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();    
+	    session.beginTransaction();
+	    User user = (User) session.load(User.class, id);
+	    
+	    if (user instanceof Student) {
+	    	
+	    	((Student) user).getLogs().clear();
+	    	UserDTO userDTO = Transtypage.createUserDTO(user);
+	    	
+	    	/* Suppressing the link between referents and students */
+		    
+		    List<ReferentDTO> referents = getAllReferents();
+		    
+		    for(ReferentDTO referent : referents) {
+		    	for(StudentDTO student : referent.getStudents()) {
+		    		if (student.getId() == id) {
+		    			referent.getStudents().remove(student);
+		    			break;
+		    		}
+		    	}
+		    }
+		    
+		    /* Suppressing the link between referents and teachers */
+		    
+		    List<TeacherDTO> teachers = getAllTeachers();
+		    
+		    for(TeacherDTO teacher : teachers) {
+		    	for(StudentDTO student : teacher.getStudents()) {
+		    		if (student.getId() == id) {
+		    			teacher.getStudents().remove(student);
+		    			break;
+		    		}
+		    	}
+		    }
+		    
+		    //session.getTransaction().commit();
+		    
+		    /* Updating student, teachers and referents */
+	    	
+	    	updateUser(userDTO);
+		    
+		    for(ReferentDTO referent : referents) {
+		    	updateReferent(referent);
+		    }
+		    
+		    for(TeacherDTO teacher : teachers) {
+		    	updateTeacher(teacher);
+		    }
+	    	
+	    } else {
+	    	session.getTransaction().commit();
+	    }
+	    
+	    session = HibernateUtil.getSessionFactory().getCurrentSession();    
+	    session.beginTransaction();
+	    
+	    session.delete(user);
+	    session.getTransaction().commit();
+	    return true;
+	}
 }

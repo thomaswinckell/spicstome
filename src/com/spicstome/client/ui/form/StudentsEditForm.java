@@ -3,32 +3,43 @@ package com.spicstome.client.ui.form;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.ButtonItem;
 import com.smartgwt.client.widgets.form.fields.SelectItem;
+import com.smartgwt.client.widgets.form.fields.events.ClickEvent;
+import com.smartgwt.client.widgets.form.fields.events.ClickHandler;
 import com.spicstome.client.dto.StudentDTO;
 import com.spicstome.client.place.AddUserPlace;
+import com.spicstome.client.services.SpicsToMeServices;
 import com.spicstome.client.ui.UsersManagementViewImpl;
 
 public class StudentsEditForm extends DynamicForm {
 	
-	SelectItem selectItem;
-	ButtonItem buttonItem;
-	LinkedHashMap<String, String> valueMap, imagesValueMap;
+	private SelectItem selectItem;
+	private ButtonItem editButtonItem, deleteButtonItem;
+	private LinkedHashMap<String, String> valueMap, imagesValueMap;
+	private List<StudentDTO> students;
 	
 	public StudentsEditForm() {
 		selectItem = new SelectItem("students", "Etudiants");
-		buttonItem = new ButtonItem("btn_edit_student", "Editer");
+		editButtonItem = new ButtonItem("btn_edit_student", "Editer");
+		deleteButtonItem = new ButtonItem("btn_delete_student", "Supprimer");
 		
 		valueMap = new LinkedHashMap<String, String>();
 		imagesValueMap = new LinkedHashMap<String, String>();
 		
 		selectItem.setImageURLPrefix(FormUtils.UPLOAD_IMAGE_PATH);
 		
-		setFields(selectItem, buttonItem);
+		setFields(selectItem, editButtonItem, deleteButtonItem);
 	}
 	
-	public void setStudents (List<StudentDTO> students, final UsersManagementViewImpl view) {
+	private void updateSelectItem() {
+		
+		selectItem.clearValue();
+		valueMap.clear();
+		imagesValueMap.clear();
+		
 		String firstStudentId = null;
 		for(StudentDTO student : students) {
 			
@@ -41,25 +52,63 @@ public class StudentsEditForm extends DynamicForm {
 		
 		if (firstStudentId != null) {
 			selectItem.setDefaultValue(firstStudentId);
-			buttonItem.enable();
+			selectItem.enable();
+			editButtonItem.enable();
+			deleteButtonItem.enable();
 		}
 		else {
 			selectItem.setDefaultValue("Aucun");
 			selectItem.disable();
-			buttonItem.disable();
+			editButtonItem.disable();
+			deleteButtonItem.disable();
 		}
 		
 		selectItem.setValueMap(valueMap);
 		selectItem.setValueIcons(imagesValueMap);
+	}
+	
+	public void setStudents (List<StudentDTO> mStudents, final UsersManagementViewImpl view) {
 		
-		buttonItem.addClickHandler(new com.smartgwt.client.widgets.form.fields.events.ClickHandler() {
+		students = mStudents;
+		
+		updateSelectItem();
+		
+		editButtonItem.addClickHandler(new ClickHandler() {
 			
 			@Override
-			public void onClick(com.smartgwt.client.widgets.form.fields.events.ClickEvent event) {
+			public void onClick(ClickEvent event) {
 				
 				Long idStudent = Long.parseLong(selectItem.getValueAsString());
 				
 				view.goTo(new AddUserPlace(idStudent.toString()));
+			}				
+		});
+		
+		deleteButtonItem.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				
+				final Long idStudent = Long.parseLong(selectItem.getValueAsString());
+				
+				SpicsToMeServices.Util.getInstance().deleteUser(idStudent, new AsyncCallback<Boolean> () {
+
+					@Override
+					public void onFailure(Throwable caught) {
+						System.out.println(caught);
+					}
+
+					@Override
+					public void onSuccess(Boolean result) {
+						for(StudentDTO student : students) {
+							if (student.getId() == idStudent) {
+								students.remove(student);
+								break;
+							}
+						}
+						updateSelectItem();
+					}					
+				});
 			}				
 		});
 	}

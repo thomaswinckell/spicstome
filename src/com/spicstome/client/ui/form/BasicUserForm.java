@@ -71,7 +71,7 @@ public class BasicUserForm extends DynamicForm{
 	    	setValue("first_name", userDTO.getFirstName());
 	    	setValue("name", userDTO.getName());
 	    	setValue("email", userDTO.getEmail());
-	    	setValue("login", userDTO.getEmail());
+	    	setValue("login", userDTO.getLogin());
 	    	getField("password").setRequired(false);
 	    	getField("password2").setRequired(false);
 		} else {

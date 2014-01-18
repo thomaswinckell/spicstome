@@ -4,12 +4,10 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.spicstome.client.ClientFactory;
-import com.spicstome.client.dto.StudentDTO;
 import com.spicstome.client.dto.UserDTO;
 import com.spicstome.client.place.AddUserPlace;
 import com.spicstome.client.services.SpicsToMeServices;
 import com.spicstome.client.ui.AddUserView;
-import com.spicstome.client.ui.LoginView;
 import com.spicstome.client.ui.UserViewImpl;
 
 public class AddUserActivity extends UserActivity {
@@ -23,7 +21,7 @@ public class AddUserActivity extends UserActivity {
 		
 		if (place.getIdUser() != null) {
 		
-			SpicsToMeServices.Util.getInstance().getStudent(Long.parseLong(place.getIdUser()), new AsyncCallback<StudentDTO> () {
+			SpicsToMeServices.Util.getInstance().getUser(Long.parseLong(place.getIdUser()), new AsyncCallback<UserDTO> () {
 	
 				@Override
 				public void onFailure(Throwable caught) {
@@ -31,9 +29,9 @@ public class AddUserActivity extends UserActivity {
 				}
 	
 				@Override
-				public void onSuccess(StudentDTO student) {
+				public void onSuccess(UserDTO user) {
 					
-					view.setUserDTO(student);
+					view.setUserDTO(user);
 				}			
 			});
 		} else {
