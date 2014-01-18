@@ -54,6 +54,7 @@ public interface SpicsToMeServices extends RemoteService {
 	public UserDTO getUser(Long idUser);
 	public StudentDTO getStudent(Long idStudent);
 	public ReferentDTO getReferentConnected();
+	public UserDTO getUserByLogin(String login);
 	public List<StudentDTO> getAllStudents();
 	public List<TeacherDTO> getAllTeachers();
 	public List<ReferentDTO> getAllReferents();

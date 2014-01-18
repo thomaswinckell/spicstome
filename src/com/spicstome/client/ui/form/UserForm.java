@@ -1,6 +1,7 @@
 package com.spicstome.client.ui.form;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.IButton;
 import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.events.ClickEvent;
@@ -80,10 +81,47 @@ public class UserForm {
 	}
 	
 	private void updateUser () {
-		SpicsToMeServices.Util.getInstance().updateUser(userDTO, onSuccess);
+		
+		if (basicUserForm.isNewLogin()) {
+			SpicsToMeServices.Util.getInstance().getUserByLogin(basicUserForm.getValueAsString("login"), 
+					new AsyncCallback<UserDTO>() {
+
+					@Override
+					public void onFailure(Throwable caught) {
+						System.out.println(caught);
+					}
+
+					@Override
+					public void onSuccess(UserDTO user) {
+						if (user == null)
+							SpicsToMeServices.Util.getInstance().updateUser(userDTO, onSuccess);
+						else {
+							SC.warn("Le login existe d&eacute;j&agrave;. Veuillez en choisir un autre.");
+						}
+					}				
+			});
+		} else {
+			SpicsToMeServices.Util.getInstance().updateUser(userDTO, onSuccess);
+		}
 	}
 	
 	private void saveUser () {
-		SpicsToMeServices.Util.getInstance().saveUser(userDTO, onSuccess);
+		SpicsToMeServices.Util.getInstance().getUserByLogin(basicUserForm.getValueAsString("login"), 
+				new AsyncCallback<UserDTO>() {
+
+				@Override
+				public void onFailure(Throwable caught) {
+					System.out.println(caught);
+				}
+
+				@Override
+				public void onSuccess(UserDTO user) {
+					if (user == null)
+						SpicsToMeServices.Util.getInstance().saveUser(userDTO, onSuccess);
+					else {
+						SC.warn("Le login existe d&eacute;j&agrave;. Veuillez en choisir un autre.");
+					}
+				}				
+		});
 	}
 }

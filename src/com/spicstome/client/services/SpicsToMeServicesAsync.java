@@ -40,6 +40,7 @@ public interface SpicsToMeServicesAsync {
 	void getUser(Long idUser, AsyncCallback<UserDTO> callback);
 	void getStudent(Long idStudent, AsyncCallback<StudentDTO> callback); 
 	void getReferentConnected(AsyncCallback<ReferentDTO> callback); 
+	void getUserByLogin(String login, AsyncCallback<UserDTO> callback); 
 	void getAllStudents(AsyncCallback<List<StudentDTO>> callback);
 	void getAllTeachers(AsyncCallback<List<TeacherDTO>> callback);
 	void getAllReferents(AsyncCallback<List<ReferentDTO>> callback);

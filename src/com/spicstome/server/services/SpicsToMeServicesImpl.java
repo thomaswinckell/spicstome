@@ -105,7 +105,7 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 			session.getTransaction().commit();
 			return null;
 		}
-	}	
+	}
 
 	@Override
 	public StudentDTO getAlbumOwner(long id) {
@@ -129,6 +129,19 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	@Override
 	public ReferentDTO getReferentConnected() {
 		return (ReferentDTO) getCurrentUser();
+	}
+	
+	@Override
+	public UserDTO getUserByLogin(String login) {		
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+	    session.beginTransaction();
+	    @SuppressWarnings("unchecked")
+		List<User> users = session.createCriteria(User.class).add(Restrictions.eq("login",login)).list();
+	    UserDTO userDTO = null;
+	    if (!users.isEmpty())
+	    	userDTO = Transtypage.createUserDTO(users.get(0));
+    	session.getTransaction().commit();
+    	return userDTO;
 	}
 	
 	@Override
@@ -212,7 +225,7 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	
 
 	@Override
-	public Long saveUser(UserDTO userDTO) {		
+	public Long saveUser(UserDTO userDTO) {
 		//Long idImageUser = saveImage(new ImageDTO((long) -1, userDTO.getImage().getFilename()));
 		
 		Long idImageUser = saveImage(userDTO.getImage());
@@ -232,6 +245,8 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	public Long saveStudent(StudentDTO studentDTO) {
 			
 		ImageDTO imageFolder = new ImageDTO((long) -1, "all.png");
+		Long idImage = saveImage(imageFolder);
+		imageFolder.setId(idImage);		
 		
 		FolderDTO folder = new FolderDTO((long) -1, "Tout", 0, null, imageFolder, new HashSet<PecsDTO>());
 		Long idFolder = saveFolder(folder);
