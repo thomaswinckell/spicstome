@@ -1,7 +1,9 @@
 package com.spicstome.client.ui.panel;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
+
 import com.smartgwt.client.util.BooleanCallback;
 import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.form.DynamicForm;
@@ -13,7 +15,9 @@ import com.smartgwt.client.widgets.tree.events.NodeClickEvent;
 import com.spicstome.client.dto.AlbumDTO;
 import com.spicstome.client.dto.ArticleDTO;
 import com.spicstome.client.dto.FolderDTO;
+import com.spicstome.client.dto.ImageDTO;
 import com.spicstome.client.dto.PecsDTO;
+import com.spicstome.client.dto.LogDTO;
 import com.spicstome.client.dto.StudentDTO;
 import com.spicstome.client.ui.form.ArticleFormWindow;
 import com.spicstome.client.ui.form.FolderFormWindow;
@@ -127,7 +131,15 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 					@Override
 					public void onDestroy()
 					{
-						articlesGrid.addItem(book.selectedImage);
+						/* getting original article to import */
+						ArticleDTO article = (ArticleDTO)book.selectedImage.getAttributeAsObject(ImageRecord.DATA);
+						
+						/* creating a copy of the article with out folder parent */
+						ImageDTO copyImage = new ImageDTO((long)-1, article.getImage().getFilename());
+						ArticleDTO copyArticle = new ArticleDTO((long)-1,article.getName(),article.getOrder(),getSelectedFolder(),copyImage,new HashSet<LogDTO>()) ;
+						
+						/* saving business data */
+						onSaveArticle(copyArticle);
 					}
 				};			 
 				win.show();

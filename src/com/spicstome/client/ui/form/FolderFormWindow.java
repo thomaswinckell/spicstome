@@ -43,7 +43,7 @@ public class FolderFormWindow extends Window{
 			setTitle("Création d'un nouveau dossier");
 			
 			this.folder = new FolderDTO((long)-1,
-					"nom du dossier",
+					"Nouveau dossier",
 					0,
 					parent,
 					new ImageDTO((long)-1,"default_folder.png"),

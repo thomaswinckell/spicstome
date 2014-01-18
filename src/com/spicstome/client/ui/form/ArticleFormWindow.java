@@ -46,7 +46,7 @@ public class ArticleFormWindow extends Window{
 			setTitle("Création d'un nouvel article");
 			
 			this.article = new ArticleDTO((long)-1,
-					"nom de l'article",
+					"Nouvel article",
 					0,
 					parent,
 					new ImageDTO((long) -1, "default_article.png"),

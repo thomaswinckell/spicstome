@@ -1,15 +1,12 @@
 package com.spicstome.server;
 
 import java.util.List;
-
 import org.hibernate.Session;
 import org.hibernate.cfg.Configuration;
-
 import com.spicstome.client.shared.Album;
 import com.spicstome.client.shared.Article;
 import com.spicstome.client.shared.Image;
 import com.spicstome.client.shared.Pecs;
-import com.spicstome.client.shared.Student;
 import com.spicstome.client.shared.User;
 
 /**
@@ -86,6 +83,7 @@ public class HibernateManager {
 		for (User user : users) {
 			session.delete(user);
 		}
+		
 		session.getTransaction().commit();
 	}
 	
