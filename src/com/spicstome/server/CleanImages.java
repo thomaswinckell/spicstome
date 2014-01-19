@@ -10,6 +10,19 @@ import com.spicstome.client.shared.Image;
 
 public class CleanImages {
 	
+	private static String [] protectedImageFileNames = {
+		"all.png", "default_article.png", "default_folder.png", "default_user.png", 
+		"no-picture.jpg"
+	};
+	
+	private static boolean isProtectedImage(String fileName) {
+		for (String s: protectedImageFileNames) {
+	      if (fileName.equals(s))
+	    	  return true;
+	    }
+		return false;
+	}
+	
 	private static List<Image> getAllImages() {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
@@ -40,7 +53,8 @@ public class CleanImages {
 	                		break;
 	                	}
 	                }
-	                if (!isImageUsed) {
+	                if ((!isImageUsed) && (!isProtectedImage(file.getName()))) {
+	                	System.out.println("Suppression du fichier : "+file.getName());
 	                	file.delete();
 	                	nbImagesDeleted++;
 	                }
@@ -50,6 +64,6 @@ public class CleanImages {
         	System.out.println("Dossier vide.");
         }
         
-        System.out.println("Nombre d'images supprimées : "+nbImagesDeleted);
+        System.out.println("Nombre de fichiers supprimées : "+nbImagesDeleted);
 	}
 }
