@@ -4,6 +4,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.smartgwt.client.util.BooleanCallback;
+import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.ButtonItem;
 import com.smartgwt.client.widgets.form.fields.SelectItem;
@@ -89,25 +91,37 @@ public class ReferentsEditForm extends DynamicForm {
 			@Override
 			public void onClick(ClickEvent event) {
 				
-				final Long idReferent = Long.parseLong(selectItem.getValueAsString());
-				
-				SpicsToMeServices.Util.getInstance().deleteUser(idReferent, new AsyncCallback<Boolean> () {
-
-					@Override
-					public void onFailure(Throwable caught) {
-						System.out.println(caught);
-					}
-
-					@Override
-					public void onSuccess(Boolean result) {
-						for(ReferentDTO referent : referents) {
-							if (referent.getId() == idReferent) {
-								referents.remove(referent);
-								break;
+				SC.ask("Confirmation de suppression", "&Ecirc;tes-vous s&ucirc;r(e) de vouloir supprimer cet utilisateur ?", 
+					new BooleanCallback() {
+						@Override
+						public void execute(Boolean confirm) {
+							if (confirm) {
+								final Long idReferent = Long.parseLong(selectItem.getValueAsString());
+								
+								if (idReferent == 1) {
+									SC.warn("Cet utilisateur est l'unique administrateur. Il est donc impossible de le supprimer.");
+								} else {				
+									SpicsToMeServices.Util.getInstance().deleteUser(idReferent, new AsyncCallback<Boolean> () {
+					
+										@Override
+										public void onFailure(Throwable caught) {
+											System.out.println(caught);
+										}
+					
+										@Override
+										public void onSuccess(Boolean result) {
+											for(ReferentDTO referent : referents) {
+												if (referent.getId() == idReferent) {
+													referents.remove(referent);
+													break;
+												}
+											}
+											updateSelectItem();
+										}					
+									});
+								}
 							}
-						}
-						updateSelectItem();
-					}					
+						}					
 				});
 			}				
 		});

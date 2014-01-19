@@ -4,6 +4,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.smartgwt.client.util.BooleanCallback;
+import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.ButtonItem;
 import com.smartgwt.client.widgets.form.fields.SelectItem;
@@ -88,26 +90,35 @@ public class StudentsEditForm extends DynamicForm {
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				
-				final Long idStudent = Long.parseLong(selectItem.getValueAsString());
-				
-				SpicsToMeServices.Util.getInstance().deleteUser(idStudent, new AsyncCallback<Boolean> () {
 
+				SC.ask("Confirmation de suppression", "&Ecirc;tes-vous s&ucirc;r(e) de vouloir supprimer cet utilisateur ?", 
+					new BooleanCallback() {
 					@Override
-					public void onFailure(Throwable caught) {
-						System.out.println(caught);
-					}
+					public void execute(Boolean confirm) {
+						if (confirm) {
 
-					@Override
-					public void onSuccess(Boolean result) {
-						for(StudentDTO student : students) {
-							if (student.getId() == idStudent) {
-								students.remove(student);
-								break;
-							}
+							final Long idStudent = Long.parseLong(selectItem.getValueAsString());
+
+							SpicsToMeServices.Util.getInstance().deleteUser(idStudent, new AsyncCallback<Boolean> () {
+
+								@Override
+								public void onFailure(Throwable caught) {
+									System.out.println(caught);
+								}
+
+								@Override
+								public void onSuccess(Boolean result) {
+									for(StudentDTO student : students) {
+										if (student.getId() == idStudent) {
+											students.remove(student);
+											break;
+										}
+									}
+									updateSelectItem();
+								}					
+							});
 						}
-						updateSelectItem();
-					}					
+					}
 				});
 			}				
 		});
