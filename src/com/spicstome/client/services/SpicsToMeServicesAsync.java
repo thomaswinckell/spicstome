@@ -37,6 +37,7 @@ public interface SpicsToMeServicesAsync {
 	/* GET */
 	void getAlbumOwner(long id,AsyncCallback<StudentDTO> callback);
 	void getAlbum(long id,AsyncCallback<AlbumDTO> callback);
+	void getFolder(long id,AsyncCallback<FolderDTO> callback);
 	void getUser(Long idUser, AsyncCallback<UserDTO> callback);
 	void getStudent(Long idStudent, AsyncCallback<StudentDTO> callback); 
 	void getReferentConnected(AsyncCallback<ReferentDTO> callback); 

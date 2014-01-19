@@ -37,7 +37,7 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 
 	VLayout articleVerticalPanel = new VLayout();
 
-	public ComboBoxItem comboBoxOwner = new ComboBoxItem("owner","Album assigné à");
+	public ComboBoxItem comboBoxOwner = new ComboBoxItem("owner","Proprietaire");
 	DynamicForm formOwner = new DynamicForm();
 	
 	
@@ -73,7 +73,7 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 
 	    
 	    comboBoxOwner.setValueMap("Albert","Jean","Robert");
-	    comboBoxOwner.setValue("Albert");
+
 
 	    formOwner.setFields(comboBoxOwner);
 	    titleLayout.addMember(formOwner);
@@ -310,10 +310,24 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 		folderTree.treeGrid.getData().openAll();
 	}
 	
-	public void updateArticleIntoGrid(ArticleDTO article)
-	{
-		UpdateGrid();
+	public void updateArticleIntoGrid(FolderDTO folder)
+	{		
+		ArrayList<ImageRecord> articles = new ArrayList<ImageRecord>();
+		
+		for(PecsDTO pecsDTO:folder.getContent())
+		{
+			if(pecsDTO instanceof ArticleDTO)
+			{
+				articles.add(new ImageRecord((ArticleDTO)pecsDTO));
+			}
+				
+		}
+		
+		articlesGrid.setItems(articles);
+		articleVerticalPanel.addMember(articlesGrid,0);
+		
 		UpdateActionPanels();
+		
 	}
 	
 	
@@ -335,11 +349,7 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 		return (ArticleDTO)((ImageRecord)(articlesGrid.getSelectedRecord())).getAttributeAsObject(ImageRecord.DATA);
 	}
 	
-	public FolderDTO getSelectedFolder()
-	{
-		if(folderTree.selectFolderNode==null) return null;
-		return (FolderDTO)folderTree.selectFolderNode.getFolderDTO();
-	}
+	
 	
 	public void UpdateActionPanels()
 	{
@@ -368,34 +378,21 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 		
 	}
 	
-	private void UpdateGrid()
-	{
-		FolderDTO folder = getSelectedFolder();
-		
-		ArrayList<ImageRecord> articles = new ArrayList<ImageRecord>();
-		
-		for(PecsDTO pecsDTO:folder.getContent())
-		{
-			if(pecsDTO instanceof ArticleDTO)
-			{
-				articles.add(new ImageRecord((ArticleDTO)pecsDTO));
-			}
-				
-		}
-		
-		articlesGrid.setItems(articles);
-		articleVerticalPanel.addMember(articlesGrid,0);
-	}
-	
+
 	@Override
 	public void onFolderClick(NodeClickEvent event)
 	{
 		super.onFolderClick(event);
 
+		onLoadFolder(getSelectedFolder());
 	
-		UpdateGrid();	
-		UpdateActionPanels();
-
+	}
+	
+	@Override
+	public void setOwnerName(String name)
+	{
+		super.setOwnerName(name);
+		comboBoxOwner.setValue(name); 
 	}
 	
 	public abstract void onSaveArticle(ArticleDTO articleDTO);
@@ -405,6 +402,7 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 	public abstract void onMoveFolder(FolderDTO child,FolderDTO parent);
 	public abstract void onUpdateFolder(FolderDTO folderDTO);
 	public abstract void onUpdateArticle(ArticleDTO articleDTO);
+	public abstract void onLoadFolder(FolderDTO folder);
 
 
 }

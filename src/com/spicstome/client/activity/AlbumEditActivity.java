@@ -6,6 +6,8 @@ import java.util.Set;
 
 
 
+
+
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
@@ -211,11 +213,36 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 			public void onFailure(Throwable caught) {}
 			@Override
 			public void onSuccess(Boolean result) {
-				
-				editview.updateArticle(a);
+				SpicsToMeServices.Util.getInstance().getFolder(a.getFolder().getId(), new AsyncCallback<FolderDTO>() {
+
+					@Override
+					public void onFailure(Throwable caught) {}
+
+					@Override
+					public void onSuccess(FolderDTO result) {
+						editview.updateArticle(result);		
+					}
+				});		
 			}
 		});
 		
+		
+	}
+
+	@Override
+	public void get(FolderDTO f) {
+		SpicsToMeServices.Util.getInstance().getFolder(f.getId(), new AsyncCallback<FolderDTO>() {
+
+			@Override
+			public void onFailure(Throwable caught) {}
+
+			@Override
+			public void onSuccess(FolderDTO result) {
+				
+				editview.updateArticle(result);	
+				
+			}
+		});
 		
 	}
 

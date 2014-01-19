@@ -84,6 +84,12 @@ public class AlbumEditViewImpl extends UserViewImpl  implements AlbumEditView{
 				
 				((AlbumEditView.Presenter)(listener)).update(a);
 			}
+
+			@Override
+			public void onLoadFolder(FolderDTO folder) {
+				
+				((AlbumEditView.Presenter)(listener)).get(folder);
+			}
 			
 		};
 		
@@ -141,9 +147,9 @@ public class AlbumEditViewImpl extends UserViewImpl  implements AlbumEditView{
 
 
 	@Override
-	public void updateArticle(ArticleDTO articleDTO) {
+	public void updateArticle(FolderDTO folder) {
 
-		albumEditPanel.updateArticleIntoGrid(articleDTO);
+		albumEditPanel.updateArticleIntoGrid(folder);
 	}
 
 

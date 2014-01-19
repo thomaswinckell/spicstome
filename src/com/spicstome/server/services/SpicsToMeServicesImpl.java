@@ -91,6 +91,18 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	
 	/* GET */
 
+	
+	@Override
+	public FolderDTO getFolder(long id) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		session.beginTransaction();
+		Folder folder = (Folder) session.load(Folder.class, id);
+		FolderDTO parent = (folder.getFolder()==null?null:Transtypage.createFolderDTO(folder.getFolder(), null));
+		FolderDTO folderDTO = Transtypage.createFolderDTO(folder,parent);
+		session.getTransaction().commit();
+		return folderDTO;
+	}
+	
 	@Override
 	public AlbumDTO getAlbum(long id) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
@@ -550,4 +562,6 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	    session.getTransaction().commit();
 	    return true;
 	}
+
+
 }

@@ -49,6 +49,7 @@ public interface SpicsToMeServices extends RemoteService {
 	public boolean disconnectCurrentUser();
 	
 	/* GET */
+	public FolderDTO getFolder(long id);
 	public StudentDTO getAlbumOwner(long id);
 	public AlbumDTO getAlbum(long id);
 	public UserDTO getUser(Long idUser);
