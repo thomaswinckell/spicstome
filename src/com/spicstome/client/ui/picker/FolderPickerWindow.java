@@ -8,7 +8,7 @@ import com.spicstome.client.ui.panel.AlbumPanel;
 public class FolderPickerWindow extends PickerWindow{
 
 	public FolderPickerWindow(Set<StudentDTO> list) {
-		super(list, 400, 500);
+		super(list, 500, 500);
 		
 	}
 	@Override

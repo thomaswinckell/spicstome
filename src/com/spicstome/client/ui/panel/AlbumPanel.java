@@ -17,7 +17,7 @@ import com.spicstome.client.ui.widget.FolderTree.AlbumTreeNode;
 public abstract class AlbumPanel extends VLayout{
 
 	protected HLayout titleLayout = new HLayout();
-	protected Label titre = new Label("");
+	protected Label title = new Label("");
 	
 	protected AlbumDTO album;
 		
@@ -38,8 +38,8 @@ public abstract class AlbumPanel extends VLayout{
 			}
 		});
 		
-		titre.setHeight(30);
-		titleLayout.addMember(titre);
+		title.setHeight(30);
+		titleLayout.addMember(title);
 		
 
 		setStyleName("album");
@@ -54,7 +54,7 @@ public abstract class AlbumPanel extends VLayout{
 	
 	public void setOwnerName(String name)
 	{
-		titre.setContents("Album de "+name); 
+		title.setContents("Album de "+name); 
 	}
 	
 	public FolderDTO getSelectedFolder()

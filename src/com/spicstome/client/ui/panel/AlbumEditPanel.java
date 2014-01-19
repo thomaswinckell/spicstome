@@ -51,8 +51,6 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 			@Override
 			public void onFolderDrop(FolderDropEvent event) {
 
-				
-				
 				if(event.getFolder()!=null && (event.getFolder() instanceof AlbumTreeNode))
 				{	
 					FolderDTO parent = ((AlbumTreeNode)(event.getFolder())).getFolderDTO();
@@ -65,15 +63,12 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 					
 					event.cancel();
 				}
-				
-				
-			
+
 			}
 		});
 
 	    
 	    comboBoxOwner.setValueMap("Albert","Jean","Robert");
-
 
 	    formOwner.setFields(comboBoxOwner);
 	    titleLayout.addMember(formOwner);
@@ -135,8 +130,8 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 						ArticleDTO article = (ArticleDTO)book.selectedImage.getAttributeAsObject(ImageRecord.DATA);
 						
 						/* creating a copy of the article with out folder parent */
-						ImageDTO copyImage = new ImageDTO((long)-1, article.getImage().getFilename());
-						ArticleDTO copyArticle = new ArticleDTO((long)-1,article.getName(),article.getOrder(),getSelectedFolder(),copyImage,new HashSet<LogDTO>()) ;
+						
+						ArticleDTO copyArticle = getCopyOfArticle(article, getSelectedFolder());
 						
 						/* saving business data */
 						onSaveArticle(copyArticle);
@@ -218,10 +213,12 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 					@Override
 					public void onDestroy()
 					{
-						// todo traitement 
-						//System.out.println(win.book.selectedImage.toString());
+						/* getting original article to import */
+						FolderDTO folder = (FolderDTO)albumPanel.getSelectedFolder();
 						
-					
+						onSaveFolder(getCopyOfFolder(folder,getSelectedFolder()));
+						
+
 					}
 				};			 
 				win.show();
@@ -298,7 +295,7 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 	
 	public void insertFolderIntoTree(FolderDTO folderDTO)
 	{
-		folderTree.tree.add(new AlbumTreeNode(folderDTO),folderTree.selectFolderNode);
+		folderTree.tree.add(new AlbumTreeNode(folderDTO),folderTree.getFolderNodeWithId(folderDTO.getFolder().getId()));
 		folderTree.treeGrid.setData(folderTree.tree);		
 		folderTree.treeGrid.getData().openAll();
 	}
@@ -334,7 +331,8 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 	
 	public void insertArticleIntoGrid(ArticleDTO articleDTO)
 	{
-		articlesGrid.addItem(new ImageRecord(articleDTO));
+		if(articleDTO.getFolder().getId()==getSelectedFolder().getId())
+			articlesGrid.addItem(new ImageRecord(articleDTO));
 	}
 	
 	public void removeArticleFromGrid(ArticleDTO articleDTO)
@@ -393,6 +391,41 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 	{
 		super.setOwnerName(name);
 		comboBoxOwner.setValue(name); 
+	}
+	
+	public ArticleDTO getCopyOfArticle(ArticleDTO article,FolderDTO parent)
+	{
+		ImageDTO copyImage = new ImageDTO((long)-1, article.getImage().getFilename());
+		ArticleDTO copyArticle = new ArticleDTO((long)-1,article.getName(),article.getOrder(),parent,copyImage,new HashSet<LogDTO>()) ;
+	
+		return copyArticle;
+	}
+	
+	public FolderDTO getCopyOfFolder(FolderDTO folderDTO,FolderDTO parent)
+	{
+		FolderDTO copyFolder = new FolderDTO((long)-1,
+				folderDTO.getName(),
+				folderDTO.getOrder(),
+				parent,
+				new ImageDTO((long)-1,folderDTO.getImage().getFilename()),
+				new HashSet<PecsDTO>());
+		
+		
+		for(PecsDTO pecs :folderDTO.getContent())
+		{
+			if(pecs instanceof ArticleDTO)
+			{
+				ArticleDTO copyArticle = getCopyOfArticle((ArticleDTO)pecs, copyFolder);
+				copyFolder.getContent().add(copyArticle);
+			}
+			else
+			{
+				FolderDTO copyFolder2 = getCopyOfFolder((FolderDTO)pecs, copyFolder);
+				copyFolder.getContent().add(copyFolder2);
+			}
+		}
+		
+		return copyFolder;
 	}
 	
 	public abstract void onSaveArticle(ArticleDTO articleDTO);

@@ -91,6 +91,22 @@ public class FolderTree extends HLayout
 	
 	}
 	
+	public AlbumTreeNode getFolderNodeWithId(long id)
+	{
+		TreeNode[] nodes = tree.getAllNodes();
+		
+		for(TreeNode node:nodes)
+		{
+			AlbumTreeNode atn = (AlbumTreeNode)node;
+			if(atn.getFolderDTO().getId()==id)
+			{
+				return atn;
+			}
+		}
+		
+		return null;
+	}
+	
 	public static class AlbumTreeNode extends TreeNode 
 	{
 	    

@@ -330,14 +330,36 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	@Override
 	public Long saveFolder(FolderDTO folderDTO) {
 			
+		//Set<PecsDTO> savedCollection = folderDTO.getContent();
+		folderDTO.setContent(new HashSet<PecsDTO>());
+		
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
 		
-		Folder parent = (folderDTO.getFolder()==null?null:new Folder(folderDTO.getFolder(),null));
+		Folder parent = (folderDTO.getFolder()==null?null:new Folder(folderDTO.getFolder(),null));	
 		Folder folder = new Folder(folderDTO,parent);
 	   
 	    session.save(folder);
 	    session.getTransaction().commit();
+	    /*
+	    for(PecsDTO pecs:savedCollection)
+	    {
+	    	long idImage = saveImage(pecs.getImage());
+	    	pecs.getImage().setId(idImage);
+	    	pecs.getFolder().setId(folder.getId());
+	    	
+	    	
+	    	if(pecs instanceof ArticleDTO)
+	    	{
+	    		saveArticle((ArticleDTO)pecs);
+	    	}
+	    	else
+	    	{
+	    		saveFolder((FolderDTO)pecs);
+	    	}
+	    	
+	    }*/
+
 	    return folder.getId();
 	}
 	

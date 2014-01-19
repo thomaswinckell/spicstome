@@ -1,8 +1,6 @@
 package com.spicstome.client.ui.panel;
 
 import java.util.ArrayList;
-
-import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.tree.events.NodeClickEvent;
 import com.spicstome.client.dto.AlbumDTO;
 import com.spicstome.client.dto.ArticleDTO;
@@ -12,18 +10,12 @@ import com.spicstome.client.ui.widget.ImageRecord;
 
 public class AlbumBookPanel extends AlbumPanel{
 
-	
 	public Book book;
-	public Label titre = new Label();
-	
+
 	public AlbumBookPanel(Book book) {
 		super();
-		
-		
-	    	
-	    this.book = book;
-	   
-	    
+
+	    this.book = book;	    
 	    horizontalLayout.addMember(book);
 	    verticalLayout.setHeight(book.heightPage+40);
 	    
@@ -32,8 +24,7 @@ public class AlbumBookPanel extends AlbumPanel{
 	@Override
 	public void setAlbum(AlbumDTO album)
 	{
-		super.setAlbum(album);
-		
+		super.setAlbum(album);		
 		book.setList(new ArrayList<ImageRecord>());
 	}
 	

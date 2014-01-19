@@ -8,6 +8,7 @@ import java.util.Set;
 
 
 
+
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
@@ -15,6 +16,7 @@ import com.spicstome.client.ClientFactory;
 import com.spicstome.client.dto.AlbumDTO;
 import com.spicstome.client.dto.ArticleDTO;
 import com.spicstome.client.dto.FolderDTO;
+import com.spicstome.client.dto.PecsDTO;
 import com.spicstome.client.dto.ReferentDTO;
 import com.spicstome.client.dto.StudentDTO;
 import com.spicstome.client.place.AlbumEditPlace;
@@ -108,7 +110,8 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 
 	@Override
 	public void save(final FolderDTO f) {
-		
+
+		/* save folder */
 		SpicsToMeServices.Util.getInstance().saveImage(f.getImage(), new AsyncCallback<Long>() {
 			@Override
 			public void onFailure(Throwable caught) {}
@@ -126,11 +129,25 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 						f.setId(result);
 						f.getFolder().getContent().add(f);
 						editview.insertFolder(f);
+						
+						for(PecsDTO pecs:f.getContent())
+						{
+							pecs.getFolder().setId(result);
+							
+							if(pecs instanceof ArticleDTO)
+							{
+								save((ArticleDTO)pecs);
+							}
+							else
+							{
+								save((FolderDTO)pecs);
+							}
+						}
 					}
 				});
 			}
 		});
-		
+
 		
 	}
 
