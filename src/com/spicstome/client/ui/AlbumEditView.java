@@ -22,6 +22,7 @@ public interface AlbumEditView extends IsWidget{
 	
 	public interface Presenter 
 	{
+		void reorder(ArticleDTO a);
 		void save(ArticleDTO a);
 		void save(FolderDTO f);
 		void delete(ArticleDTO a);

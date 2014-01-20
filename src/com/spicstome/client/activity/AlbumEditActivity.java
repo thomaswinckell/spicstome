@@ -256,9 +256,23 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 			@Override
 			public void onSuccess(FolderDTO result) {
 				
+				
+				
 				editview.updateArticle(result);	
 				
 			}
+		});
+		
+	}
+
+	@Override
+	public void reorder(ArticleDTO a) {
+		
+		SpicsToMeServices.Util.getInstance().updateArticle(a, new AsyncCallback<Boolean>() {
+			@Override
+			public void onFailure(Throwable caught) {}
+			@Override
+			public void onSuccess(Boolean result) {}
 		});
 		
 	}

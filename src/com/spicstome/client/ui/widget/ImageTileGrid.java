@@ -1,13 +1,13 @@
 package com.spicstome.client.ui.widget;
 
-
 import java.util.List;
-
 import com.smartgwt.client.types.AnimationEffect;
 import com.smartgwt.client.types.DragAppearance;
 import com.smartgwt.client.types.DragDataAction;
 import com.smartgwt.client.widgets.events.DragStopEvent;
 import com.smartgwt.client.widgets.events.DragStopHandler;
+import com.smartgwt.client.widgets.events.DropCompleteEvent;
+import com.smartgwt.client.widgets.events.DropCompleteHandler;
 import com.smartgwt.client.widgets.tile.TileGrid;
 import com.smartgwt.client.widgets.tile.events.RecordClickEvent;
 import com.smartgwt.client.widgets.tile.events.RecordClickHandler;
@@ -103,6 +103,16 @@ public abstract class ImageTileGrid extends TileGrid {
 			setTileDragAppearance(DragAppearance.TARGET);
 			setDragTrackerStyle("dragStyle");
 			
+			addDropCompleteHandler(new DropCompleteHandler() {
+				
+				@Override
+				public void onDropComplete(DropCompleteEvent event) {
+					OnReorder();
+					
+				}
+			});
+			
+			
 			break;
 		}
 	}
@@ -152,6 +162,11 @@ public abstract class ImageTileGrid extends TileGrid {
 					removeData(getSelectedRecord());
 			}
 		});
+	}
+	
+	public void OnReorder()
+	{
+		
 	}
 
 	public void OnSelectChanged(ImageRecord object)

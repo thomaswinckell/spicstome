@@ -1,7 +1,6 @@
 package com.spicstome.client.ui;
 
 import java.util.ArrayList;
-import java.util.Set;
 import com.spicstome.client.dto.AlbumDTO;
 import com.spicstome.client.dto.StudentDTO;
 import com.spicstome.client.place.AlbumEditPlace;
@@ -73,7 +72,7 @@ public class AlbumManagementViewImpl extends UserViewImpl  implements AlbumManag
 	}
 
 	@Override
-	public void setAlbums(Set<StudentDTO> list) {
+	public void setAlbums(ArrayList<StudentDTO> list) {
 		
 		ArrayList<ImageRecord> modules = new ArrayList<ImageRecord>();
 

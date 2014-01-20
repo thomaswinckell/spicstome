@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import com.spicstome.client.dto.PecsDTO;
 
-public abstract class Pecs implements Serializable {
+public abstract class Pecs implements Comparable<Pecs>,Serializable {
 	
 	private static final long serialVersionUID = 739051315384634937L;
 	
@@ -74,4 +74,25 @@ public abstract class Pecs implements Serializable {
 		return "Pecs [id=" + id + ", name=" + name + ", order=" + order
 				+ ", folder=" + folder + "]";
 	}	
+	
+	@Override
+	public int compareTo(Pecs that) {
+		
+		final int BEFORE = -1;
+        final int AFTER = 1;
+ 
+        if (that == null) {
+            return BEFORE;
+        }
+        
+        if(getOrder()<that.getOrder())
+        {
+        	return BEFORE;
+        }
+        else
+        {
+        	return AFTER;
+        }
+		
+	}
 }

@@ -5,7 +5,7 @@ import java.util.Date;
 
 import com.spicstome.client.dto.UserDTO;
 
-public abstract class User implements Serializable {
+public abstract class User implements Comparable<User>,Serializable {
 	
 	private static final long serialVersionUID = 3555772168779223497L;
 	
@@ -104,5 +104,28 @@ public abstract class User implements Serializable {
 	public String toString() {
 		return "User [id=" + id + ", login=" + login + ", password=" + password
 				+ ", image=" + image + "]";
+	}
+	
+	@Override
+	public int compareTo(User that) {
+		
+		final int BEFORE = -1;
+        final int AFTER = 1;
+ 
+        if (that == null || getFirstName().length()==0 || that.getFirstName().length()==0) {
+            return BEFORE;
+        }
+        
+        
+        
+        if(getFirstName().charAt(0)<that.getFirstName().charAt(0))
+        {
+        	return BEFORE;
+        }
+        else
+        {
+        	return AFTER;
+        }
+		
 	}
 }
