@@ -16,9 +16,11 @@ package com.spicstome.client.ui;
 
 import java.util.List;
 
-import com.smartgwt.client.widgets.IButton;
+import com.smartgwt.client.types.Alignment;
+import com.smartgwt.client.widgets.IconButton;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
+import com.smartgwt.client.widgets.layout.VLayout;
 import com.spicstome.client.dto.ReferentDTO;
 import com.spicstome.client.dto.StudentDTO;
 import com.spicstome.client.dto.TeacherDTO;
@@ -49,23 +51,29 @@ public class UsersManagementViewImpl extends UserViewImpl implements UsersManage
 		
 		/* Add a user */
 		
-		IButton buttonAddUser = new IButton("Ajouter un utilisateur");
+		IconButton buttonAddUser = new IconButton("");
+		buttonAddUser.setIcon("new.png");
+		buttonAddUser.setIconSize(40);
+		buttonAddUser.setLayoutAlign(Alignment.CENTER);
+		
 		buttonAddUser.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
 				goTo(new AddUserPlace(null));
 			}			
-		});		
-		
-		mainPanel.addMember(buttonAddUser);
+		});
 		
 		studentsEditForm = new StudentsEditForm();
 		teachersEditForm = new TeachersEditForm();
 		referentsEditForm = new ReferentsEditForm();
 		
-		mainPanel.addMember(studentsEditForm);
-		mainPanel.addMember(teachersEditForm);
-		mainPanel.addMember(referentsEditForm);
+		VLayout vLayout = new VLayout();
+		vLayout.addMember(buttonAddUser);
+		vLayout.addMember(studentsEditForm);
+		vLayout.addMember(teachersEditForm);
+		vLayout.addMember(referentsEditForm);
+		
+		mainPanel.addMember(vLayout);
 	}
 	
 	public void setStudents (List<StudentDTO> students) {
