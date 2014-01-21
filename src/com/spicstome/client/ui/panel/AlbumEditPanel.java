@@ -23,6 +23,8 @@ import com.spicstome.client.dto.ImageDTO;
 import com.spicstome.client.dto.PecsDTO;
 import com.spicstome.client.dto.LogDTO;
 import com.spicstome.client.dto.StudentDTO;
+import com.spicstome.client.dto.SubjectDTO;
+import com.spicstome.client.dto.VerbDTO;
 import com.spicstome.client.ui.form.ArticleFormWindow;
 import com.spicstome.client.ui.form.FolderFormWindow;
 import com.spicstome.client.ui.picker.ArticlePickerWindow;
@@ -367,6 +369,7 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 	public void updateFolderIntoTree(FolderDTO folder)
 	{
 		folderTree.tree.getAllNodes(folderTree.selectFolderNode)[0].setAttribute("title",folder.getName());
+		folderTree.tree.getAllNodes(folderTree.selectFolderNode)[0].setAttribute("icon","upload/"+folder.getImage().getFilename());
 		folderTree.treeGrid.setData(folderTree.tree);		
 		folderTree.treeGrid.getData().openAll();
 	}
@@ -460,9 +463,25 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 	public ArticleDTO getCopyOfArticle(ArticleDTO article,FolderDTO parent)
 	{
 		ImageDTO copyImage = new ImageDTO((long)-1, article.getImage().getFilename());
-		ArticleDTO copyArticle = new ArticleDTO((long)-1,article.getName(),article.getOrder(),parent,copyImage,new HashSet<LogDTO>()) ;
+		
+		if(article instanceof SubjectDTO)
+		{
+			SubjectDTO subjectDTO = (SubjectDTO) article;
+			SubjectDTO copySubject= new SubjectDTO((long)-1,subjectDTO.getName(),subjectDTO.getOrder(),parent,copyImage,new HashSet<LogDTO>(),0,subjectDTO.getGender(),subjectDTO.getNature(),subjectDTO.getNumber()) ;
+			
+			return copySubject;
+		}
+		else if(article instanceof VerbDTO)
+		{
+			VerbDTO verbDTO = (VerbDTO) article;
+			VerbDTO copyVerb= new VerbDTO((long)-1,verbDTO.getName(),verbDTO.getOrder(),parent,copyImage,new HashSet<LogDTO>(),0,
+					verbDTO.getGroup(),verbDTO.getIrregular1(),verbDTO.getIrregular2(),verbDTO.getIrregular3(),verbDTO.getIrregular4(),verbDTO.getIrregular5(),verbDTO.getIrregular6()) ;
+			
+			return copyVerb;
+		}
+
 	
-		return copyArticle;
+		return null;
 	}
 	
 	public FolderDTO getCopyOfFolder(FolderDTO folderDTO,FolderDTO parent)

@@ -10,6 +10,8 @@ import java.util.Set;
 
 
 
+
+
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
@@ -92,7 +94,7 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 			public void onSuccess(Long result) {
 				
 				a.getImage().setId(result);
-				
+							
 				SpicsToMeServices.Util.getInstance().saveArticle(a, new AsyncCallback<Long>() {
 					@Override
 					public void onSuccess(Long result) {
@@ -210,39 +212,62 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 	@Override
 	public void update(final FolderDTO f) {
 		
-		SpicsToMeServices.Util.getInstance().updateFolder(f, new AsyncCallback<Boolean>() {
+		SpicsToMeServices.Util.getInstance().updateImage(f.getImage(), new AsyncCallback<Long>() {
 
 			@Override
 			public void onFailure(Throwable caught) {}
+
 			@Override
-			public void onSuccess(Boolean result) {
+			public void onSuccess(Long result) {
 				
-				editview.updateFolder(f);
-			}
-		});
-		
+				SpicsToMeServices.Util.getInstance().updateFolder(f, new AsyncCallback<Boolean>() {
+
+					@Override
+					public void onFailure(Throwable caught) {}
+					@Override
+					public void onSuccess(Boolean result) {
+						
+						editview.updateFolder(f);
+					}
+				});			
+			}		
+		});	
 	}
 
 	@Override
 	public void update(final ArticleDTO a) {
-		SpicsToMeServices.Util.getInstance().updateArticle(a, new AsyncCallback<Boolean>() {
+		
+		SpicsToMeServices.Util.getInstance().updateImage(a.getImage(),new AsyncCallback<Long>() {
 
 			@Override
 			public void onFailure(Throwable caught) {}
+
 			@Override
-			public void onSuccess(Boolean result) {
-				SpicsToMeServices.Util.getInstance().getFolder(a.getFolder().getId(), new AsyncCallback<FolderDTO>() {
+			public void onSuccess(Long result) {
+				
+				SpicsToMeServices.Util.getInstance().updateArticle(a, new AsyncCallback<Boolean>() {
 
 					@Override
 					public void onFailure(Throwable caught) {}
-
 					@Override
-					public void onSuccess(FolderDTO result) {
-						editview.updateArticle(result);		
+					public void onSuccess(Boolean result) {
+						SpicsToMeServices.Util.getInstance().getFolder(a.getFolder().getId(), new AsyncCallback<FolderDTO>() {
+
+							@Override
+							public void onFailure(Throwable caught) {}
+
+							@Override
+							public void onSuccess(FolderDTO result) {
+								editview.updateArticle(result);		
+							}
+						});		
 					}
-				});		
+				});
+				
 			}
 		});
+		
+	
 		
 		
 	}

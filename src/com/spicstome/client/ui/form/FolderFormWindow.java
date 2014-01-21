@@ -3,12 +3,10 @@ package com.spicstome.client.ui.form;
 import java.util.ArrayList;
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.widgets.IconButton;
-import com.smartgwt.client.widgets.Img;
 import com.smartgwt.client.widgets.Window;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.form.DynamicForm;
-import com.smartgwt.client.widgets.form.fields.FileItem;
 import com.smartgwt.client.widgets.form.fields.TextItem;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.spicstome.client.dto.FolderDTO;
@@ -20,13 +18,14 @@ public class FolderFormWindow extends Window{
 	VLayout verticalLayout = new VLayout();
 	DynamicForm form = new DynamicForm();
 	
+	ImageUploadForm imageUploadForm = new ImageUploadForm(128, 128);
+	
 	IconButton buttonValidate = new IconButton("");
 	
 	public FolderDTO folder;
 	
 	TextItem nameDetail = new TextItem("name");
-	Img imgDetail = new Img();
-	FileItem fileItem = new FileItem();
+
 	
 	public enum Mode{NEW, EDIT}
 	
@@ -41,9 +40,14 @@ public class FolderFormWindow extends Window{
 		{
 			setTitle("Création d'un nouveau dossier");
 			
+			int order=0;
+			
+			if(parent!=null)
+				order = parent.getContent().size();
+			
 			this.folder = new FolderDTO((long)-1,
 					"Nouveau dossier",
-					0,
+					order,
 					parent,
 					new ImageDTO((long)-1,"default_folder.png"),
 					new ArrayList<PecsDTO>());
@@ -55,6 +59,8 @@ public class FolderFormWindow extends Window{
 			this.folder=folderDTO;
 		}
 		
+		
+		
 		setShowMinimizeButton(false);
 		setIsModal(true);
 		setShowModalMask(true);
@@ -63,15 +69,12 @@ public class FolderFormWindow extends Window{
 		setDismissOnOutsideClick(true);
 		
 
-		imgDetail.setSize(150);
-		imgDetail.setLayoutAlign(Alignment.RIGHT);
-
+		imageUploadForm.setImageFileName(folder.getImage().getFilename());
+		
 		nameDetail.setHeight(20);    
 		nameDetail.setTitle("Nom");
 		
-		fileItem.setTitle("Image");
-		
-		form.setFields(nameDetail,fileItem);
+		form.setFields(nameDetail);
 		
 		buttonValidate.setIconSize(42);
 		buttonValidate.setIcon("check.png");
@@ -82,6 +85,7 @@ public class FolderFormWindow extends Window{
 			public void onClick(ClickEvent event) {
 				
 				folder.setName(nameDetail.getValueAsString());
+				folder.getImage().setFilename(imageUploadForm.getImageFileName());
 				
 				destroy();
 				
@@ -90,14 +94,12 @@ public class FolderFormWindow extends Window{
 		
 		nameDetail.setValue(this.folder.getName());
 
-		verticalLayout.addMember(imgDetail);
+	    verticalLayout.addMember(imageUploadForm.getImage());
+	    verticalLayout.addMember(imageUploadForm.getUploadButton());
 		verticalLayout.addMember(form);
 		verticalLayout.addMember(buttonValidate);
 		
 		addItem(verticalLayout);
-		
-	
-			
-		
+
 	}
 }

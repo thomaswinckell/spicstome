@@ -32,9 +32,9 @@ public class MailViewImpl extends UserViewImpl  implements MailView{
         f.setImage(new ImageDTO((long)0));
         f.getImage().setFilename("tout.png");
         f.setName("tout");
-        ArticleDTO art = new ArticleDTO((long)0);
+       /* ArticleDTO art = new ArticleDTO((long)0);
         art.setName("essai");
-        f.getContent().add(art);
+        f.getContent().add(art);*/
         List<FolderDTO> listFodler = new ArrayList<FolderDTO>();
         listFodler.add(f);
         album.folderTree.setFolders(listFodler);
