@@ -4,43 +4,116 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.util.BooleanCallback;
 import com.smartgwt.client.util.SC;
+import com.smartgwt.client.widgets.IconButton;
 import com.smartgwt.client.widgets.form.DynamicForm;
-import com.smartgwt.client.widgets.form.fields.ButtonItem;
-import com.smartgwt.client.widgets.form.fields.SelectItem;
-import com.smartgwt.client.widgets.form.fields.events.ClickEvent;
-import com.smartgwt.client.widgets.form.fields.events.ClickHandler;
+import com.smartgwt.client.widgets.form.fields.ComboBoxItem;
+import com.smartgwt.client.widgets.form.fields.events.KeyPressEvent;
+import com.smartgwt.client.widgets.form.fields.events.KeyPressHandler;
+import com.smartgwt.client.widgets.grid.CellFormatter;
+import com.smartgwt.client.widgets.grid.HoverCustomizer;
+import com.smartgwt.client.widgets.grid.ListGrid;
+import com.smartgwt.client.widgets.grid.ListGridRecord; 
+import com.smartgwt.client.widgets.events.ClickEvent;
+import com.smartgwt.client.widgets.events.ClickHandler;
+import com.smartgwt.client.widgets.layout.HLayout;
 import com.spicstome.client.dto.StudentDTO;
 import com.spicstome.client.place.AddUserPlace;
 import com.spicstome.client.services.SpicsToMeServices;
 import com.spicstome.client.ui.UsersManagementViewImpl;
 
-public class StudentsEditForm extends DynamicForm {
+public class StudentsEditForm extends HLayout {
 	
-	private SelectItem selectItem;
-	private ButtonItem editButtonItem, deleteButtonItem;
-	private LinkedHashMap<String, String> valueMap, imagesValueMap;
+	private DynamicForm form;
+	private ComboBoxItem selectItem;
+	private IconButton editButton, deleteButton;
+	private LinkedHashMap<String, String> valueMap;
 	private List<StudentDTO> students;
 	
 	public StudentsEditForm() {
-		selectItem = new SelectItem("students", "Etudiants");
-		editButtonItem = new ButtonItem("btn_edit_student", "Editer");
-		deleteButtonItem = new ButtonItem("btn_delete_student", "Supprimer");
+		
+		super();
+		
+		setWidth("500px");
+		setMargin(20);
+		setLayoutAlign(Alignment.CENTER);
+		
+		form = new DynamicForm();
+		form.setMargin(10);
+		
+		selectItem = new ComboBoxItem("students", "<b>Etudiants</b>");
+		selectItem.setWidth(320);
+  
+        ListGrid pickListProperties = new ListGrid();  
+        pickListProperties.setCellHeight(50);  
+        pickListProperties.setCanHover(true);  
+        pickListProperties.setShowHover(true);  
+        pickListProperties.setCellFormatter(new CellFormatter() {  
+            @Override  
+            public String format(Object value, ListGridRecord record, int rowNum, int colNum) {
+            	StudentDTO student = students.get(rowNum);  
+                String styleStr = "white-space:nowrap;overflow:hidden;";  
+                String retStr = "<table>" +  
+                        "<tr>" +
+                        "<td align='right'><span style='" + styleStr + "width:50px;float:left;'>" +
+                    		"<img src='images/"+ FormUtils.UPLOAD_IMAGE_PATH + student.getImage().getFilename() + "' height='40px' width='40px'>" +
+                    	"<span></td>" +  
+                		"<td ><span style='" + styleStr + "width:170px;float:right;font-weight:bold;font-family:arial;font-size:18px;'>" + student.getFirstName() + " " + student.getName() + "<span></td>" +  
+                        "</tr></table>";  
+                return retStr;  
+  
+            }  
+        });
+        
+        pickListProperties.setHoverCustomizer(new HoverCustomizer() {  
+            @Override  
+            public String hoverHTML(Object value, ListGridRecord record, int rowNum, int colNum) { 
+            	StudentDTO student = students.get(rowNum);            	
+            	String styleStr = "white-space:nowrap;overflow:hidden;";  
+                String retStr = "<table>" +  
+                        "<tr>" +
+                		"<td align='center'><span style='" + styleStr + "width:200px;font-weight:bold;font-family:arial;font-size:25px;'>" + student.getFirstName() + " " + student.getName() + "<span></td>" +
+                        "</tr><tr>" +
+                		"<td align='center'><span style='" + styleStr + "width:200px;'>" +
+                    		"<img src='images/"+ FormUtils.UPLOAD_IMAGE_PATH + student.getImage().getFilename() + "' max-width='200px'>" +
+                    	"<span></td>" +   
+                        "</tr></table>";  
+                return retStr;  
+            }  
+        });
+  
+        selectItem.setPickListProperties(pickListProperties);
+        
+        selectItem.addKeyPressHandler(new KeyPressHandler() {
+			@Override
+			public void onKeyPress(KeyPressEvent event) {
+				event.cancel();
+			}        	
+        });
+		
+		form.setFields(selectItem);
+		
+		editButton = new IconButton("");
+		editButton.setIcon("edit.png");
+		editButton.setIconSize(40);
+		editButton.setTop("-30px");
+		deleteButton = new IconButton("");
+		deleteButton.setIcon("delete.png");
+		deleteButton.setIconSize(40);
 		
 		valueMap = new LinkedHashMap<String, String>();
-		imagesValueMap = new LinkedHashMap<String, String>();
 		
-		selectItem.setImageURLPrefix(FormUtils.UPLOAD_IMAGE_PATH);
-		
-		setFields(selectItem, editButtonItem, deleteButtonItem);
+		addMember(form);
+		addMember(editButton);
+		addMember(deleteButton);
 	}
 	
 	private void updateSelectItem() {
 		
 		selectItem.clearValue();
 		valueMap.clear();
-		imagesValueMap.clear();
 		
 		String firstStudentId = null;
 		for(StudentDTO student : students) {
@@ -49,24 +122,22 @@ public class StudentsEditForm extends DynamicForm {
 				firstStudentId = student.getId().toString();
 				
 			valueMap.put(student.getId().toString(), student.getFirstName()+" "+student.getName());
-			imagesValueMap.put(student.getId().toString(), student.getImage().getFilename());
 		}
 		
 		if (firstStudentId != null) {
 			selectItem.setDefaultValue(firstStudentId);
 			selectItem.enable();
-			editButtonItem.enable();
-			deleteButtonItem.enable();
+			editButton.enable();
+			deleteButton.enable();
 		}
 		else {
 			selectItem.setDefaultValue("Aucun");
 			selectItem.disable();
-			editButtonItem.disable();
-			deleteButtonItem.disable();
+			editButton.disable();
+			deleteButton.disable();
 		}
 		
 		selectItem.setValueMap(valueMap);
-		selectItem.setValueIcons(imagesValueMap);
 	}
 	
 	public void setStudents (List<StudentDTO> mStudents, final UsersManagementViewImpl view) {
@@ -75,7 +146,7 @@ public class StudentsEditForm extends DynamicForm {
 		
 		updateSelectItem();
 		
-		editButtonItem.addClickHandler(new ClickHandler() {
+		editButton.addClickHandler(new ClickHandler() {
 			
 			@Override
 			public void onClick(ClickEvent event) {
@@ -86,7 +157,7 @@ public class StudentsEditForm extends DynamicForm {
 			}				
 		});
 		
-		deleteButtonItem.addClickHandler(new ClickHandler() {
+		deleteButton.addClickHandler(new ClickHandler() {
 			
 			@Override
 			public void onClick(ClickEvent event) {
