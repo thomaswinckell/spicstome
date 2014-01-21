@@ -7,6 +7,7 @@ import java.util.Set;
 
 import com.spicstome.client.dto.ArticleDTO;
 import com.spicstome.client.dto.LogDTO;
+import com.spicstome.client.dto.SubjectDTO;
 
 public class Log implements Serializable {
 
@@ -36,7 +37,8 @@ public class Log implements Serializable {
 		if (articleDTOs != null) {
 			Set<Article> articles = new HashSet<Article>(articleDTOs.size());
 			for (ArticleDTO articleDTO : articleDTOs) {
-				articles.add(new Article(articleDTO,null));
+				if(articleDTO instanceof SubjectDTO)
+					articles.add(new Subject((SubjectDTO)articleDTO,null));
 			}
 			this.articles = articles;
 		}

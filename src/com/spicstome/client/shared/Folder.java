@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
-import com.spicstome.client.dto.ArticleDTO;
 import com.spicstome.client.dto.FolderDTO;
 import com.spicstome.client.dto.PecsDTO;
+import com.spicstome.client.dto.SubjectDTO;
 
 public class Folder extends Pecs implements Serializable {
 	
@@ -31,7 +31,11 @@ public class Folder extends Pecs implements Serializable {
 				if (pecsDTO instanceof FolderDTO)
 					pecs.add(new Folder((FolderDTO) pecsDTO,this));
 				else
-					pecs.add(new Article((ArticleDTO) pecsDTO,this));
+				{
+					if(pecsDTO instanceof SubjectDTO)
+						pecs.add(new Subject((SubjectDTO) pecsDTO,this));
+				}
+					
 			}
 			this.content = pecs;
 		}

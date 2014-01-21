@@ -12,8 +12,10 @@ import com.spicstome.client.dto.LogDTO;
 import com.spicstome.client.dto.PecsDTO;
 import com.spicstome.client.dto.ReferentDTO;
 import com.spicstome.client.dto.StudentDTO;
+import com.spicstome.client.dto.SubjectDTO;
 import com.spicstome.client.dto.TeacherDTO;
 import com.spicstome.client.dto.UserDTO;
+import com.spicstome.client.dto.VerbDTO;
 import com.spicstome.client.shared.Album;
 import com.spicstome.client.shared.Article;
 import com.spicstome.client.shared.Folder;
@@ -22,8 +24,10 @@ import com.spicstome.client.shared.Log;
 import com.spicstome.client.shared.Pecs;
 import com.spicstome.client.shared.Referent;
 import com.spicstome.client.shared.Student;
+import com.spicstome.client.shared.Subject;
 import com.spicstome.client.shared.Teacher;
 import com.spicstome.client.shared.User;
+import com.spicstome.client.shared.Verb;
 
 public class Transtypage {
 	
@@ -48,12 +52,24 @@ public class Transtypage {
 		return folderDTO;
 	}
 	
-	public static ArticleDTO createArticleDTO(Article article,FolderDTO parentDTO)
+	public static VerbDTO createVerbDTO(Verb verb,FolderDTO parentDTO)
 	{
-		return new ArticleDTO(article.getId(),article.getName(),article.getOrder(),parentDTO,createImageDTO(article.getImage()),
-				createListLogDTO(article.getLogs()));
+		return new VerbDTO(verb.getId(),verb.getName(),verb.getOrder(),parentDTO,createImageDTO(verb.getImage()),
+				createListLogDTO(verb.getLogs()),
+				verb.getFavorite(),
+				verb.getGroup(),
+				verb.getIrregular1(),
+				verb.getIrregular2(),
+				verb.getIrregular3(),
+				verb.getIrregular4(),
+				verb.getIrregular5(),
+				verb.getIrregular6());
 	}
-	
+	public static SubjectDTO createSubjectDTO(Subject subject,FolderDTO parentDTO)
+	{
+		return new SubjectDTO(subject.getId(),subject.getName(),subject.getOrder(),parentDTO,createImageDTO(subject.getImage()),
+				createListLogDTO(subject.getLogs()),subject.getFavorite(),subject.getGender(),subject.getNature(),subject.getNumber());
+	}
 	public static LogDTO createLogDTO(Log log)
 	{
 		return new LogDTO(log.getId(),createStudentDTO(log.getStudent()),
@@ -76,8 +92,10 @@ public class Transtypage {
 		Set<ArticleDTO> listDTO=new HashSet<>();
 		
 		for(Article article:list){	
-			// dans le cas d'une liste d'article , le parent n'est pas charger en dto.
-			listDTO.add(createArticleDTO(article,null));
+			if(article instanceof Subject)
+				listDTO.add(createSubjectDTO((Subject)article,null));
+			else if(article instanceof Verb)
+				listDTO.add(createVerbDTO((Verb)article,null));
 		}
 
 		return listDTO;
@@ -89,36 +107,24 @@ public class Transtypage {
 		
 		for(Pecs p:list)
 		{
-			if(p instanceof Article)
-				listDTO.add(createArticleDTO((Article)p,parent));
+			
 			if(p instanceof Folder)
 				listDTO.add(createFolderDTO((Folder)p,parent));
+			else
+			{
+				if(p instanceof Subject)
+					listDTO.add(createSubjectDTO((Subject)p,parent));
+				if(p instanceof Verb)
+					listDTO.add(createVerbDTO((Verb)p,parent));
+			}
+				
+				
+					
 		}
 
 		return listDTO;
 	}
 
-	/*public static UserDTO createUserDTO(User user) {
-		return new UserDTO(user.getId(), user.getSubscriptionDate(), user.getFirstName(), 
-				user.getName(), user.getEmail(), user.getLogin(), user.getPassword(), createImageDTO(user.getImage()));
-	}
-
-	public static StudentDTO createStudentDTO(Student student)
-	{
-		return new StudentDTO(student.getId(),
-				student.getSubscriptionDate(),
-				student.getFirstName(),
-				student.getName(),	 
-				student.getEmail(), 
-				student.getLogin(), 
-				student.getPassword(), 
-				createImageDTO(student.getImage()),
-				createAlbumDTO(student.getAlbum()),
-				createListLogDTO(student.getLogs()),null,null);
-			
-		// null null => le mec qui en a eu marre mais c'est la liste des referent et des teacher donc methode
-		// pour transcrire teacher , list de teacher ...
-	}*/
 
 	public static UserDTO createUserDTO(User user) {
 		/*return new UserDTO(user.getId(), user.getSubscriptionDate(), user.getFirstName(), 

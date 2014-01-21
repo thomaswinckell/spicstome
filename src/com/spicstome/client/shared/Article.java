@@ -7,11 +7,12 @@ import java.util.Set;
 import com.spicstome.client.dto.ArticleDTO;
 import com.spicstome.client.dto.LogDTO;
 
-public class Article extends Pecs implements Serializable {
+public abstract class Article extends Pecs implements Serializable {
 	
 	private static final long serialVersionUID = -4644499772441676322L;
 	
 	private Set<Log> logs;
+	private int favorite;
 	
 	public Article() {		
 	}
@@ -30,6 +31,7 @@ public class Article extends Pecs implements Serializable {
 			}
 			this.logs = logs;
 		}
+		this.favorite=articleDTO.getFavorite();
 	}
 	
 	public void addLog(Log log) {
@@ -57,6 +59,14 @@ public class Article extends Pecs implements Serializable {
 	@Override
 	public String toString() {
 		return "Article []";
+	}
+
+	public int getFavorite() {
+		return favorite;
+	}
+
+	public void setFavorite(int favorite) {
+		this.favorite = favorite;
 	}
 
 }

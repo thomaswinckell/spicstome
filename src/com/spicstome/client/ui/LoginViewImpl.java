@@ -50,9 +50,11 @@ public class LoginViewImpl extends VLayout implements LoginView
 		
 		
 		textLogin = new TextItem();
+		textLogin.setValue("");
 		textLogin.setName("Login");
 		textPassword = new PasswordItem();
 		textPassword.setName("Password");
+		textPassword.setValue("");
 		
 		form.setFields(textLogin,textPassword);
 		form.setMargin(20);

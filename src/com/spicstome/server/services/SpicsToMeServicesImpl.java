@@ -2,9 +2,12 @@ package com.spicstome.server.services;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.servlet.ServletException;
+
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
+
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.spicstome.client.dto.AlbumDTO;
 import com.spicstome.client.dto.ArticleDTO;
@@ -13,8 +16,10 @@ import com.spicstome.client.dto.ImageDTO;
 import com.spicstome.client.dto.PecsDTO;
 import com.spicstome.client.dto.ReferentDTO;
 import com.spicstome.client.dto.StudentDTO;
+import com.spicstome.client.dto.SubjectDTO;
 import com.spicstome.client.dto.TeacherDTO;
 import com.spicstome.client.dto.UserDTO;
+import com.spicstome.client.dto.VerbDTO;
 import com.spicstome.client.services.SpicsToMeServices;
 import com.spicstome.client.shared.Album;
 import com.spicstome.client.shared.Article;
@@ -22,8 +27,10 @@ import com.spicstome.client.shared.Folder;
 import com.spicstome.client.shared.Image;
 import com.spicstome.client.shared.Referent;
 import com.spicstome.client.shared.Student;
+import com.spicstome.client.shared.Subject;
 import com.spicstome.client.shared.Teacher;
 import com.spicstome.client.shared.User;
+import com.spicstome.client.shared.Verb;
 import com.spicstome.server.Encryption;
 import com.spicstome.server.HibernateUtil;
 
@@ -336,27 +343,9 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 		
 		Folder parent = (folderDTO.getFolder()==null?null:new Folder(folderDTO.getFolder(),null));	
 		Folder folder = new Folder(folderDTO,parent);
-	   
+		 
 	    session.save(folder);
 	    session.getTransaction().commit();
-	    /*
-	    for(PecsDTO pecs:savedCollection)
-	    {
-	    	long idImage = saveImage(pecs.getImage());
-	    	pecs.getImage().setId(idImage);
-	    	pecs.getFolder().setId(folder.getId());
-	    	
-	    	
-	    	if(pecs instanceof ArticleDTO)
-	    	{
-	    		saveArticle((ArticleDTO)pecs);
-	    	}
-	    	else
-	    	{
-	    		saveFolder((FolderDTO)pecs);
-	    	}
-	    	
-	    }*/
 
 	    return folder.getId();
 	}
@@ -366,14 +355,32 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();   
 	    session.beginTransaction();
+	    
+	    long idRes = 0;
 		
-		Article article = new Article(articleDTO,new Folder(articleDTO.getFolder(),null));		
-		int order = article.getFolder().getContent().size();
-		article.setOrder(order);
+	    if(articleDTO instanceof SubjectDTO)
+	    {
+	    	SubjectDTO subjectDTO = (SubjectDTO)articleDTO;
+	    	Subject subject = new Subject(subjectDTO,new Folder(subjectDTO.getFolder(),null));	
+	    	
+			session.save(subject);
+			
+			idRes = subject.getId();
+	    }
+	    else if(articleDTO instanceof VerbDTO)
+	    {
+	    	VerbDTO verbDTO = (VerbDTO)articleDTO;
+	    	Verb verb = new Verb(verbDTO,new Folder(verbDTO.getFolder(),null));	
+	    	
+			session.save(verb);
+			
+			idRes = verb.getId();
+	    }
 		
-	    session.save(article);
+		
+	  
 	    session.getTransaction().commit();
-	    return article.getId();
+	    return idRes;
 	}
 	
 	
@@ -397,8 +404,19 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.beginTransaction();	 
 		
-		Article article = new  Article(articleDTO,new Folder(articleDTO.getFolder(),null));
-	    session.update(article);
+		if(articleDTO instanceof SubjectDTO)
+		{
+			SubjectDTO subjectDTO = (SubjectDTO)articleDTO;
+			Subject subject = new  Subject(subjectDTO,new Folder(subjectDTO.getFolder(),null));
+		    session.update(subject);
+		}
+		else if(articleDTO instanceof VerbDTO)
+		{
+			VerbDTO verbDTO = (VerbDTO)articleDTO;
+			Verb verb = new  Verb(verbDTO,new Folder(verbDTO.getFolder(),null));
+		    session.update(verb);
+		}
+		
 	    session.getTransaction().commit();
 	    return true;
 	}

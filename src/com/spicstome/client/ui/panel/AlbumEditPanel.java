@@ -7,6 +7,8 @@ import java.util.Set;
 import com.smartgwt.client.data.RecordList;
 import com.smartgwt.client.util.BooleanCallback;
 import com.smartgwt.client.util.SC;
+import com.smartgwt.client.widgets.events.DropCompleteEvent;
+import com.smartgwt.client.widgets.events.DropCompleteHandler;
 import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.ComboBoxItem;
 import com.smartgwt.client.widgets.layout.VLayout;
@@ -21,6 +23,8 @@ import com.spicstome.client.dto.ImageDTO;
 import com.spicstome.client.dto.PecsDTO;
 import com.spicstome.client.dto.LogDTO;
 import com.spicstome.client.dto.StudentDTO;
+import com.spicstome.client.dto.SubjectDTO;
+import com.spicstome.client.dto.VerbDTO;
 import com.spicstome.client.ui.form.ArticleFormWindow;
 import com.spicstome.client.ui.form.FolderFormWindow;
 import com.spicstome.client.ui.picker.ArticlePickerWindow;
@@ -59,16 +63,6 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 					FolderDTO child = ((AlbumTreeNode)(event.getNodes()[0])).getFolderDTO();
 					onMoveFolder(child,parent);
 					
-					/*
-					AlbumTreeNode f = (AlbumTreeNode)(folderTree.tree.getRoot().getn);
-					
-					TreeNode[] childsNode = folderTree.tree.getChildren(f);
-					
-					for(TreeNode childNode:childsNode)
-					{
-						FolderDTO fo = ((AlbumTreeNode)(childNode)).getFolderDTO();
-						System.out.println(fo.getName());
-					}*/
 				}
 				else
 				{
@@ -77,6 +71,20 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 					event.cancel();
 				}
 
+			}
+			
+			
+		});
+		
+		folderTree.treeGrid.addDropCompleteHandler(new DropCompleteHandler() {
+			
+			@Override
+			public void onDropComplete(DropCompleteEvent event) {
+				
+				AlbumTreeNode f = (AlbumTreeNode)(folderTree.tree.getChildren(folderTree.tree.getRoot())[0]);
+				
+				ReorderFolder(f);
+				
 			}
 		});
 
@@ -317,6 +325,26 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 	    
 	}
 	
+	public void ReorderFolder(AlbumTreeNode f)
+	{
+		TreeNode[] childsNode = folderTree.tree.getChildren(f);
+		
+		int order = 0;
+		for(TreeNode childNode:childsNode)
+		{
+			FolderDTO fo = ((AlbumTreeNode)(childNode)).getFolderDTO();
+			System.out.println(fo.getName());
+			
+			fo.setOrder(order);
+			
+			onReorderFolder(fo);
+			
+			ReorderFolder((AlbumTreeNode)childNode);
+			
+			order++;
+		}
+	}
+	
 	public void removeFolderFromTree(FolderDTO folderDTO)
 	{
 		folderTree.tree.remove(folderTree.selectFolderNode);
@@ -341,6 +369,7 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 	public void updateFolderIntoTree(FolderDTO folder)
 	{
 		folderTree.tree.getAllNodes(folderTree.selectFolderNode)[0].setAttribute("title",folder.getName());
+		folderTree.tree.getAllNodes(folderTree.selectFolderNode)[0].setAttribute("icon","upload/"+folder.getImage().getFilename());
 		folderTree.treeGrid.setData(folderTree.tree);		
 		folderTree.treeGrid.getData().openAll();
 	}
@@ -434,9 +463,25 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 	public ArticleDTO getCopyOfArticle(ArticleDTO article,FolderDTO parent)
 	{
 		ImageDTO copyImage = new ImageDTO((long)-1, article.getImage().getFilename());
-		ArticleDTO copyArticle = new ArticleDTO((long)-1,article.getName(),article.getOrder(),parent,copyImage,new HashSet<LogDTO>()) ;
+		
+		if(article instanceof SubjectDTO)
+		{
+			SubjectDTO subjectDTO = (SubjectDTO) article;
+			SubjectDTO copySubject= new SubjectDTO((long)-1,subjectDTO.getName(),subjectDTO.getOrder(),parent,copyImage,new HashSet<LogDTO>(),0,subjectDTO.getGender(),subjectDTO.getNature(),subjectDTO.getNumber()) ;
+			
+			return copySubject;
+		}
+		else if(article instanceof VerbDTO)
+		{
+			VerbDTO verbDTO = (VerbDTO) article;
+			VerbDTO copyVerb= new VerbDTO((long)-1,verbDTO.getName(),verbDTO.getOrder(),parent,copyImage,new HashSet<LogDTO>(),0,
+					verbDTO.getGroup(),verbDTO.getIrregular1(),verbDTO.getIrregular2(),verbDTO.getIrregular3(),verbDTO.getIrregular4(),verbDTO.getIrregular5(),verbDTO.getIrregular6()) ;
+			
+			return copyVerb;
+		}
+
 	
-		return copyArticle;
+		return null;
 	}
 	
 	public FolderDTO getCopyOfFolder(FolderDTO folderDTO,FolderDTO parent)
@@ -475,5 +520,6 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 	public abstract void onUpdateArticle(ArticleDTO articleDTO);
 	public abstract void onLoadFolder(FolderDTO folder);
 	public abstract void onReorderArticle(ArticleDTO article);
+	public abstract void onReorderFolder(FolderDTO folder);
 
 }

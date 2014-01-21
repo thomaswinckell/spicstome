@@ -2,40 +2,65 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
-<hibernate-mapping package="com.spicstome.client.shared" default-lazy="false">
+<hibernate-mapping package="com.spicstome.client.shared"
+	default-lazy="false">
 
-<class name="Pecs" select-before-update="true" table="pecs" polymorphism="implicit">
-    
-	<id name="id" type="long" column="id">
-		<generator class="increment" />
-	</id>
-	<property name="name" type="string" column="name" />
-	<property name="order" type="int" column="order_in_folder" />
-	
-	<many-to-one name="folder" class="Folder" column="id_folder_parent"
-		not-null="false" unique="false"  />
-	
-	<many-to-one name="image" column="id_image" class="Image"
-		unique="true" cascade="delete" />
-	
-	<joined-subclass name="Article" table="article" extends="Pecs">
-	    <key column="id"/>
-		<set name="logs" table="logs_articles" lazy="true">
-			<key column="id_article" />
-			<many-to-many class="Log" column="id_log" />
-		</set>
-	</joined-subclass>
-	
-	<joined-subclass name="Folder" table="folder" extends="Pecs">
-	    <key column="id"/>
-		<set name="content" inverse="false" lazy="true" fetch="select"
-			cascade="delete" sort="natural" >
-			<key>
-				<column name="id_folder_parent" not-null="true" />
-			</key>
-			<one-to-many class="Pecs" />
-		</set>
-	</joined-subclass>
-</class>
-        
+	<class name="Pecs" select-before-update="true" table="pecs"
+		polymorphism="implicit">
+
+		<id name="id" type="long" column="id">
+			<generator class="increment" />
+		</id>
+		<property name="name" type="string" column="name" />
+		<property name="order" type="int" column="order_in_folder" />
+
+		<many-to-one name="folder" class="Folder" column="id_folder_parent"
+			not-null="false" unique="false" />
+
+		<many-to-one name="image" column="id_image" class="Image"
+			unique="false" cascade="delete" />
+
+		<joined-subclass name="Article" table="article"
+			extends="Pecs">
+			<key column="id" />
+			<property name="favorite" type="int" column="favorite" />
+			<set name="logs" table="logs_articles" lazy="true">
+				<key column="id_article" />
+				<many-to-many class="Log" column="id_log" />
+			</set>
+			<joined-subclass name="Subject" table="subject"
+				extends="Article">
+				<key column="id" />
+				<property name="gender" type="int" column="gender" />
+				<property name="number" type="int" column="number" />
+				<property name="nature" type="int" column="nature" />
+
+			</joined-subclass>
+
+			<joined-subclass name="Verb" table="verb" extends="Article">
+				<key column="id" />
+				<property name="group" type="int" column="group_verb" />
+
+				<property name="irregular1" type="string" column="irregular1" />
+				<property name="irregular2" type="string" column="irregular2" />
+				<property name="irregular3" type="string" column="irregular3" />
+				<property name="irregular4" type="string" column="irregular4" />
+				<property name="irregular5" type="string" column="irregular5" />
+				<property name="irregular6" type="string" column="irregular6" />
+
+			</joined-subclass>
+		</joined-subclass>
+
+		<joined-subclass name="Folder" table="folder" extends="Pecs">
+			<key column="id" />
+			<set name="content" inverse="false" lazy="true" fetch="select"
+				cascade="delete" sort="natural">
+				<key>
+					<column name="id_folder_parent" not-null="true" />
+				</key>
+				<one-to-many class="Pecs" />
+			</set>
+		</joined-subclass>
+	</class>
+
 </hibernate-mapping>
