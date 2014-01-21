@@ -64,4 +64,9 @@ public interface SpicsToMeServicesAsync {
 	void deleteArticle(long id,AsyncCallback<Boolean> callback);
 	void deleteFolder(long id,AsyncCallback<Boolean> callback);
 	void deleteUser(long id,AsyncCallback<Boolean> callback);
+	
+	/*COPY*/
+	void copyFolder(FolderDTO folderDTO,FolderDTO parent,AsyncCallback<FolderDTO> callback);
+	void copyArticle(ArticleDTO articleDTO,FolderDTO parent,AsyncCallback<ArticleDTO> callback);
+	
 }

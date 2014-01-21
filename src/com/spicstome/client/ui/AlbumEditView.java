@@ -26,6 +26,8 @@ public interface AlbumEditView extends IsWidget{
 		void reorder(FolderDTO f);
 		void save(ArticleDTO a);
 		void save(FolderDTO f);
+		void copy(FolderDTO f,FolderDTO parent);
+		void copy(ArticleDTO a,FolderDTO parent);
 		void delete(ArticleDTO a);
 		void delete(FolderDTO f);
 		void move(FolderDTO child,FolderDTO parent);

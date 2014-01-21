@@ -1,9 +1,7 @@
 package com.spicstome.client.ui.panel;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Set;
-
 import com.smartgwt.client.data.RecordList;
 import com.smartgwt.client.util.BooleanCallback;
 import com.smartgwt.client.util.SC;
@@ -19,12 +17,8 @@ import com.smartgwt.client.widgets.tree.events.NodeClickEvent;
 import com.spicstome.client.dto.AlbumDTO;
 import com.spicstome.client.dto.ArticleDTO;
 import com.spicstome.client.dto.FolderDTO;
-import com.spicstome.client.dto.ImageDTO;
 import com.spicstome.client.dto.PecsDTO;
-import com.spicstome.client.dto.LogDTO;
 import com.spicstome.client.dto.StudentDTO;
-import com.spicstome.client.dto.SubjectDTO;
-import com.spicstome.client.dto.VerbDTO;
 import com.spicstome.client.ui.form.ArticleFormWindow;
 import com.spicstome.client.ui.form.FolderFormWindow;
 import com.spicstome.client.ui.picker.ArticlePickerWindow;
@@ -151,11 +145,9 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 						ArticleDTO article = (ArticleDTO)book.selectedImage.getAttributeAsObject(ImageRecord.DATA);
 						
 						/* creating a copy of the article with out folder parent */
-						
-						ArticleDTO copyArticle = getCopyOfArticle(article, getSelectedFolder());
-						
-						/* saving business data */
-						onSaveArticle(copyArticle);
+
+						onCopyArticle(article, getSelectedFolder());
+					
 					}
 				};			 
 				win.show();
@@ -241,7 +233,7 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 							/* getting original article to import */
 							FolderDTO folder = (FolderDTO)albumPanel.getSelectedFolder();
 							
-							onSaveFolder(getCopyOfFolder(folder,parent));
+							onCopyFolder(folder, parent);
 							
 
 						}
@@ -460,56 +452,7 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 		comboBoxOwner.setValue(name); 
 	}
 	
-	public ArticleDTO getCopyOfArticle(ArticleDTO article,FolderDTO parent)
-	{
-		ImageDTO copyImage = new ImageDTO((long)-1, article.getImage().getFilename());
-		
-		if(article instanceof SubjectDTO)
-		{
-			SubjectDTO subjectDTO = (SubjectDTO) article;
-			SubjectDTO copySubject= new SubjectDTO((long)-1,subjectDTO.getName(),subjectDTO.getOrder(),parent,copyImage,new HashSet<LogDTO>(),0,subjectDTO.getGender(),subjectDTO.getNature(),subjectDTO.getNumber()) ;
-			
-			return copySubject;
-		}
-		else if(article instanceof VerbDTO)
-		{
-			VerbDTO verbDTO = (VerbDTO) article;
-			VerbDTO copyVerb= new VerbDTO((long)-1,verbDTO.getName(),verbDTO.getOrder(),parent,copyImage,new HashSet<LogDTO>(),0,
-					verbDTO.getGroup(),verbDTO.getIrregular1(),verbDTO.getIrregular2(),verbDTO.getIrregular3(),verbDTO.getIrregular4(),verbDTO.getIrregular5(),verbDTO.getIrregular6()) ;
-			
-			return copyVerb;
-		}
-
 	
-		return null;
-	}
-	
-	public FolderDTO getCopyOfFolder(FolderDTO folderDTO,FolderDTO parent)
-	{
-		FolderDTO copyFolder = new FolderDTO((long)-1,
-				folderDTO.getName(),
-				folderDTO.getOrder(),
-				parent,
-				new ImageDTO((long)-1,folderDTO.getImage().getFilename()),
-				new ArrayList<PecsDTO>());
-		
-		
-		for(PecsDTO pecs :folderDTO.getContent())
-		{
-			if(pecs instanceof ArticleDTO)
-			{
-				ArticleDTO copyArticle = getCopyOfArticle((ArticleDTO)pecs, copyFolder);
-				copyFolder.getContent().add(copyArticle);
-			}
-			else
-			{
-				FolderDTO copyFolder2 = getCopyOfFolder((FolderDTO)pecs, copyFolder);
-				copyFolder.getContent().add(copyFolder2);
-			}
-		}
-		
-		return copyFolder;
-	}
 	
 	public abstract void onSaveArticle(ArticleDTO articleDTO);
 	public abstract void onSaveFolder(FolderDTO folderDTO);
@@ -521,5 +464,7 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 	public abstract void onLoadFolder(FolderDTO folder);
 	public abstract void onReorderArticle(ArticleDTO article);
 	public abstract void onReorderFolder(FolderDTO folder);
+	public abstract void onCopyFolder(FolderDTO folder,FolderDTO parent);
+	public abstract void onCopyArticle(ArticleDTO article,FolderDTO parent);
 
 }

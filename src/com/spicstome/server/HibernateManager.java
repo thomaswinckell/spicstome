@@ -84,6 +84,12 @@ public class HibernateManager {
 			session.delete(user);
 		}
 		
+		@SuppressWarnings("unchecked")
+		List<Pecs> pecss = session.createCriteria(Pecs.class).list();
+		for (Pecs pecs : pecss) {
+			session.delete(pecs);
+		}
+		
 		session.getTransaction().commit();
 	}
 	

@@ -133,19 +133,6 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 						f.getFolder().getContent().add(f);
 						editview.insertFolder(f);
 						
-						for(PecsDTO pecs:f.getContent())
-						{
-							pecs.getFolder().setId(result);
-							
-							if(pecs instanceof ArticleDTO)
-							{
-								save((ArticleDTO)pecs);
-							}
-							else
-							{
-								save((FolderDTO)pecs);
-							}
-						}
 					}
 				});
 			}
@@ -315,5 +302,54 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 		});
 		
 	}
+	
+	public void InsertFolder(FolderDTO f)
+	{
+		editview.insertFolder(f);
+		
+		for(PecsDTO pecs:f.getContent())
+		{
+			if(pecs instanceof FolderDTO)
+			{
+				InsertFolder((FolderDTO)pecs);
+			}
+		}
+	}
+
+	
+	@Override
+	public void copy(final FolderDTO f,FolderDTO parent) {
+		
+		
+				
+		SpicsToMeServices.Util.getInstance().copyFolder(f,parent,new AsyncCallback<FolderDTO>() {
+			@Override
+			public void onFailure(Throwable caught) {}
+			
+			@Override
+			public void onSuccess(FolderDTO result) {
+				
+				InsertFolder(result);
+				
+			}
+		});
+		
+	}
+
+	@Override
+	public void copy(ArticleDTO a, FolderDTO parent) {
+		SpicsToMeServices.Util.getInstance().copyArticle(a,parent,new AsyncCallback<ArticleDTO>() {
+			@Override
+			public void onFailure(Throwable caught) {}
+			
+			@Override
+			public void onSuccess(ArticleDTO result) {
+				editview.insertArticle(result);
+			}
+		});
+		
+	}
+
+
 
 }

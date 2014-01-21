@@ -78,4 +78,8 @@ public interface SpicsToMeServices extends RemoteService {
 	public boolean deleteArticle(long id);
 	public boolean deleteFolder(long id);
 	public boolean deleteUser(long id);
+	
+	/*COPY*/
+	public FolderDTO copyFolder(FolderDTO folderDTO,FolderDTO parent);
+	public ArticleDTO copyArticle(ArticleDTO articleDTO,FolderDTO parent);
 }

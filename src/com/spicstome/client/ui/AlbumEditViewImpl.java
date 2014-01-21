@@ -104,6 +104,21 @@ public class AlbumEditViewImpl extends UserViewImpl  implements AlbumEditView{
 				((AlbumEditView.Presenter)(listener)).reorder(folder);
 				
 			}
+
+			@Override
+			public void onCopyFolder(FolderDTO folder,FolderDTO parent) {
+				
+				((AlbumEditView.Presenter)(listener)).copy(folder,parent);
+				
+			}
+
+			@Override
+			public void onCopyArticle(ArticleDTO article, FolderDTO parent) {
+				((AlbumEditView.Presenter)(listener)).copy(article,parent);
+				
+			}
+
+		
 			
 		};
 		

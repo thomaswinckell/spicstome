@@ -1,6 +1,7 @@
 package com.spicstome.server.services;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -13,6 +14,7 @@ import com.spicstome.client.dto.AlbumDTO;
 import com.spicstome.client.dto.ArticleDTO;
 import com.spicstome.client.dto.FolderDTO;
 import com.spicstome.client.dto.ImageDTO;
+import com.spicstome.client.dto.LogDTO;
 import com.spicstome.client.dto.PecsDTO;
 import com.spicstome.client.dto.ReferentDTO;
 import com.spicstome.client.dto.StudentDTO;
@@ -263,6 +265,7 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 		else
 			return null;
 	}
+	
 
 	private Long saveStudent(StudentDTO studentDTO) {
 			
@@ -604,5 +607,115 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	    return true;
 	}
 
+	/* COPY */
+	
+	public ArticleDTO copyArticle(ArticleDTO article,FolderDTO parent)
+	{
+		ImageDTO copyImage = new ImageDTO((long)-1, article.getImage().getFilename());	
+		Long idImageArticle = saveImage(copyImage);
+		
+		if(article instanceof SubjectDTO)
+		{
+			SubjectDTO subjectDTO = (SubjectDTO) article;
+			SubjectDTO copySubject= new SubjectDTO((long)-1,subjectDTO.getName(),subjectDTO.getOrder(),parent,copyImage,new HashSet<LogDTO>(),0,subjectDTO.getGender(),subjectDTO.getNature(),subjectDTO.getNumber()) ;
+			
+			copySubject.getImage().setId(idImageArticle);
+			Long id = saveArticle(copySubject);
+			copySubject.setId(id);
+			
+			return copySubject;
+		}
+		else if(article instanceof VerbDTO)
+		{
+			VerbDTO verbDTO = (VerbDTO) article;
+			VerbDTO copyVerb= new VerbDTO((long)-1,verbDTO.getName(),verbDTO.getOrder(),parent,copyImage,new HashSet<LogDTO>(),0,
+					verbDTO.getGroup(),verbDTO.getIrregular1(),verbDTO.getIrregular2(),verbDTO.getIrregular3(),verbDTO.getIrregular4(),verbDTO.getIrregular5(),verbDTO.getIrregular6()) ;
+			
+			copyVerb.getImage().setId(idImageArticle);
+			Long id = saveArticle(copyVerb);
+			copyVerb.setId(id);
+			
+			return copyVerb;
+		}
 
+	
+		return null;
+	}
+	
+	public FolderDTO copyFolder(FolderDTO folderDTO,FolderDTO parent)
+	{
+		FolderDTO copyFolder = new FolderDTO((long)-1,
+				folderDTO.getName(),
+				folderDTO.getOrder(),
+				parent,
+				new ImageDTO((long)-1,folderDTO.getImage().getFilename()),
+				new ArrayList<PecsDTO>());
+		
+		Long idImage = saveImage(copyFolder.getImage());
+		copyFolder.getImage().setId(idImage);
+		
+		Long idFolder = saveFolder(copyFolder);    
+		copyFolder.setId(idFolder);
+		
+		for(PecsDTO pecs :folderDTO.getContent())
+		{
+
+			if(pecs instanceof ArticleDTO)
+			{
+				ArticleDTO copyArticle = copyArticle((ArticleDTO)pecs, copyFolder);	
+				copyFolder.getContent().add(copyArticle);
+			}
+			else
+			{
+				FolderDTO copyFolder2 = copyFolder((FolderDTO)pecs, copyFolder);			
+				copyFolder.getContent().add(copyFolder2);
+			}
+
+		}
+		
+		return copyFolder;
+	}
+	/*
+	@Override
+	public FolderDTO copyFolder(FolderDTO folderDTO) {
+		
+		System.out.println(folderDTO.getFolder().getName());
+		System.out.println("copie dossier");
+			    
+	    Long idImage = saveImage(folderDTO.getImage());
+	    folderDTO.getImage().setId(idImage);
+
+	    ArrayList<PecsDTO> savedCollection = folderDTO.getContent();
+	    
+	    Long idFolder = saveFolder(folderDTO);    
+	    folderDTO.setId(idFolder);
+	
+	    for(PecsDTO pecs:savedCollection)
+	    {
+	    	pecs.getFolder().setId(idFolder);
+	    	
+	    	if(pecs instanceof FolderDTO)
+	    	{		
+	    		pecs.setId(copyFolder((FolderDTO)pecs).getId());
+	    	}
+	    	else
+	    	{
+	    		if(pecs instanceof ArticleDTO)
+	    		{
+	    			 ArticleDTO art = (ArticleDTO)pecs;
+	    			 Long idImageArticle = saveImage(art.getImage());
+	    			 art.getImage().setId(idImageArticle);
+	    			 			 
+	    			 long id = saveArticle(art); 
+	    			 art.setId(id);
+	    		}
+	    	}
+	    	
+	    }
+	  
+		folderDTO.setContent(savedCollection);
+
+		return folderDTO;
+	}
+	*/
 }
