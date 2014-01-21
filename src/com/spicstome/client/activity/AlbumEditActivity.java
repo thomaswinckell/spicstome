@@ -9,6 +9,7 @@ import java.util.Set;
 
 
 
+
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
@@ -271,6 +272,19 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 		SpicsToMeServices.Util.getInstance().updateArticle(a, new AsyncCallback<Boolean>() {
 			@Override
 			public void onFailure(Throwable caught) {}
+			@Override
+			public void onSuccess(Boolean result) {}
+		});
+		
+	}
+
+	@Override
+	public void reorder(FolderDTO f) {
+		SpicsToMeServices.Util.getInstance().updateFolder(f,new AsyncCallback<Boolean>() {
+
+			@Override
+			public void onFailure(Throwable caught) {}
+
 			@Override
 			public void onSuccess(Boolean result) {}
 		});

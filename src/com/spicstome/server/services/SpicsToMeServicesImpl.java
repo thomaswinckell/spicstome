@@ -336,7 +336,13 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 		
 		Folder parent = (folderDTO.getFolder()==null?null:new Folder(folderDTO.getFolder(),null));	
 		Folder folder = new Folder(folderDTO,parent);
-	   
+		
+		if(parent!=null)
+		{
+			int order = parent.getContent().size();
+			folder.setOrder(order);
+		}
+		 
 	    session.save(folder);
 	    session.getTransaction().commit();
 	    /*
@@ -367,6 +373,8 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();   
 	    session.beginTransaction();
 		
+	    
+	    //test si verb , nom , transformation en DTO correspondant , save
 		Article article = new Article(articleDTO,new Folder(articleDTO.getFolder(),null));		
 		int order = article.getFolder().getContent().size();
 		article.setOrder(order);

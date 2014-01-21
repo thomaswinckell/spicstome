@@ -7,6 +7,8 @@ import java.util.Set;
 import com.smartgwt.client.data.RecordList;
 import com.smartgwt.client.util.BooleanCallback;
 import com.smartgwt.client.util.SC;
+import com.smartgwt.client.widgets.events.DropCompleteEvent;
+import com.smartgwt.client.widgets.events.DropCompleteHandler;
 import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.ComboBoxItem;
 import com.smartgwt.client.widgets.layout.VLayout;
@@ -59,16 +61,6 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 					FolderDTO child = ((AlbumTreeNode)(event.getNodes()[0])).getFolderDTO();
 					onMoveFolder(child,parent);
 					
-					/*
-					AlbumTreeNode f = (AlbumTreeNode)(folderTree.tree.getRoot().getn);
-					
-					TreeNode[] childsNode = folderTree.tree.getChildren(f);
-					
-					for(TreeNode childNode:childsNode)
-					{
-						FolderDTO fo = ((AlbumTreeNode)(childNode)).getFolderDTO();
-						System.out.println(fo.getName());
-					}*/
 				}
 				else
 				{
@@ -77,6 +69,20 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 					event.cancel();
 				}
 
+			}
+			
+			
+		});
+		
+		folderTree.treeGrid.addDropCompleteHandler(new DropCompleteHandler() {
+			
+			@Override
+			public void onDropComplete(DropCompleteEvent event) {
+				
+				AlbumTreeNode f = (AlbumTreeNode)(folderTree.tree.getChildren(folderTree.tree.getRoot())[0]);
+				
+				ReorderFolder(f);
+				
 			}
 		});
 
@@ -317,6 +323,26 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 	    
 	}
 	
+	public void ReorderFolder(AlbumTreeNode f)
+	{
+		TreeNode[] childsNode = folderTree.tree.getChildren(f);
+		
+		int order = 0;
+		for(TreeNode childNode:childsNode)
+		{
+			FolderDTO fo = ((AlbumTreeNode)(childNode)).getFolderDTO();
+			System.out.println(fo.getName());
+			
+			fo.setOrder(order);
+			
+			onReorderFolder(fo);
+			
+			ReorderFolder((AlbumTreeNode)childNode);
+			
+			order++;
+		}
+	}
+	
 	public void removeFolderFromTree(FolderDTO folderDTO)
 	{
 		folderTree.tree.remove(folderTree.selectFolderNode);
@@ -475,5 +501,6 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 	public abstract void onUpdateArticle(ArticleDTO articleDTO);
 	public abstract void onLoadFolder(FolderDTO folder);
 	public abstract void onReorderArticle(ArticleDTO article);
+	public abstract void onReorderFolder(FolderDTO folder);
 
 }
