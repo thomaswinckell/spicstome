@@ -1,15 +1,10 @@
 package com.spicstome.server.services;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-
 import javax.servlet.ServletException;
-
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
-
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.spicstome.client.dto.AlbumDTO;
 import com.spicstome.client.dto.ArticleDTO;
@@ -100,8 +95,11 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 		FolderDTO parent = (folder.getFolder()==null?null:Transtypage.createFolderDTO(folder.getFolder(), null));
 		FolderDTO folderDTO = Transtypage.createFolderDTO(folder,parent);
 		session.getTransaction().commit();
+			
 		return folderDTO;
 	}
+	
+	
 	
 	@Override
 	public AlbumDTO getAlbum(long id) {
@@ -265,7 +263,7 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 		Long idImage = saveImage(imageFolder);
 		imageFolder.setId(idImage);		
 		
-		FolderDTO folder = new FolderDTO((long) -1, "Tout", 0, null, imageFolder, new HashSet<PecsDTO>());
+		FolderDTO folder = new FolderDTO((long) -1, "Tout", 0, null, imageFolder, new ArrayList<PecsDTO>());
 		Long idFolder = saveFolder(folder);
 		folder.setId(idFolder);
 	
@@ -288,7 +286,7 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 	    session.beginTransaction();
 	    
-	    Set<StudentDTO> students = new HashSet<StudentDTO>(teacherDTO.getStudents().size());	
+	    ArrayList<StudentDTO> students = new ArrayList<StudentDTO>(teacherDTO.getStudents().size());	
 		for(StudentDTO student : teacherDTO.getStudents()) {
 			students.add(Transtypage.createStudentDTO((Student) session.load(Student.class, student.getId())));
 		}
@@ -308,7 +306,7 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 	    session.beginTransaction();
 	    
-	    Set<StudentDTO> students = new HashSet<StudentDTO>(referentDTO.getStudents().size());	
+	    ArrayList<StudentDTO> students = new ArrayList<StudentDTO>(referentDTO.getStudents().size());	
 		for(StudentDTO student : referentDTO.getStudents()) {
 			students.add(Transtypage.createStudentDTO((Student) session.load(Student.class, student.getId())));
 		}
@@ -331,7 +329,7 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	public Long saveFolder(FolderDTO folderDTO) {
 			
 		//Set<PecsDTO> savedCollection = folderDTO.getContent();
-		folderDTO.setContent(new HashSet<PecsDTO>());
+		folderDTO.setContent(new ArrayList<PecsDTO>());
 		
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
@@ -369,7 +367,10 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();   
 	    session.beginTransaction();
 		
-		Article article = new Article(articleDTO,new Folder(articleDTO.getFolder(),null));	    
+		Article article = new Article(articleDTO,new Folder(articleDTO.getFolder(),null));		
+		int order = article.getFolder().getContent().size();
+		article.setOrder(order);
+		
 	    session.save(article);
 	    session.getTransaction().commit();
 	    return article.getId();
@@ -461,7 +462,7 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 	    session.beginTransaction();
 	    
-	    Set<StudentDTO> students = new HashSet<StudentDTO>(teacherDTO.getStudents().size());	
+	    ArrayList<StudentDTO> students = new ArrayList<StudentDTO>(teacherDTO.getStudents().size());	
 		for(StudentDTO student : teacherDTO.getStudents()) {
 			students.add(Transtypage.createStudentDTO((Student) session.load(Student.class, student.getId())));
 		}
@@ -481,7 +482,7 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 	    session.beginTransaction();
 	    
-	    Set<StudentDTO> students = new HashSet<StudentDTO>(referentDTO.getStudents().size());	
+	    ArrayList<StudentDTO> students = new ArrayList<StudentDTO>(referentDTO.getStudents().size());	
 		for(StudentDTO student : referentDTO.getStudents()) {
 			students.add(Transtypage.createStudentDTO((Student) session.load(Student.class, student.getId())));
 		}

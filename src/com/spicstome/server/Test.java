@@ -1,6 +1,6 @@
 package com.spicstome.server;
 
-import com.google.gwt.dev.util.collect.HashSet;
+import java.util.TreeSet;
 import com.spicstome.client.shared.Album;
 import com.spicstome.client.shared.Folder;
 import com.spicstome.client.shared.Image;
@@ -73,6 +73,10 @@ public class Test {
 		
 		HibernateManager.getInstance().save(superAdmin);
 		
+		/* General album  = 1 */
+		
+		/* Example album = 2 */
+		
 		/* Student */
 		Student dagobert = populateWithStudent("Dagobert", "Albert", "albert", "albert");
 		Student maxime = populateWithStudent("Hass", "Maxime", "mofo", "mofo");
@@ -89,7 +93,7 @@ public class Test {
 		referent.setPassword(Encryption.toSHA256("referent"));
 		referent.setImage(imageReferant);
 		
-		referent.setStudents(new HashSet<Student>());
+		referent.setStudents(new TreeSet<Student>());
 		referent.addStudent(dagobert);
 		referent.addStudent(maxime);
 		referent.addStudent(thomas);

@@ -90,6 +90,13 @@ public class AlbumEditViewImpl extends UserViewImpl  implements AlbumEditView{
 				
 				((AlbumEditView.Presenter)(listener)).get(folder);
 			}
+
+			@Override
+			public void onReorderArticle(ArticleDTO article) {
+				
+				((AlbumEditView.Presenter)(listener)).reorder(article);
+				
+			}
 			
 		};
 		

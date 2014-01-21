@@ -1,7 +1,6 @@
 package com.spicstome.client.ui;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import com.spicstome.client.dto.ArticleDTO;
 import com.spicstome.client.dto.FolderDTO;
@@ -29,7 +28,7 @@ public class MailViewImpl extends UserViewImpl  implements MailView{
         
 
         FolderDTO f = new FolderDTO((long)0);
-        f.setContent(new HashSet<PecsDTO>());
+        f.setContent(new ArrayList<PecsDTO>());
         f.setImage(new ImageDTO((long)0));
         f.getImage().setFilename("tout.png");
         f.setName("tout");

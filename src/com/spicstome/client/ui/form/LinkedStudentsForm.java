@@ -1,11 +1,9 @@
 package com.spicstome.client.ui.form;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.widgets.form.fields.ButtonItem;
 import com.smartgwt.client.widgets.form.fields.SelectItem;
@@ -128,7 +126,7 @@ public class LinkedStudentsForm {
     	nonLinkedStudentsSelectItem.setValueIcons(nonLinkedStudentsImagesValueMap);
 	}
 	
-	public void setLinkedStudents(Set<StudentDTO> students, FormUtils.Mode mode) {
+	public void setLinkedStudents(ArrayList<StudentDTO> students, FormUtils.Mode mode) {
 		
         linkedStudentsValueMap.clear();
         linkedStudentsImagesValueMap.clear();
@@ -198,8 +196,8 @@ public class LinkedStudentsForm {
 		});
 	}
 	
-	public Set<StudentDTO> getLinkedStudents() {
-		Set<StudentDTO> students = new HashSet<StudentDTO>();
+	public ArrayList<StudentDTO> getLinkedStudents() {
+		ArrayList<StudentDTO> students = new ArrayList<StudentDTO>();
 		
 		for (Map.Entry<String, String> entry : linkedStudentsValueMap.entrySet()) {
 			

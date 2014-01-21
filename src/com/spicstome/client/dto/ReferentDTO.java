@@ -1,14 +1,14 @@
 package com.spicstome.client.dto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.Set;
 
 public class ReferentDTO extends UserDTO implements Serializable {
 	
 	private static final long serialVersionUID = -9215342098567221018L;
 	
-	private Set<StudentDTO> students;
+	private ArrayList<StudentDTO> students;
 	
 	public ReferentDTO() {
 	}
@@ -17,16 +17,16 @@ public class ReferentDTO extends UserDTO implements Serializable {
 		super(id);
 	}
 
-	public ReferentDTO(Long id, Date subscriptionDate, String firstName, String name, String email, String login, String password, ImageDTO image, Set<StudentDTO> students) {
+	public ReferentDTO(Long id, Date subscriptionDate, String firstName, String name, String email, String login, String password, ImageDTO image, ArrayList<StudentDTO> students) {
 		super(id, subscriptionDate, firstName, name, email, login, password, image);
 		this.students = students;
 	}
 	
-	public Set<StudentDTO> getStudents() {
+	public ArrayList<StudentDTO> getStudents() {
 		return students;
 	}
 
-	public void setStudents(Set<StudentDTO> students) {
+	public void setStudents(ArrayList<StudentDTO> students) {
 		this.students = students;
 	}
 

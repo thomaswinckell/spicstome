@@ -58,4 +58,5 @@ public class Article extends Pecs implements Serializable {
 	public String toString() {
 		return "Article []";
 	}
+
 }

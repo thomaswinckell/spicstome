@@ -1,7 +1,6 @@
 package com.spicstome.client.ui.form;
 
-import java.util.HashSet;
-
+import java.util.ArrayList;
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.widgets.IconButton;
 import com.smartgwt.client.widgets.Img;
@@ -47,7 +46,7 @@ public class FolderFormWindow extends Window{
 					0,
 					parent,
 					new ImageDTO((long)-1,"default_folder.png"),
-					new HashSet<PecsDTO>());
+					new ArrayList<PecsDTO>());
 		}
 			
 		else if(mode==Mode.EDIT)

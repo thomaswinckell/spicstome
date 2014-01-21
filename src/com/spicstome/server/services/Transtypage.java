@@ -1,5 +1,6 @@
 package com.spicstome.server.services;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -82,9 +83,9 @@ public class Transtypage {
 		return listDTO;
 	}
 	
-	public static Set<PecsDTO> createListPecsDTO(Set<Pecs> list,FolderDTO parent)
+	public static ArrayList<PecsDTO> createListPecsDTO(Set<Pecs> list,FolderDTO parent)
 	{
-		Set<PecsDTO> listDTO=new HashSet<PecsDTO>();
+		ArrayList<PecsDTO> listDTO=new ArrayList<PecsDTO>();
 		
 		for(Pecs p:list)
 		{
@@ -134,7 +135,7 @@ public class Transtypage {
 
 	public static ReferentDTO createReferentDTO(Referent referent) {
 		Set<Student> students = referent.getStudents();
-		Set<StudentDTO> studentDTOs = new HashSet<StudentDTO>(students != null ? students.size() : 0);
+		ArrayList<StudentDTO> studentDTOs = new ArrayList<StudentDTO>(students != null ? students.size() : 0);
 		if (students != null) {
 			for (Student student : students) {
 				studentDTOs.add(createStudentDTO(student));
@@ -149,7 +150,7 @@ public class Transtypage {
 	public static TeacherDTO createTeacherDTO(Teacher teacher) {
 		
 		Set<Student> students = teacher.getStudents();
-		Set<StudentDTO> studentDTOs = new HashSet<StudentDTO>(students != null ? students.size() : 0);
+		ArrayList<StudentDTO> studentDTOs = new ArrayList<StudentDTO>(students != null ? students.size() : 0);
 		if (students != null) {
 			for (Student student : students) {
 				studentDTOs.add(createStudentDTO(student));

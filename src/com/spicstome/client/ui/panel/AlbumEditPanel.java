@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.smartgwt.client.data.RecordList;
 import com.smartgwt.client.util.BooleanCallback;
 import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.ComboBoxItem;
 import com.smartgwt.client.widgets.layout.VLayout;
+import com.smartgwt.client.widgets.tree.TreeNode;
 import com.smartgwt.client.widgets.tree.events.FolderDropEvent;
 import com.smartgwt.client.widgets.tree.events.FolderDropHandler;
 import com.smartgwt.client.widgets.tree.events.NodeClickEvent;
@@ -56,6 +58,17 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 					FolderDTO parent = ((AlbumTreeNode)(event.getFolder())).getFolderDTO();
 					FolderDTO child = ((AlbumTreeNode)(event.getNodes()[0])).getFolderDTO();
 					onMoveFolder(child,parent);
+					
+					/*
+					AlbumTreeNode f = (AlbumTreeNode)(folderTree.tree.getRoot().getn);
+					
+					TreeNode[] childsNode = folderTree.tree.getChildren(f);
+					
+					for(TreeNode childNode:childsNode)
+					{
+						FolderDTO fo = ((AlbumTreeNode)(childNode)).getFolderDTO();
+						System.out.println(fo.getName());
+					}*/
 				}
 				else
 				{
@@ -209,19 +222,29 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 			@Override
 			public void onImport()
 			{
-				FolderPickerWindow win = new FolderPickerWindow(others){
-					@Override
-					public void onDestroy()
-					{
-						/* getting original article to import */
-						FolderDTO folder = (FolderDTO)albumPanel.getSelectedFolder();
-						
-						onSaveFolder(getCopyOfFolder(folder,getSelectedFolder()));
-						
+				final FolderDTO parent = getSelectedFolder();
+				
+				if(parent!=null)
+				{
+					FolderPickerWindow win = new FolderPickerWindow(others){
+						@Override
+						public void onDestroy()
+						{
+							/* getting original article to import */
+							FolderDTO folder = (FolderDTO)albumPanel.getSelectedFolder();
+							
+							onSaveFolder(getCopyOfFolder(folder,parent));
+							
 
-					}
-				};			 
-				win.show();
+						}
+					};			 
+					win.show();
+				}
+				else
+				{
+					SC.warn("Vous devez selectionner un dossier de destination");
+				}
+			
 			}
 
 			@Override
@@ -265,6 +288,21 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 
 				UpdateActionPanels();
 			}
+	    	
+	    	@Override
+			public void OnReorder()
+	    	{
+	    		RecordList list = articlesGrid.getDataAsRecordList();
+	    		
+	    		
+	    		for(int i=0;i<list.getLength();i++)
+	    		{
+	    			ArticleDTO a = (ArticleDTO)((ImageRecord)(list.get(i))).getAttributeAsObject(ImageRecord.DATA);  			
+	    			a.setOrder(i);
+	    		
+	    			onReorderArticle(a);
+	    		}
+	    	}
 	    	
 	    };
 	    
@@ -408,7 +446,7 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 				folderDTO.getOrder(),
 				parent,
 				new ImageDTO((long)-1,folderDTO.getImage().getFilename()),
-				new HashSet<PecsDTO>());
+				new ArrayList<PecsDTO>());
 		
 		
 		for(PecsDTO pecs :folderDTO.getContent())
@@ -436,6 +474,6 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 	public abstract void onUpdateFolder(FolderDTO folderDTO);
 	public abstract void onUpdateArticle(ArticleDTO articleDTO);
 	public abstract void onLoadFolder(FolderDTO folder);
-
+	public abstract void onReorderArticle(ArticleDTO article);
 
 }

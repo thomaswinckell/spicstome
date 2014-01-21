@@ -1,9 +1,10 @@
 package com.spicstome.client.shared;
 
 import java.io.Serializable;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.Set;
-
+import java.util.SortedSet;
+import java.util.TreeSet;
 import com.spicstome.client.dto.ReferentDTO;
 import com.spicstome.client.dto.StudentDTO;
 
@@ -11,7 +12,7 @@ public class Referent extends User implements Serializable {
 	
 	private static final long serialVersionUID = -9215342098567221018L;
 	
-	private Set<Student> students;
+	private SortedSet<Student> students;
 	
 	public Referent() {
 	}
@@ -22,9 +23,9 @@ public class Referent extends User implements Serializable {
 	
 	public Referent(ReferentDTO referentDTO) {
 		super(referentDTO);
-		Set<StudentDTO> studentDTOs = referentDTO.getStudents();
+		ArrayList<StudentDTO> studentDTOs = referentDTO.getStudents();
 		if (studentDTOs != null) {
-			Set<Student> students = new HashSet<Student>(studentDTOs.size());
+			SortedSet<Student> students = new TreeSet<Student>();
 			for (StudentDTO studentDTO : studentDTOs) {
 				students.add(new Student(studentDTO));
 			}
@@ -36,13 +37,13 @@ public class Referent extends User implements Serializable {
 		return students;
 	}
 
-	public void setStudents(Set<Student> students) {
+	public void setStudents(SortedSet<Student> students) {
 		this.students = students;
 	}
 
 	public void addStudent(Student student) {
 		if (students == null) {
-			students = new HashSet<Student>();
+			students = new TreeSet<Student>();
 		}
 		students.add(student);
 	}

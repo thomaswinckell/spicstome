@@ -29,7 +29,7 @@
 	<joined-subclass name="Folder" table="folder" extends="Pecs">
 	    <key column="id"/>
 		<set name="content" inverse="false" lazy="true" fetch="select"
-			cascade="delete" >
+			cascade="delete" sort="natural" >
 			<key>
 				<column name="id_folder_parent" not-null="true" />
 			</key>

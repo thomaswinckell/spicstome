@@ -1,13 +1,13 @@
 package com.spicstome.client.dto;
 
 import java.io.Serializable;
-import java.util.Set;
+import java.util.ArrayList;
 
 public class FolderDTO extends PecsDTO implements Serializable {
 	
 	private static final long serialVersionUID = 836063685281646643L;
 	
-	private Set<PecsDTO> content;
+	private ArrayList<PecsDTO> content;
 
 	public FolderDTO() {
 	}
@@ -16,16 +16,16 @@ public class FolderDTO extends PecsDTO implements Serializable {
 		super(id);
 	}
 	
-	public FolderDTO(Long id, String name, int order, FolderDTO folder, ImageDTO image, Set<PecsDTO> content) {
-		super(id, name, order, folder, image);		
+	public FolderDTO(Long id, String name, int order, FolderDTO folder, ImageDTO image, ArrayList<PecsDTO> content) {
+		super(id, name, order, folder, image);	
 		this.content = content;
 	}
 
-	public Set<PecsDTO> getContent() {
+	public ArrayList<PecsDTO> getContent() {
 		return content;
 	}
 
-	public void setContent(Set<PecsDTO> content) {
+	public void setContent(ArrayList<PecsDTO> content) {
 		this.content = content;
 	}
 

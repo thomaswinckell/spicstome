@@ -1,9 +1,8 @@
 package com.spicstome.client.ui.form;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
-import java.util.Set;
-
 import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.SelectItem;
 import com.smartgwt.client.widgets.form.fields.events.ChangeEvent;
@@ -88,7 +87,7 @@ public class UserTypeForm extends DynamicForm {
 	
 	public void setTeacherOrReferentMode() {
 		
-		Set<StudentDTO> students = new HashSet<StudentDTO>();
+		ArrayList<StudentDTO> students = new ArrayList<StudentDTO>();
         
 		if (mode == FormUtils.Mode.EDIT) {
 	        if (userDTO instanceof TeacherDTO)
