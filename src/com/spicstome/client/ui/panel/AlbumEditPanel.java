@@ -1,7 +1,11 @@
 package com.spicstome.client.ui.panel;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
+
+
+
 import com.smartgwt.client.data.RecordList;
 import com.smartgwt.client.util.BooleanCallback;
 import com.smartgwt.client.util.SC;
@@ -14,7 +18,6 @@ import com.smartgwt.client.widgets.tree.TreeNode;
 import com.smartgwt.client.widgets.tree.events.FolderDropEvent;
 import com.smartgwt.client.widgets.tree.events.FolderDropHandler;
 import com.smartgwt.client.widgets.tree.events.NodeClickEvent;
-import com.spicstome.client.dto.AlbumDTO;
 import com.spicstome.client.dto.ArticleDTO;
 import com.spicstome.client.dto.FolderDTO;
 import com.spicstome.client.dto.PecsDTO;
@@ -88,7 +91,7 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 	    formOwner.setFields(comboBoxOwner);
 	    titleLayout.addMember(formOwner);
 	    
-	    actionArticlePanel = new ActionPanel(true,true,false,true,true)
+	    actionArticlePanel = new ActionPanel(true,true,false,true,false,true,true)
 	    {
 
 			@Override
@@ -172,9 +175,31 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 				});
 				
 			}
+			
+			@Override
+			public void onMove()
+			{
+				/* the student is not upto date */
+				final ArticleDTO article = getSelectedArticle();
+				Set<StudentDTO> set = new HashSet<StudentDTO>();
+				set.add(student);
+				
+				FolderPickerWindow win = new FolderPickerWindow(set,FolderPickerWindow.Type.MOVE){
+					@Override
+					public void onDestroy()
+					{
+						/* getting original article to import */
+						FolderDTO folder = (FolderDTO)albumPanel.getSelectedFolder();
+						
+						onMoveArticle(article, folder);
+
+					}
+				};			 
+				win.show();
+			}
 		};
 	    
-	    actionFoldersPanel = new ActionPanel(true,true,false,true,true) {
+	    actionFoldersPanel = new ActionPanel(true,true,false,true,false,false,true) {
 
 			@Override
 			public void onEdit() {
@@ -226,7 +251,7 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 				
 				if(parent!=null)
 				{
-					FolderPickerWindow win = new FolderPickerWindow(others){
+					FolderPickerWindow win = new FolderPickerWindow(others,FolderPickerWindow.Type.IMPORT){
 						@Override
 						public void onDestroy()
 						{
@@ -416,9 +441,9 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 	}
 
 	@Override
-	public void setAlbum(AlbumDTO album)
+	public void setStudent(StudentDTO student)
 	{
-		super.setAlbum(album);
+		super.setStudent(student);
 		articlesGrid.clearItems();
 		UpdateActionPanels();
 	}
@@ -459,6 +484,7 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 	public abstract void onDeleteArticle(ArticleDTO a);
 	public abstract void onDeleteFolder(FolderDTO f);
 	public abstract void onMoveFolder(FolderDTO child,FolderDTO parent);
+	public abstract void onMoveArticle(ArticleDTO child,FolderDTO parent);
 	public abstract void onUpdateFolder(FolderDTO folderDTO);
 	public abstract void onUpdateArticle(ArticleDTO articleDTO);
 	public abstract void onLoadFolder(FolderDTO folder);

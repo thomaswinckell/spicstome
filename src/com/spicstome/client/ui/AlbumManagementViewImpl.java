@@ -23,7 +23,7 @@ public class AlbumManagementViewImpl extends UserViewImpl  implements AlbumManag
 		
 		addCrumb(new Crumb("Les albums"){});
 
-		actionPanel = new ActionPanel(true,false,true,true,true) {
+		actionPanel = new ActionPanel(true,false,true,true,true,false,true) {
 			
 			@Override
 			public void onVisualize() {
@@ -49,6 +49,13 @@ public class AlbumManagementViewImpl extends UserViewImpl  implements AlbumManag
 			@Override
 			public void onDelete() {
 				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onCopy() {
+				
+				
 				
 			}
 		};

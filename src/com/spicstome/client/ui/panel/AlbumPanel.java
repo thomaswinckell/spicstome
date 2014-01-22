@@ -2,15 +2,14 @@ package com.spicstome.client.ui.panel;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.smartgwt.client.widgets.tree.events.NodeClickEvent;
 import com.smartgwt.client.widgets.tree.events.NodeClickHandler;
-import com.spicstome.client.dto.AlbumDTO;
 import com.spicstome.client.dto.FolderDTO;
 import com.spicstome.client.dto.PecsDTO;
+import com.spicstome.client.dto.StudentDTO;
 import com.spicstome.client.ui.widget.FolderTree;
 import com.spicstome.client.ui.widget.FolderTree.AlbumTreeNode;
 
@@ -19,7 +18,7 @@ public abstract class AlbumPanel extends VLayout{
 	protected HLayout titleLayout = new HLayout();
 	protected Label title = new Label("");
 	
-	protected AlbumDTO album;
+	protected StudentDTO student;
 		
 	HLayout horizontalLayout = new HLayout();
 	VLayout verticalLayout = new VLayout();
@@ -82,11 +81,11 @@ public abstract class AlbumPanel extends VLayout{
 	}
 
 
-	public void setAlbum(AlbumDTO album)
+	public void setStudent(StudentDTO student)
 	{
-		this.album=album;
+		this.student=student;
 		
-		List<FolderDTO> folders =  GetFoldersFolder(album.getFolder());
+		List<FolderDTO> folders =  GetFoldersFolder(student.getAlbum().getFolder());
 		
 		this.folderTree.setFolders(folders);
 	}

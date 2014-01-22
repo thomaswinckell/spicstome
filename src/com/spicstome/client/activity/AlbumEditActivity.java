@@ -2,21 +2,10 @@ package com.spicstome.client.activity;
 
 import java.util.HashSet;
 import java.util.Set;
-
-
-
-
-
-
-
-
-
-
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.spicstome.client.ClientFactory;
-import com.spicstome.client.dto.AlbumDTO;
 import com.spicstome.client.dto.ArticleDTO;
 import com.spicstome.client.dto.FolderDTO;
 import com.spicstome.client.dto.PecsDTO;
@@ -30,51 +19,46 @@ import com.spicstome.client.ui.UserViewImpl;
 public class AlbumEditActivity extends UserActivity implements AlbumEditView.Presenter{
 	
 	AlbumEditView editview;
+	long idAlbum;
 
 	public AlbumEditActivity(final AlbumEditPlace place, ClientFactory clientFactory) {
 		super(place, clientFactory,(UserViewImpl)clientFactory.getAlbumEditView());
 
 		this.editview = clientFactory.getAlbumEditView();
-
-		SpicsToMeServices.Util.getInstance().getAlbum(place.idAlbum, new AsyncCallback<AlbumDTO>() {
+		this.idAlbum=place.idAlbum;
+		
+		SpicsToMeServices.Util.getInstance().getAlbumOwner(place.idAlbum, new AsyncCallback<StudentDTO>() {
+			@Override
+			public void onSuccess(StudentDTO result) {
+				
+				editview.setStudent(result);
+				editview.setOwner(result.getFirstName());
+			}
+			@Override
+			public void onFailure(Throwable caught) {}			
+		});	
+		
+		SpicsToMeServices.Util.getInstance().getReferentConnected( new AsyncCallback<ReferentDTO>() {
+			
 			@Override
 			public void onFailure(Throwable caught) {}
 			@Override
-			public void onSuccess(AlbumDTO result) {
+			public void onSuccess(ReferentDTO result) {
+				Set<StudentDTO> listWithoutCurrent = new HashSet<StudentDTO>();
+				for(StudentDTO student : result.getStudents())
+				{
+					if(student.getAlbum().getId()!=place.idAlbum)
+						listWithoutCurrent.add(student);
+				}
+				
+				editview.setOthersAlbum(listWithoutCurrent);
+				
+			}			
+		});	
+				
+				
 			
-
-				editview.setAlbum(result);
-				
-				SpicsToMeServices.Util.getInstance().getAlbumOwner(result.getId(), new AsyncCallback<StudentDTO>() {
-					@Override
-					public void onSuccess(StudentDTO result) {
-						editview.setOwner(result.getFirstName());
-					}
-					@Override
-					public void onFailure(Throwable caught) {}			
-				});	
-				
-				SpicsToMeServices.Util.getInstance().getReferentConnected( new AsyncCallback<ReferentDTO>() {
-					
-					@Override
-					public void onFailure(Throwable caught) {}
-					@Override
-					public void onSuccess(ReferentDTO result) {
-						Set<StudentDTO> listWithoutCurrent = new HashSet<StudentDTO>();
-						for(StudentDTO student : result.getStudents())
-						{
-							if(student.getAlbum().getId()!=place.idAlbum)
-								listWithoutCurrent.add(student);
-						}
-						
-						editview.setOthersAlbum(listWithoutCurrent);
-						
-					}			
-				});	
-				
-				
-			}
-		});
+		
 
 	}
 
@@ -269,10 +253,7 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 			@Override
 			public void onSuccess(FolderDTO result) {
 				
-				
-				
-				editview.updateArticle(result);	
-				
+				editview.updateArticle(result);			
 			}
 		});
 		
@@ -331,9 +312,22 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 				
 				InsertFolder(result);
 				
+				/* album update */
+				
+				SpicsToMeServices.Util.getInstance().getAlbumOwner(idAlbum, new AsyncCallback<StudentDTO>() {
+					@Override
+					public void onSuccess(StudentDTO result) {
+						
+						editview.setStudent(result);
+						editview.setOwner(result.getFirstName());
+					}
+					@Override
+					public void onFailure(Throwable caught) {}			
+				});	
+				
 			}
 		});
-		
+
 	}
 
 	@Override
@@ -346,6 +340,34 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 			public void onSuccess(ArticleDTO result) {
 				editview.insertArticle(result);
 			}
+		});
+		
+	}
+
+	@Override
+	public void move(final ArticleDTO child, FolderDTO parent) {
+		
+		/* delete old linking */
+		child.getFolder().getContent().remove(child);
+		/* new linking */
+		child.setFolder(parent);
+		parent.getContent().add(child);
+		
+		SpicsToMeServices.Util.getInstance().updateArticle(child, new AsyncCallback<Boolean>() {
+
+			@Override
+			public void onFailure(Throwable caught) {}
+			@Override
+			public void onSuccess(Boolean result) {
+				editview.deleteArticle(child);
+			}
+		});
+		SpicsToMeServices.Util.getInstance().updateFolder(parent, new AsyncCallback<Boolean>() {
+
+			@Override
+			public void onFailure(Throwable caught) {}
+			@Override
+			public void onSuccess(Boolean result) {}
 		});
 		
 	}

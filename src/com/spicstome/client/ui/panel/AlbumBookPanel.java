@@ -2,10 +2,10 @@ package com.spicstome.client.ui.panel;
 
 import java.util.ArrayList;
 import com.smartgwt.client.widgets.tree.events.NodeClickEvent;
-import com.spicstome.client.dto.AlbumDTO;
 import com.spicstome.client.dto.ArticleDTO;
 import com.spicstome.client.dto.FolderDTO;
 import com.spicstome.client.dto.PecsDTO;
+import com.spicstome.client.dto.StudentDTO;
 import com.spicstome.client.ui.widget.ImageRecord;
 
 public class AlbumBookPanel extends AlbumPanel{
@@ -22,9 +22,9 @@ public class AlbumBookPanel extends AlbumPanel{
 	}
 	
 	@Override
-	public void setAlbum(AlbumDTO album)
+	public void setStudent(StudentDTO student)
 	{
-		super.setAlbum(album);		
+		super.setStudent(student);		
 		book.setList(new ArrayList<ImageRecord>());
 	}
 	

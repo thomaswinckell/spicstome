@@ -675,47 +675,16 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 		
 		return copyFolder;
 	}
-	/*
+
 	@Override
-	public FolderDTO copyFolder(FolderDTO folderDTO) {
-		
-		System.out.println(folderDTO.getFolder().getName());
-		System.out.println("copie dossier");
-			    
-	    Long idImage = saveImage(folderDTO.getImage());
-	    folderDTO.getImage().setId(idImage);
+	public AlbumDTO copyAlbum(AlbumDTO albumDTO) {
 
-	    ArrayList<PecsDTO> savedCollection = folderDTO.getContent();
-	    
-	    Long idFolder = saveFolder(folderDTO);    
-	    folderDTO.setId(idFolder);
+		FolderDTO copyRacine = copyFolder(albumDTO.getFolder(),null);		
+		AlbumDTO copyAlbum = new AlbumDTO((long)-1,copyRacine);	
+		long id = saveAlbum(copyAlbum);
 	
-	    for(PecsDTO pecs:savedCollection)
-	    {
-	    	pecs.getFolder().setId(idFolder);
-	    	
-	    	if(pecs instanceof FolderDTO)
-	    	{		
-	    		pecs.setId(copyFolder((FolderDTO)pecs).getId());
-	    	}
-	    	else
-	    	{
-	    		if(pecs instanceof ArticleDTO)
-	    		{
-	    			 ArticleDTO art = (ArticleDTO)pecs;
-	    			 Long idImageArticle = saveImage(art.getImage());
-	    			 art.getImage().setId(idImageArticle);
-	    			 			 
-	    			 long id = saveArticle(art); 
-	    			 art.setId(id);
-	    		}
-	    	}
-	    	
-	    }
-	  
-		folderDTO.setContent(savedCollection);
-
-		return folderDTO;
+		copyAlbum.setId(id);		
+		return copyAlbum;
+		
 	}
-	*/
 }
