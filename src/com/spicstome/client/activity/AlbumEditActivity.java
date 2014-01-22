@@ -31,30 +31,40 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 		this.idAlbum=place.idAlbum;
 		
 		
-		SpicsToMeServices.Util.getInstance().getAlbum(place.idAlbum, new AsyncCallback<AlbumDTO>() {
-			@Override
-			public void onSuccess(AlbumDTO result) {
-				
-				editview.setAlbum(result);
-	
-				SpicsToMeServices.Util.getInstance().getAlbumOwner(place.idAlbum, new AsyncCallback<StudentDTO>(){
-
-					@Override
-					public void onFailure(Throwable caught) {}
-
-					@Override
-					public void onSuccess(StudentDTO result) {
-						
-						
-						editview.setStudent(result);
-						
-					}
+		if(idAlbum==1 || idAlbum==2)
+		{
+			SpicsToMeServices.Util.getInstance().getAlbum(place.idAlbum, new AsyncCallback<AlbumDTO>() {
+				@Override
+				public void onSuccess(AlbumDTO result) {
 					
-				});
-			}
-			@Override
-			public void onFailure(Throwable caught) {}			
-		});	
+					StudentDTO falseStudent = new StudentDTO((long)-1);
+					falseStudent.setAlbum(result);
+					
+					editview.setStudent(falseStudent);
+				}
+
+				@Override
+				public void onFailure(Throwable caught) {}
+			});
+		}
+		else
+		{
+			SpicsToMeServices.Util.getInstance().getAlbumOwner(place.idAlbum, new AsyncCallback<StudentDTO>(){
+
+				@Override
+				public void onFailure(Throwable caught) {}
+
+				@Override
+				public void onSuccess(StudentDTO result) {
+
+					editview.setStudent(result);				
+				}
+				
+			});
+		}
+		
+			
+		
 		
 		SpicsToMeServices.Util.getInstance().getGeneralAndExampleAlbum(new AsyncCallback<List<AlbumDTO>>() {
 
@@ -64,35 +74,42 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 			@Override
 			public void onSuccess(List<AlbumDTO> result) {
 				
-				editview.setMainAlbums(result);
+				final Set<StudentDTO> mergedListStudent = new HashSet<StudentDTO>();
+				for(AlbumDTO album:result)
+				{
+					if(album.getId()!=place.idAlbum)
+					{
+						StudentDTO falseStudent = new StudentDTO((long)-1);
+						falseStudent.setAlbum(album);
+						mergedListStudent.add(falseStudent);
+					}
+						
+				}
+				
+				
+				SpicsToMeServices.Util.getInstance().getReferentConnected( new AsyncCallback<ReferentDTO>() {
+					
+					@Override
+					public void onFailure(Throwable caught) {}
+					@Override
+					public void onSuccess(ReferentDTO result) {
+						
+
+						for(StudentDTO student : result.getStudents())
+						{
+							if(student.getAlbum().getId()!=place.idAlbum)
+								mergedListStudent.add(student);
+							
+						}
+						
+						editview.setAllStudents(mergedListStudent);
+						
+					}			
+				});	
 				
 			}
 		});
 		
-		SpicsToMeServices.Util.getInstance().getReferentConnected( new AsyncCallback<ReferentDTO>() {
-			
-			@Override
-			public void onFailure(Throwable caught) {}
-			@Override
-			public void onSuccess(ReferentDTO result) {
-				Set<StudentDTO> listWithoutCurrent = new HashSet<StudentDTO>();
-
-				for(StudentDTO student : result.getStudents())
-				{
-					if(student.getAlbum().getId()!=place.idAlbum)
-						listWithoutCurrent.add(student);
-					
-				}
-				
-				editview.setAllStudents(listWithoutCurrent);
-				
-			}			
-		});	
-				
-				
-			
-		
-
 	}
 
 	@Override
@@ -119,6 +136,7 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 						a.setId(result);
 						a.getFolder().getContent().add(a);
 						editview.insertArticle(a);
+						UpdateStudentDTO();
 					}			
 					@Override
 					public void onFailure(Throwable caught) {}
@@ -149,7 +167,7 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 						f.setId(result);
 						f.getFolder().getContent().add(f);
 						editview.insertFolder(f);
-						
+						UpdateStudentDTO();
 					}
 				});
 			}
@@ -169,6 +187,7 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 				
 				a.getFolder().getContent().remove(a);
 				editview.deleteArticle(a);
+				UpdateStudentDTO();
 			}
 		});
 	}
@@ -183,6 +202,7 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 				
 				f.getFolder().getContent().remove(f);
 				editview.deleteFolder(f);
+				UpdateStudentDTO();
 			}
 		});
 		
@@ -202,14 +222,18 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 			@Override
 			public void onFailure(Throwable caught) {}
 			@Override
-			public void onSuccess(Boolean result) {}
+			public void onSuccess(Boolean result) {
+				UpdateStudentDTO();
+			}
 		});
 		SpicsToMeServices.Util.getInstance().updateFolder(parent, new AsyncCallback<Boolean>() {
 
 			@Override
 			public void onFailure(Throwable caught) {}
 			@Override
-			public void onSuccess(Boolean result) {}
+			public void onSuccess(Boolean result) {
+				UpdateStudentDTO();
+			}
 		});
 	}
 
@@ -232,6 +256,8 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 					public void onSuccess(Boolean result) {
 						
 						editview.updateFolder(f);
+						
+						UpdateStudentDTO();
 					}
 				});			
 			}		
@@ -263,6 +289,8 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 							@Override
 							public void onSuccess(FolderDTO result) {
 								editview.updateArticle(result);		
+								
+								UpdateStudentDTO();
 							}
 						});		
 					}
@@ -334,32 +362,67 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 	@Override
 	public void copy(final FolderDTO f,FolderDTO parent) {
 		
-		
-				
-		SpicsToMeServices.Util.getInstance().copyFolder(f,parent,new AsyncCallback<FolderDTO>() {
-			@Override
-			public void onFailure(Throwable caught) {}
+		if(f.getFolder()==null)
+		{
+			/* importing all the folders of the root */
 			
-			@Override
-			public void onSuccess(FolderDTO result) {
-				
-				InsertFolder(result);
-				
-				/* album update */
-				
-				SpicsToMeServices.Util.getInstance().getAlbumOwner(idAlbum, new AsyncCallback<StudentDTO>() {
-					@Override
-					public void onSuccess(StudentDTO result) {
+			for(PecsDTO pecs:f.getContent())
+			{
+				if(pecs instanceof FolderDTO)
+				{
+					SpicsToMeServices.Util.getInstance().copyFolder((FolderDTO)pecs,parent,new AsyncCallback<FolderDTO>() {
+						@Override
+						public void onFailure(Throwable caught) {}
 						
-						editview.setStudent(result);
-					}
-					@Override
-					public void onFailure(Throwable caught) {}			
-				});	
+						@Override
+						public void onSuccess(FolderDTO result) {
+							
+							InsertFolder(result);
+							
+							UpdateStudentDTO();
+						}
+					});
+				}
 				
 			}
-		});
+			
+			
+		}
+		else
+		{
+			SpicsToMeServices.Util.getInstance().copyFolder(f,parent,new AsyncCallback<FolderDTO>() {
+				@Override
+				public void onFailure(Throwable caught) {}
+				
+				@Override
+				public void onSuccess(FolderDTO result) {
+					
+					InsertFolder(result);
+					
+					UpdateStudentDTO();
+					
+				}
+			});
 
+		}
+				
+		
+	}
+	
+	public void UpdateStudentDTO()
+	{
+		/* album update */
+		
+		SpicsToMeServices.Util.getInstance().getAlbum(idAlbum, new AsyncCallback<AlbumDTO>() {
+			@Override
+			public void onSuccess(AlbumDTO result) {
+				
+				editview.updateAlbum(result);
+
+			}
+			@Override
+			public void onFailure(Throwable caught) {}			
+		});
 	}
 
 	@Override

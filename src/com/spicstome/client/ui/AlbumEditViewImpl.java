@@ -1,6 +1,5 @@
 package com.spicstome.client.ui;
 
-import java.util.List;
 import java.util.Set;
 
 import com.spicstome.client.dto.AlbumDTO;
@@ -136,21 +135,15 @@ public class AlbumEditViewImpl extends UserViewImpl  implements AlbumEditView{
 
 
 	@Override
-	public void setAlbum(AlbumDTO album)
-	{
-		albumEditPanel.setAlbum(album);
-		
-		if(album.getId()==1)
-			crumb.setCrumbTitle("Album général (administration)");
-		else if(album.getId()==2)
-			crumb.setCrumbTitle("Album exemple (administration)");
-	}
-
-	@Override
 	public void setStudent(StudentDTO student) {
 		
 		albumEditPanel.setStudent(student);
-		if(student!=null)
+		
+		if(student.getAlbum().getId()==1)
+			crumb.setCrumbTitle("Album général (administration)");
+		else if(student.getAlbum().getId()==2)
+			crumb.setCrumbTitle("Album exemple (administration)");
+		else
 			crumb.setCrumbTitle("Album de "+student.getFirstName()+" (administration)");
 		
 	}
@@ -206,11 +199,12 @@ public class AlbumEditViewImpl extends UserViewImpl  implements AlbumEditView{
 
 
 	@Override
-	public void setMainAlbums(List<AlbumDTO> list) {
-		
-		albumEditPanel.setMainAlbums(list);
+	public void updateAlbum(AlbumDTO album) {
+		albumEditPanel.updateAlbum(album);
 		
 	}
+
+
 
 	
 	

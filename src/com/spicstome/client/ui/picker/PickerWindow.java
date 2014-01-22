@@ -36,7 +36,7 @@ public abstract class PickerWindow extends Window{
     public enum Type{IMPORT,MOVE};
 	Type type;
 	
-	public PickerWindow(Set<StudentDTO> list,Set<AlbumDTO> mainAlbum,Type type,int width,int height) {
+	public PickerWindow(Set<StudentDTO> list,Type type,int width,int height) {
 		super();
 				
 		this.type=type;
@@ -45,7 +45,7 @@ public abstract class PickerWindow extends Window{
 		setHeight(height);
 		
 		this.others = list;
-		this.mainAlbums=mainAlbum;
+		
   
         
         setShowMinimizeButton(false);
@@ -60,21 +60,21 @@ public abstract class PickerWindow extends Window{
         {
         	  LinkedHashMap<Integer, String> map = new LinkedHashMap<Integer, String>(others.size());
              
-        	  if(mainAlbum!=null)
-        	  {
-        		  for(AlbumDTO album : mainAlbum)
-            	  {
-            		  if(album.getId()==1)
-            			  map.put(-1,"Album général");
-            		  if(album.getId()==2)
-            			  map.put(-2,"Album exemple");
-            	  }
-        	  }
         	 
+        	  
         	  for(StudentDTO student : others)
               {
-              	  map.put(new Integer(student.getId().toString()),student.getFirstName());
+        		  if(student.getAlbum().getId()==1)
+        			  map.put(1,"Album général");
+        		  else if(student.getAlbum().getId()==2)
+        			  map.put(2,"Album exemple");
+        		  else
+        			  map.put(new Integer(student.getAlbum().getId().toString()),student.getFirstName());
               }
+        	  
+        	
+        	 
+        	  
               
               comboBox.setValueMap(map);
               comboBox.setValue(map.values().iterator().next());
@@ -87,16 +87,10 @@ public abstract class PickerWindow extends Window{
             	  public void onChange(ChangeEvent event) {
 
             		  int choice = Integer.valueOf(event.getValue().toString());
-            		  if(choice<0)
-            		  {
-            			  albumPanel.setAlbum(getAlbumWithId(-choice));
-            		  }
-            		  else
-            		  {
-            			  StudentDTO student = getStudentWithId(choice);
-                		  albumPanel.setAlbum(student.getAlbum());
-                		  albumPanel.setStudent(student);
-            		  }
+            		  
+        			  StudentDTO student = getStudentWithId(choice);
+            		  albumPanel.setStudent(student);
+            		  
             		 
             	  }
               });
@@ -107,9 +101,9 @@ public abstract class PickerWindow extends Window{
         InitAlbumPanel();
         
         /* setting first album */
-        albumPanel.setAlbum(others.iterator().next().getAlbum());
-        albumPanel.setStudent(others.iterator().next());
-        
+      
+    	albumPanel.setStudent(others.iterator().next());
+       
   
         validButton.setIcon("check.png");
         int iconsize=32;
@@ -139,12 +133,12 @@ public abstract class PickerWindow extends Window{
         addItem(verticalLayout);
 	}
 
-	public StudentDTO getStudentWithId(int idOwner)
+	public StudentDTO getStudentWithId(int id)
 	{
 		
 		for(StudentDTO student : others)
 		{
-			if(student.getId()==idOwner)
+			if(student.getAlbum().getId()==id)
 				return student;
 		}
 		return null;

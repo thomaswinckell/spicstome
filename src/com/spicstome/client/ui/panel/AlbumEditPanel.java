@@ -2,7 +2,6 @@ package com.spicstome.client.ui.panel;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import com.smartgwt.client.data.RecordList;
@@ -35,7 +34,6 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 	ActionPanel actionArticlePanel;
 	ImageTileGrid articlesGrid;
 	Set<StudentDTO> allStudents;
-	Set<AlbumDTO> mainAlbums;
 
 	VLayout articleVerticalPanel = new VLayout();
 
@@ -132,7 +130,7 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 			@Override
 			public void onImport()
 			{
-				ArticlePickerWindow win = new ArticlePickerWindow(allStudents,mainAlbums){
+				ArticlePickerWindow win = new ArticlePickerWindow(allStudents){
 					@Override
 					public void onDestroy()
 					{
@@ -176,7 +174,7 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 				Set<StudentDTO> set = new HashSet<StudentDTO>();
 				set.add(student);
 				
-				FolderPickerWindow win = new FolderPickerWindow(set,mainAlbums,FolderPickerWindow.Type.MOVE){
+				FolderPickerWindow win = new FolderPickerWindow(set,FolderPickerWindow.Type.MOVE){
 					@Override
 					public void onDestroy()
 					{
@@ -243,7 +241,7 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 				
 				if(parent!=null)
 				{
-					FolderPickerWindow win = new FolderPickerWindow(allStudents,mainAlbums,FolderPickerWindow.Type.IMPORT){
+					FolderPickerWindow win = new FolderPickerWindow(allStudents,FolderPickerWindow.Type.IMPORT){
 						@Override
 						public void onDestroy()
 						{
@@ -436,16 +434,16 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 	public void setStudent(StudentDTO student)
 	{
 		super.setStudent(student);
-	}
-	
-	@Override
-	public void setAlbum(AlbumDTO album)
-	{
-		super.setAlbum(album);
+		
 		articlesGrid.clearItems();
 		UpdateActionPanels();
 	}
 	
+	
+	public void updateAlbum(AlbumDTO album)
+	{
+		student.setAlbum(album);
+	}
 	
 	
 	
@@ -464,15 +462,6 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 		
 	}
 	
-	public void setMainAlbums(List<AlbumDTO> list)
-	{
-		mainAlbums = new HashSet<AlbumDTO>();
-		
-		for(AlbumDTO album :list)
-		{
-			mainAlbums.add(album);
-		}
-	}
 	
 
 	@Override

@@ -2,13 +2,11 @@ package com.spicstome.client.ui.panel;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.smartgwt.client.widgets.tree.events.NodeClickEvent;
 import com.smartgwt.client.widgets.tree.events.NodeClickHandler;
-import com.spicstome.client.dto.AlbumDTO;
 import com.spicstome.client.dto.FolderDTO;
 import com.spicstome.client.dto.PecsDTO;
 import com.spicstome.client.dto.StudentDTO;
@@ -21,7 +19,6 @@ public abstract class AlbumPanel extends VLayout{
 	protected Label title = new Label("");
 	
 	protected StudentDTO student;
-	protected AlbumDTO album;
 		
 	HLayout horizontalLayout = new HLayout();
 	VLayout verticalLayout = new VLayout();
@@ -87,18 +84,23 @@ public abstract class AlbumPanel extends VLayout{
 		return res;
 	}
 
-	public void setAlbum(AlbumDTO album)
+
+
+	public void setStudent(StudentDTO student)
 	{
-		this.album=album;
+		this.student=student;
+
 		
-		if(album.getId()==1)
+		if(student.getAlbum().getId()==1)
 			title.setContents("Album Général");
-		else if(album.getId()==2)
+		else if(student.getAlbum().getId()==2)
 			title.setContents("Album Exemple");
+		else
+			setOwnerName(student.getFirstName());
 		
-		if(album.getFolder()!=null)
+		if(student.getAlbum().getFolder()!=null)
 		{
-			List<FolderDTO> folders =  GetFoldersFolder(album.getFolder());
+			List<FolderDTO> folders =  GetFoldersFolder(student.getAlbum().getFolder());
 			
 			this.folderTree.setFolders(folders);
 		}
@@ -106,15 +108,6 @@ public abstract class AlbumPanel extends VLayout{
 		{
 			this.folderTree.treeGrid.clear();
 		}
-		
-	}
-
-	public void setStudent(StudentDTO student)
-	{
-		this.student=student;
-		
-		if(student!=null)
-			setOwnerName(student.getFirstName());
 		
 	}
 

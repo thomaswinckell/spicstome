@@ -1,11 +1,14 @@
 package com.spicstome.server;
 
 import java.util.TreeSet;
+
 import com.spicstome.client.shared.Album;
 import com.spicstome.client.shared.Folder;
 import com.spicstome.client.shared.Image;
 import com.spicstome.client.shared.Referent;
 import com.spicstome.client.shared.Student;
+import com.spicstome.client.shared.Subject;
+import com.spicstome.client.shared.Verb;
 
 
 public class Test {
@@ -41,6 +44,41 @@ public class Test {
 		return imageUser;
 	}
 	
+	public static void generateSubject(String name,String image,Folder parent,int gender,int number,int nature)
+	{
+		Image imageSubject = new Image((long)-1);
+		imageSubject.setFilename(image);
+		
+		HibernateManager.getInstance().save(imageSubject);
+		
+		Subject subject = new Subject((long)-1);
+		subject.setName(name);
+		subject.setGender(gender);
+		subject.setNature(nature);
+		subject.setNumber(number);
+		subject.setImage(imageSubject);
+		subject.setFolder(parent);
+		
+		HibernateManager.getInstance().save(subject);
+		
+	}
+	
+	public static void generateVerb(String name,String image,Folder parent,int group)
+	{
+		Image imageSubject = new Image((long)-1);
+		imageSubject.setFilename(image);
+		
+		HibernateManager.getInstance().save(imageSubject);
+		
+		Verb subject = new Verb((long)-1);
+		subject.setName(name);
+		subject.setGroup(group);
+		subject.setImage(imageSubject);
+		subject.setFolder(parent);
+		
+		HibernateManager.getInstance().save(subject);
+	}
+	
 	public static void generateGeneralAlbum()
 	{
 		Folder racine = generateFolder("Tout", "all.png", null);
@@ -48,6 +86,23 @@ public class Test {
 		Folder quoi = generateFolder("Quoi", "quoi.gif", racine);
 		Folder comment = generateFolder("Comment", "comment.gif", racine);
 		
+		Folder couverts = generateFolder("Couverts", "couverts.gif", quoi);
+		Folder choses = generateFolder("Choses", "choses.gif", quoi);
+		Folder nouriture = generateFolder("Nourriture", "nourriture.gif", quoi);
+		Folder commercants = generateFolder("Commerçants", "commercants.gif", qui);
+		
+		generateSubject("Je", "je_1.JPG", qui, 0, 0, 0);
+		generateSubject("Je", "je_2.JPG", qui, 1, 0, 0);
+		generateSubject("Tu", "tu_1.JPG", qui, 0, 0, 1);
+		generateSubject("Tu", "tu_2.JPG", qui, 1, 0, 1);
+		
+		generateVerb("Ecouter", "ecouter.gif", quoi, 0);
+		generateVerb("Dormir", "dormir.gif", quoi, 0);
+		generateVerb("Dire", "dire.gif", quoi, 0);
+		
+		generateSubject("Cerises", "cerises.gif", nouriture, 1, 1, 2);
+		
+		generateSubject("Boulanger", "boulanger.gif", commercants, 0, 0, 2);
 
 		Album album = new Album((long)-1);
 		album.setFolder(racine);
