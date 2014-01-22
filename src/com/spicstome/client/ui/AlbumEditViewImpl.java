@@ -1,6 +1,9 @@
 package com.spicstome.client.ui;
 
+import java.util.List;
 import java.util.Set;
+
+import com.spicstome.client.dto.AlbumDTO;
 import com.spicstome.client.dto.ArticleDTO;
 import com.spicstome.client.dto.FolderDTO;
 import com.spicstome.client.dto.StudentDTO;
@@ -133,17 +136,23 @@ public class AlbumEditViewImpl extends UserViewImpl  implements AlbumEditView{
 
 
 	@Override
-	public void setStudent(StudentDTO student)
+	public void setAlbum(AlbumDTO album)
 	{
-		albumEditPanel.setStudent(student);
+		albumEditPanel.setAlbum(album);
+		
+		if(album.getId()==1)
+			crumb.setCrumbTitle("Album général (administration)");
+		else if(album.getId()==2)
+			crumb.setCrumbTitle("Album exemple (administration)");
 	}
 
 	@Override
-	public void setOwner(String name) {
+	public void setStudent(StudentDTO student) {
 		
-		albumEditPanel.comboBoxOwner.setValue(name);
-		crumb.setCrumbTitle("Album de "+name+" (administration)");
-
+		albumEditPanel.setStudent(student);
+		if(student!=null)
+			crumb.setCrumbTitle("Album de "+student.getFirstName()+" (administration)");
+		
 	}
 
 	@Override
@@ -174,10 +183,12 @@ public class AlbumEditViewImpl extends UserViewImpl  implements AlbumEditView{
 
 
 	@Override
-	public void setOthersAlbum(Set<StudentDTO> list) {
-		albumEditPanel.setOthersAlbum(list);
+	public void setAllStudents(Set<StudentDTO> list) {
+		albumEditPanel.setAllStudents(list);
 		
 	}
+	
+	
 
 
 	@Override
@@ -191,6 +202,14 @@ public class AlbumEditViewImpl extends UserViewImpl  implements AlbumEditView{
 	public void updateFolder(FolderDTO folderDTO) {
 		
 		albumEditPanel.updateFolderIntoTree(folderDTO);
+	}
+
+
+	@Override
+	public void setMainAlbums(List<AlbumDTO> list) {
+		
+		albumEditPanel.setMainAlbums(list);
+		
 	}
 
 	

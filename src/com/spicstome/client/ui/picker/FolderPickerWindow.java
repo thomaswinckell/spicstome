@@ -1,7 +1,9 @@
 package com.spicstome.client.ui.picker;
 
 import java.util.Set;
+
 import com.smartgwt.client.widgets.tree.events.NodeClickEvent;
+import com.spicstome.client.dto.AlbumDTO;
 import com.spicstome.client.dto.StudentDTO;
 import com.spicstome.client.ui.panel.AlbumPanel;
 
@@ -9,9 +11,9 @@ public class FolderPickerWindow extends PickerWindow{
 
 	
 	
-	public FolderPickerWindow(Set<StudentDTO> list,Type type) {
+	public FolderPickerWindow(Set<StudentDTO> list,Set<AlbumDTO> mainAlbum,Type type) {
 
-		super(list,type, 500, 500);
+		super(list,mainAlbum,type, 500, 500);
 		
 	}
 	

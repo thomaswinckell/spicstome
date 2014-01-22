@@ -85,6 +85,12 @@ public class HibernateManager {
 		}
 		
 		@SuppressWarnings("unchecked")
+		List<Album> albums = session.createCriteria(Album.class).list();
+		for (Album album : albums) {
+			session.delete(album);
+		}
+		
+		@SuppressWarnings("unchecked")
 		List<Pecs> pecss = session.createCriteria(Pecs.class).list();
 		for (Pecs pecs : pecss) {
 			session.delete(pecs);

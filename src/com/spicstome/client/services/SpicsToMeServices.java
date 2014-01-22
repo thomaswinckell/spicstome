@@ -15,7 +15,6 @@
 package com.spicstome.client.services;
 
 import java.util.List;
-
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
@@ -54,6 +53,7 @@ public interface SpicsToMeServices extends RemoteService {
 	public AlbumDTO getAlbum(long id);
 	public UserDTO getUser(Long idUser);
 	public StudentDTO getStudent(Long idStudent);
+	public List<AlbumDTO> getGeneralAndExampleAlbum();
 	public ReferentDTO getReferentConnected();
 	public UserDTO getUserByLogin(String login);
 	public List<StudentDTO> getAllStudents();
@@ -73,6 +73,8 @@ public interface SpicsToMeServices extends RemoteService {
 
 	public Long updateImage(ImageDTO imageDTO);
 	public Long updateUser(UserDTO userDTO, boolean isNewPassword);
+	
+	public boolean updateAlbum(AlbumDTO album);
 	
 	/* DELETE */
 	public boolean deleteArticle(long id);

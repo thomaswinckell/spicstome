@@ -2,7 +2,6 @@ package com.spicstome.client.ui.picker;
 
 import java.util.LinkedHashMap;
 import java.util.Set;
-
 import com.smartgwt.client.widgets.IconButton;
 import com.smartgwt.client.widgets.Window;
 import com.smartgwt.client.widgets.events.ClickEvent;
@@ -13,6 +12,7 @@ import com.smartgwt.client.widgets.form.fields.events.ChangeEvent;
 import com.smartgwt.client.widgets.form.fields.events.ChangeHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
+import com.spicstome.client.dto.AlbumDTO;
 import com.spicstome.client.dto.StudentDTO;
 import com.spicstome.client.ui.panel.AlbumPanel;
 
@@ -32,10 +32,11 @@ public abstract class PickerWindow extends Window{
     VLayout verticalLayout = new VLayout();
     HLayout bottomLayout = new HLayout();
     Set<StudentDTO> others;
+    Set<AlbumDTO> mainAlbums;
     public enum Type{IMPORT,MOVE};
 	Type type;
 	
-	public PickerWindow(Set<StudentDTO> list,Type type,int width,int height) {
+	public PickerWindow(Set<StudentDTO> list,Set<AlbumDTO> mainAlbum,Type type,int width,int height) {
 		super();
 				
 		this.type=type;
@@ -44,6 +45,7 @@ public abstract class PickerWindow extends Window{
 		setHeight(height);
 		
 		this.others = list;
+		this.mainAlbums=mainAlbum;
   
         
         setShowMinimizeButton(false);
@@ -57,7 +59,19 @@ public abstract class PickerWindow extends Window{
         if(others.size()>1)
         {
         	  LinkedHashMap<Integer, String> map = new LinkedHashMap<Integer, String>(others.size());
-              for(StudentDTO student : others)
+             
+        	  if(mainAlbum!=null)
+        	  {
+        		  for(AlbumDTO album : mainAlbum)
+            	  {
+            		  if(album.getId()==1)
+            			  map.put(-1,"Album général");
+            		  if(album.getId()==2)
+            			  map.put(-2,"Album exemple");
+            	  }
+        	  }
+        	 
+        	  for(StudentDTO student : others)
               {
               	  map.put(new Integer(student.getId().toString()),student.getFirstName());
               }
@@ -72,9 +86,18 @@ public abstract class PickerWindow extends Window{
             	  @Override
             	  public void onChange(ChangeEvent event) {
 
-            		  StudentDTO student = getStudentWithId(Integer.valueOf(event.getValue().toString()));
-            		  albumPanel.setStudent(student);
-            		  albumPanel.setOwnerName(student.getFirstName());
+            		  int choice = Integer.valueOf(event.getValue().toString());
+            		  if(choice<0)
+            		  {
+            			  albumPanel.setAlbum(getAlbumWithId(-choice));
+            		  }
+            		  else
+            		  {
+            			  StudentDTO student = getStudentWithId(choice);
+                		  albumPanel.setAlbum(student.getAlbum());
+                		  albumPanel.setStudent(student);
+            		  }
+            		 
             	  }
               });
         }
@@ -84,8 +107,9 @@ public abstract class PickerWindow extends Window{
         InitAlbumPanel();
         
         /* setting first album */
+        albumPanel.setAlbum(others.iterator().next().getAlbum());
         albumPanel.setStudent(others.iterator().next());
-        albumPanel.setOwnerName(others.iterator().next().getFirstName());
+        
   
         validButton.setIcon("check.png");
         int iconsize=32;
@@ -117,10 +141,21 @@ public abstract class PickerWindow extends Window{
 
 	public StudentDTO getStudentWithId(int idOwner)
 	{
+		
 		for(StudentDTO student : others)
 		{
 			if(student.getId()==idOwner)
 				return student;
+		}
+		return null;
+	}
+	
+	public AlbumDTO getAlbumWithId(int id)
+	{
+		for(AlbumDTO album : mainAlbums )
+		{
+			if(album.getId()==id)
+				return album;
 		}
 		return null;
 	}

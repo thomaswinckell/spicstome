@@ -38,6 +38,7 @@ public class Transtypage {
 	
 	public static AlbumDTO createAlbumDTO(Album album)
 	{
+		
 		return new AlbumDTO(album.getId(),createFolderDTO(album.getFolder(),null));
 	}
 	

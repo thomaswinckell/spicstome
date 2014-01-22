@@ -21,7 +21,7 @@ public class Album implements Serializable {
 
 	public Album(AlbumDTO albumDTO) {
 		id = albumDTO.getId();
-		folder = new Folder(albumDTO.getFolder(),null);
+		folder = (albumDTO.getFolder()==null?null:new Folder(albumDTO.getFolder(),null));
 	}
 
 	public Long getId() {
@@ -44,4 +44,6 @@ public class Album implements Serializable {
 	public String toString() {
 		return "Album [id=" + id + ", folder=" + folder + "]";
 	}
+
+
 }

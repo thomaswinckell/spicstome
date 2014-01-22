@@ -1,11 +1,14 @@
 package com.spicstome.client.activity;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.spicstome.client.ClientFactory;
+import com.spicstome.client.dto.AlbumDTO;
 import com.spicstome.client.dto.ArticleDTO;
 import com.spicstome.client.dto.FolderDTO;
 import com.spicstome.client.dto.PecsDTO;
@@ -27,16 +30,44 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 		this.editview = clientFactory.getAlbumEditView();
 		this.idAlbum=place.idAlbum;
 		
-		SpicsToMeServices.Util.getInstance().getAlbumOwner(place.idAlbum, new AsyncCallback<StudentDTO>() {
+		
+		SpicsToMeServices.Util.getInstance().getAlbum(place.idAlbum, new AsyncCallback<AlbumDTO>() {
 			@Override
-			public void onSuccess(StudentDTO result) {
+			public void onSuccess(AlbumDTO result) {
 				
-				editview.setStudent(result);
-				editview.setOwner(result.getFirstName());
+				editview.setAlbum(result);
+	
+				SpicsToMeServices.Util.getInstance().getAlbumOwner(place.idAlbum, new AsyncCallback<StudentDTO>(){
+
+					@Override
+					public void onFailure(Throwable caught) {}
+
+					@Override
+					public void onSuccess(StudentDTO result) {
+						
+						
+						editview.setStudent(result);
+						
+					}
+					
+				});
 			}
 			@Override
 			public void onFailure(Throwable caught) {}			
 		});	
+		
+		SpicsToMeServices.Util.getInstance().getGeneralAndExampleAlbum(new AsyncCallback<List<AlbumDTO>>() {
+
+			@Override
+			public void onFailure(Throwable caught) {}
+
+			@Override
+			public void onSuccess(List<AlbumDTO> result) {
+				
+				editview.setMainAlbums(result);
+				
+			}
+		});
 		
 		SpicsToMeServices.Util.getInstance().getReferentConnected( new AsyncCallback<ReferentDTO>() {
 			
@@ -45,13 +76,15 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 			@Override
 			public void onSuccess(ReferentDTO result) {
 				Set<StudentDTO> listWithoutCurrent = new HashSet<StudentDTO>();
+
 				for(StudentDTO student : result.getStudents())
 				{
 					if(student.getAlbum().getId()!=place.idAlbum)
 						listWithoutCurrent.add(student);
+					
 				}
 				
-				editview.setOthersAlbum(listWithoutCurrent);
+				editview.setAllStudents(listWithoutCurrent);
 				
 			}			
 		});	
@@ -319,7 +352,6 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 					public void onSuccess(StudentDTO result) {
 						
 						editview.setStudent(result);
-						editview.setOwner(result.getFirstName());
 					}
 					@Override
 					public void onFailure(Throwable caught) {}			

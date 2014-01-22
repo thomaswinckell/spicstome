@@ -13,21 +13,7 @@ public class Test {
 	
 	public static Student populateWithStudent(String name,String firstname,String login,String password)
 	{
-		Image imageRacine = new Image((long)-1);
-		imageRacine.setFilename("all.png");
-		
-		HibernateManager.getInstance().save(imageRacine);
-		
-		Folder folderRacine = new Folder((long)-1);
-		folderRacine.setName("Tout");
-		folderRacine.setImage(imageRacine);
-		
-		HibernateManager.getInstance().save(folderRacine);
-		
-		Album album = new Album((long)-1);
-		album.setFolder(folderRacine);
-		
-		HibernateManager.getInstance().save(album);
+		Album album = generateExampleAlbum();
 		
 		Image imageUser = populateWithImageUser();
 		
@@ -55,10 +41,72 @@ public class Test {
 		return imageUser;
 	}
 	
+	public static void generateGeneralAlbum()
+	{
+		Folder racine = generateFolder("Tout", "all.png", null);
+		Folder qui = generateFolder("Qui", "qui.gif", racine);
+		Folder quoi = generateFolder("Quoi", "quoi.gif", racine);
+		Folder comment = generateFolder("Comment", "comment.gif", racine);
+		
+
+		Album album = new Album((long)-1);
+		album.setFolder(racine);
+		
+		HibernateManager.getInstance().save(album);
+	}
+	
+	
+	
+	public static Folder generateFolder(String name,String image,Folder parent)
+	{
+		Image imageRacine = new Image((long)-1);
+		imageRacine.setFilename(image);
+		
+		HibernateManager.getInstance().save(imageRacine);
+		
+		Folder folder = new Folder((long)-1);
+		folder.setName(name);
+		folder.setImage(imageRacine);
+		folder.setFolder(parent);
+		
+		HibernateManager.getInstance().save(folder);
+		
+		
+		
+		return folder;
+	}
+	
+	public static Album generateExampleAlbum()
+	{
+	
+		Folder racine = generateFolder("Tout", "all.png", null);
+		Folder qui = generateFolder("Dossier", "qui.gif", racine);
+	
+		
+
+		Album album = new Album((long)-1);
+		album.setFolder(racine);
+		
+		HibernateManager.getInstance().save(album);
+		
+		return album;
+	
+	}
+	
 	public static void main(String[] args) {
 		
 		/* Clear All */
 		HibernateManager.getInstance().ClearAll();
+		
+		
+		/* General album  = 1 */
+		
+		generateGeneralAlbum();
+		
+		/* Example album = 2 */
+		
+		generateExampleAlbum();
+		
 		
 		/* Super Admin */
 		Image imageAdmin = populateWithImageUser();
@@ -73,9 +121,7 @@ public class Test {
 		
 		HibernateManager.getInstance().save(superAdmin);
 		
-		/* General album  = 1 */
 		
-		/* Example album = 2 */
 		
 		/* Student */
 		Student dagobert = populateWithStudent("Dagobert", "Albert", "albert", "albert");

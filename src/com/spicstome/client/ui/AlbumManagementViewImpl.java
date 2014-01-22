@@ -1,6 +1,7 @@
 package com.spicstome.client.ui;
 
 import java.util.ArrayList;
+import java.util.List;
 import com.spicstome.client.dto.AlbumDTO;
 import com.spicstome.client.dto.StudentDTO;
 import com.spicstome.client.place.AlbumEditPlace;
@@ -14,8 +15,9 @@ import com.spicstome.client.ui.widget.ImageTileGrid.Mode;
 public class AlbumManagementViewImpl extends UserViewImpl  implements AlbumManagementView
 {
 
-	ImageTileGrid imageList;
-	ActionPanel actionPanel;
+	ImageTileGrid imageListStudentAlbum;
+	ActionPanel actionPanelStudentAlbum;
+
 	
 	public AlbumManagementViewImpl()
 	{
@@ -23,72 +25,85 @@ public class AlbumManagementViewImpl extends UserViewImpl  implements AlbumManag
 		
 		addCrumb(new Crumb("Les albums"){});
 
-		actionPanel = new ActionPanel(true,false,true,true,true,false,true) {
+		actionPanelStudentAlbum = new ActionPanel(false,false,true,true,false,false,false) {
 			
 			@Override
 			public void onVisualize() {
-				AlbumDTO a = (AlbumDTO)imageList.getSelectedItem().getAttributeAsObject(ImageRecord.DATA);
+				AlbumDTO a = (AlbumDTO)imageListStudentAlbum.getSelectedItem().getAttributeAsObject(ImageRecord.DATA);
 				listener.goTo(new AlbumPlace(a.getId()));
 				
 			}
 			
-			@Override
-			public void onNew() {
-				// TODO Auto-generated method stub
-				
-			}
+			
 			
 			@Override
 			public void onEdit() {
 				
-				AlbumDTO a = (AlbumDTO)imageList.getSelectedItem().getAttributeAsObject(ImageRecord.DATA);
+				AlbumDTO a = (AlbumDTO)imageListStudentAlbum.getSelectedItem().getAttributeAsObject(ImageRecord.DATA);
 				listener.goTo(new AlbumEditPlace(a.getId()));
 				
 			}
 
-			@Override
-			public void onDelete() {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void onCopy() {
-				
-				
-				
-			}
+		
 		};
 		
-		imageList = new ImageTileGrid(Mode.CLICK,200,150,100){
+	
+		
+		imageListStudentAlbum = new ImageTileGrid(Mode.CLICK,200,150,100){
 			
 
 			@Override
 			public void OnSelectChanged(ImageRecord object) {
 
-	                actionPanel.setHiddenActionVisible(getSelectedItem()!=null);
+	                actionPanelStudentAlbum.setHiddenActionVisible(getSelectedItem()!=null);
 				
 			};
 		};
+		
+	
+		
+		imageListStudentAlbum.setHeight(170);
 
-		imageList.setHeight(250);
+		mainPanel.addMember(imageListStudentAlbum);
+		mainPanel.addMember(actionPanelStudentAlbum);
 
-		mainPanel.addMember(imageList);
-		mainPanel.addMember(actionPanel);
+	}
+
+	
+
+	@Override
+	public void insertStudentAlbum(ArrayList<StudentDTO> list) {
+
+		for(StudentDTO student:list)
+		{
+			imageListStudentAlbum.addItem(new ImageRecord(student.getAlbum(),student));
+		}
 
 	}
 
 	@Override
-	public void setAlbums(ArrayList<StudentDTO> list) {
+	public void insertAlbum(List<AlbumDTO> list) {
 		
-		ArrayList<ImageRecord> modules = new ArrayList<ImageRecord>();
-
-		for(StudentDTO student:list)
+		actionPanelStudentAlbum.setHiddenActionVisible(false);
+		
+		for(AlbumDTO album:list)
 		{
-			modules.add(new ImageRecord(student.getAlbum(),student.getFirstName()));
+			if(album.getId()==1)
+				imageListStudentAlbum.addItem(new ImageRecord(album,"Album général"));
+			if(album.getId()==2)
+				imageListStudentAlbum.addItem(new ImageRecord(album,"Album exemple"));
 		}
-
-		imageList.setItems(modules);
+		
 	}
 
+
+
+	@Override
+	public void initview() {
+		
+		imageListStudentAlbum.clearItems();
+		
+	}
+
+	
 }

@@ -1,7 +1,9 @@
 package com.spicstome.client.ui.picker;
 
 import java.util.Set;
+
 import com.smartgwt.client.widgets.tree.events.NodeClickEvent;
+import com.spicstome.client.dto.AlbumDTO;
 import com.spicstome.client.dto.StudentDTO;
 import com.spicstome.client.ui.panel.AlbumBookPanel;
 import com.spicstome.client.ui.panel.Book;
@@ -11,8 +13,8 @@ public class ArticlePickerWindow extends PickerWindow {
 
     public Book book;
 	
-	public ArticlePickerWindow(Set<StudentDTO> list) {
-		super(list,Type.IMPORT, 1000, 450);
+	public ArticlePickerWindow(Set<StudentDTO> list,Set<AlbumDTO> mainAlbum) {
+		super(list,mainAlbum,Type.IMPORT, 1000, 450);
 		
 	}
 	@Override

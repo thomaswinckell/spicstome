@@ -41,4 +41,7 @@ public class AlbumDTO implements Serializable {
 	public String toString() {
 		return "Album [id=" + id + ", folder=" + folder + "]";
 	}
+
+
+
 }

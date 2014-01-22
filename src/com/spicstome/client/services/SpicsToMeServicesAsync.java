@@ -41,6 +41,7 @@ public interface SpicsToMeServicesAsync {
 	void getUser(Long idUser, AsyncCallback<UserDTO> callback);
 	void getStudent(Long idStudent, AsyncCallback<StudentDTO> callback); 
 	void getReferentConnected(AsyncCallback<ReferentDTO> callback); 
+	void getGeneralAndExampleAlbum(AsyncCallback<List<AlbumDTO>> callback);
 	void getUserByLogin(String login, AsyncCallback<UserDTO> callback); 
 	void getAllStudents(AsyncCallback<List<StudentDTO>> callback);
 	void getAllTeachers(AsyncCallback<List<TeacherDTO>> callback);
@@ -56,9 +57,9 @@ public interface SpicsToMeServicesAsync {
 	/* UPDATE */
 	void updateFolder(FolderDTO folderDTO,AsyncCallback<Boolean> callack);
 	void updateArticle(ArticleDTO articleDTO,AsyncCallback<Boolean> callack);
-
 	void updateImage(ImageDTO imageDTO, AsyncCallback<Long> callback);
 	void updateUser(UserDTO userDTO, boolean isNewPassword, AsyncCallback<Long> callback);
+	void updateAlbum(AlbumDTO album,AsyncCallback<Boolean> callback);
 
 	/* DELETE */	
 	void deleteArticle(long id,AsyncCallback<Boolean> callback);

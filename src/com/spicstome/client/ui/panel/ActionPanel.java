@@ -41,7 +41,7 @@ public abstract class ActionPanel extends HLayout{
 		this.moveAction=moveAction;
 		
 		buttonImport.setVisible(true);
-		buttonNew.setVisible(true);
+		buttonNew.setVisible(createAction);
 		buttonEdit.setVisible(false);
 		buttonDelete.setVisible(false);	
 		buttonRead.setVisible(false);
@@ -192,15 +192,16 @@ public abstract class ActionPanel extends HLayout{
 	public void setHiddenActionVisible(boolean b)
 	{
 		if(readAction)
-			buttonRead.setVisible(b);
-		if(createAction)
-			buttonEdit.setVisible(b);	
+			buttonRead.setVisible(b);	
 		if(deleteAction)
 			buttonDelete.setVisible(b);
 		if(copyAction)
 			buttonCopy.setVisible(b);
 		if(moveAction)
 			buttonMove.setVisible(b);
+		if(editAction)
+			buttonEdit.setVisible(b);
+		
 	}
 
 	public void onVisualize(){};

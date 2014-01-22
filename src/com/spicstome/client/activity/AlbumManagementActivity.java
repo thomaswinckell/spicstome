@@ -1,5 +1,7 @@
 package com.spicstome.client.activity;
 
+import java.util.List;
+
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
@@ -14,6 +16,8 @@ import com.spicstome.client.ui.UserViewImpl;
 
 public class AlbumManagementActivity extends UserActivity implements AlbumManagementView.Presenter {
 
+	ReferentDTO referent;
+	
 	public AlbumManagementActivity(AlbumManagementPlace place, ClientFactory clientFactory) {
 
 		super(place, clientFactory,(UserViewImpl)clientFactory.getAlbumManagementView());
@@ -24,34 +28,45 @@ public class AlbumManagementActivity extends UserActivity implements AlbumManage
 
 		
 		super.start(containerWidget, eventBus);
-				
-		SpicsToMeServices.Util.getInstance().getReferentConnected(new AsyncCallback<ReferentDTO>() {
+		
+		clientFactory.getAlbumManagementView().initview();
+		
+		SpicsToMeServices.Util.getInstance().getGeneralAndExampleAlbum(new AsyncCallback<List<AlbumDTO>>() {
 
 			@Override
 			public void onFailure(Throwable caught) {}
 
 			@Override
-			public void onSuccess(ReferentDTO result) {
-				if(result!=null) 
-				{
-					clientFactory.getAlbumManagementView().setAlbums(result.getStudents());
-				}		
+			public void onSuccess(List<AlbumDTO> result) {
+				
+				clientFactory.getAlbumManagementView().insertAlbum(result);
+				
+				SpicsToMeServices.Util.getInstance().getReferentConnected(new AsyncCallback<ReferentDTO>() {
+
+					@Override
+					public void onFailure(Throwable caught) {}
+
+					@Override
+					public void onSuccess(ReferentDTO result) {
+						
+						referent=result;
+						if(result!=null) 
+						{
+							clientFactory.getAlbumManagementView().insertStudentAlbum(result.getStudents());
+						}		
+					}
+				});
+				
 			}
 		});
-	}
-
-	@Override
-	public void copy(AlbumDTO album) {
-		SpicsToMeServices.Util.getInstance().copyAlbum(album, new AsyncCallback<AlbumDTO>() {
-
-			@Override
-			public void onFailure(Throwable caught) {}
-
-			@Override
-			public void onSuccess(AlbumDTO result) {
-				// TODO Auto-generated method stub
 				
-			}
-		});		
+		
+		
+		
+		
+		
+		
+		
 	}
+
 }
