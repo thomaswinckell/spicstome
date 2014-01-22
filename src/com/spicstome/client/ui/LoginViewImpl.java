@@ -9,6 +9,8 @@ import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.PasswordItem;
 import com.smartgwt.client.widgets.form.fields.TextItem;
+import com.smartgwt.client.widgets.form.fields.events.KeyPressEvent;
+import com.smartgwt.client.widgets.form.fields.events.KeyPressHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 
@@ -65,7 +67,22 @@ public class LoginViewImpl extends VLayout implements LoginView
             	listener.login(textLogin.getValueAsString(), textPassword.getValueAsString());           	
             }
         });
+		
+		textPassword.addKeyPressHandler(new KeyPressHandler() {
 
+			@Override
+			public void onKeyPress(KeyPressEvent event) {
+				
+				if(event.getKeyName() != null) {
+					if(event.getKeyName() != null) {
+						String keyName = event.getKeyName();
+						if(keyName.equals("Enter")) {
+							listener.login(textLogin.getValueAsString(), textPassword.getValueAsString());
+						}						
+					}
+				}
+			}			
+		});
 		
 		title.setLayoutAlign(VerticalAlignment.CENTER);
 		image.setLayoutAlign(VerticalAlignment.CENTER);
@@ -80,11 +97,7 @@ public class LoginViewImpl extends VLayout implements LoginView
 		viewPanel.addMember(button);
 		viewPanel.addMember(wrongPanel);
 		
-		
-		
 		addMember(viewPanel);
-		
-		
 	}
 
 	@Override
@@ -92,9 +105,6 @@ public class LoginViewImpl extends VLayout implements LoginView
 	{
 		this.listener = listener;
 	}
-
-
-
 
 	@Override
 	public void setWrongLogin() 
