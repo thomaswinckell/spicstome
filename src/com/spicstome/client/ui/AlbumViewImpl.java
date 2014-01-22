@@ -1,6 +1,6 @@
 package com.spicstome.client.ui;
 
-import com.spicstome.client.dto.AlbumDTO;
+import com.spicstome.client.dto.StudentDTO;
 import com.spicstome.client.place.AlbumManagementPlace;
 import com.spicstome.client.ui.panel.AlbumBookPanel;
 import com.spicstome.client.ui.panel.Book;
@@ -33,9 +33,9 @@ public class AlbumViewImpl extends UserViewImpl  implements AlbumView{
 
 
 	@Override
-	public void setAlbum(AlbumDTO album) {
+	public void setStudent(StudentDTO student){
 		
-		this.albumBookPanel.setAlbum(album);
+		this.albumBookPanel.setStudent(student);
 		
 	}
 }

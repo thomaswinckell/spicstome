@@ -13,6 +13,8 @@ public abstract class ActionPanel extends HLayout{
 	protected IconButton buttonRead = new IconButton("");
 	protected IconButton buttonEdit = new IconButton("");
 	protected IconButton buttonDelete = new IconButton("");
+	protected IconButton buttonCopy = new IconButton("");
+	protected IconButton buttonMove = new IconButton("");
 	
 	
 	private boolean readAction = false;
@@ -20,12 +22,13 @@ public abstract class ActionPanel extends HLayout{
 	private boolean editAction = false;
 	private boolean deleteAction = false;
 	private boolean importAction = false;
-	
+	private boolean copyAction = false;
+	private boolean moveAction = false;
 	
 	protected HLayout hiddenPanel = new HLayout();
 	
 	public ActionPanel(boolean createAction,boolean importAction,boolean readAction
-			,boolean editAction,boolean deleteAction)
+			,boolean editAction,boolean copyAction,boolean moveAction,boolean deleteAction)
 	{
 		super();
 		
@@ -34,12 +37,16 @@ public abstract class ActionPanel extends HLayout{
 		this.deleteAction=deleteAction;
 		this.importAction=importAction;
 		this.createAction=createAction;
+		this.copyAction=copyAction;
+		this.moveAction=moveAction;
 		
 		buttonImport.setVisible(true);
 		buttonNew.setVisible(true);
 		buttonEdit.setVisible(false);
 		buttonDelete.setVisible(false);	
 		buttonRead.setVisible(false);
+		buttonCopy.setVisible(false);
+		buttonMove.setVisible(false);
 		
 		int iconsize=40;
 		
@@ -111,6 +118,41 @@ public abstract class ActionPanel extends HLayout{
 				}
 			});
 		}
+		
+		if(this.copyAction)
+		{
+			buttonCopy.setIcon("copy.png");
+			buttonCopy.setIconSize(iconsize);
+			hiddenPanel.addMember(buttonCopy);
+			
+			buttonCopy.addClickHandler(new ClickHandler() {
+				
+				@Override
+				public void onClick(ClickEvent event) {
+					
+					onCopy();
+					
+				}
+			});
+		}
+		
+		if(this.moveAction)
+		{
+			buttonMove.setIcon("move.png");
+			buttonMove.setIconSize(iconsize);
+			hiddenPanel.addMember(buttonMove);
+			
+			buttonMove.addClickHandler(new ClickHandler() {
+				
+				@Override
+				public void onClick(ClickEvent event) {
+					
+					onMove();
+					
+				}
+			});
+		}
+			
 			
 		if(this.deleteAction)
 		{
@@ -130,7 +172,7 @@ public abstract class ActionPanel extends HLayout{
 		}
 		
 
-		hiddenPanel.setWidth(3*iconsize);
+		hiddenPanel.setWidth(5*iconsize);
 		
 		if(createAction)
 			addMember(buttonNew);
@@ -141,7 +183,7 @@ public abstract class ActionPanel extends HLayout{
 		
 		
 		setHeight(iconsize);
-		setWidth(5*iconsize);
+		setWidth(8*iconsize);
 	
 	}
 	
@@ -155,6 +197,10 @@ public abstract class ActionPanel extends HLayout{
 			buttonEdit.setVisible(b);	
 		if(deleteAction)
 			buttonDelete.setVisible(b);
+		if(copyAction)
+			buttonCopy.setVisible(b);
+		if(moveAction)
+			buttonMove.setVisible(b);
 	}
 
 	public void onVisualize(){};
@@ -162,5 +208,7 @@ public abstract class ActionPanel extends HLayout{
 	public void onNew(){};
 	public void onDelete(){};
 	public void onImport(){};
+	public void onCopy(){};
+	public void onMove(){};
 
 }

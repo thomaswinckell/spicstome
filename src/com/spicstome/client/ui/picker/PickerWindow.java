@@ -2,6 +2,7 @@ package com.spicstome.client.ui.picker;
 
 import java.util.LinkedHashMap;
 import java.util.Set;
+
 import com.smartgwt.client.widgets.IconButton;
 import com.smartgwt.client.widgets.Window;
 import com.smartgwt.client.widgets.events.ClickEvent;
@@ -31,17 +32,20 @@ public abstract class PickerWindow extends Window{
     VLayout verticalLayout = new VLayout();
     HLayout bottomLayout = new HLayout();
     Set<StudentDTO> others;
-
+    public enum Type{IMPORT,MOVE};
+	Type type;
 	
-	public PickerWindow(Set<StudentDTO> list,int width,int height) {
+	public PickerWindow(Set<StudentDTO> list,Type type,int width,int height) {
 		super();
 				
+		this.type=type;
+		
 		setWidth(width);
 		setHeight(height);
 		
 		this.others = list;
   
-        setTitle("Import depuis autre album");
+        
         setShowMinimizeButton(false);
         setIsModal(true);
         setShowModalMask(true);
@@ -69,7 +73,7 @@ public abstract class PickerWindow extends Window{
             	  public void onChange(ChangeEvent event) {
 
             		  StudentDTO student = getStudentWithId(Integer.valueOf(event.getValue().toString()));
-            		  albumPanel.setAlbum(student.getAlbum());
+            		  albumPanel.setStudent(student);
             		  albumPanel.setOwnerName(student.getFirstName());
             	  }
               });
@@ -80,7 +84,7 @@ public abstract class PickerWindow extends Window{
         InitAlbumPanel();
         
         /* setting first album */
-        albumPanel.setAlbum(others.iterator().next().getAlbum());
+        albumPanel.setStudent(others.iterator().next());
         albumPanel.setOwnerName(others.iterator().next().getFirstName());
   
         validButton.setIcon("check.png");

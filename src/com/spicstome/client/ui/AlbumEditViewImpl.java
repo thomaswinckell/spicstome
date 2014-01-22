@@ -1,8 +1,6 @@
 package com.spicstome.client.ui;
 
 import java.util.Set;
-
-import com.spicstome.client.dto.AlbumDTO;
 import com.spicstome.client.dto.ArticleDTO;
 import com.spicstome.client.dto.FolderDTO;
 import com.spicstome.client.dto.StudentDTO;
@@ -118,6 +116,13 @@ public class AlbumEditViewImpl extends UserViewImpl  implements AlbumEditView{
 				
 			}
 
+			@Override
+			public void onMoveArticle(ArticleDTO child, FolderDTO parent) {
+				
+				((AlbumEditView.Presenter)(listener)).move(child,parent);
+				
+			}
+
 		
 			
 		};
@@ -128,9 +133,9 @@ public class AlbumEditViewImpl extends UserViewImpl  implements AlbumEditView{
 
 
 	@Override
-	public void setAlbum(AlbumDTO album)
+	public void setStudent(StudentDTO student)
 	{
-		albumEditPanel.setAlbum(album);
+		albumEditPanel.setStudent(student);
 	}
 
 	@Override

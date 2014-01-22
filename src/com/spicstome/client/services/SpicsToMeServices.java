@@ -82,4 +82,5 @@ public interface SpicsToMeServices extends RemoteService {
 	/*COPY*/
 	public FolderDTO copyFolder(FolderDTO folderDTO,FolderDTO parent);
 	public ArticleDTO copyArticle(ArticleDTO articleDTO,FolderDTO parent);
+	public AlbumDTO copyAlbum(AlbumDTO albumDTO);
 }

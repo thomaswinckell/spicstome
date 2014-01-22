@@ -68,5 +68,6 @@ public interface SpicsToMeServicesAsync {
 	/*COPY*/
 	void copyFolder(FolderDTO folderDTO,FolderDTO parent,AsyncCallback<FolderDTO> callback);
 	void copyArticle(ArticleDTO articleDTO,FolderDTO parent,AsyncCallback<ArticleDTO> callback);
+	void copyAlbum(AlbumDTO albumDTO,AsyncCallback<AlbumDTO> callback);
 	
 }

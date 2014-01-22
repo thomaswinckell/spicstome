@@ -12,12 +12,14 @@ public class ArticlePickerWindow extends PickerWindow {
     public Book book;
 	
 	public ArticlePickerWindow(Set<StudentDTO> list) {
-		super(list, 1000, 450);
+		super(list,Type.IMPORT, 1000, 450);
 		
 	}
 	@Override
 	public void InitAlbumPanel()
 	{
+		setTitle("Importer un article depuis autre album");
+		
 		 book = new Book(50){
 	        	@Override
 	        	public void onSelectChangeBook(ImageRecord image)
