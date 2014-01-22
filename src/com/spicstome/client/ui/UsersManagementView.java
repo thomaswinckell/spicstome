@@ -20,6 +20,7 @@ import com.google.gwt.user.client.ui.IsWidget;
 import com.spicstome.client.dto.ReferentDTO;
 import com.spicstome.client.dto.StudentDTO;
 import com.spicstome.client.dto.TeacherDTO;
+import com.spicstome.client.dto.UserDTO;
 
 /**
  * View base interface.
@@ -27,7 +28,7 @@ import com.spicstome.client.dto.TeacherDTO;
  */
 public interface UsersManagementView extends IsWidget {
 
-	public void setStudents (List<StudentDTO> students);
-	public void setTeachers (List<TeacherDTO> teachers);
-	public void setReferents (List<ReferentDTO> referents);
+	public void setStudents (List<UserDTO> students);
+	public void setTeachers (List<UserDTO> teachers);
+	public void setReferents (List<UserDTO> referents);
 }

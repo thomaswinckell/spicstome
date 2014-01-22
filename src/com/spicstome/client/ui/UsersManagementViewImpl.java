@@ -14,6 +14,7 @@
  *******************************************************************************/
 package com.spicstome.client.ui;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.smartgwt.client.types.Alignment;
@@ -24,6 +25,7 @@ import com.smartgwt.client.widgets.layout.VLayout;
 import com.spicstome.client.dto.ReferentDTO;
 import com.spicstome.client.dto.StudentDTO;
 import com.spicstome.client.dto.TeacherDTO;
+import com.spicstome.client.dto.UserDTO;
 import com.spicstome.client.place.AddUserPlace;
 import com.spicstome.client.ui.form.ReferentsEditForm;
 import com.spicstome.client.ui.form.StudentsEditForm;
@@ -76,15 +78,15 @@ public class UsersManagementViewImpl extends UserViewImpl implements UsersManage
 		mainPanel.addMember(vLayout);
 	}
 	
-	public void setStudents (List<StudentDTO> students) {
+	public void setStudents (List<UserDTO> students) {
 		studentsEditForm.setStudents(students, this);
 	}
 	
-	public void setReferents (List<ReferentDTO> referents) {
+	public void setReferents (List<UserDTO> referents) {		
 		referentsEditForm.setReferents(referents, this);
 	}
 	
-	public void setTeachers (List<TeacherDTO> teachers) {
+	public void setTeachers (List<UserDTO> teachers) {
 		teachersEditForm.setTeachers(teachers, this);
 	}
 }

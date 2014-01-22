@@ -1,12 +1,14 @@
 
 package com.spicstome.client.activity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.spicstome.client.ClientFactory;
 import com.spicstome.client.dto.StudentDTO;
 import com.spicstome.client.dto.TeacherDTO;
 import com.spicstome.client.dto.ReferentDTO;
+import com.spicstome.client.dto.UserDTO;
 import com.spicstome.client.place.UsersManagementPlace;
 import com.spicstome.client.services.SpicsToMeServices;
 import com.spicstome.client.ui.UserViewImpl;
@@ -36,7 +38,11 @@ public class UsersManagementActivity extends UserActivity {
 
 			@Override
 			public void onSuccess(List<StudentDTO> students) {
-				view.setStudents(students);
+				List<UserDTO> users = new ArrayList<UserDTO>();
+				for(StudentDTO student : students) {
+					users.add(((UserDTO) student));
+				}
+				view.setStudents(users);
 			}
 		});
 		
@@ -49,7 +55,11 @@ public class UsersManagementActivity extends UserActivity {
 
 			@Override
 			public void onSuccess(List<TeacherDTO> teachers) {
-				view.setTeachers(teachers);
+				List<UserDTO> users = new ArrayList<UserDTO>();
+				for(TeacherDTO teacher : teachers) {
+					users.add(((UserDTO) teacher));
+				}
+				view.setTeachers(users);
 			}
 		});
 		
@@ -62,7 +72,11 @@ public class UsersManagementActivity extends UserActivity {
 
 			@Override
 			public void onSuccess(List<ReferentDTO> referents) {
-				view.setReferents(referents);
+				List<UserDTO> users = new ArrayList<UserDTO>();
+				for(ReferentDTO referent : referents) {
+					users.add(((UserDTO) referent));
+				}
+				view.setReferents(users);
 			}
 		});
 	}
