@@ -3,10 +3,12 @@ package com.spicstome.client.ui.form;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+
 import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.SelectItem;
 import com.smartgwt.client.widgets.form.fields.events.ChangeEvent;
 import com.smartgwt.client.widgets.form.fields.events.ChangeHandler;
+import com.smartgwt.client.widgets.layout.VLayout;
 import com.spicstome.client.dto.ImageDTO;
 import com.spicstome.client.dto.LogDTO;
 import com.spicstome.client.dto.ReferentDTO;
@@ -14,17 +16,20 @@ import com.spicstome.client.dto.StudentDTO;
 import com.spicstome.client.dto.TeacherDTO;
 import com.spicstome.client.dto.UserDTO;
 
-public class UserTypeForm extends DynamicForm {
+public class UserTypeForm extends VLayout {
 	
 	private FormUtils.Mode mode;
 	
 	private SelectItem userTypeSelectItem;
 	private UserDTO userDTO;
 	private LinkedStudentsForm linkedStudentsForm = null;
+	private DynamicForm form;
 
 	public UserTypeForm () {
 		
 		super();
+		
+		form = new DynamicForm();
         
         // Selecting the user type        
         userTypeSelectItem = new SelectItem("user_type", "Type d'utilisateur");
@@ -47,17 +52,15 @@ public class UserTypeForm extends DynamicForm {
 			}
         });
         
+        userTypeSelectItem.setTop(10);
+        
+        form.setFields(userTypeSelectItem);
+        
+        addMember(form);
+        
         linkedStudentsForm = new LinkedStudentsForm();
 		
-		setFields(userTypeSelectItem, linkedStudentsForm.getLinkedStudentsSelectItem(), 
-				linkedStudentsForm.getRemoveStudentButtonItem(), 
-				linkedStudentsForm.getNonLinkedStudentsSelectItem(), 
-				linkedStudentsForm.getAddStudentButtonItem());
-		
-		linkedStudentsForm.getLinkedStudentsSelectItem().setVisible(false);
-		linkedStudentsForm.getRemoveStudentButtonItem().setVisible(false);  
-		linkedStudentsForm.getNonLinkedStudentsSelectItem().setVisible(false); 
-		linkedStudentsForm.getAddStudentButtonItem().setVisible(false);
+		addMember(linkedStudentsForm);
 	}
 	
 	public void setUserDTO(UserDTO userDTO, FormUtils.Mode mode) {
@@ -98,17 +101,11 @@ public class UserTypeForm extends DynamicForm {
 		
         linkedStudentsForm.setLinkedStudents(students, mode);
         
-        linkedStudentsForm.getLinkedStudentsSelectItem().show(); 
-		linkedStudentsForm.getRemoveStudentButtonItem().show(); 
-		linkedStudentsForm.getNonLinkedStudentsSelectItem().show();  
-		linkedStudentsForm.getAddStudentButtonItem().show();
+        linkedStudentsForm.show();
 	}
 	
 	public void setStudentMode() {
-		linkedStudentsForm.getLinkedStudentsSelectItem().hide();
-		linkedStudentsForm.getRemoveStudentButtonItem().hide();
-		linkedStudentsForm.getNonLinkedStudentsSelectItem().hide();
-		linkedStudentsForm.getAddStudentButtonItem().hide();
+		linkedStudentsForm.hide();
 	}
 	
 	public UserDTO getUserDTO() {

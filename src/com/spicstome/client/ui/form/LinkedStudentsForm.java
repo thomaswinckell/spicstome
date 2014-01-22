@@ -1,160 +1,122 @@
 package com.spicstome.client.ui.form;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
+
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.smartgwt.client.widgets.form.fields.ButtonItem;
-import com.smartgwt.client.widgets.form.fields.SelectItem;
+import com.smartgwt.client.types.Alignment;
+import com.smartgwt.client.types.VerticalAlignment;
+import com.smartgwt.client.util.SC;
+import com.smartgwt.client.widgets.IButton;
+import com.smartgwt.client.widgets.form.DynamicForm;
+import com.smartgwt.client.widgets.events.ClickEvent;
+import com.smartgwt.client.widgets.events.ClickHandler;
+import com.smartgwt.client.widgets.layout.HLayout;
+import com.smartgwt.client.widgets.layout.VLayout;
 import com.spicstome.client.dto.StudentDTO;
+import com.spicstome.client.dto.UserDTO;
 import com.spicstome.client.services.SpicsToMeServices;
 
-public class LinkedStudentsForm {
+public class LinkedStudentsForm extends VLayout {
 	
-	private SelectItem linkedStudentsSelectItem, nonLinkedStudentsSelectItem;
-	private ButtonItem removeStudentButtonItem, addStudentButtonItem;
-	
-	private LinkedHashMap<String, String> linkedStudentsValueMap, nonLinkedStudentsValueMap;
-	private LinkedHashMap<String, String> linkedStudentsImagesValueMap, nonLinkedStudentsImagesValueMap;
+	private UserComboBoxItem linkedStudentsSelectItem, nonLinkedStudentsSelectItem;
+	private IButton removeStudentButtonItem, addStudentButtonItem;
+	private DynamicForm linkedStudentsForm, nonLinkedStudentsForm;
 	
 	public LinkedStudentsForm() {
-
-        linkedStudentsValueMap = new LinkedHashMap<String, String>();
-        linkedStudentsImagesValueMap = new LinkedHashMap<String, String>();
-        
-        removeStudentButtonItem = new ButtonItem("btn_unlink_student", "D&eacute;lier");
 		
-		linkedStudentsSelectItem = new SelectItem("linked_students", "Etudiants li&eacute;s");
-        linkedStudentsSelectItem.setValueMap(linkedStudentsValueMap);
-        linkedStudentsSelectItem.setValueIcons(linkedStudentsImagesValueMap);
-	        
-        linkedStudentsSelectItem.setImageURLPrefix(FormUtils.UPLOAD_IMAGE_PATH);
+		super();
+		
+		linkedStudentsForm = new DynamicForm();
+		nonLinkedStudentsForm = new DynamicForm();
         
-        nonLinkedStudentsSelectItem = new SelectItem("non_linked_students", "Etudiants non li&eacute;s");
-        nonLinkedStudentsSelectItem.setImageURLPrefix(FormUtils.UPLOAD_IMAGE_PATH);
+        removeStudentButtonItem = new IButton("D&eacute;lier");
+		
+		linkedStudentsSelectItem = new UserComboBoxItem("linked_students", "Etudiants li&eacute;s");
+        
+        nonLinkedStudentsSelectItem = new UserComboBoxItem("non_linked_students", "Etudiants non li&eacute;s");
               
-        removeStudentButtonItem.addClickHandler(new com.smartgwt.client.widgets.form.fields.events.ClickHandler() {
-            public void onClick(com.smartgwt.client.widgets.form.fields.events.ClickEvent event) {
+        removeStudentButtonItem.addClickHandler(new ClickHandler() {
+            public void onClick(ClickEvent event) {
             	
-            	String idStudent = linkedStudentsSelectItem.getValueAsString();
+            	String val = linkedStudentsSelectItem.getValueAsString();
             	
-            	// saving and removing the current student from the students list
-            	String studentName = linkedStudentsValueMap.get(idStudent);
-            	String studentImageFilename = linkedStudentsImagesValueMap.get(idStudent);	            	
-            	linkedStudentsValueMap.remove(idStudent);
-            	linkedStudentsImagesValueMap.remove(idStudent);
-            	
-            	// add current student to the add list
-            	nonLinkedStudentsValueMap.put(idStudent, studentName);
-            	nonLinkedStudentsImagesValueMap.put(idStudent, studentImageFilename);
-            	
-            	forceDataUpdate();
-            	
-            	nonLinkedStudentsSelectItem.enable();
-            	addStudentButtonItem.enable();
-            	nonLinkedStudentsSelectItem.setDefaultValue(idStudent);
-            	
-            	if (linkedStudentsValueMap.keySet().size() > 0) {		            	
-            		linkedStudentsSelectItem.setDefaultValue(linkedStudentsValueMap.keySet().iterator().next());
-            	} else {
-            		linkedStudentsSelectItem.setDefaultValue("Aucun");
-            		linkedStudentsSelectItem.disable();
-	            	removeStudentButtonItem.disable();
-            	}
+            	if ((val == null) || val.isEmpty()){
+					SC.warn("Veuillez s&eacute;lectionner un &eacute;tudiant.");
+				} else {				
+					// saving and removing the current student from the students list
+	            	UserDTO userDTO = linkedStudentsSelectItem.removeUser(Long.parseLong(val));
+	            	
+	            	// add current student to the add list
+	            	nonLinkedStudentsSelectItem.addUser(userDTO);
+	            	addStudentButtonItem.enable();
+	            	
+	            	if (linkedStudentsSelectItem.isEmpty()) {		            	
+	            		removeStudentButtonItem.disable();
+	            	} else {
+		            	removeStudentButtonItem.enable();
+	            	}
+				}
             }
         });
         
-        addStudentButtonItem = new ButtonItem("btn_link_student", "Lier");
-        
-        nonLinkedStudentsValueMap = new LinkedHashMap<String, String>();
-		nonLinkedStudentsImagesValueMap = new LinkedHashMap<String, String>();
+        addStudentButtonItem = new IButton("Lier");
 		
-		addStudentButtonItem.addClickHandler(new com.smartgwt.client.widgets.form.fields.events.ClickHandler() {
-            public void onClick(com.smartgwt.client.widgets.form.fields.events.ClickEvent event) {
-            	String idStudent = nonLinkedStudentsSelectItem.getValueAsString();
+		addStudentButtonItem.addClickHandler(new ClickHandler() {
+            public void onClick(ClickEvent event) {
             	
-            	// saving and removing the current student from the add list
-            	String studentName = nonLinkedStudentsValueMap.get(idStudent);
-            	String studentImageFilename = nonLinkedStudentsImagesValueMap.get(idStudent);	            	
-            	nonLinkedStudentsValueMap.remove(idStudent);
-            	nonLinkedStudentsImagesValueMap.remove(idStudent);
+            	String val = nonLinkedStudentsSelectItem.getValueAsString();
             	
-            	// add current student to the students list
-            	linkedStudentsValueMap.put(idStudent, studentName);
-            	linkedStudentsImagesValueMap.put(idStudent, studentImageFilename);
-            	
-            	forceDataUpdate();
-            	
-            	linkedStudentsSelectItem.enable();
-            	removeStudentButtonItem.enable();
-            	linkedStudentsSelectItem.setDefaultValue(idStudent);
-            	
-            	if (nonLinkedStudentsValueMap.keySet().size() > 0) {		            	
-            		nonLinkedStudentsSelectItem.setDefaultValue(nonLinkedStudentsValueMap.keySet().iterator().next());
-            	} else {
-            		nonLinkedStudentsSelectItem.setDefaultValue("Aucun");
-            		nonLinkedStudentsSelectItem.disable();
-	            	addStudentButtonItem.disable();
-            	}
+            	if ((val == null) || val.isEmpty()){
+					SC.warn("Veuillez s&eacute;lectionner un &eacute;tudiant.");
+				} else {	
+	            	// saving and removing the current student from the students list
+	            	UserDTO userDTO = nonLinkedStudentsSelectItem.removeUser(Long.parseLong(val));
+	            	
+	            	// add current student to the add list
+	            	linkedStudentsSelectItem.addUser(userDTO);
+	            	removeStudentButtonItem.enable();
+	            	
+	            	if (nonLinkedStudentsSelectItem.isEmpty()) {		            	
+	            		addStudentButtonItem.disable();
+	            	} else {
+	            		addStudentButtonItem.enable();
+	            	}
+				}
             }
         });
-	}
-
-	public SelectItem getLinkedStudentsSelectItem() {
-		return linkedStudentsSelectItem;
-	}
-
-	public SelectItem getNonLinkedStudentsSelectItem() {
-		return nonLinkedStudentsSelectItem;
-	}
-
-	public ButtonItem getRemoveStudentButtonItem() {
-		return removeStudentButtonItem;
-	}
-
-	public ButtonItem getAddStudentButtonItem() {
-		return addStudentButtonItem;
+		
+		linkedStudentsForm.setFields(linkedStudentsSelectItem);
+		nonLinkedStudentsForm.setFields(nonLinkedStudentsSelectItem);
+		
+		removeStudentButtonItem.setLayoutAlign(Alignment.CENTER);
+		addStudentButtonItem.setLayoutAlign(VerticalAlignment.CENTER);
+		
+		HLayout hLayout = new HLayout();
+		hLayout.addMember(linkedStudentsForm);
+		hLayout.addMember(removeStudentButtonItem);
+		
+		HLayout hLayout2 = new HLayout();
+		hLayout2.addMember(nonLinkedStudentsForm);
+		hLayout2.addMember(addStudentButtonItem);
+		
+		addMember(hLayout);
+		addMember(hLayout2);
 	}
 	
-	private void forceDataUpdate() {
-    	linkedStudentsSelectItem.clearValue();
-    	nonLinkedStudentsSelectItem.clearValue();
-    	linkedStudentsSelectItem.setValueMap(linkedStudentsValueMap);
-    	linkedStudentsSelectItem.setValueIcons(linkedStudentsImagesValueMap);
-    	nonLinkedStudentsSelectItem.setValueMap(nonLinkedStudentsValueMap);
-    	nonLinkedStudentsSelectItem.setValueIcons(nonLinkedStudentsImagesValueMap);
-	}
-	
-	public void setLinkedStudents(ArrayList<StudentDTO> students, FormUtils.Mode mode) {
+	public void setLinkedStudents(List<StudentDTO> students, FormUtils.Mode mode) {
 		
-        linkedStudentsValueMap.clear();
-        linkedStudentsImagesValueMap.clear();
-        nonLinkedStudentsValueMap.clear();
-        nonLinkedStudentsImagesValueMap.clear();
+		List<UserDTO> users = new ArrayList<UserDTO>();
+		for (StudentDTO student : students) {
+			users.add((UserDTO) student);
+		}
+		linkedStudentsSelectItem.setUsers(users);
 		
-		String firstStudentId = null;
-        
-	    if (mode == FormUtils.Mode.EDIT) {
-	        
-	        for(StudentDTO student : students) {
-				if (firstStudentId == null)
-					firstStudentId = student.getId().toString();
-					
-				linkedStudentsValueMap.put(student.getId().toString(), student.getFirstName()+" "+student.getName());
-				linkedStudentsImagesValueMap.put(student.getId().toString(), student.getImage().getFilename());
-			}
-	    }
-	    
-	    if (firstStudentId == null) {
-	        linkedStudentsSelectItem.setDefaultValue("Aucun");
-	        linkedStudentsSelectItem.disable();
-	        removeStudentButtonItem.disable();
-        } else {
-        	linkedStudentsSelectItem.setDefaultValue(firstStudentId);
-	        linkedStudentsSelectItem.enable();
-	        removeStudentButtonItem.enable();
-        }
+		if (linkedStudentsSelectItem.isEmpty()) {		            	
+    		removeStudentButtonItem.disable();
+    	} else {
+        	removeStudentButtonItem.enable();
+    	}
 	    
 	    SpicsToMeServices.Util.getInstance().getAllStudents(new AsyncCallback<List<StudentDTO>> () {
         	
@@ -165,44 +127,27 @@ public class LinkedStudentsForm {
 
 			@Override
 			public void onSuccess(List<StudentDTO> students) {
-				
-				String firstStudentId = null;
-				for(StudentDTO student : students) {
-					
-					if (!linkedStudentsValueMap.containsKey(student.getId().toString())) {					
-						if (firstStudentId == null)
-							firstStudentId = student.getId().toString();
-							
-						nonLinkedStudentsValueMap.put(student.getId().toString(), student.getFirstName()+" "+student.getName());
-						nonLinkedStudentsImagesValueMap.put(student.getId().toString(), student.getImage().getFilename());
-					}
+				List<UserDTO> users = new ArrayList<UserDTO>();
+				for (StudentDTO student : students) {
+					if (!linkedStudentsSelectItem.getUsers().contains((UserDTO) student))
+						users.add((UserDTO) student);
 				}
+				nonLinkedStudentsSelectItem.setUsers(users);
 				
-				nonLinkedStudentsSelectItem.setValueMap(nonLinkedStudentsValueMap);
-				nonLinkedStudentsSelectItem.setValueIcons(nonLinkedStudentsImagesValueMap);
-				
-				forceDataUpdate();
-				
-				if (firstStudentId != null) {
-					nonLinkedStudentsSelectItem.setDefaultValue(firstStudentId);
-					addStudentButtonItem.enable();
-				}
-				else {
-					nonLinkedStudentsSelectItem.setDefaultValue("Aucun");
-					nonLinkedStudentsSelectItem.disable();
-					addStudentButtonItem.disable();
-				}
+				if (nonLinkedStudentsSelectItem.isEmpty()) {		            	
+            		addStudentButtonItem.disable();
+            	} else {
+            		addStudentButtonItem.enable();
+            	}
 			}	    				
 		});
 	}
 	
 	public ArrayList<StudentDTO> getLinkedStudents() {
 		ArrayList<StudentDTO> students = new ArrayList<StudentDTO>();
-		
-		for (Map.Entry<String, String> entry : linkedStudentsValueMap.entrySet()) {
-			
-		    students.add(new StudentDTO(Long.parseLong(entry.getKey())));
-		}
+		for (UserDTO user : linkedStudentsSelectItem.getUsers()) {
+			students.add((StudentDTO) user);
+		}		
 		
 		return students;
 	}

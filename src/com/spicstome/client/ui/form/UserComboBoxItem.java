@@ -3,16 +3,7 @@ package com.spicstome.client.ui.form;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-import com.smartgwt.client.event.Cancellable;
 import com.smartgwt.client.widgets.form.fields.ComboBoxItem;
-import com.smartgwt.client.widgets.form.fields.events.ClickEvent;
-import com.smartgwt.client.widgets.form.fields.events.ClickHandler;
-import com.smartgwt.client.widgets.form.fields.events.EditorEnterEvent;
-import com.smartgwt.client.widgets.form.fields.events.EditorEnterHandler;
-import com.smartgwt.client.widgets.form.fields.events.FocusEvent;
-import com.smartgwt.client.widgets.form.fields.events.FocusHandler;
-import com.smartgwt.client.widgets.form.fields.events.KeyPressEvent;
-import com.smartgwt.client.widgets.form.fields.events.KeyPressHandler;
 import com.smartgwt.client.widgets.grid.CellFormatter;
 import com.smartgwt.client.widgets.grid.HoverCustomizer;
 import com.smartgwt.client.widgets.grid.ListGrid;
@@ -77,13 +68,6 @@ public class UserComboBoxItem extends ComboBoxItem {
   
         setPickListProperties(pickListProperties);
         
-        /*addKeyPressHandler(new KeyPressHandler() {
-			@Override
-			public void onKeyPress(KeyPressEvent event) {
-				event.cancel();
-			}        	
-        });*/
-        
         setAddUnknownValues(false);
 	}
 	
@@ -119,19 +103,28 @@ public class UserComboBoxItem extends ComboBoxItem {
 		return isEmpty;
 	}
 	
-	public void setUsers (List<UserDTO> mUsers) {
-		users = mUsers;
-		
+	public void setUsers(List<UserDTO> mUsers) {
+		users = mUsers;		
 		updateSelectItem();
 	}
 	
-	public void removeUser(Long idUser) {
+	public List<UserDTO> getUsers() {
+		return users;
+	}
+	
+	public void addUser(UserDTO userDTO) {
+		users.add(userDTO);
+		updateSelectItem();
+	}
+	
+	public UserDTO removeUser(Long idUser) {
 		for(UserDTO user : users) {
 			if (user.getId() == idUser) {
 				users.remove(user);
 				updateSelectItem();
-				return;
+				return user;
 			}
 		}
+		return null;
 	}
 }

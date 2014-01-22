@@ -1,6 +1,7 @@
 package com.spicstome.client.ui;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.smartgwt.client.types.Alignment;
 import com.spicstome.client.dto.UserDTO;
 import com.spicstome.client.place.UsersManagementPlace;
 import com.spicstome.client.ui.form.FormUtils;
@@ -21,7 +22,7 @@ public class AddUserViewImpl extends UserViewImpl  implements AddUserView {
 			}
 		});*/
 		
-		userForm = new UserForm(mainPanel, new AsyncCallback<Long> () {
+		userForm = new UserForm(new AsyncCallback<Long> () {
 			@Override
 			public void onFailure(Throwable caught) {
 				System.out.println(caught);
@@ -32,6 +33,10 @@ public class AddUserViewImpl extends UserViewImpl  implements AddUserView {
 				goTo(new UsersManagementPlace());
 			}
 		});
+		
+		userForm.setWidth(500);
+		userForm.setLayoutAlign(Alignment.CENTER);
+		mainPanel.addMember(userForm);
 	}
 	
 	public void setUserDTO(UserDTO userDTO) {

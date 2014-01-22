@@ -10,6 +10,7 @@ import gwtupload.client.IUploader.OnFinishUploaderHandler;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.XMLParser;
+import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.IButton;
 import com.smartgwt.client.widgets.Img;
@@ -33,24 +34,49 @@ public class ImageUploadForm {
 		image = new Img(FormUtils.UPLOAD_IMAGE_PATH+imageFileName, imageWidth, imageHeight);
 
 		uploadButton = new IButton("Charger une nouvelle image");
+		
+		final IButton saveImageButton = new IButton("Sauvegarder");
+
+		final Img uploaderImage = new Img(FormUtils.UPLOAD_IMAGE_PATH+FormUtils.DEFAULT_IMAGE_FILENAME, imageWidth, imageHeight);
+
+		final SingleUploader uploader = new SingleUploader(FileInputType.BROWSER_INPUT);
+		uploader.setValidExtensions("jpg","jpeg","png","bmp","gif");
+		uploader.setI18Constants(new MyUploaderConstants());
+		uploader.setAvoidRepeatFiles(true);
+
+		String url = GWT.getModuleBaseURL()+"imageUpload";
+		uploader.setServletPath(url);
+		
+		final Window window = new Window();
+		window.setWidth(265);
+		window.setHeight(290);
+		window.setTitle("Chargement d'une image");
+		window.centerInPage();
+		
+		uploaderImage.setLayoutAlign(Alignment.CENTER);
+		saveImageButton.setLayoutAlign(Alignment.CENTER);
+		
+		saveImageButton.disable();
+
+		saveImageButton.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				image.setSrc(FormUtils.UPLOAD_IMAGE_PATH+imageFileName);
+				window.destroy();
+			}
+		});
+
+		window.addItem(uploaderImage);       
+		window.addItem(uploader);
+		window.addItem(saveImageButton);
 
 		uploadButton.addClickHandler(new ClickHandler() {
 
 			@Override
 			public void onClick(ClickEvent event) {
 
-				final IButton saveImageButton = new IButton("Sauvegarder");
-				saveImageButton.disable();
-
-				final Img uploaderImage = new Img(FormUtils.UPLOAD_IMAGE_PATH+FormUtils.DEFAULT_IMAGE_FILENAME, imageWidth, imageHeight);
-
-				final SingleUploader uploader = new SingleUploader(FileInputType.BROWSER_INPUT);
-				uploader.setValidExtensions("jpg","jpeg","png","bmp","gif");
-				uploader.setI18Constants(new MyUploaderConstants());
-				uploader.setAvoidRepeatFiles(true);
-
-				String url = GWT.getModuleBaseURL()+"imageUpload";
-				uploader.setServletPath(url);
+				
 
 				uploader.addOnFinishUploadHandler(new OnFinishUploaderHandler() {
 					public void onFinish(IUploader uploader) {
@@ -77,25 +103,6 @@ public class ImageUploadForm {
 
 					}
 				});
-
-				final Window window = new Window();
-				window.setWidth(400);
-				window.setHeight(400);
-				window.setTitle("Chargement d'une image");
-				window.centerInPage();
-
-				saveImageButton.addClickHandler(new ClickHandler() {
-
-					@Override
-					public void onClick(ClickEvent event) {
-						image.setSrc(FormUtils.UPLOAD_IMAGE_PATH+imageFileName);
-						window.destroy();
-					}
-				});
-
-				window.addItem(uploaderImage);       
-				window.addItem(uploader);
-				window.addItem(saveImageButton);
 
 				window.show();
 			}

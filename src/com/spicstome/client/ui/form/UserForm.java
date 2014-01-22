@@ -8,11 +8,12 @@ import com.smartgwt.client.widgets.IButton;
 import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
+import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.spicstome.client.dto.UserDTO;
 import com.spicstome.client.services.SpicsToMeServices;
 
-public class UserForm {
+public class UserForm extends VLayout {
 	
 	private UserDTO userDTO;
 
@@ -22,13 +23,17 @@ public class UserForm {
 	private FormUtils.Mode mode;
 	private AsyncCallback<Long> onSuccess;
 	
-	public UserForm (VLayout mainPanel, AsyncCallback<Long> onSuccess) {
+	public UserForm (AsyncCallback<Long> onSuccess) {
+		
+		super();
 		
 		this.onSuccess = onSuccess;
 		
 		basicUserForm = new BasicUserForm();
 		
-		Label labelUserImage = new Label("Image de l'utilisateur :");
+		Label labelUserImage = new Label("<b>Image :</b>");
+		
+		labelUserImage.setPadding(7);
 
 		imageUploadForm = new ImageUploadForm(128, 128);
 		
@@ -53,15 +58,28 @@ public class UserForm {
 	    	}
 	    });
 	    
-	    VLayout vLayout = new VLayout();
-	    vLayout.addMember(basicUserForm);
-	    vLayout.addMember(labelUserImage);
-	    vLayout.addMember(imageUploadForm.getImage());
-	    vLayout.addMember(imageUploadForm.getUploadButton());
-	    vLayout.addMember(userTypeForm);
-	    vLayout.addMember(validateButton);
+	    setPadding(20);
 	    
-	    mainPanel.addMember(vLayout);
+	    HLayout hLayout = new HLayout();
+	    labelUserImage.setLayoutAlign(VerticalAlignment.CENTER);
+	    labelUserImage.setAlign(Alignment.RIGHT);
+	    hLayout.addMember(labelUserImage);
+	    
+	    VLayout vLayout = new VLayout();
+	    imageUploadForm.getImage().setPadding(10);
+	    vLayout.addMember(imageUploadForm.getImage());
+	    imageUploadForm.getUploadButton().setWidth("150px");
+	    vLayout.addMember(imageUploadForm.getUploadButton());
+	    
+	    hLayout.addMember(vLayout);
+	    
+	    addMember(basicUserForm);
+	    addMember(hLayout);
+	    
+	    addMember(userTypeForm);
+	    
+	    validateButton.setLayoutAlign(Alignment.CENTER);
+	    addMember(validateButton);
 	}
 	
 	public boolean validate() {

@@ -70,7 +70,7 @@ public class TeachersEditForm extends HLayout {
 				String val = selectItem.getValueAsString();
 				
 				if ((val == null) || val.isEmpty()){
-					SC.warn("Veuillez s&eacute;lectionner un r&eacute;f&eacute;rent.");
+					SC.warn("Veuillez s&eacute;lectionner un enseignant.");
 				} else {				
 					Long idTeacher = Long.parseLong(val);
 					
