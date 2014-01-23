@@ -44,7 +44,7 @@ public class Test {
 		return imageUser;
 	}
 	
-	public static void generateSubject(String name,String image,Folder parent,int gender,int number,int nature)
+	public static void generateSubject(int order,String name,String image,Folder parent,int gender,int number,int nature)
 	{
 		Image imageSubject = new Image((long)-1);
 		imageSubject.setFilename(image);
@@ -58,51 +58,54 @@ public class Test {
 		subject.setNumber(number);
 		subject.setImage(imageSubject);
 		subject.setFolder(parent);
+		subject.setOrder(order);
 		
 		HibernateManager.getInstance().save(subject);
 		
 	}
 	
-	public static void generateVerb(String name,String image,Folder parent,int group)
+	public static void generateVerb(int order,String name,String image,Folder parent,int group)
 	{
 		Image imageSubject = new Image((long)-1);
 		imageSubject.setFilename(image);
 		
 		HibernateManager.getInstance().save(imageSubject);
 		
-		Verb subject = new Verb((long)-1);
-		subject.setName(name);
-		subject.setGroup(group);
-		subject.setImage(imageSubject);
-		subject.setFolder(parent);
+		Verb verb = new Verb((long)-1);
+		verb.setName(name);
+		verb.setGroup(group);
+		verb.setImage(imageSubject);
+		verb.setFolder(parent);
+		verb.setOrder(order);
 		
-		HibernateManager.getInstance().save(subject);
+		HibernateManager.getInstance().save(verb);
 	}
 	
 	public static void generateGeneralAlbum()
 	{
-		Folder racine = generateFolder("Tout", "all.png", null);
-		Folder qui = generateFolder("Qui", "qui.gif", racine);
-		Folder quoi = generateFolder("Quoi", "quoi.gif", racine);
-		Folder comment = generateFolder("Comment", "comment.gif", racine);
+		Folder racine = generateFolder(0,"Tout", "all.png", null);
+		Folder qui = generateFolder(0,"Qui", "qui.gif", racine);
+		Folder quoi = generateFolder(1,"Quoi", "quoi.gif", racine);
+		Folder comment = generateFolder(2,"Comment", "comment.gif", racine);
 		
-		Folder couverts = generateFolder("Couverts", "couverts.gif", quoi);
-		Folder choses = generateFolder("Choses", "choses.gif", quoi);
-		Folder nouriture = generateFolder("Nourriture", "nourriture.gif", quoi);
-		Folder commercants = generateFolder("Commerçants", "commercants.gif", qui);
+		Folder couverts = generateFolder(0,"Couverts", "couverts.gif", quoi);
+		Folder choses = generateFolder(1,"Choses", "choses.gif", quoi);
+		Folder nouriture = generateFolder(2,"Nourriture", "nourriture.gif", quoi);
 		
-		generateSubject("Je", "je_1.JPG", qui, 0, 0, 0);
-		generateSubject("Je", "je_2.JPG", qui, 1, 0, 0);
-		generateSubject("Tu", "tu_1.JPG", qui, 0, 0, 1);
-		generateSubject("Tu", "tu_2.JPG", qui, 1, 0, 1);
+		Folder commercants = generateFolder(0,"Commerçants", "commercants.gif", qui);
 		
-		generateVerb("Ecouter", "ecouter.gif", quoi, 0);
-		generateVerb("Dormir", "dormir.gif", quoi, 0);
-		generateVerb("Dire", "dire.gif", quoi, 0);
+		generateSubject(0,"Je", "je_1.JPG", qui, 0, 0, 0);
+		generateSubject(1,"Je", "je_2.JPG", qui, 1, 0, 0);
+		generateSubject(2,"Tu", "tu_1.JPG", qui, 0, 0, 1);
+		generateSubject(3,"Tu", "tu_2.JPG", qui, 1, 0, 1);
 		
-		generateSubject("Cerises", "cerises.gif", nouriture, 1, 1, 2);
+		generateVerb(0,"Ecouter", "ecouter.gif", quoi, 0);
+		generateVerb(1,"Dormir", "dormir.gif", quoi, 0);
+		generateVerb(2,"Dire", "dire.gif", quoi, 0);
 		
-		generateSubject("Boulanger", "boulanger.gif", commercants, 0, 0, 2);
+		generateSubject(0,"Cerises", "cerises.gif", nouriture, 1, 1, 2);
+		
+		generateSubject(0,"Boulanger", "boulanger.gif", commercants, 0, 0, 2);
 
 		Album album = new Album((long)-1);
 		album.setFolder(racine);
@@ -112,7 +115,7 @@ public class Test {
 	
 	
 	
-	public static Folder generateFolder(String name,String image,Folder parent)
+	public static Folder generateFolder(int order,String name,String image,Folder parent)
 	{
 		Image imageRacine = new Image((long)-1);
 		imageRacine.setFilename(image);
@@ -123,6 +126,7 @@ public class Test {
 		folder.setName(name);
 		folder.setImage(imageRacine);
 		folder.setFolder(parent);
+		folder.setOrder(order);
 		
 		HibernateManager.getInstance().save(folder);
 		
@@ -134,8 +138,8 @@ public class Test {
 	public static Album generateExampleAlbum()
 	{
 	
-		Folder racine = generateFolder("Tout", "all.png", null);
-		Folder qui = generateFolder("Dossier", "qui.gif", racine);
+		Folder racine = generateFolder(0,"Tout", "all.png", null);
+		Folder qui = generateFolder(0,"Dossier", "qui.gif", racine);
 	
 		
 

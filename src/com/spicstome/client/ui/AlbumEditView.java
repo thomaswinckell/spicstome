@@ -1,7 +1,6 @@
 package com.spicstome.client.ui;
 
-import java.util.Set;
-
+import java.util.List;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.spicstome.client.dto.AlbumDTO;
 import com.spicstome.client.dto.ArticleDTO;
@@ -10,7 +9,7 @@ import com.spicstome.client.dto.StudentDTO;
 
 public interface AlbumEditView extends IsWidget{
 
-	void setAllStudents(Set<StudentDTO> list);
+	void setAllStudents(List<StudentDTO> list);
 	void setStudent(StudentDTO owner);
 	void insertFolder(FolderDTO folder);
 	void deleteFolder(FolderDTO folder);

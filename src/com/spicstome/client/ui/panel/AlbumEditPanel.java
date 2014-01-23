@@ -1,9 +1,7 @@
 package com.spicstome.client.ui.panel;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
-
+import java.util.List;
 import com.smartgwt.client.data.RecordList;
 import com.smartgwt.client.util.BooleanCallback;
 import com.smartgwt.client.util.SC;
@@ -33,7 +31,7 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 	ActionPanel actionFoldersPanel;
 	ActionPanel actionArticlePanel;
 	ImageTileGrid articlesGrid;
-	Set<StudentDTO> allStudents;
+	List<StudentDTO> allStudents;
 
 	VLayout articleVerticalPanel = new VLayout();
 
@@ -171,7 +169,7 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 			{
 				/* the student is not upto date */
 				final ArticleDTO article = getSelectedArticle();
-				Set<StudentDTO> set = new HashSet<StudentDTO>();
+				List<StudentDTO> set = new ArrayList<StudentDTO>();
 				set.add(student);
 				
 				FolderPickerWindow win = new FolderPickerWindow(set,FolderPickerWindow.Type.MOVE){
@@ -405,7 +403,6 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 	
 	public void insertArticleIntoGrid(ArticleDTO articleDTO)
 	{
-		if(articleDTO.getFolder().getId()==getSelectedFolder().getId())
 			articlesGrid.addItem(new ImageRecord(articleDTO));
 	}
 	
@@ -443,11 +440,12 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 	public void updateAlbum(AlbumDTO album)
 	{
 		student.setAlbum(album);
+		super.setStudent(student);
 	}
 	
 	
 	
-	public void setAllStudents(Set<StudentDTO> list)
+	public void setAllStudents(List<StudentDTO> list)
 	{
 		if(list.size()>0)
 		{

@@ -1,7 +1,6 @@
 package com.spicstome.client.ui;
 
-import java.util.Set;
-
+import java.util.List;
 import com.spicstome.client.dto.AlbumDTO;
 import com.spicstome.client.dto.ArticleDTO;
 import com.spicstome.client.dto.FolderDTO;
@@ -176,7 +175,7 @@ public class AlbumEditViewImpl extends UserViewImpl  implements AlbumEditView{
 
 
 	@Override
-	public void setAllStudents(Set<StudentDTO> list) {
+	public void setAllStudents(List<StudentDTO> list) {
 		albumEditPanel.setAllStudents(list);
 		
 	}

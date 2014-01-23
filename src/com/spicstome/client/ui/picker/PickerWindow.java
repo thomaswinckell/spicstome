@@ -1,7 +1,7 @@
 package com.spicstome.client.ui.picker;
 
 import java.util.LinkedHashMap;
-import java.util.Set;
+import java.util.List;
 import com.smartgwt.client.widgets.IconButton;
 import com.smartgwt.client.widgets.Window;
 import com.smartgwt.client.widgets.events.ClickEvent;
@@ -12,7 +12,6 @@ import com.smartgwt.client.widgets.form.fields.events.ChangeEvent;
 import com.smartgwt.client.widgets.form.fields.events.ChangeHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
-import com.spicstome.client.dto.AlbumDTO;
 import com.spicstome.client.dto.StudentDTO;
 import com.spicstome.client.ui.panel.AlbumPanel;
 
@@ -31,12 +30,12 @@ public abstract class PickerWindow extends Window{
     IconButton validButton = new IconButton("");
     VLayout verticalLayout = new VLayout();
     HLayout bottomLayout = new HLayout();
-    Set<StudentDTO> others;
-    Set<AlbumDTO> mainAlbums;
+    List<StudentDTO> others;
+
     public enum Type{IMPORT,MOVE};
 	Type type;
 	
-	public PickerWindow(Set<StudentDTO> list,Type type,int width,int height) {
+	public PickerWindow(List<StudentDTO> list,Type type,int width,int height) {
 		super();
 				
 		this.type=type;
@@ -144,15 +143,6 @@ public abstract class PickerWindow extends Window{
 		return null;
 	}
 	
-	public AlbumDTO getAlbumWithId(int id)
-	{
-		for(AlbumDTO album : mainAlbums )
-		{
-			if(album.getId()==id)
-				return album;
-		}
-		return null;
-	}
 	
 	public void InitAlbumPanel()
 	{

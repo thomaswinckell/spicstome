@@ -1,9 +1,7 @@
 package com.spicstome.client.activity;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
@@ -74,7 +72,7 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 			@Override
 			public void onSuccess(List<AlbumDTO> result) {
 				
-				final Set<StudentDTO> mergedListStudent = new HashSet<StudentDTO>();
+				final List<StudentDTO> mergedListStudent = new ArrayList<StudentDTO>();
 				for(AlbumDTO album:result)
 				{
 					if(album.getId()!=place.idAlbum)
@@ -226,15 +224,28 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 				UpdateStudentDTO();
 			}
 		});
-		SpicsToMeServices.Util.getInstance().updateFolder(parent, new AsyncCallback<Boolean>() {
+		
+	}
+	
+	@Override
+	public void move(final ArticleDTO child, FolderDTO parent) {
+		
+		/* delete old linking */
+		child.getFolder().getContent().remove(child);
+		/* new linking */
+		child.setFolder(parent);
+		parent.getContent().add(child);
+		
+		SpicsToMeServices.Util.getInstance().updateArticle(child, new AsyncCallback<Boolean>() {
 
 			@Override
 			public void onFailure(Throwable caught) {}
 			@Override
 			public void onSuccess(Boolean result) {
-				UpdateStudentDTO();
+				editview.deleteArticle(child);
 			}
 		});
+		
 	}
 
 	@Override
@@ -362,6 +373,8 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 	@Override
 	public void copy(final FolderDTO f,FolderDTO parent) {
 		
+		
+		
 		if(f.getFolder()==null)
 		{
 			/* importing all the folders of the root */
@@ -390,6 +403,8 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 		}
 		else
 		{
+			f.setOrder(parent.getContent().size());
+			
 			SpicsToMeServices.Util.getInstance().copyFolder(f,parent,new AsyncCallback<FolderDTO>() {
 				@Override
 				public void onFailure(Throwable caught) {}
@@ -427,6 +442,9 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 
 	@Override
 	public void copy(ArticleDTO a, FolderDTO parent) {
+		
+		a.setOrder(parent.getContent().size());
+		
 		SpicsToMeServices.Util.getInstance().copyArticle(a,parent,new AsyncCallback<ArticleDTO>() {
 			@Override
 			public void onFailure(Throwable caught) {}
@@ -439,33 +457,7 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 		
 	}
 
-	@Override
-	public void move(final ArticleDTO child, FolderDTO parent) {
-		
-		/* delete old linking */
-		child.getFolder().getContent().remove(child);
-		/* new linking */
-		child.setFolder(parent);
-		parent.getContent().add(child);
-		
-		SpicsToMeServices.Util.getInstance().updateArticle(child, new AsyncCallback<Boolean>() {
 
-			@Override
-			public void onFailure(Throwable caught) {}
-			@Override
-			public void onSuccess(Boolean result) {
-				editview.deleteArticle(child);
-			}
-		});
-		SpicsToMeServices.Util.getInstance().updateFolder(parent, new AsyncCallback<Boolean>() {
-
-			@Override
-			public void onFailure(Throwable caught) {}
-			@Override
-			public void onSuccess(Boolean result) {}
-		});
-		
-	}
 
 
 
