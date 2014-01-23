@@ -41,7 +41,7 @@ public abstract class AlbumPanel extends VLayout{
 		titleLayout.addMember(title);
 		
 
-		setStyleName("album");
+		setStyleName("bloc");
 		verticalLayout.setHeight(300);
 		verticalLayout.setWidth(400);
 		verticalLayout.addMember(folderTree);
@@ -92,9 +92,9 @@ public abstract class AlbumPanel extends VLayout{
 
 		
 		if(student.getAlbum().getId()==1)
-			title.setContents("Album Général");
+			title.setContents("Album général");
 		else if(student.getAlbum().getId()==2)
-			title.setContents("Album Exemple");
+			title.setContents("Album exemple");
 		else
 			setOwnerName(student.getFirstName());
 		

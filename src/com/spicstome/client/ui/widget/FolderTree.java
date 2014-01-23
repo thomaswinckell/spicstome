@@ -32,12 +32,12 @@ public class FolderTree extends HLayout
 		field.setTreeField(true);
 		treeGrid.setFields(field);
 
-		treeGrid.setIconSize(30);
+		treeGrid.setIconSize(50);
 		treeGrid.setWidth100();
 		treeGrid.setHeight100();
 
 		//pas defini , ne sert qu'a masquer les bords
-		treeGrid.setStyleName("album");
+		treeGrid.setStyleName("bloc");
 		
 		addMember(treeGrid);
 	}

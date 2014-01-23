@@ -9,7 +9,7 @@ public class DropZone extends ImageTileGrid{
 		
 		setWidth100();
 		setHeight(iconSize+100);
-		setStyleName("album");
+		setStyleName("bloc");
 		removeOnDragOver();
 	}
 

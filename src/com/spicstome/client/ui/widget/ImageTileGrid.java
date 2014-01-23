@@ -25,11 +25,9 @@ public abstract class ImageTileGrid extends TileGrid {
 	
 
 	public ImageTileGrid(Mode mode,int tileWidth,int tileHeight,int imageSize) {
+	
 		super();
 		this.mode = mode;
-		
-
-		
 		setShowEdges(false);
 		setAnimateTime(200);
 		setData(new ImageRecord[]{});

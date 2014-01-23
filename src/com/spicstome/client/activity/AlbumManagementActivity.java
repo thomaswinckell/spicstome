@@ -1,5 +1,6 @@
 package com.spicstome.client.activity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gwt.event.shared.EventBus;
@@ -8,6 +9,7 @@ import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.spicstome.client.ClientFactory;
 import com.spicstome.client.dto.AlbumDTO;
 import com.spicstome.client.dto.ReferentDTO;
+import com.spicstome.client.dto.StudentDTO;
 import com.spicstome.client.place.AlbumManagementPlace;
 import com.spicstome.client.services.SpicsToMeServices;
 import com.spicstome.client.ui.AlbumManagementView;
@@ -17,6 +19,7 @@ import com.spicstome.client.ui.UserViewImpl;
 public class AlbumManagementActivity extends UserActivity implements AlbumManagementView.Presenter {
 
 	ReferentDTO referent;
+	AlbumManagementView managementView;
 	
 	public AlbumManagementActivity(AlbumManagementPlace place, ClientFactory clientFactory) {
 
@@ -27,9 +30,11 @@ public class AlbumManagementActivity extends UserActivity implements AlbumManage
 	public void start(AcceptsOneWidget containerWidget, EventBus eventBus) {
 
 		
+		
 		super.start(containerWidget, eventBus);
 		
-		clientFactory.getAlbumManagementView().initview();
+		managementView = clientFactory.getAlbumManagementView();
+		
 		
 		SpicsToMeServices.Util.getInstance().getGeneralAndExampleAlbum(new AsyncCallback<List<AlbumDTO>>() {
 
@@ -38,30 +43,26 @@ public class AlbumManagementActivity extends UserActivity implements AlbumManage
 
 			@Override
 			public void onSuccess(List<AlbumDTO> result) {
-				
-				clientFactory.getAlbumManagementView().insertAlbum(result);
-				
-				SpicsToMeServices.Util.getInstance().getReferentConnected(new AsyncCallback<ReferentDTO>() {
+		
+				managementView.insertMainAlbum(result);
 
-					@Override
-					public void onFailure(Throwable caught) {}
-
-					@Override
-					public void onSuccess(ReferentDTO result) {
-						
-						referent=result;
-						if(result!=null) 
-						{
-							clientFactory.getAlbumManagementView().insertStudentAlbum(result.getStudents());
-						}		
-					}
-				});
-				
 			}
 		});
 				
 		
-		
+		SpicsToMeServices.Util.getInstance().getReferentConnected( new AsyncCallback<ReferentDTO>() {
+			
+			@Override
+			public void onFailure(Throwable caught) {}
+			@Override
+			public void onSuccess(ReferentDTO result) {
+
+				
+				
+				managementView.insertStudentAlbum(result.getStudents());
+				
+			}			
+		});	
 		
 		
 		

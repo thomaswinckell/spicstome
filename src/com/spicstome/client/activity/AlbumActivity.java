@@ -4,6 +4,7 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.spicstome.client.ClientFactory;
+import com.spicstome.client.dto.AlbumDTO;
 import com.spicstome.client.dto.StudentDTO;
 import com.spicstome.client.place.AlbumPlace;
 import com.spicstome.client.services.SpicsToMeServices;
@@ -21,16 +22,34 @@ public class AlbumActivity extends UserActivity{
 
 		this.albumView = clientFactory.getAlbumView();
 
-		SpicsToMeServices.Util.getInstance().getAlbumOwner(place.idAlbum, new AsyncCallback<StudentDTO>() {
-			@Override
-			public void onSuccess(StudentDTO result) {
-				
-				albumView.setStudent(result);
-			}
-			@Override
-			public void onFailure(Throwable caught) {}			
-		});	
-		
+		if(place.idAlbum==1 || place.idAlbum==2)
+		{
+			SpicsToMeServices.Util.getInstance().getAlbum(place.idAlbum, new AsyncCallback<AlbumDTO>() {
+				@Override
+				public void onSuccess(AlbumDTO result) {
+					
+					StudentDTO falseStudent = new StudentDTO((long)-1);
+					falseStudent.setAlbum(result);
+					
+					albumView.setStudent(falseStudent);
+				}
+
+				@Override
+				public void onFailure(Throwable caught) {}
+			});
+		}
+		else
+		{
+			SpicsToMeServices.Util.getInstance().getAlbumOwner(place.idAlbum, new AsyncCallback<StudentDTO>() {
+				@Override
+				public void onSuccess(StudentDTO result) {
+					
+					albumView.setStudent(result);
+				}
+				@Override
+				public void onFailure(Throwable caught) {}			
+			});	
+		}
 		
 	}
 

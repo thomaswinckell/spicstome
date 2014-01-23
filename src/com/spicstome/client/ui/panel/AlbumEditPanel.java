@@ -79,7 +79,7 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 		});
 
 	    
-	    actionArticlePanel = new ActionPanel(true,true,false,true,false,true,true)
+	    actionArticlePanel = new ActionPanel(40,true,true,false,true,false,true,true)
 	    {
 
 			@Override
@@ -187,7 +187,7 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 			}
 		};
 	    
-	    actionFoldersPanel = new ActionPanel(true,true,false,true,false,false,true) {
+	    actionFoldersPanel = new ActionPanel(40,true,true,false,true,false,false,true) {
 
 			@Override
 			public void onEdit() {
@@ -291,10 +291,10 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 	    
 	    verticalLayout.addMember(actionFoldersPanel);
 	    
-	    verticalLayout.setStyleName("album");
-	    articleVerticalPanel.setStyleName("album");
+	    verticalLayout.setStyleName("bloc");
+	    articleVerticalPanel.setStyleName("bloc");
 	    
-	    articlesGrid = new ImageTileGrid(Mode.DRAG_AND_DROP,70,70,50){
+	    articlesGrid = new ImageTileGrid(Mode.DRAG_AND_DROP,120,120,100){
 	    	
 	    	@Override
 			public void OnSelectChanged(ImageRecord object) {
@@ -321,8 +321,8 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 	    
 	    articleVerticalPanel.addMember(actionArticlePanel);
 	       
-	    verticalLayout.setHeight(350);
-	    articleVerticalPanel.setHeight(350);
+	    verticalLayout.setHeight(450);
+	    articleVerticalPanel.setHeight(450);
 	    
 	    horizontalLayout.addMember(articleVerticalPanel);
 

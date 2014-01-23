@@ -10,6 +10,7 @@ public class AlbumViewImpl extends UserViewImpl  implements AlbumView{
 	
 	
 	AlbumBookPanel albumBookPanel;
+	Crumb crumb;
 	
 	public AlbumViewImpl()
 	{
@@ -23,9 +24,13 @@ public class AlbumViewImpl extends UserViewImpl  implements AlbumView{
 			}
 		});
 		
-		addCrumb(new Crumb("Album de Albert"){});
-
+		crumb = new Crumb(""){
+			@Override
+			public void onClickCrumb() {}
+		};
 		
+		addCrumb(crumb);
+
 		this.albumBookPanel = new AlbumBookPanel(new Book(100));
 		
 		mainPanel.addMember(this.albumBookPanel);
@@ -36,6 +41,13 @@ public class AlbumViewImpl extends UserViewImpl  implements AlbumView{
 	public void setStudent(StudentDTO student){
 		
 		this.albumBookPanel.setStudent(student);
+		
+		if(student.getAlbum().getId()==1)
+			crumb.setCrumbTitle("Album général (consultation)");
+		else if(student.getAlbum().getId()==2)
+			crumb.setCrumbTitle("Album exemple (consultation)");
+		else
+			crumb.setCrumbTitle("Album de "+student.getFirstName()+" (consultation)");
 		
 	}
 }

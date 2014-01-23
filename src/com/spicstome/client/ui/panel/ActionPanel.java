@@ -27,7 +27,7 @@ public abstract class ActionPanel extends HLayout{
 	
 	protected HLayout hiddenPanel = new HLayout();
 	
-	public ActionPanel(boolean createAction,boolean importAction,boolean readAction
+	public ActionPanel(int iconsize,boolean createAction,boolean importAction,boolean readAction
 			,boolean editAction,boolean copyAction,boolean moveAction,boolean deleteAction)
 	{
 		super();
@@ -48,12 +48,13 @@ public abstract class ActionPanel extends HLayout{
 		buttonCopy.setVisible(false);
 		buttonMove.setVisible(false);
 		
-		int iconsize=40;
+		int nbAction=0;
 		
 		if(this.createAction)
 		{
 			buttonNew.setIcon("new.png");
 			buttonNew.setIconSize(iconsize);
+			nbAction++;
 			
 			buttonNew.addClickHandler(new ClickHandler() {
 				
@@ -70,7 +71,7 @@ public abstract class ActionPanel extends HLayout{
 		{
 			buttonImport.setIcon("import.png");
 			buttonImport.setIconSize(iconsize);
-			
+			nbAction++;
 			
 			buttonImport.addClickHandler(new ClickHandler() {
 				
@@ -89,6 +90,7 @@ public abstract class ActionPanel extends HLayout{
 			buttonRead.setIcon("visualize.png");
 			buttonRead.setIconSize(iconsize);
 			hiddenPanel.addMember(buttonRead);
+			nbAction++;
 			
 			buttonRead.addClickHandler(new ClickHandler() {
 				
@@ -107,6 +109,7 @@ public abstract class ActionPanel extends HLayout{
 			buttonEdit.setIcon("edit.png");
 			buttonEdit.setIconSize(iconsize);
 			hiddenPanel.addMember(buttonEdit);
+			nbAction++;
 			
 			buttonEdit.addClickHandler(new ClickHandler() {
 				
@@ -124,6 +127,7 @@ public abstract class ActionPanel extends HLayout{
 			buttonCopy.setIcon("copy.png");
 			buttonCopy.setIconSize(iconsize);
 			hiddenPanel.addMember(buttonCopy);
+			nbAction++;
 			
 			buttonCopy.addClickHandler(new ClickHandler() {
 				
@@ -141,6 +145,7 @@ public abstract class ActionPanel extends HLayout{
 			buttonMove.setIcon("move.png");
 			buttonMove.setIconSize(iconsize);
 			hiddenPanel.addMember(buttonMove);
+			nbAction++;
 			
 			buttonMove.addClickHandler(new ClickHandler() {
 				
@@ -159,6 +164,7 @@ public abstract class ActionPanel extends HLayout{
 			buttonDelete.setIcon("delete.png");
 			buttonDelete.setIconSize(iconsize);
 			hiddenPanel.addMember(buttonDelete);
+			nbAction++;
 			
 			buttonDelete.addClickHandler(new ClickHandler() {
 				
@@ -172,7 +178,7 @@ public abstract class ActionPanel extends HLayout{
 		}
 		
 
-		hiddenPanel.setWidth(5*iconsize);
+		hiddenPanel.setWidth100();
 		
 		if(createAction)
 			addMember(buttonNew);
@@ -183,7 +189,7 @@ public abstract class ActionPanel extends HLayout{
 		
 		
 		setHeight(iconsize);
-		setWidth(8*iconsize);
+		setWidth(nbAction*iconsize);
 	
 	}
 	

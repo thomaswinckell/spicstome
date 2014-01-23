@@ -13,10 +13,11 @@ import com.spicstome.client.shared.Verb;
 
 public class Test {
 	
+	public enum Type {EXAMPLE,GENERAL};
 	
 	public static Student populateWithStudent(String name,String firstname,String login,String password)
 	{
-		Album album = generateExampleAlbum();
+		Album album = generateAlbum(Type.EXAMPLE);
 		
 		Image imageUser = populateWithImageUser();
 		
@@ -81,36 +82,70 @@ public class Test {
 		HibernateManager.getInstance().save(verb);
 	}
 	
-	public static void generateGeneralAlbum()
+	public static Album generateAlbum(Type type)
 	{
 		Folder racine = generateFolder(0,"Tout", "all.png", null);
-		Folder qui = generateFolder(0,"Qui", "qui.gif", racine);
-		Folder quoi = generateFolder(1,"Quoi", "quoi.gif", racine);
-		Folder comment = generateFolder(2,"Comment", "comment.gif", racine);
 		
-		Folder couverts = generateFolder(0,"Couverts", "couverts.gif", quoi);
-		Folder choses = generateFolder(1,"Choses", "choses.gif", quoi);
-		Folder nouriture = generateFolder(2,"Nourriture", "nourriture.gif", quoi);
+			Folder qui = generateFolder(0,"Qui", "qui.gif", racine);	
+			
+				Folder commercants = generateFolder(0,"Commerçants", "commercants.gif", qui);
+				
+					generateSubject(0,"Boulanger", "boulanger.gif", commercants, 0, 0, 2);
+					generateSubject(1,"Coiffeur", "coiffeur.gif", commercants, 0, 0, 2);
+					
+				generateSubject(0,"Je", "je_1.JPG", qui, 0, 0, 0);
+				generateSubject(1,"Je", "je_2.JPG", qui, 1, 0, 0);
+				generateSubject(2,"Tu", "tu_1.JPG", qui, 0, 0, 1);
+				generateSubject(3,"Tu", "tu_2.JPG", qui, 1, 0, 1);	
+				
+				if(type==Type.GENERAL)
+				{		
+					generateSubject(4,"Vous", "vous_1.JPG", qui, 0, 1, 1);
+					generateSubject(5,"Vous", "vous_2.JPG", qui, 1, 1, 1);
+					generateSubject(6, "Parent", "parent.gif", qui, 1, 0, 2);
+					generateSubject(7, "Père", "pere.gif", qui, 0, 0, 2);
+					generateSubject(8, "Mère", "mere.gif", qui, 1, 0, 2);
+				}
+				
+			Folder quoi = generateFolder(1,"Quoi", "quoi.gif", racine);
+			
+				generateVerb(0,"Ecouter", "ecouter.gif", quoi, 0);
+				generateVerb(1,"Dormir", "dormir.gif", quoi, 0);
+				generateVerb(2,"Dire", "dire.gif", quoi, 0);
+					
+				Folder nouriture = generateFolder(0,"Nourriture", "nourriture.gif", quoi);
+				
+					generateSubject(0,"Cerises", "cerises.gif", nouriture, 1, 1, 2);
+					
+					if(type==Type.GENERAL)
+					{
+						generateSubject(1, "Abricot", "abricot.gif", nouriture, 1, 0, 2);
+					}
+					
+				Folder boissons = generateFolder(1,"Boissons", "boissons.gif", quoi);
+				
+					generateSubject(0,"Bouteille de coca", "bouteille de coca.gif", boissons, 1, 0, 2);	
+							
+			Folder comment = generateFolder(2,"Comment", "comment.gif", racine);
+			
+					generateSubject(0,"Fatigué", "fatiguer.gif", comment, 1, 0, 2);	
+			
+			if(type==Type.GENERAL)
+			{
+				Folder ou = generateFolder(3,"Ou", "ou.gif", racine);
+				
+					generateSubject(0,"Boucherie", "boucherie.gif", ou, 1, 0, 2);	
+					generateSubject(0,"Boulangerie", "boulangerie.gif", ou, 1, 0, 2);
+			}
+			
+			
 		
-		Folder commercants = generateFolder(0,"Commerçants", "commercants.gif", qui);
-		
-		generateSubject(0,"Je", "je_1.JPG", qui, 0, 0, 0);
-		generateSubject(1,"Je", "je_2.JPG", qui, 1, 0, 0);
-		generateSubject(2,"Tu", "tu_1.JPG", qui, 0, 0, 1);
-		generateSubject(3,"Tu", "tu_2.JPG", qui, 1, 0, 1);
-		
-		generateVerb(0,"Ecouter", "ecouter.gif", quoi, 0);
-		generateVerb(1,"Dormir", "dormir.gif", quoi, 0);
-		generateVerb(2,"Dire", "dire.gif", quoi, 0);
-		
-		generateSubject(0,"Cerises", "cerises.gif", nouriture, 1, 1, 2);
-		
-		generateSubject(0,"Boulanger", "boulanger.gif", commercants, 0, 0, 2);
-
 		Album album = new Album((long)-1);
 		album.setFolder(racine);
 		
 		HibernateManager.getInstance().save(album);
+		
+		return album;
 	}
 	
 	
@@ -135,22 +170,6 @@ public class Test {
 		return folder;
 	}
 	
-	public static Album generateExampleAlbum()
-	{
-	
-		Folder racine = generateFolder(0,"Tout", "all.png", null);
-		Folder qui = generateFolder(0,"Dossier", "qui.gif", racine);
-	
-		
-
-		Album album = new Album((long)-1);
-		album.setFolder(racine);
-		
-		HibernateManager.getInstance().save(album);
-		
-		return album;
-	
-	}
 	
 	public static void main(String[] args) {
 		
@@ -160,11 +179,11 @@ public class Test {
 		
 		/* General album  = 1 */
 		
-		generateGeneralAlbum();
+		generateAlbum(Type.GENERAL);
 		
 		/* Example album = 2 */
 		
-		generateExampleAlbum();
+		generateAlbum(Type.EXAMPLE);
 		
 		
 		/* Super Admin */

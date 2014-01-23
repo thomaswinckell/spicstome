@@ -301,7 +301,6 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 							public void onSuccess(FolderDTO result) {
 								editview.updateArticle(result);		
 								
-								UpdateStudentDTO();
 							}
 						});		
 					}
