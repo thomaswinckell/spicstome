@@ -2,6 +2,7 @@ package com.spicstome.client.ui.panel;
 
 import java.util.ArrayList;
 
+import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.IconButton;
 import com.smartgwt.client.widgets.events.ClickEvent;
@@ -18,6 +19,7 @@ import com.spicstome.client.ui.widget.ImageTileGrid.Mode;
 public class Book extends VLayout{
 	
 	protected ArrayList<ImageTileGrid> listPage= new ArrayList<ImageTileGrid>();
+	protected VLayout verticalPanel = new VLayout();
 	protected HLayout horizontalPagePanel = new HLayout();
 	protected HLayout horizontalNextPrevPanel = new HLayout();
 	protected IconButton buttonNext = new IconButton("");
@@ -44,13 +46,18 @@ public class Book extends VLayout{
 		this.imageSize=imageSize;
 		
 		tileWidth  = imageSize+20;
-		tileHeight = imageSize+20;
+		tileHeight = imageSize+50;
 		
 		widthPage =(nbColPerPage*(tileWidth+20));
 		heightPage = (nbRowPerPage*(tileHeight+20));
 		
 		buttonNext.setIcon("next-icon.png");
 		buttonPrev.setIcon("prev-icon.png");
+		buttonNext.setIconSize(30);
+		buttonPrev.setIconSize(30);
+		
+		buttonNext.setWidth(30);
+		buttonPrev.setWidth(30);
 		
 		buttonNext.addClickHandler(new ClickHandler() {
 			
@@ -72,15 +79,21 @@ public class Book extends VLayout{
 			}
 		});
 		
+		verticalPanel.setWidth(2*widthPage);
+		verticalPanel.setLayoutAlign(Alignment.CENTER);
 
+		
 		horizontalNextPrevPanel.addMember(buttonPrev);
 		horizontalNextPrevPanel.addMember(buttonNext);
 		
 		horizontalNextPrevPanel.setHeight(28);
+		horizontalNextPrevPanel.setWidth(50);
+		horizontalNextPrevPanel.setLayoutAlign(Alignment.CENTER);
 		
-		addMember(horizontalPagePanel);
-		addMember(horizontalNextPrevPanel);
+		verticalPanel.addMember(horizontalPagePanel);
+		verticalPanel.addMember(horizontalNextPrevPanel);
 		
+		addMember(verticalPanel);
 
 		UpdateNextPrev();
 	}
@@ -165,8 +178,8 @@ public class Book extends VLayout{
 	
 	public void UpdateNextPrev()
 	{
-		buttonPrev.setVisible(iLeftPage>0);		
-		buttonNext.setVisible(iLeftPage+2<lastPage);
+		buttonPrev.setDisabled(!(iLeftPage>0));		
+		buttonNext.setDisabled(!(iLeftPage+2<lastPage));
 	}
 	
 	public void UpdatePage()

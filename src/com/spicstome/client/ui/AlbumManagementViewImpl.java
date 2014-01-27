@@ -2,16 +2,12 @@ package com.spicstome.client.ui;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.form.DynamicForm;
-import com.smartgwt.client.widgets.form.fields.events.ChangeEvent;
-import com.smartgwt.client.widgets.form.fields.events.ChangeHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.spicstome.client.dto.AlbumDTO;
 import com.spicstome.client.dto.StudentDTO;
-import com.spicstome.client.dto.UserDTO;
 import com.spicstome.client.place.AlbumEditPlace;
 import com.spicstome.client.place.AlbumPlace;
 import com.spicstome.client.ui.form.UserComboBoxItem;
@@ -95,7 +91,7 @@ public class AlbumManagementViewImpl extends UserViewImpl  implements AlbumManag
 		
 	
 		
-		imageListStudentAlbum = new ImageTileGrid(Mode.CLICK,150,100,60){
+		imageListStudentAlbum = new ImageTileGrid(Mode.CLICK,200,100,60){
 			
 
 			@Override
@@ -111,9 +107,11 @@ public class AlbumManagementViewImpl extends UserViewImpl  implements AlbumManag
 		labelMain.setContents("Albums généraux");
 		labelMain.setHeight(20);
 		labelMain.setAlign(Alignment.CENTER);
+		labelMain.setStyleName("title");
 		labelStudent.setContents("Albums des enfants");
 		labelStudent.setHeight(20);
 		labelStudent.setAlign(Alignment.CENTER);
+		labelStudent.setStyleName("title");
 		
 		imageListMainAlbum.setWidth(700);
 		imageListMainAlbum.setHeight(170);

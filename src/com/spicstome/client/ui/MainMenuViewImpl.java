@@ -27,7 +27,7 @@ public class MainMenuViewImpl extends UserViewImpl implements MainMenuView {
 		modules.add(new ImageRecord(3,"Historique","history.png"));
 		
 		
-		imageList = new ImageTileGrid(Mode.CLICK,200,150,100){
+		imageList = new ImageTileGrid(Mode.CLICK,250,150,100){
 			@Override
 			public void OnSelectChanged(ImageRecord object) {
 				

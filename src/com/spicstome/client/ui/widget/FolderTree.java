@@ -2,15 +2,18 @@ package com.spicstome.client.ui.widget;
 
 import java.util.List;
 
+
+
+
 import com.smartgwt.client.types.TreeModelType;
-import com.smartgwt.client.widgets.layout.HLayout;
+import com.smartgwt.client.widgets.layout.VLayout;
 import com.smartgwt.client.widgets.tree.Tree;
 import com.smartgwt.client.widgets.tree.TreeGrid;
 import com.smartgwt.client.widgets.tree.TreeGridField;
 import com.smartgwt.client.widgets.tree.TreeNode;
 import com.spicstome.client.dto.FolderDTO;
 
-public class FolderTree extends HLayout
+public class FolderTree extends VLayout
 {
 	
 	public AlbumTreeNode selectFolderNode;
@@ -36,7 +39,6 @@ public class FolderTree extends HLayout
 		treeGrid.setWidth100();
 		treeGrid.setHeight100();
 
-		//pas defini , ne sert qu'a masquer les bords
 		treeGrid.setStyleName("bloc");
 		
 		addMember(treeGrid);

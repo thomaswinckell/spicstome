@@ -18,6 +18,7 @@ public class AlbumBookPanel extends AlbumPanel{
 	    this.book = book;	    
 	    horizontalLayout.addMember(book);
 	    verticalLayout.setHeight(book.heightPage+40);
+
 	    
 	}
 	

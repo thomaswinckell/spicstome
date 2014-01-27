@@ -6,10 +6,25 @@ h1 {
 }
 
 
-.titleAlbum
+.tileValue, .tileValueDown, .tileValueSelected, .tileValueOver, .tileValueSelectedOver, .tileValueSelectedDown {
+    font-size:20px !important;
+}
+
+.simpleTile, .simpleTileOver, .simpleTileSelected, .simpleTileSelectedOver {
+    font-size:20px !important;
+}
+
+
+.treeCell, .treeCellDark, .treeCellOver, .treeCellOverDark, .treeCellSelected, .treeCellSelectedDark, .treeCellSelectedOver, .treeCellSelectedOverDark, .treeCellDisabled, .treeCellDisabledDark, .treeTallCell, .treeTallCellDark, .treeTallCellOver, .treeTallCellOverDark, .treeTallCellSelected, .treeTallCellSelectedDark, .treeTallCellSelectedOver, .treeTallCellSelectedOverDark, .treeTallCellDisabled, .treeTallCellDisabledDark {
+    font-size: 20px !important;;
+}
+
+
+.title
 {
-	font-size:18px;
+	font-size:30px;
 	margin:10px;
+	color:darkblue;
 }
 
 .dragStyle
@@ -68,11 +83,7 @@ h1 {
 	
 }
 
-.albumtree
-{
-	
-	
-}
+
 .crumb:hover
 {
 	cursor:pointer;

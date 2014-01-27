@@ -2,6 +2,8 @@ package com.spicstome.client.ui.panel;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.smartgwt.client.widgets.Img;
 import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
@@ -16,8 +18,8 @@ import com.spicstome.client.ui.widget.FolderTree.AlbumTreeNode;
 public abstract class AlbumPanel extends VLayout{
 
 	protected HLayout titleLayout = new HLayout();
-	protected Label title = new Label("");
-	
+	protected Label title = new Label();
+	protected Img imgBook;
 	protected StudentDTO student;
 		
 	HLayout horizontalLayout = new HLayout();
@@ -37,10 +39,17 @@ public abstract class AlbumPanel extends VLayout{
 			}
 		});
 		
-		title.setHeight(30);
+		title.setStyleName("title");	
+		title.setWidth100();
+		imgBook   = new Img("albumlogo.png");
+		imgBook.setSize(50);
+
+		
+		titleLayout.addMember(imgBook);
 		titleLayout.addMember(title);
 		
-
+	
+		
 		setStyleName("bloc");
 		verticalLayout.setHeight(300);
 		verticalLayout.setWidth(400);

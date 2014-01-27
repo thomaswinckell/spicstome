@@ -294,7 +294,7 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 	    verticalLayout.setStyleName("bloc");
 	    articleVerticalPanel.setStyleName("bloc");
 	    
-	    articlesGrid = new ImageTileGrid(Mode.DRAG_AND_DROP,120,120,100){
+	    articlesGrid = new ImageTileGrid(Mode.DRAG_AND_DROP,120,150,100){
 	    	
 	    	@Override
 			public void OnSelectChanged(ImageRecord object) {

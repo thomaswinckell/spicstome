@@ -23,6 +23,8 @@ public abstract class ImageTileGrid extends TileGrid {
 	//	Only used for deselection 
 	private ImageRecord old=null;
 	
+	
+	
 
 	public ImageTileGrid(Mode mode,int tileWidth,int tileHeight,int imageSize) {
 	
@@ -33,16 +35,21 @@ public abstract class ImageTileGrid extends TileGrid {
 		setData(new ImageRecord[]{});
 		setShowAllRecords(true);
 		setTileMargin(2);
+
+		
 		setTileWidth(tileWidth);
 		setTileHeight(tileHeight);
 	
 		DetailViewerField pictureField = new DetailViewerField(ImageRecord.PICTURE_PATH);  
-		pictureField.setType("image");  
-
-		pictureField.setImageSize(imageSize);	
+		pictureField.setType("image");
+		pictureField.setImageSize(imageSize);
+		
 		DetailViewerField nameField = new DetailViewerField(ImageRecord.PICTURE_NAME);
-
+		//nameField.setCellStyle("tile");
+		
 		setFields(pictureField, nameField);
+		
+		
 		
 		initComponent();
 		
