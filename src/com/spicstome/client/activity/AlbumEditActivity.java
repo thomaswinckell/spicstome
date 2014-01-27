@@ -134,7 +134,6 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 						a.setId(result);
 						a.getFolder().getContent().add(a);
 						editview.insertArticle(a);
-						UpdateStudentDTO();
 					}			
 					@Override
 					public void onFailure(Throwable caught) {}
@@ -165,7 +164,7 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 						f.setId(result);
 						f.getFolder().getContent().add(f);
 						editview.insertFolder(f);
-						UpdateStudentDTO();
+
 					}
 				});
 			}
@@ -185,7 +184,6 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 				
 				a.getFolder().getContent().remove(a);
 				editview.deleteArticle(a);
-				UpdateStudentDTO();
 			}
 		});
 	}
@@ -200,7 +198,6 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 				
 				f.getFolder().getContent().remove(f);
 				editview.deleteFolder(f);
-				UpdateStudentDTO();
 			}
 		});
 		
