@@ -303,7 +303,7 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 			}
 	    	
 	    	@Override
-			public void OnReorder()
+			public void OnDropOrReorder(ArticleDTO article)
 	    	{
 	    		RecordList list = articlesGrid.getDataAsRecordList();
 	    		

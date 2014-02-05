@@ -65,7 +65,8 @@ public class Test {
 		
 	}
 	
-	public static void generateVerb(int order,String name,String image,Folder parent,int group)
+	public static void generateVerb(int order,String name,String image,Folder parent,int group,
+			String irregular1,String irregular2,String irregular3,String irregular4,String irregular5,String irregular6)
 	{
 		Image imageSubject = new Image((long)-1);
 		imageSubject.setFilename(image);
@@ -75,6 +76,13 @@ public class Test {
 		Verb verb = new Verb((long)-1);
 		verb.setName(name);
 		verb.setGroup(group);
+		verb.setIrregular1(irregular1);
+		verb.setIrregular2(irregular2);
+		verb.setIrregular3(irregular3);
+		verb.setIrregular4(irregular4);
+		verb.setIrregular5(irregular5);
+		verb.setIrregular6(irregular6);
+		
 		verb.setImage(imageSubject);
 		verb.setFolder(parent);
 		verb.setOrder(order);
@@ -102,17 +110,21 @@ public class Test {
 				{		
 					generateSubject(4,"Vous", "vous_1.JPG", qui, 0, 1, 1);
 					generateSubject(5,"Vous", "vous_2.JPG", qui, 1, 1, 1);
-					generateSubject(6, "Parent", "parent.gif", qui, 1, 0, 2);
+					generateSubject(6, "Parent", "parent.gif", qui, 1, 1, 2);
 					generateSubject(7, "Père", "pere.gif", qui, 0, 0, 2);
 					generateSubject(8, "Mère", "mere.gif", qui, 1, 0, 2);
 				}
 				
 			Folder quoi = generateFolder(1,"Quoi", "quoi.gif", racine);
 			
-				generateVerb(0,"Ecouter", "ecouter.gif", quoi, 0);
-				generateVerb(1,"Dormir", "dormir.gif", quoi, 0);
-				generateVerb(2,"Dire", "dire.gif", quoi, 0);
-					
+				if(type==Type.GENERAL)
+				{
+					generateVerb(0,"Ecouter", "ecouter.gif", quoi, 0,"","","","","","");
+					generateVerb(1,"Dormir", "dormir.gif", quoi, 2,"dors","dors","dort","dormons","dormez","dorment");
+					generateVerb(2,"Dire", "dire.gif", quoi, 2,"dis","dis","dit","disons","dites","disent");
+					generateVerb(3,"Etre", "etre.gif", quoi, 2,"suis","es","est","sommes","êtes","sont");
+				}
+			
 				Folder nouriture = generateFolder(0,"Nourriture", "nourriture.gif", quoi);
 				
 					generateSubject(0,"Cerises", "cerises.gif", nouriture, 1, 1, 2);

@@ -151,7 +151,6 @@ public class ArticleFormWindow extends Window{
 		mapRadioGroupGroup.put(0,"1er groupe");
 		mapRadioGroupGroup.put(1,"2ème groupe");
 		mapRadioGroupGroup.put(2,"3ème groupe");
-		mapRadioGroupGroup.put(3,"irrégulier");
 		radioGroupGroup.setValueMap(mapRadioGroupGroup);
 		radioGroupGroup.setDefaultValue(0);
 		
@@ -321,7 +320,7 @@ public class ArticleFormWindow extends Window{
 	
 	public void UpdateIrregular(int c)
 	{
-		formIrregularVerb.setVisible(c==3);
+		formIrregularVerb.setVisible(c==2);
 	}
 	
 	public void SetNewArticle()

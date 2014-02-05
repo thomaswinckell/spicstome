@@ -4,14 +4,14 @@ import com.spicstome.client.dto.StudentDTO;
 import com.spicstome.client.ui.panel.AlbumBookPanel;
 import com.spicstome.client.ui.panel.Book;
 import com.spicstome.client.ui.widget.Crumb;
-import com.spicstome.client.ui.widget.DropZone;
+import com.spicstome.client.ui.widget.MailDropZone;
 
 
 public class MailViewImpl extends UserViewImpl  implements MailView{
 	
 	
 	AlbumBookPanel album;
-	DropZone dropZone;
+	MailDropZone dropZone;
 	
 	public MailViewImpl()
 	{
@@ -21,7 +21,7 @@ public class MailViewImpl extends UserViewImpl  implements MailView{
 
         album = new AlbumBookPanel(new Book(100));
         
-    	dropZone = new DropZone(album.book.imageSize);
+    	dropZone = new MailDropZone(album.book.imageSize);
         
         mainPanel.addMember(album);
         mainPanel.addMember(dropZone);

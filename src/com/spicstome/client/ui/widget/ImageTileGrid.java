@@ -1,6 +1,7 @@
 package com.spicstome.client.ui.widget;
 
 import java.util.List;
+
 import com.smartgwt.client.types.AnimationEffect;
 import com.smartgwt.client.types.DragAppearance;
 import com.smartgwt.client.types.DragDataAction;
@@ -12,6 +13,7 @@ import com.smartgwt.client.widgets.tile.TileGrid;
 import com.smartgwt.client.widgets.tile.events.RecordClickEvent;
 import com.smartgwt.client.widgets.tile.events.RecordClickHandler;
 import com.smartgwt.client.widgets.viewer.DetailViewerField;
+import com.spicstome.client.dto.ArticleDTO;
 
 public abstract class ImageTileGrid extends TileGrid {
 
@@ -112,7 +114,8 @@ public abstract class ImageTileGrid extends TileGrid {
 				
 				@Override
 				public void onDropComplete(DropCompleteEvent event) {
-					OnReorder();
+					ImageRecord record = (ImageRecord) event.getTransferredRecords()[0];
+					OnDropOrReorder((ArticleDTO)(record.getAttributeAsObject(ImageRecord.DATA)));
 					
 				}
 			});
@@ -164,12 +167,21 @@ public abstract class ImageTileGrid extends TileGrid {
 				event.cancel();
 				
 				if(getSelectedRecord()!=null)
+				{
 					removeData(getSelectedRecord());
+					OnRemove();
+				}
+					
 			}
 		});
 	}
 	
-	public void OnReorder()
+	public void OnDropOrReorder(ArticleDTO article)
+	{
+		
+	}
+	
+	public void OnRemove()
 	{
 		
 	}
