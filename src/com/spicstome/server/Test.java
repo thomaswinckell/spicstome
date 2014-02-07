@@ -2,6 +2,7 @@ package com.spicstome.server;
 
 import java.util.TreeSet;
 
+import com.spicstome.client.shared.Adjective;
 import com.spicstome.client.shared.Album;
 import com.spicstome.client.shared.Folder;
 import com.spicstome.client.shared.Image;
@@ -65,7 +66,7 @@ public class Test {
 		
 	}
 	
-	public static void generateVerb(int order,String name,String image,Folder parent,int group,
+	public static void generateVerb(int order,String name,String image,Folder parent,int group,int type,
 			String irregular1,String irregular2,String irregular3,String irregular4,String irregular5,String irregular6)
 	{
 		Image imageSubject = new Image((long)-1);
@@ -76,6 +77,7 @@ public class Test {
 		Verb verb = new Verb((long)-1);
 		verb.setName(name);
 		verb.setGroup(group);
+		verb.setType(type);
 		verb.setIrregular1(irregular1);
 		verb.setIrregular2(irregular2);
 		verb.setIrregular3(irregular3);
@@ -88,6 +90,30 @@ public class Test {
 		verb.setOrder(order);
 		
 		HibernateManager.getInstance().save(verb);
+	}
+	
+	public static void generateAdjective(int order,String name,String image,Folder parent,
+			String matching1,String matching2,String matching3,String matching4)
+	{
+		Image imageSubject = new Image((long)-1);
+		imageSubject.setFilename(image);
+		
+		HibernateManager.getInstance().save(imageSubject);
+		
+		Adjective adjective = new Adjective((long)-1);
+		adjective.setName(name);
+		
+		adjective.setMatching1(matching1);
+		adjective.setMatching2(matching2);
+		adjective.setMatching3(matching3);
+		adjective.setMatching4(matching4);
+
+		
+		adjective.setImage(imageSubject);
+		adjective.setFolder(parent);
+		adjective.setOrder(order);
+		
+		HibernateManager.getInstance().save(adjective);
 	}
 	
 	public static Album generateAlbum(Type type)
@@ -110,7 +136,7 @@ public class Test {
 				{		
 					generateSubject(4,"Vous", "vous_1.JPG", qui, 0, 1, 1);
 					generateSubject(5,"Vous", "vous_2.JPG", qui, 1, 1, 1);
-					generateSubject(6, "Parent", "parent.gif", qui, 1, 1, 2);
+					generateSubject(6, "Parent", "parent.gif", qui, 0, 1, 2);
 					generateSubject(7, "Père", "pere.gif", qui, 0, 0, 2);
 					generateSubject(8, "Mère", "mere.gif", qui, 1, 0, 2);
 				}
@@ -119,10 +145,12 @@ public class Test {
 			
 				if(type==Type.GENERAL)
 				{
-					generateVerb(0,"Ecouter", "ecouter.gif", quoi, 0,"","","","","","");
-					generateVerb(1,"Dormir", "dormir.gif", quoi, 2,"dors","dors","dort","dormons","dormez","dorment");
-					generateVerb(2,"Dire", "dire.gif", quoi, 2,"dis","dis","dit","disons","dites","disent");
-					generateVerb(3,"Etre", "etre.gif", quoi, 2,"suis","es","est","sommes","êtes","sont");
+					generateVerb(0,"Ecouter", "ecouter.gif", quoi, 0,0,"","","","","","");
+					generateVerb(1,"Dormir", "dormir.gif", quoi, 2,0,"dors","dors","dort","dormons","dormez","dorment");
+					generateVerb(2,"Dire", "dire.gif", quoi, 2,0,"dis","dis","dit","disons","dites","disent");
+					generateVerb(3,"Etre", "etre.gif", quoi, 2,2,"suis","es","est","sommes","êtes","sont");
+					generateVerb(4,"Vouloir", "vouloir.JPG", quoi, 2,1,"veux","veux","veut","voulons","voulez","veulent");
+					generateVerb(5,"Aimer", "aimer.gif", quoi, 0,3,"","","","","","");
 				}
 			
 				Folder nouriture = generateFolder(0,"Nourriture", "nourriture.gif", quoi);
@@ -140,7 +168,8 @@ public class Test {
 							
 			Folder comment = generateFolder(2,"Comment", "comment.gif", racine);
 			
-					generateSubject(0,"Fatigué", "fatiguer.gif", comment, 1, 0, 2);	
+					generateAdjective(0,"Fatigué", "fatiguer.gif", comment,"fatigué","fatigués","fatiguée","fatiguées");	
+					generateAdjective(0,"Heureux", "heureux.jpg", comment,"heureux","heureux","heureuse","heureuses");	
 			
 			if(type==Type.GENERAL)
 			{

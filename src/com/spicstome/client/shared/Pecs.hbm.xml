@@ -40,13 +40,24 @@
 			<joined-subclass name="Verb" table="verb" extends="Article">
 				<key column="id" />
 				<property name="group" type="int" column="group_verb" />
-
+				<property name="type" type="int" column="type" />
+				
 				<property name="irregular1" type="string" column="irregular1" />
 				<property name="irregular2" type="string" column="irregular2" />
 				<property name="irregular3" type="string" column="irregular3" />
 				<property name="irregular4" type="string" column="irregular4" />
 				<property name="irregular5" type="string" column="irregular5" />
 				<property name="irregular6" type="string" column="irregular6" />
+
+			</joined-subclass>
+			
+			<joined-subclass name="Adjective" table="adjective" extends="Article">
+				<key column="id" />
+						
+				<property name="matching1" type="string" column="matching1" />
+				<property name="matching2" type="string" column="matching2" />
+				<property name="matching3" type="string" column="matching3" />
+				<property name="matching4" type="string" column="matching4" />
 
 			</joined-subclass>
 		</joined-subclass>

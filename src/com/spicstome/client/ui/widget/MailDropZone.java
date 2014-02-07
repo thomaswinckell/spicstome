@@ -1,7 +1,9 @@
 package com.spicstome.client.ui.widget;
 
 import java.util.ArrayList;
+
 import com.smartgwt.client.data.RecordList;
+import com.spicstome.client.dto.AdjectiveDTO;
 import com.spicstome.client.dto.ArticleDTO;
 import com.spicstome.client.dto.SubjectDTO;
 import com.spicstome.client.dto.VerbDTO;
@@ -82,6 +84,42 @@ public class MailDropZone extends ImageTileGrid{
 				articles.add(verbRecord);
 			
 				
+			}
+			else if(article instanceof AdjectiveDTO)
+			{
+				AdjectiveDTO adjective = (AdjectiveDTO)article;
+				
+				String matchingAdjective = "";
+				
+				if(!(first==null) && first instanceof SubjectDTO)
+				{
+					SubjectDTO subjectDTO = (SubjectDTO)first;
+					
+					if(subjectDTO.getGender()==0)
+					{
+						if(subjectDTO.getNumber()==0)
+							matchingAdjective=adjective.getMatching1();
+						else
+							matchingAdjective=adjective.getMatching2();
+					}
+					else
+					{
+						if(subjectDTO.getNumber()==0)
+							matchingAdjective=adjective.getMatching3();
+						else
+							matchingAdjective=adjective.getMatching4();
+					}
+					
+				
+				}
+				else
+				{
+					matchingAdjective = adjective.getName();
+				}
+				
+				ImageRecord verbRecord = new ImageRecord(adjective);
+				verbRecord.setAttribute(ImageRecord.PICTURE_NAME, matchingAdjective);
+				articles.add(verbRecord);
 			}
 			else
 			{

@@ -17,6 +17,7 @@ import com.smartgwt.client.widgets.form.fields.events.ChangeEvent;
 import com.smartgwt.client.widgets.form.fields.events.ChangeHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
+import com.spicstome.client.dto.AdjectiveDTO;
 import com.spicstome.client.dto.ArticleDTO;
 import com.spicstome.client.dto.FolderDTO;
 import com.spicstome.client.dto.ImageDTO;
@@ -37,6 +38,7 @@ public class ArticleFormWindow extends Window{
 	
 	RadioGroupItem radioGroupType = new RadioGroupItem();
 	RadioGroupItem radioGroupGroup = new RadioGroupItem();
+	RadioGroupItem radioGroupVerbType = new RadioGroupItem();
 	CheckboxItem checkBoxFavorite = new CheckboxItem("favorite","Favoris");
 	
 	HLayout verbLayout = new HLayout();
@@ -45,10 +47,16 @@ public class ArticleFormWindow extends Window{
 	public DynamicForm formNormalVerb = new DynamicForm();
 	public DynamicForm formIrregularVerb = new DynamicForm();
 	public DynamicForm formSubject = new DynamicForm();
+	public DynamicForm formAdjective = new DynamicForm();
 	
 	RadioGroupItem radioGroupGender = new RadioGroupItem();
 	RadioGroupItem radioGroupNature = new RadioGroupItem();
 	RadioGroupItem radioGroupNumber = new RadioGroupItem();
+	
+	TextItem matchingText1 = new TextItem("matching1");
+	TextItem matchingText2 = new TextItem("matching2");
+	TextItem matchingText3 = new TextItem("matching3");
+	TextItem matchingText4 = new TextItem("matching4");
 	
 	TextItem irregularText1 = new TextItem("irregular1");
 	TextItem irregularText2 = new TextItem("irregular2");
@@ -58,7 +66,7 @@ public class ArticleFormWindow extends Window{
 	TextItem irregularText6 = new TextItem("irregular6");
 	
 	public enum Mode{NEW, EDIT}
-	public enum TypeArticle{VERB,SUBJECT}
+	public enum TypeArticle{VERB,SUBJECT,ADJECTIVE}
 	
 	FolderDTO parent;
 	
@@ -88,6 +96,7 @@ public class ArticleFormWindow extends Window{
 		LinkedHashMap<Integer, String> mapRadioGroupType = new LinkedHashMap<Integer, String>(2);
 		mapRadioGroupType.put(0, "Sujet (nom,pronom)");
 		mapRadioGroupType.put(1,"Verbe");
+		mapRadioGroupType.put(2,"Adjectif");
 		radioGroupType.setValueMap(mapRadioGroupType);
 		radioGroupType.setDefaultValue(0);
 		
@@ -100,8 +109,10 @@ public class ArticleFormWindow extends Window{
 
 				if(choice==0)
 					type=TypeArticle.SUBJECT;
-				else
+				else if(choice==1)
 					type=TypeArticle.VERB;
+				else
+					type=TypeArticle.ADJECTIVE;
 				
 				SetNewArticle();
 				setFields();
@@ -154,6 +165,8 @@ public class ArticleFormWindow extends Window{
 		radioGroupGroup.setValueMap(mapRadioGroupGroup);
 		radioGroupGroup.setDefaultValue(0);
 		
+		
+		
 		radioGroupGroup.addChangeHandler(new ChangeHandler() {
 			
 			@Override
@@ -166,9 +179,17 @@ public class ArticleFormWindow extends Window{
 			}
 		});
 		
+		/* Verb Type */
+		radioGroupVerbType.setTitle("Type du verbe");
+		LinkedHashMap<Integer, String> mapRadioGroupVerbType = new LinkedHashMap<Integer, String>(2);
+		mapRadioGroupVerbType.put(0,"Verbe d'action");
+		mapRadioGroupVerbType.put(1,"Verbe de volonté");
+		mapRadioGroupVerbType.put(2,"Verbe d'état");
+		mapRadioGroupVerbType.put(3,"Verbe d'appréciation");
+		radioGroupVerbType.setValueMap(mapRadioGroupVerbType);
+		radioGroupVerbType.setDefaultValue(0);
 		
-		
-		formNormalVerb.setFields(radioGroupGroup);
+		formNormalVerb.setFields(radioGroupVerbType,radioGroupGroup);
 		formNormalVerb.setWidth(250);
 		
 		
@@ -190,6 +211,19 @@ public class ArticleFormWindow extends Window{
 		verbLayout.addMember(formIrregularVerb);
 		
 		verbLayout.setHeight(200);
+		
+		
+		/* ADJECTIVE */
+		
+		matchingText1.setTitle("masculin singulier");
+		matchingText2.setTitle("masculin pluriel");
+		matchingText3.setTitle("féminin singulier");
+		matchingText4.setTitle("féminin pluriel");
+		
+		formAdjective.setFields(matchingText1,
+				matchingText2,
+				matchingText3,
+				matchingText4);
 		
 		buttonValidate.setIconSize(42);
 		buttonValidate.setIcon("check.png");
@@ -213,17 +247,26 @@ public class ArticleFormWindow extends Window{
 					subj.setNumber(Integer.valueOf(radioGroupNumber.getValue().toString()));
 					subj.setNature(Integer.valueOf(radioGroupNature.getValue().toString()));
 				}
-				else
+				else if(type==TypeArticle.VERB)
 				{
 					VerbDTO verb = (VerbDTO)article;
 					
 					verb.setGroup(Integer.valueOf(radioGroupGroup.getValue().toString()));
+					verb.setType(Integer.valueOf(radioGroupVerbType.getValue().toString()));
 					verb.setIrregular1(irregularText1.getValueAsString());
 					verb.setIrregular2(irregularText2.getValueAsString());
 					verb.setIrregular3(irregularText3.getValueAsString());
 					verb.setIrregular4(irregularText4.getValueAsString());
 					verb.setIrregular5(irregularText5.getValueAsString());
 					verb.setIrregular6(irregularText6.getValueAsString());
+				}
+				else
+				{
+					AdjectiveDTO adjective=(AdjectiveDTO)article;
+					adjective.setMatching1(matchingText1.getValueAsString());
+					adjective.setMatching2(matchingText2.getValueAsString());
+					adjective.setMatching3(matchingText3.getValueAsString());
+					adjective.setMatching4(matchingText4.getValueAsString());
 				}
 				
 				destroy();
@@ -238,6 +281,7 @@ public class ArticleFormWindow extends Window{
 		verticalLayout.addMember(formArticle);
 		verticalLayout.addMember(labelType);
 		verticalLayout.addMember(formSubject);
+		verticalLayout.addMember(formAdjective);
 		verticalLayout.addMember(verbLayout);
 		verticalLayout.addMember(buttonValidate);
 		
@@ -261,10 +305,15 @@ public class ArticleFormWindow extends Window{
 				type=TypeArticle.SUBJECT;
 				labelType.setContents("Type : "+"sujet");
 			}
-			else
+			else if(articleDTO instanceof VerbDTO)
 			{
 				type=TypeArticle.VERB;
 				labelType.setContents("Type : "+"verbe");
+			}
+			else
+			{
+				type=TypeArticle.ADJECTIVE;
+				labelType.setContents("Type : "+"adjectif");
 			}
 	
 			setTitle("Edition d'un article");	
@@ -302,11 +351,11 @@ public class ArticleFormWindow extends Window{
 			radioGroupNumber.setValue(subj.getNumber());
 			
 		}
-		else
+		else if(article instanceof VerbDTO)
 		{
 			VerbDTO verb = (VerbDTO)article;
 			radioGroupGroup.setValue(verb.getGroup());
-			
+			radioGroupVerbType.setValue(verb.getType());
 			irregularText1.setValue(verb.getIrregular1());
 			irregularText2.setValue(verb.getIrregular2());
 			irregularText3.setValue(verb.getIrregular3());
@@ -315,6 +364,14 @@ public class ArticleFormWindow extends Window{
 			irregularText6.setValue(verb.getIrregular6());
 			
 			UpdateIrregular(verb.getGroup());
+		}
+		else
+		{
+			AdjectiveDTO adjective = (AdjectiveDTO)article;
+			matchingText1.setValue(adjective.getMatching1());
+			matchingText2.setValue(adjective.getMatching2());
+			matchingText3.setValue(adjective.getMatching3());
+			matchingText4.setValue(adjective.getMatching4());
 		}
 	}
 	
@@ -335,10 +392,10 @@ public class ArticleFormWindow extends Window{
 					order,
 					parent,
 					new ImageDTO((long) -1, "default_article.png"),
-					new HashSet<LogDTO>(),0,0,"","","","","","");
+					new HashSet<LogDTO>(),0,0,0,"","","","","","");
 			
 		}
-		else
+		else if(type==TypeArticle.SUBJECT)
 		{
 			this.article = new SubjectDTO((long)-1,
 					"Nouveau sujet",
@@ -347,12 +404,22 @@ public class ArticleFormWindow extends Window{
 					new ImageDTO((long) -1, "default_article.png"),
 					new HashSet<LogDTO>(),0,0,0,0);
 		}
+		else
+		{
+			this.article = new AdjectiveDTO((long)-1,
+					"Nouvel adjectif",
+					order,
+					parent,
+					new ImageDTO((long) -1, "default_article.png"),
+					new HashSet<LogDTO>(),0,"","","","");
+		}
 	}
 	
 	public void UpdateType()
 	{
 		verbLayout.setVisible(type==TypeArticle.VERB);
 		formSubject.setVisible(type==TypeArticle.SUBJECT);
+		formAdjective.setVisible(type==TypeArticle.ADJECTIVE);
 	}
 	
 }

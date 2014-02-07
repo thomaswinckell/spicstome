@@ -10,6 +10,7 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import com.spicstome.client.dto.AdjectiveDTO;
 import com.spicstome.client.dto.AlbumDTO;
 import com.spicstome.client.dto.ArticleDTO;
 import com.spicstome.client.dto.FolderDTO;
@@ -23,6 +24,7 @@ import com.spicstome.client.dto.TeacherDTO;
 import com.spicstome.client.dto.UserDTO;
 import com.spicstome.client.dto.VerbDTO;
 import com.spicstome.client.services.SpicsToMeServices;
+import com.spicstome.client.shared.Adjective;
 import com.spicstome.client.shared.Album;
 import com.spicstome.client.shared.Article;
 import com.spicstome.client.shared.Folder;
@@ -412,7 +414,15 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 			
 			idRes = verb.getId();
 	    }
-		
+	    else if(articleDTO instanceof AdjectiveDTO)
+	    {
+	    	AdjectiveDTO adjectiveDTO = (AdjectiveDTO)articleDTO;
+	    	Adjective adjective = new Adjective(adjectiveDTO,new Folder(adjectiveDTO.getFolder(),null));	
+	    	
+			session.save(adjective);
+			
+			idRes = adjective.getId();
+	    }
 		
 	  
 	    session.getTransaction().commit();
@@ -452,6 +462,12 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 			VerbDTO verbDTO = (VerbDTO)articleDTO;
 			Verb verb = new  Verb(verbDTO,new Folder(verbDTO.getFolder(),null));
 		    session.update(verb);
+		}
+		else if(articleDTO instanceof AdjectiveDTO)
+		{
+			AdjectiveDTO adjectiveDTO = (AdjectiveDTO)articleDTO;
+			Adjective adjective = new  Adjective(adjectiveDTO,new Folder(adjectiveDTO.getFolder(),null));
+		    session.update(adjective);
 		}
 		
 	    session.getTransaction().commit();
@@ -669,13 +685,25 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 		{
 			VerbDTO verbDTO = (VerbDTO) article;
 			VerbDTO copyVerb= new VerbDTO((long)-1,verbDTO.getName(),verbDTO.getOrder(),parent,copyImage,new HashSet<LogDTO>(),0,
-					verbDTO.getGroup(),verbDTO.getIrregular1(),verbDTO.getIrregular2(),verbDTO.getIrregular3(),verbDTO.getIrregular4(),verbDTO.getIrregular5(),verbDTO.getIrregular6()) ;
+					verbDTO.getGroup(),verbDTO.getType(),verbDTO.getIrregular1(),verbDTO.getIrregular2(),verbDTO.getIrregular3(),verbDTO.getIrregular4(),verbDTO.getIrregular5(),verbDTO.getIrregular6()) ;
 			
 			copyVerb.getImage().setId(idImageArticle);
 			Long id = saveArticle(copyVerb);
 			copyVerb.setId(id);
 			
 			return copyVerb;
+		}
+		else if(article instanceof AdjectiveDTO)
+		{
+			AdjectiveDTO ajectiveDTO = (AdjectiveDTO) article;
+			AdjectiveDTO copyAdjective= new AdjectiveDTO((long)-1,ajectiveDTO.getName(),ajectiveDTO.getOrder(),parent,copyImage,new HashSet<LogDTO>(),0,
+					ajectiveDTO.getMatching1(),ajectiveDTO.getMatching2(),ajectiveDTO.getMatching3(),ajectiveDTO.getMatching4()) ;
+			
+			copyAdjective.getImage().setId(idImageArticle);
+			Long id = saveArticle(copyAdjective);
+			copyAdjective.setId(id);
+			
+			return copyAdjective;
 		}
 
 	
@@ -729,9 +757,4 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	}
 
 
-	
-	
-
-
-	
 }

@@ -9,6 +9,7 @@ public class Verb extends Article implements Serializable {
 	private static final long serialVersionUID = 1333962488010340815L;
 	
 	private int group;
+	private int type;
 	private String irregular1;
 	private String irregular2;
 	private String irregular3;
@@ -28,12 +29,14 @@ public class Verb extends Article implements Serializable {
 		super(verbDTO,parent);	
 		
 		this.group=verbDTO.getGroup();
+		this.type=verbDTO.getType();
 		this.irregular1=verbDTO.getIrregular1();
 		this.irregular2=verbDTO.getIrregular2();
 		this.irregular3=verbDTO.getIrregular3();
 		this.irregular4=verbDTO.getIrregular4();
 		this.irregular5=verbDTO.getIrregular5();
 		this.irregular6=verbDTO.getIrregular6();
+		
 	}
 	
 	public int getGroup() {
@@ -96,6 +99,14 @@ public class Verb extends Article implements Serializable {
 	@Override
 	public String toString() {
 		return "Verb []";
+	}
+
+	public int getType() {
+		return type;
+	}
+
+	public void setType(int type) {
+		this.type = type;
 	}
 	
 }

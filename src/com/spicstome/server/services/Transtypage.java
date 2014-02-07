@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.spicstome.client.dto.AdjectiveDTO;
 import com.spicstome.client.dto.AlbumDTO;
 import com.spicstome.client.dto.ArticleDTO;
 import com.spicstome.client.dto.FolderDTO;
@@ -16,6 +17,7 @@ import com.spicstome.client.dto.SubjectDTO;
 import com.spicstome.client.dto.TeacherDTO;
 import com.spicstome.client.dto.UserDTO;
 import com.spicstome.client.dto.VerbDTO;
+import com.spicstome.client.shared.Adjective;
 import com.spicstome.client.shared.Album;
 import com.spicstome.client.shared.Article;
 import com.spicstome.client.shared.Folder;
@@ -59,6 +61,7 @@ public class Transtypage {
 				createListLogDTO(verb.getLogs()),
 				verb.getFavorite(),
 				verb.getGroup(),
+				verb.getType(),
 				verb.getIrregular1(),
 				verb.getIrregular2(),
 				verb.getIrregular3(),
@@ -66,6 +69,18 @@ public class Transtypage {
 				verb.getIrregular5(),
 				verb.getIrregular6());
 	}
+	
+	public static AdjectiveDTO createAdjectiveDTO(Adjective adjective,FolderDTO parentDTO)
+	{
+		return new AdjectiveDTO(adjective.getId(),adjective.getName(),adjective.getOrder(),parentDTO,createImageDTO(adjective.getImage()),
+				createListLogDTO(adjective.getLogs()),
+				adjective.getFavorite(),	
+				adjective.getMatching1(),
+				adjective.getMatching2(),
+				adjective.getMatching3(),
+				adjective.getMatching4());
+	}
+	
 	public static SubjectDTO createSubjectDTO(Subject subject,FolderDTO parentDTO)
 	{
 		return new SubjectDTO(subject.getId(),subject.getName(),subject.getOrder(),parentDTO,createImageDTO(subject.getImage()),
@@ -117,6 +132,8 @@ public class Transtypage {
 					listDTO.add(createSubjectDTO((Subject)p,parent));
 				if(p instanceof Verb)
 					listDTO.add(createVerbDTO((Verb)p,parent));
+				if(p instanceof Adjective)
+					listDTO.add(createAdjectiveDTO((Adjective)p,parent));
 			}
 				
 				
