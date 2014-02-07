@@ -41,6 +41,7 @@ public class ArticleFormWindow extends Window{
 	RadioGroupItem radioGroupVerbType = new RadioGroupItem();
 	CheckboxItem checkBoxFavorite = new CheckboxItem("favorite","Favoris");
 	
+	
 	HLayout verbLayout = new HLayout();
 	
 	public DynamicForm formArticle = new DynamicForm();
@@ -57,6 +58,8 @@ public class ArticleFormWindow extends Window{
 	TextItem matchingText2 = new TextItem("matching2");
 	TextItem matchingText3 = new TextItem("matching3");
 	TextItem matchingText4 = new TextItem("matching4");
+	
+	CheckboxItem checkBoxNegation = new CheckboxItem("negation","Negation");
 	
 	TextItem irregularText1 = new TextItem("irregular1");
 	TextItem irregularText2 = new TextItem("irregular2");
@@ -189,7 +192,9 @@ public class ArticleFormWindow extends Window{
 		radioGroupVerbType.setValueMap(mapRadioGroupVerbType);
 		radioGroupVerbType.setDefaultValue(0);
 		
-		formNormalVerb.setFields(radioGroupVerbType,radioGroupGroup);
+		
+		
+		formNormalVerb.setFields(checkBoxNegation,radioGroupVerbType,radioGroupGroup);
 		formNormalVerb.setWidth(250);
 		
 		
@@ -251,6 +256,7 @@ public class ArticleFormWindow extends Window{
 				{
 					VerbDTO verb = (VerbDTO)article;
 					
+					verb.setNegation((checkBoxNegation.getValueAsBoolean()?1:0));
 					verb.setGroup(Integer.valueOf(radioGroupGroup.getValue().toString()));
 					verb.setType(Integer.valueOf(radioGroupVerbType.getValue().toString()));
 					verb.setIrregular1(irregularText1.getValueAsString());
@@ -354,6 +360,7 @@ public class ArticleFormWindow extends Window{
 		else if(article instanceof VerbDTO)
 		{
 			VerbDTO verb = (VerbDTO)article;
+			checkBoxNegation.setValue(verb.getNegation()==1);
 			radioGroupGroup.setValue(verb.getGroup());
 			radioGroupVerbType.setValue(verb.getType());
 			irregularText1.setValue(verb.getIrregular1());
@@ -392,7 +399,7 @@ public class ArticleFormWindow extends Window{
 					order,
 					parent,
 					new ImageDTO((long) -1, "default_article.png"),
-					new HashSet<LogDTO>(),0,0,0,"","","","","","");
+					new HashSet<LogDTO>(),0,0,0,0,"","","","","","");
 			
 		}
 		else if(type==TypeArticle.SUBJECT)

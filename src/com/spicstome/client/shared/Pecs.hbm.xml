@@ -39,6 +39,8 @@
 
 			<joined-subclass name="Verb" table="verb" extends="Article">
 				<key column="id" />
+				
+				<property name="negation" type="int" column="negation" />
 				<property name="group" type="int" column="group_verb" />
 				<property name="type" type="int" column="type" />
 				

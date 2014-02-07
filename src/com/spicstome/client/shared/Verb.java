@@ -8,6 +8,7 @@ public class Verb extends Article implements Serializable {
 
 	private static final long serialVersionUID = 1333962488010340815L;
 	
+	private int negation;
 	private int group;
 	private int type;
 	private String irregular1;
@@ -28,6 +29,7 @@ public class Verb extends Article implements Serializable {
 	{
 		super(verbDTO,parent);	
 		
+		this.negation=verbDTO.getNegation();
 		this.group=verbDTO.getGroup();
 		this.type=verbDTO.getType();
 		this.irregular1=verbDTO.getIrregular1();
@@ -107,6 +109,14 @@ public class Verb extends Article implements Serializable {
 
 	public void setType(int type) {
 		this.type = type;
+	}
+
+	public int getNegation() {
+		return negation;
+	}
+
+	public void setNegation(int negation) {
+		this.negation = negation;
 	}
 	
 }

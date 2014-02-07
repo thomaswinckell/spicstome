@@ -7,16 +7,16 @@ h1 {
 
 
 .tileValue, .tileValueDown, .tileValueSelected, .tileValueOver, .tileValueSelectedOver, .tileValueSelectedDown {
-    font-size:20px !important;
+    font-size:15px !important;
 }
 
 .simpleTile, .simpleTileOver, .simpleTileSelected, .simpleTileSelectedOver {
-    font-size:20px !important;
+    font-size:15px !important;
 }
 
 
 .treeCell, .treeCellDark, .treeCellOver, .treeCellOverDark, .treeCellSelected, .treeCellSelectedDark, .treeCellSelectedOver, .treeCellSelectedOverDark, .treeCellDisabled, .treeCellDisabledDark, .treeTallCell, .treeTallCellDark, .treeTallCellOver, .treeTallCellOverDark, .treeTallCellSelected, .treeTallCellSelectedDark, .treeTallCellSelectedOver, .treeTallCellSelectedOverDark, .treeTallCellDisabled, .treeTallCellDisabledDark {
-    font-size: 20px !important;;
+    font-size: 15px !important;;
 }
 
 
@@ -98,7 +98,6 @@ h1 {
 .bloc
 {
 	margin:20px;
-	
 	padding:10px;
 	border-width:2px;
 	border-style:outset;

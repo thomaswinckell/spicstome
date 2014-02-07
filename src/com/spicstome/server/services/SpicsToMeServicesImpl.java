@@ -685,7 +685,7 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 		{
 			VerbDTO verbDTO = (VerbDTO) article;
 			VerbDTO copyVerb= new VerbDTO((long)-1,verbDTO.getName(),verbDTO.getOrder(),parent,copyImage,new HashSet<LogDTO>(),0,
-					verbDTO.getGroup(),verbDTO.getType(),verbDTO.getIrregular1(),verbDTO.getIrregular2(),verbDTO.getIrregular3(),verbDTO.getIrregular4(),verbDTO.getIrregular5(),verbDTO.getIrregular6()) ;
+					verbDTO.getNegation(),verbDTO.getGroup(),verbDTO.getType(),verbDTO.getIrregular1(),verbDTO.getIrregular2(),verbDTO.getIrregular3(),verbDTO.getIrregular4(),verbDTO.getIrregular5(),verbDTO.getIrregular6()) ;
 			
 			copyVerb.getImage().setId(idImageArticle);
 			Long id = saveArticle(copyVerb);

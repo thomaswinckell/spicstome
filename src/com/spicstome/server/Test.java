@@ -66,7 +66,7 @@ public class Test {
 		
 	}
 	
-	public static void generateVerb(int order,String name,String image,Folder parent,int group,int type,
+	public static void generateVerb(int order,String name,String image,Folder parent,int negation,int group,int type,
 			String irregular1,String irregular2,String irregular3,String irregular4,String irregular5,String irregular6)
 	{
 		Image imageSubject = new Image((long)-1);
@@ -76,6 +76,7 @@ public class Test {
 		
 		Verb verb = new Verb((long)-1);
 		verb.setName(name);
+		verb.setNegation(negation);
 		verb.setGroup(group);
 		verb.setType(type);
 		verb.setIrregular1(irregular1);
@@ -145,12 +146,13 @@ public class Test {
 			
 				if(type==Type.GENERAL)
 				{
-					generateVerb(0,"Ecouter", "ecouter.gif", quoi, 0,0,"","","","","","");
-					generateVerb(1,"Dormir", "dormir.gif", quoi, 2,0,"dors","dors","dort","dormons","dormez","dorment");
-					generateVerb(2,"Dire", "dire.gif", quoi, 2,0,"dis","dis","dit","disons","dites","disent");
-					generateVerb(3,"Etre", "etre.gif", quoi, 2,2,"suis","es","est","sommes","êtes","sont");
-					generateVerb(4,"Vouloir", "vouloir.JPG", quoi, 2,1,"veux","veux","veut","voulons","voulez","veulent");
-					generateVerb(5,"Aimer", "aimer.gif", quoi, 0,3,"","","","","","");
+					generateVerb(0,"Ecouter", "ecouter.gif", quoi, 0,0,0,"","","","","","");
+					generateVerb(1,"Dormir", "dormir.gif", quoi, 0,2,0,"dors","dors","dort","dormons","dormez","dorment");
+					generateVerb(2,"Dire", "dire.gif", quoi, 0,2,0,"dis","dis","dit","disons","dites","disent");
+					generateVerb(3,"Etre", "etre.gif", quoi, 0,2,2,"suis","es","est","sommes","êtes","sont");
+					generateVerb(4,"Vouloir", "vouloir.JPG", quoi, 0,2,1,"veux","veux","veut","voulons","voulez","veulent");
+					generateVerb(5,"Aimer", "aimer.gif", quoi, 0,0,3,"","","","","","");
+					generateVerb(6,"Ne pas vouloir", "nepasvouloir.JPG", quoi, 1,2,1,"veux","veux","veut","voulons","voulez","veulent");
 				}
 			
 				Folder nouriture = generateFolder(0,"Nourriture", "nourriture.gif", quoi);

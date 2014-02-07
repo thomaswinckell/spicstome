@@ -1,150 +1,85 @@
 package com.spicstome.client.ui.widget;
 
 import java.util.ArrayList;
-
 import com.smartgwt.client.data.RecordList;
-import com.spicstome.client.dto.AdjectiveDTO;
+import com.smartgwt.client.widgets.IconButton;
+import com.smartgwt.client.widgets.layout.HLayout;
 import com.spicstome.client.dto.ArticleDTO;
-import com.spicstome.client.dto.SubjectDTO;
-import com.spicstome.client.dto.VerbDTO;
-import com.spicstome.client.syntax.SyntaxConjugator;
+import com.spicstome.client.syntax.SyntaxAnalyser;
+import com.spicstome.client.ui.widget.ImageTileGrid.Mode;
 
-public class MailDropZone extends ImageTileGrid{
+public class MailDropZone extends HLayout{
 
-	private SyntaxConjugator syntaxConjugator;
+	ImageTileGrid dropZone;
+	private SyntaxAnalyser analyser;
+	protected IconButton valid = new IconButton("");
 	
 	public MailDropZone(int iconSize) {
-		super(Mode.DRAG_AND_DROP, iconSize+20, iconSize+50, iconSize);
 		
-		setWidth100();
-		setHeight(iconSize+100);
-		setStyleName("bloc");
-		removeOnDragOver();
+		dropZone = new ImageTileGrid(Mode.DRAG_AND_DROP, iconSize+50, iconSize+50, iconSize){
+			@Override
+			public void OnRemove()
+			{
+				UpdateMail();
+			}
+			
+			@Override
+			public void OnDropOrReorder(ArticleDTO article)
+			{
+				UpdateMail();
+			}
+		};
+	
 		
-		syntaxConjugator = new SyntaxConjugator();
+		dropZone.setWidth100();
+		dropZone.setHeight(iconSize+100);
+		dropZone.setStyleName("bloc");
+		dropZone.removeOnDragOver();
+		
+		valid.setIconSize(50);
+		valid.setIcon("check.png");
+		
+		addMember(dropZone);
+		addMember(valid);
+		
+		analyser = new SyntaxAnalyser();
+	}
+	
+	public void UpdateValidation(Boolean b)
+	{
+		valid.setVisible(b);
 	}
 	
 	public void UpdateMail()
 	{
-		RecordList list = getDataAsRecordList();
+		RecordList list = dropZone.getDataAsRecordList();
 		ArrayList<ImageRecord> articles = new ArrayList<ImageRecord>();
-		
-		ArticleDTO first=null;
-		
-		if(list.getLength()>0)
-			first = (ArticleDTO)((ImageRecord)(list.get(0))).getAttributeAsObject(ImageRecord.DATA);
-		
-		
 		
 		for(int i=0;i<list.getLength();i++)
 		{
 			ArticleDTO article = (ArticleDTO)((ImageRecord)(list.get(i))).getAttributeAsObject(ImageRecord.DATA);
-			if(article instanceof VerbDTO)
-			{
-				VerbDTO verb = (VerbDTO)article;
-				
-				String conjugateVerb = "";
-				
-				if(!(first==null) && first instanceof SubjectDTO)
-				{
-					SubjectDTO subjectDTO = (SubjectDTO)first;
-								
-					if(verb.getGroup()==0 || verb.getGroup()==1)
-						conjugateVerb = syntaxConjugator.conjugateVerb(verb.getName(), subjectDTO.getNature(),subjectDTO.getNumber());
-					else
-					{			
-						if(subjectDTO.getNumber()==0)
-						{
-
-							if(subjectDTO.getNature()==0)
-								conjugateVerb = verb.getIrregular1();
-							else if(subjectDTO.getNature()==1)
-								conjugateVerb = verb.getIrregular2();
-							else if(subjectDTO.getNature()==2)
-								conjugateVerb = verb.getIrregular3();	
-						}
-						else
-						{
-							if(subjectDTO.getNature()==0)
-								conjugateVerb = verb.getIrregular4();
-							else if(subjectDTO.getNature()==1)
-								conjugateVerb = verb.getIrregular5();
-							else if(subjectDTO.getNature()==2)
-								conjugateVerb = verb.getIrregular6();
-						}
-					}	
-				}
-				else
-				{
-					conjugateVerb = verb.getName();
-				}
-				
-				ImageRecord verbRecord = new ImageRecord(verb);
-				verbRecord.setAttribute(ImageRecord.PICTURE_NAME, conjugateVerb);
-				articles.add(verbRecord);
-			
-				
-			}
-			else if(article instanceof AdjectiveDTO)
-			{
-				AdjectiveDTO adjective = (AdjectiveDTO)article;
-				
-				String matchingAdjective = "";
-				
-				if(!(first==null) && first instanceof SubjectDTO)
-				{
-					SubjectDTO subjectDTO = (SubjectDTO)first;
-					
-					if(subjectDTO.getGender()==0)
-					{
-						if(subjectDTO.getNumber()==0)
-							matchingAdjective=adjective.getMatching1();
-						else
-							matchingAdjective=adjective.getMatching2();
-					}
-					else
-					{
-						if(subjectDTO.getNumber()==0)
-							matchingAdjective=adjective.getMatching3();
-						else
-							matchingAdjective=adjective.getMatching4();
-					}
-					
-				
-				}
-				else
-				{
-					matchingAdjective = adjective.getName();
-				}
-				
-				ImageRecord verbRecord = new ImageRecord(adjective);
-				verbRecord.setAttribute(ImageRecord.PICTURE_NAME, matchingAdjective);
-				articles.add(verbRecord);
-			}
-			else
-			{
-				articles.add(new ImageRecord(article));
-			}
+			ImageRecord record = new ImageRecord(article);
+			record.setAttribute(ImageRecord.PICTURE_NAME, article.getName());
+			articles.add(record);
 		}
 		
-		clearItems();
+		analyser.init();
 		
-		setItems(articles);
+		for(int i=0;i<articles.size();i++)
+		{
+			analyser.currentState.check(articles.get(i),i,articles);
+		}
+		
+		UpdateValidation(analyser.currentState.acceptance);
+	
+		dropZone.clearItems();
+		
+		dropZone.setItems(articles);
 		
 		
 
 	}
 	
-	@Override
-	public void OnRemove()
-	{
-		UpdateMail();
-	}
 	
-	@Override
-	public void OnDropOrReorder(ArticleDTO article)
-	{
-		UpdateMail();
-	}
 
 }

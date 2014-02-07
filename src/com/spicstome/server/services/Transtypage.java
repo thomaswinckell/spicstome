@@ -60,6 +60,7 @@ public class Transtypage {
 		return new VerbDTO(verb.getId(),verb.getName(),verb.getOrder(),parentDTO,createImageDTO(verb.getImage()),
 				createListLogDTO(verb.getLogs()),
 				verb.getFavorite(),
+				verb.getNegation(),
 				verb.getGroup(),
 				verb.getType(),
 				verb.getIrregular1(),

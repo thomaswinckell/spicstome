@@ -45,7 +45,7 @@ public class Book extends VLayout{
 		setMargin(20);
 		this.imageSize=imageSize;
 		
-		tileWidth  = imageSize+20;
+		tileWidth  = imageSize+50;
 		tileHeight = imageSize+50;
 		
 		widthPage =(nbColPerPage*(tileWidth+20));
