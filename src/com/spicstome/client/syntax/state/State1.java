@@ -1,13 +1,10 @@
 package com.spicstome.client.syntax.state;
 
-import java.util.ArrayList;
-
 import com.spicstome.client.dto.AdjectiveDTO;
 import com.spicstome.client.dto.ArticleDTO;
 import com.spicstome.client.dto.SubjectDTO;
 import com.spicstome.client.dto.VerbDTO;
-import com.spicstome.client.syntax.SyntaxAnalyser;
-import com.spicstome.client.ui.widget.ImageRecord;
+
 
 public class State1 extends SyntaxState{
 
@@ -16,29 +13,44 @@ public class State1 extends SyntaxState{
 	}
 
 	@Override
-	public void check(ImageRecord record, int range,
-			ArrayList<ImageRecord> arrayRecord) {
+	public String check(ArticleDTO article, int range) {
 		
-		ArticleDTO article = extractArticle(record);
-		ImageRecord recordVerb = arrayRecord.get(range);
 		
-		SubjectDTO subject = (SubjectDTO) extractArticle(arrayRecord.get(0));
+		
+		SubjectDTO subject = (SubjectDTO) analyser.extractArticle(0);
 		
 		if(article instanceof AdjectiveDTO)
 		{
 			AdjectiveDTO adjective = (AdjectiveDTO) article;
-			analyser.match(subject, adjective, recordVerb);		
+
 			analyser.currentState=analyser.state2;
+			
+			return analyser.syntaxFrenchManager.match(subject.getGender(),subject.getNumber(), 
+					adjective.getMatching1(),adjective.getMatching2(),adjective.getMatching3(),adjective.getMatching4());
 		}
 		else if(article instanceof VerbDTO)
 		{
 			VerbDTO verb = (VerbDTO) article;
-			analyser.conjugate(subject, verb, recordVerb);	
-			analyser.currentState=analyser.state3;
+
+			if(verb.getType()==0)
+				analyser.currentState=analyser.state3;
+			else if(verb.getType()==1)
+				analyser.currentState=analyser.state3;
+			else if(verb.getType()==2)
+				analyser.currentState=analyser.state3;
+			else if(verb.getType()==3)
+				analyser.currentState=analyser.state3;
+			
+			return analyser.syntaxFrenchManager.conjugate(subject.getNature(),subject.getNumber(),
+					verb.getName(),verb.getNegation(),verb.getGroup(),
+					verb.getIrregular1(),verb.getIrregular2(),verb.getIrregular3(),
+					verb.getIrregular4(),verb.getIrregular5(),verb.getIrregular6())	;
 		}
 		else
 		{
 			analyser.currentState=analyser.trashState;
+			
+			return null;
 		}
 		
 	}

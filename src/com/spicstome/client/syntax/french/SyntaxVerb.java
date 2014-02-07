@@ -1,4 +1,4 @@
-package com.spicstome.client.syntax;
+package com.spicstome.client.syntax.french;
 
 
 public abstract class SyntaxVerb

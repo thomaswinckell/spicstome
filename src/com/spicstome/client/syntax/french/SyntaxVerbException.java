@@ -1,4 +1,4 @@
-package com.spicstome.client.syntax;
+package com.spicstome.client.syntax.french;
 
 /**
  * erreur sur la classification d'un verbe lors de l'instantiation

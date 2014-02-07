@@ -1,11 +1,12 @@
 package com.spicstome.client.ui.widget;
 
 import java.util.ArrayList;
+
 import com.smartgwt.client.data.RecordList;
 import com.smartgwt.client.widgets.IconButton;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.spicstome.client.dto.ArticleDTO;
-import com.spicstome.client.syntax.SyntaxAnalyser;
+import com.spicstome.client.syntax.state.SyntaxAnalyser;
 import com.spicstome.client.ui.widget.ImageTileGrid.Mode;
 
 public class MailDropZone extends HLayout{
@@ -63,11 +64,17 @@ public class MailDropZone extends HLayout{
 			articles.add(record);
 		}
 		
-		analyser.init();
+		analyser.init(articles);
 		
 		for(int i=0;i<articles.size();i++)
 		{
-			analyser.currentState.check(articles.get(i),i,articles);
+			
+			String modif = analyser.check(i);
+			
+			if(modif!=null)
+			{
+				articles.get(i).setAttribute(ImageRecord.PICTURE_NAME, modif);
+			}
 		}
 		
 		UpdateValidation(analyser.currentState.acceptance);

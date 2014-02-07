@@ -3,9 +3,9 @@ package com.spicstome.client.syntax.state;
 import com.spicstome.client.dto.ArticleDTO;
 
 
-public class State3 extends SyntaxState{
+public class State5 extends SyntaxState{
 
-	public State3(SyntaxAnalyser analyser) {
+	public State5(SyntaxAnalyser analyser) {
 		super(true, analyser);
 	}
 	

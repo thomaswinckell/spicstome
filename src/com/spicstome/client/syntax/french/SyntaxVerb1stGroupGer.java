@@ -1,4 +1,4 @@
-package com.spicstome.client.syntax;
+package com.spicstome.client.syntax.french;
 /**
  * repr�sente un verbe comme : manger, ranger,...
  * 

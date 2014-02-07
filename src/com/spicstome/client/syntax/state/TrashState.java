@@ -1,9 +1,7 @@
 package com.spicstome.client.syntax.state;
 
-import java.util.ArrayList;
+import com.spicstome.client.dto.ArticleDTO;
 
-import com.spicstome.client.syntax.SyntaxAnalyser;
-import com.spicstome.client.ui.widget.ImageRecord;
 
 public class TrashState extends SyntaxState{
 
@@ -14,9 +12,9 @@ public class TrashState extends SyntaxState{
 	}
 
 	@Override
-	public void check(ImageRecord record,int range,ArrayList<ImageRecord> arrayRecord) 
+	public String check(ArticleDTO article,int range) 
 	{
-		
+		return null;
 	}
 
 }
