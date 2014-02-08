@@ -1,7 +1,10 @@
 package com.spicstome.client.syntax.state;
 
 import com.spicstome.client.dto.ArticleDTO;
+import com.spicstome.client.dto.NounDTO;
+import com.spicstome.client.dto.VerbDTO;
 
+/* Wish */
 
 public class State5 extends SyntaxState{
 
@@ -14,10 +17,21 @@ public class State5 extends SyntaxState{
 	{
 
 		
-		
-		analyser.currentState=analyser.trashState;
-		
-		return null;
+		if(article instanceof VerbDTO)
+		{
+			analyser.currentState=analyser.state8;
+			return null;
+		}
+		else if(article instanceof NounDTO)
+		{
+			analyser.currentState=analyser.state8;
+			return null;
+		}
+		else
+		{
+			analyser.currentState=analyser.trashState;
+			return null;
+		}
 		
 	}
 

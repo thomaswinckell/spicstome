@@ -16,6 +16,11 @@ public class SyntaxAnalyser {
 	public State1 state1;
 	public State2 state2;
 	public State3 state3;
+	public State4 state4;
+	public State5 state5;
+	public State6 state6;
+	public State7 state7;
+	public State8 state8;
 	
 	public TrashState trashState;
 	
@@ -27,6 +32,12 @@ public class SyntaxAnalyser {
 		state1 = new State1(this);
 		state2 = new State2(this);
 		state3 = new State3(this);
+		state4 = new State4(this);
+		state5 = new State5(this);
+		state6 = new State6(this);
+		state7= new State7(this);
+		state8 = new State8(this);
+		
 		trashState = new TrashState(this);
 		
 		currentState = state0;
@@ -47,4 +58,6 @@ public class SyntaxAnalyser {
 	{
 		return currentState.check(extractArticle(range), range);
 	}
+	
+	
 }

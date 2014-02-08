@@ -32,19 +32,7 @@ public class State1 extends SyntaxState{
 		{
 			VerbDTO verb = (VerbDTO) article;
 
-			if(verb.getType()==0)
-				analyser.currentState=analyser.state3;
-			else if(verb.getType()==1)
-				analyser.currentState=analyser.state3;
-			else if(verb.getType()==2)
-				analyser.currentState=analyser.state3;
-			else if(verb.getType()==3)
-				analyser.currentState=analyser.state3;
-			
-			return analyser.syntaxFrenchManager.conjugate(subject.getPerson(),subject.getNumber(),
-					verb.getName(),verb.getNegation(),verb.getGroup(),
-					verb.getIrregular1(),verb.getIrregular2(),verb.getIrregular3(),
-					verb.getIrregular4(),verb.getIrregular5(),verb.getIrregular6())	;
+			return conjugueVerb(subject,verb);
 		}
 		else
 		{

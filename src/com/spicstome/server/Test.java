@@ -181,7 +181,7 @@ public class Test {
 					
 					if(type==Type.GENERAL)
 					{
-						generateSubject(1, "Abricot", "abricot.gif", nouriture, 1, 0, 2,false);
+						generateSubject(1, "Abricot", "abricot.gif", nouriture, 0, 0, 2,false);
 					}
 					
 				Folder boissons = generateFolder(1,"Boissons", "boissons.gif", quoi);
