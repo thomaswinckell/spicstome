@@ -33,7 +33,17 @@
 				<key column="id" />
 				<property name="gender" type="int" column="gender" />
 				<property name="number" type="int" column="number" />
-				<property name="nature" type="int" column="nature" />
+				<property name="person" type="int" column="person" />
+				
+				<joined-subclass name="Noun" table="noun"
+					extends="Subject">
+					<key column="id" />
+				</joined-subclass>
+				
+				<joined-subclass name="Pronoun" table="pronoun"
+					extends="Subject">
+					<key column="id" />
+				</joined-subclass>
 
 			</joined-subclass>
 

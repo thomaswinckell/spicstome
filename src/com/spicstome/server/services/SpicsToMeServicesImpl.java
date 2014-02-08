@@ -16,7 +16,9 @@ import com.spicstome.client.dto.ArticleDTO;
 import com.spicstome.client.dto.FolderDTO;
 import com.spicstome.client.dto.ImageDTO;
 import com.spicstome.client.dto.LogDTO;
+import com.spicstome.client.dto.NounDTO;
 import com.spicstome.client.dto.PecsDTO;
+import com.spicstome.client.dto.PronounDTO;
 import com.spicstome.client.dto.ReferentDTO;
 import com.spicstome.client.dto.StudentDTO;
 import com.spicstome.client.dto.SubjectDTO;
@@ -29,9 +31,10 @@ import com.spicstome.client.shared.Album;
 import com.spicstome.client.shared.Article;
 import com.spicstome.client.shared.Folder;
 import com.spicstome.client.shared.Image;
+import com.spicstome.client.shared.Noun;
+import com.spicstome.client.shared.Pronoun;
 import com.spicstome.client.shared.Referent;
 import com.spicstome.client.shared.Student;
-import com.spicstome.client.shared.Subject;
 import com.spicstome.client.shared.Teacher;
 import com.spicstome.client.shared.User;
 import com.spicstome.client.shared.Verb;
@@ -398,12 +401,21 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 		
 	    if(articleDTO instanceof SubjectDTO)
 	    {
-	    	SubjectDTO subjectDTO = (SubjectDTO)articleDTO;
-	    	Subject subject = new Subject(subjectDTO,new Folder(subjectDTO.getFolder(),null));	
+	    	if(articleDTO instanceof NounDTO)
+	 	    {
+	    		NounDTO nounDTO = (NounDTO)articleDTO;
+		    	Noun noun = new Noun(nounDTO,new Folder(nounDTO.getFolder(),null));	 	
+				session.save(noun);		
+				idRes = noun.getId();
+	 	    }
+	    	else if(articleDTO instanceof PronounDTO)
+	 	    {
+	    		PronounDTO pronounDTO = (PronounDTO)articleDTO;
+		    	Pronoun pronoun = new Pronoun(pronounDTO,new Folder(pronounDTO.getFolder(),null));	 	
+				session.save(pronoun);		
+				idRes = pronoun.getId();
+	 	    }
 	    	
-			session.save(subject);
-			
-			idRes = subject.getId();
 	    }
 	    else if(articleDTO instanceof VerbDTO)
 	    {
@@ -453,9 +465,19 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 		
 		if(articleDTO instanceof SubjectDTO)
 		{
-			SubjectDTO subjectDTO = (SubjectDTO)articleDTO;
-			Subject subject = new  Subject(subjectDTO,new Folder(subjectDTO.getFolder(),null));
-		    session.update(subject);
+			if(articleDTO instanceof NounDTO)
+			{
+				NounDTO nounDTO = (NounDTO)articleDTO;
+				Noun noun = new  Noun(nounDTO,new Folder(nounDTO.getFolder(),null));
+			    session.update(noun);
+			}
+			else if(articleDTO instanceof PronounDTO)
+			{
+				PronounDTO pronounDTO = (PronounDTO)articleDTO;
+				Pronoun pronoun = new  Pronoun(pronounDTO,new Folder(pronounDTO.getFolder(),null));
+			    session.update(pronoun);
+			}
+			
 		}
 		else if(articleDTO instanceof VerbDTO)
 		{
@@ -672,14 +694,29 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 		
 		if(article instanceof SubjectDTO)
 		{
-			SubjectDTO subjectDTO = (SubjectDTO) article;
-			SubjectDTO copySubject= new SubjectDTO((long)-1,subjectDTO.getName(),subjectDTO.getOrder(),parent,copyImage,new HashSet<LogDTO>(),0,subjectDTO.getGender(),subjectDTO.getNature(),subjectDTO.getNumber()) ;
+			if(article instanceof NounDTO)
+			{
+				NounDTO nounDTO = (NounDTO) article;
+				NounDTO copyNoun= new NounDTO((long)-1,nounDTO.getName(),nounDTO.getOrder(),parent,copyImage,new HashSet<LogDTO>(),0,nounDTO.getGender(),nounDTO.getPerson(),nounDTO.getNumber()) ;
+				
+				copyNoun.getImage().setId(idImageArticle);
+				Long id = saveArticle(copyNoun);
+				copyNoun.setId(id);
+				
+				return copyNoun;
+			}
+			else if(article instanceof PronounDTO)
+			{
+				PronounDTO pronounDTO = (PronounDTO) article;
+				PronounDTO copyPronoun= new PronounDTO((long)-1,pronounDTO.getName(),pronounDTO.getOrder(),parent,copyImage,new HashSet<LogDTO>(),0,pronounDTO.getGender(),pronounDTO.getPerson(),pronounDTO.getNumber()) ;
+				
+				copyPronoun.getImage().setId(idImageArticle);
+				Long id = saveArticle(copyPronoun);
+				copyPronoun.setId(id);
+				
+				return copyPronoun;
+			}
 			
-			copySubject.getImage().setId(idImageArticle);
-			Long id = saveArticle(copySubject);
-			copySubject.setId(id);
-			
-			return copySubject;
 		}
 		else if(article instanceof VerbDTO)
 		{

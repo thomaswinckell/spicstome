@@ -6,9 +6,10 @@ import com.spicstome.client.shared.Adjective;
 import com.spicstome.client.shared.Album;
 import com.spicstome.client.shared.Folder;
 import com.spicstome.client.shared.Image;
+import com.spicstome.client.shared.Noun;
+import com.spicstome.client.shared.Pronoun;
 import com.spicstome.client.shared.Referent;
 import com.spicstome.client.shared.Student;
-import com.spicstome.client.shared.Subject;
 import com.spicstome.client.shared.Verb;
 
 
@@ -46,23 +47,41 @@ public class Test {
 		return imageUser;
 	}
 	
-	public static void generateSubject(int order,String name,String image,Folder parent,int gender,int number,int nature)
+	public static void generateSubject(int order,String name,String image,Folder parent,int gender,int number,int person,boolean isPronoun)
 	{
 		Image imageSubject = new Image((long)-1);
 		imageSubject.setFilename(image);
 		
 		HibernateManager.getInstance().save(imageSubject);
 		
-		Subject subject = new Subject((long)-1);
-		subject.setName(name);
-		subject.setGender(gender);
-		subject.setNature(nature);
-		subject.setNumber(number);
-		subject.setImage(imageSubject);
-		subject.setFolder(parent);
-		subject.setOrder(order);
 		
-		HibernateManager.getInstance().save(subject);
+		
+		
+		if(isPronoun)
+		{
+			Pronoun pronoun = new Pronoun((long)-1);
+			pronoun.setName(name);
+			pronoun.setGender(gender);
+			pronoun.setPerson(person);
+			pronoun.setNumber(number);
+			pronoun.setImage(imageSubject);
+			pronoun.setFolder(parent);
+			pronoun.setOrder(order);
+			HibernateManager.getInstance().save(pronoun);
+		}
+		else
+		{
+			Noun noun = new Noun((long)-1);
+			noun.setName(name);
+			noun.setGender(gender);
+			noun.setPerson(person);
+			noun.setNumber(number);
+			noun.setImage(imageSubject);
+			noun.setFolder(parent);
+			noun.setOrder(order);
+			HibernateManager.getInstance().save(noun);
+		}
+		
 		
 	}
 	
@@ -125,48 +144,49 @@ public class Test {
 			
 				Folder commercants = generateFolder(0,"Commerçants", "commercants.gif", qui);
 				
-					generateSubject(0,"Boulanger", "boulanger.gif", commercants, 0, 0, 2);
-					generateSubject(1,"Coiffeur", "coiffeur.gif", commercants, 0, 0, 2);
+					generateSubject(0,"Boulanger", "boulanger.gif", commercants, 0, 0, 2,false);
+					generateSubject(1,"Coiffeur", "coiffeur.gif", commercants, 0, 0, 2,false);
 					
-				generateSubject(0,"Je", "je_1.JPG", qui, 0, 0, 0);
-				generateSubject(1,"Je", "je_2.JPG", qui, 1, 0, 0);
-				generateSubject(2,"Tu", "tu_1.JPG", qui, 0, 0, 1);
-				generateSubject(3,"Tu", "tu_2.JPG", qui, 1, 0, 1);	
+				generateSubject(0,"Je", "je_1.JPG", qui, 0, 0, 0,true);
+				generateSubject(1,"Je", "je_2.JPG", qui, 1, 0, 0,true);
+				generateSubject(2,"Tu", "tu_1.JPG", qui, 0, 0, 1,true);
+				generateSubject(3,"Tu", "tu_2.JPG", qui, 1, 0, 1,true);	
 				
 				if(type==Type.GENERAL)
 				{		
-					generateSubject(4,"Vous", "vous_1.JPG", qui, 0, 1, 1);
-					generateSubject(5,"Vous", "vous_2.JPG", qui, 1, 1, 1);
-					generateSubject(6, "Parent", "parent.gif", qui, 0, 1, 2);
-					generateSubject(7, "Père", "pere.gif", qui, 0, 0, 2);
-					generateSubject(8, "Mère", "mere.gif", qui, 1, 0, 2);
+					generateSubject(4,"Vous", "vous_1.JPG", qui, 0, 1, 1,true);
+					generateSubject(5,"Vous", "vous_2.JPG", qui, 1, 1, 1,true);
+					generateSubject(6, "Parent", "parent.gif", qui, 0, 1, 2,false);
+					generateSubject(7, "Père", "pere.gif", qui, 0, 0, 2,false);
+					generateSubject(8, "Mère", "mere.gif", qui, 1, 0, 2,false);
 				}
 				
 			Folder quoi = generateFolder(1,"Quoi", "quoi.gif", racine);
 			
+			generateVerb(0,"Etre", "etre.gif", quoi, 0,2,2,"suis","es","est","sommes","êtes","sont");
+			
 				if(type==Type.GENERAL)
 				{
-					generateVerb(0,"Ecouter", "ecouter.gif", quoi, 0,0,0,"","","","","","");
 					generateVerb(1,"Dormir", "dormir.gif", quoi, 0,2,0,"dors","dors","dort","dormons","dormez","dorment");
 					generateVerb(2,"Dire", "dire.gif", quoi, 0,2,0,"dis","dis","dit","disons","dites","disent");
-					generateVerb(3,"Etre", "etre.gif", quoi, 0,2,2,"suis","es","est","sommes","êtes","sont");
-					generateVerb(4,"Vouloir", "vouloir.JPG", quoi, 0,2,1,"veux","veux","veut","voulons","voulez","veulent");
-					generateVerb(5,"Aimer", "aimer.gif", quoi, 0,0,3,"","","","","","");
-					generateVerb(6,"Ne pas vouloir", "nepasvouloir.JPG", quoi, 1,2,1,"veux","veux","veut","voulons","voulez","veulent");
+					generateVerb(3,"Vouloir", "vouloir.JPG", quoi, 0,2,1,"veux","veux","veut","voulons","voulez","veulent");
+					generateVerb(4,"Aimer", "aimer.gif", quoi, 0,0,3,"","","","","","");
+					generateVerb(5,"Ne pas vouloir", "nepasvouloir.JPG", quoi, 1,2,1,"veux","veux","veut","voulons","voulez","veulent");
+					generateVerb(6,"Ecouter", "ecouter.gif", quoi, 0,0,0,"","","","","","");
 				}
 			
 				Folder nouriture = generateFolder(0,"Nourriture", "nourriture.gif", quoi);
 				
-					generateSubject(0,"Cerises", "cerises.gif", nouriture, 1, 1, 2);
+					generateSubject(0,"Cerises", "cerises.gif", nouriture, 1, 1, 2,false);
 					
 					if(type==Type.GENERAL)
 					{
-						generateSubject(1, "Abricot", "abricot.gif", nouriture, 1, 0, 2);
+						generateSubject(1, "Abricot", "abricot.gif", nouriture, 1, 0, 2,false);
 					}
 					
 				Folder boissons = generateFolder(1,"Boissons", "boissons.gif", quoi);
 				
-					generateSubject(0,"Bouteille de coca", "bouteille de coca.gif", boissons, 1, 0, 2);	
+					generateSubject(0,"Bouteille de coca", "bouteille de coca.gif", boissons, 1, 0, 2,false);	
 							
 			Folder comment = generateFolder(2,"Comment", "comment.gif", racine);
 			
@@ -177,8 +197,8 @@ public class Test {
 			{
 				Folder ou = generateFolder(3,"Ou", "ou.gif", racine);
 				
-					generateSubject(0,"Boucherie", "boucherie.gif", ou, 1, 0, 2);	
-					generateSubject(0,"Boulangerie", "boulangerie.gif", ou, 1, 0, 2);
+					generateSubject(0,"Boucherie", "boucherie.gif", ou, 1, 0, 2,false);	
+					generateSubject(0,"Boulangerie", "boulangerie.gif", ou, 1, 0, 2,false);
 			}
 			
 			

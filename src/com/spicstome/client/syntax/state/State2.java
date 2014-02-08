@@ -29,7 +29,7 @@ public class State2 extends SyntaxState{
 			else if(verb.getType()==3)
 				analyser.currentState=analyser.state3;
 			
-			return analyser.syntaxFrenchManager.conjugate(subject.getNature(),subject.getNumber(),
+			return analyser.syntaxFrenchManager.conjugate(subject.getPerson(),subject.getNumber(),
 						verb.getName(),verb.getNegation(),verb.getGroup(),
 						verb.getIrregular1(),verb.getIrregular2(),verb.getIrregular3(),
 						verb.getIrregular4(),verb.getIrregular5(),verb.getIrregular6())	;

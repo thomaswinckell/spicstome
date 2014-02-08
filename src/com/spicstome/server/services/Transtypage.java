@@ -10,10 +10,11 @@ import com.spicstome.client.dto.ArticleDTO;
 import com.spicstome.client.dto.FolderDTO;
 import com.spicstome.client.dto.ImageDTO;
 import com.spicstome.client.dto.LogDTO;
+import com.spicstome.client.dto.NounDTO;
 import com.spicstome.client.dto.PecsDTO;
+import com.spicstome.client.dto.PronounDTO;
 import com.spicstome.client.dto.ReferentDTO;
 import com.spicstome.client.dto.StudentDTO;
-import com.spicstome.client.dto.SubjectDTO;
 import com.spicstome.client.dto.TeacherDTO;
 import com.spicstome.client.dto.UserDTO;
 import com.spicstome.client.dto.VerbDTO;
@@ -23,7 +24,9 @@ import com.spicstome.client.shared.Article;
 import com.spicstome.client.shared.Folder;
 import com.spicstome.client.shared.Image;
 import com.spicstome.client.shared.Log;
+import com.spicstome.client.shared.Noun;
 import com.spicstome.client.shared.Pecs;
+import com.spicstome.client.shared.Pronoun;
 import com.spicstome.client.shared.Referent;
 import com.spicstome.client.shared.Student;
 import com.spicstome.client.shared.Subject;
@@ -55,6 +58,8 @@ public class Transtypage {
 		return folderDTO;
 	}
 	
+	
+	
 	public static VerbDTO createVerbDTO(Verb verb,FolderDTO parentDTO)
 	{
 		return new VerbDTO(verb.getId(),verb.getName(),verb.getOrder(),parentDTO,createImageDTO(verb.getImage()),
@@ -81,11 +86,15 @@ public class Transtypage {
 				adjective.getMatching3(),
 				adjective.getMatching4());
 	}
-	
-	public static SubjectDTO createSubjectDTO(Subject subject,FolderDTO parentDTO)
+	public static PronounDTO createPronounDTO(Pronoun pronoun,FolderDTO parentDTO)
 	{
-		return new SubjectDTO(subject.getId(),subject.getName(),subject.getOrder(),parentDTO,createImageDTO(subject.getImage()),
-				createListLogDTO(subject.getLogs()),subject.getFavorite(),subject.getGender(),subject.getNature(),subject.getNumber());
+		return new PronounDTO(pronoun.getId(),pronoun.getName(),pronoun.getOrder(),parentDTO,createImageDTO(pronoun.getImage()),
+				createListLogDTO(pronoun.getLogs()),pronoun.getFavorite(),pronoun.getGender(),pronoun.getPerson(),pronoun.getNumber());
+	}
+	public static NounDTO createNounDTO(Noun noun,FolderDTO parentDTO)
+	{
+		return new NounDTO(noun.getId(),noun.getName(),noun.getOrder(),parentDTO,createImageDTO(noun.getImage()),
+				createListLogDTO(noun.getLogs()),noun.getFavorite(),noun.getGender(),noun.getPerson(),noun.getNumber());
 	}
 	public static LogDTO createLogDTO(Log log)
 	{
@@ -110,9 +119,16 @@ public class Transtypage {
 		
 		for(Article article:list){	
 			if(article instanceof Subject)
-				listDTO.add(createSubjectDTO((Subject)article,null));
-			else if(article instanceof Verb)
+			{
+				if(article instanceof Noun)
+					listDTO.add(createNounDTO((Noun)article,null));
+				else if(article instanceof Pronoun)
+					listDTO.add(createPronounDTO((Pronoun)article,null));
+			}		
+			if(article instanceof Verb)
 				listDTO.add(createVerbDTO((Verb)article,null));
+			if(article instanceof Adjective)
+				listDTO.add(createAdjectiveDTO((Adjective)article,null));
 		}
 
 		return listDTO;
@@ -130,7 +146,12 @@ public class Transtypage {
 			else
 			{
 				if(p instanceof Subject)
-					listDTO.add(createSubjectDTO((Subject)p,parent));
+				{
+					if(p instanceof Noun)
+						listDTO.add(createNounDTO((Noun)p,parent));
+					else if(p instanceof Pronoun)
+						listDTO.add(createPronounDTO((Pronoun)p,parent));
+				}		
 				if(p instanceof Verb)
 					listDTO.add(createVerbDTO((Verb)p,parent));
 				if(p instanceof Adjective)

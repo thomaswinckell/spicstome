@@ -22,6 +22,8 @@ import com.spicstome.client.dto.ArticleDTO;
 import com.spicstome.client.dto.FolderDTO;
 import com.spicstome.client.dto.ImageDTO;
 import com.spicstome.client.dto.LogDTO;
+import com.spicstome.client.dto.NounDTO;
+import com.spicstome.client.dto.PronounDTO;
 import com.spicstome.client.dto.SubjectDTO;
 import com.spicstome.client.dto.VerbDTO;
 
@@ -51,7 +53,7 @@ public class ArticleFormWindow extends Window{
 	public DynamicForm formAdjective = new DynamicForm();
 	
 	RadioGroupItem radioGroupGender = new RadioGroupItem();
-	RadioGroupItem radioGroupNature = new RadioGroupItem();
+	RadioGroupItem radioGroupPerson = new RadioGroupItem();
 	RadioGroupItem radioGroupNumber = new RadioGroupItem();
 	
 	TextItem matchingText1 = new TextItem("matching1");
@@ -69,7 +71,7 @@ public class ArticleFormWindow extends Window{
 	TextItem irregularText6 = new TextItem("irregular6");
 	
 	public enum Mode{NEW, EDIT}
-	public enum TypeArticle{VERB,SUBJECT,ADJECTIVE}
+	public enum TypeArticle{VERB,NOUN,PRONOUN,ADJECTIVE}
 	
 	FolderDTO parent;
 	
@@ -97,9 +99,10 @@ public class ArticleFormWindow extends Window{
 
 		radioGroupType.setTitle("Type de l'article");
 		LinkedHashMap<Integer, String> mapRadioGroupType = new LinkedHashMap<Integer, String>(2);
-		mapRadioGroupType.put(0, "Sujet (nom,pronom)");
-		mapRadioGroupType.put(1,"Verbe");
-		mapRadioGroupType.put(2,"Adjectif");
+		mapRadioGroupType.put(0, "Nom (Arbre,Maman...)");
+		mapRadioGroupType.put(1, "Pronom (Je,Tu ..)");
+		mapRadioGroupType.put(2,"Verbe");
+		mapRadioGroupType.put(3,"Adjectif");
 		radioGroupType.setValueMap(mapRadioGroupType);
 		radioGroupType.setDefaultValue(0);
 		
@@ -111,8 +114,10 @@ public class ArticleFormWindow extends Window{
 				int choice = (Integer.valueOf(event.getValue().toString()));
 
 				if(choice==0)
-					type=TypeArticle.SUBJECT;
+					type=TypeArticle.NOUN;
 				else if(choice==1)
+					type=TypeArticle.PRONOUN;
+				else if(choice==2)
 					type=TypeArticle.VERB;
 				else
 					type=TypeArticle.ADJECTIVE;
@@ -122,10 +127,13 @@ public class ArticleFormWindow extends Window{
 				UpdateType();
 			}
 		});
-	
+		
+
 		formArticle.setFields(nameDetail,checkBoxFavorite,radioGroupType);
 		
 		/* Subject */
+		
+		
 		
 		/* Gender */
 		
@@ -138,13 +146,13 @@ public class ArticleFormWindow extends Window{
 		
 		/* Nature */
 		
-		radioGroupNature.setTitle("Nature");
+		radioGroupPerson.setTitle("Personne");
 		LinkedHashMap<Integer, String> mapRadioGroupNature = new LinkedHashMap<Integer, String>(2);
-		mapRadioGroupNature.put(0, "1ère personne");
-		mapRadioGroupNature.put(1,"2ème personne");
-		mapRadioGroupNature.put(2,"3ème personne");
-		radioGroupNature.setValueMap(mapRadioGroupNature);
-		radioGroupNature.setDefaultValue(0);
+		mapRadioGroupNature.put(0, "1ère");
+		mapRadioGroupNature.put(1,"2ème");
+		mapRadioGroupNature.put(2,"3ème");
+		radioGroupPerson.setValueMap(mapRadioGroupNature);
+		radioGroupPerson.setDefaultValue(0);
 		
 		/* Number */
 		
@@ -155,7 +163,7 @@ public class ArticleFormWindow extends Window{
 		radioGroupNumber.setValueMap(mapRadioGroupNumber);
 		radioGroupNumber.setDefaultValue(0);
 		
-		formSubject.setFields(radioGroupGender,radioGroupNature,radioGroupNumber);
+		formSubject.setFields(radioGroupGender,radioGroupPerson,radioGroupNumber);
 		
 		/* Verb */
 		
@@ -244,13 +252,13 @@ public class ArticleFormWindow extends Window{
 				
 				article.setFavorite((checkBoxFavorite.getValueAsBoolean()?1:0));
 				
-				if(type==TypeArticle.SUBJECT)
+				if((type==TypeArticle.NOUN) || (type==TypeArticle.PRONOUN))
 				{
 					SubjectDTO subj = (SubjectDTO)article;
 					
 					subj.setGender(Integer.valueOf(radioGroupGender.getValue().toString()));
 					subj.setNumber(Integer.valueOf(radioGroupNumber.getValue().toString()));
-					subj.setNature(Integer.valueOf(radioGroupNature.getValue().toString()));
+					subj.setPerson(Integer.valueOf(radioGroupPerson.getValue().toString()));
 				}
 				else if(type==TypeArticle.VERB)
 				{
@@ -295,7 +303,7 @@ public class ArticleFormWindow extends Window{
 		
 		if(mode==Mode.NEW)
 		{
-			type = TypeArticle.SUBJECT;
+			type = TypeArticle.NOUN;
 			
 			setTitle("Création d'un nouvel article");
 			
@@ -308,8 +316,17 @@ public class ArticleFormWindow extends Window{
 		{
 			if(articleDTO instanceof SubjectDTO)
 			{
-				type=TypeArticle.SUBJECT;
-				labelType.setContents("Type : "+"sujet");
+				if(articleDTO instanceof PronounDTO)
+				{
+					type=TypeArticle.PRONOUN;
+					labelType.setContents("Type : "+"pronom");
+				}
+				else if(articleDTO instanceof NounDTO)
+				{
+					type=TypeArticle.NOUN;
+					labelType.setContents("Type : "+"nom");
+				}
+				
 			}
 			else if(articleDTO instanceof VerbDTO)
 			{
@@ -353,7 +370,7 @@ public class ArticleFormWindow extends Window{
 			SubjectDTO subj = (SubjectDTO)article;
 			
 			radioGroupGender.setValue(subj.getGender());
-			radioGroupNature.setValue(subj.getNature());
+			radioGroupPerson.setValue(subj.getPerson());
 			radioGroupNumber.setValue(subj.getNumber());
 			
 		}
@@ -402,10 +419,19 @@ public class ArticleFormWindow extends Window{
 					new HashSet<LogDTO>(),0,0,0,0,"","","","","","");
 			
 		}
-		else if(type==TypeArticle.SUBJECT)
+		else if(type==TypeArticle.NOUN)
 		{
-			this.article = new SubjectDTO((long)-1,
-					"Nouveau sujet",
+			this.article = new NounDTO((long)-1,
+					"Nouveau nom",
+					order,
+					parent,
+					new ImageDTO((long) -1, "default_article.png"),
+					new HashSet<LogDTO>(),0,0,0,0);
+		}
+		else if(type==TypeArticle.PRONOUN)
+		{
+			this.article = new PronounDTO((long)-1,
+					"Nouveau pronom",
 					order,
 					parent,
 					new ImageDTO((long) -1, "default_article.png"),
@@ -425,7 +451,7 @@ public class ArticleFormWindow extends Window{
 	public void UpdateType()
 	{
 		verbLayout.setVisible(type==TypeArticle.VERB);
-		formSubject.setVisible(type==TypeArticle.SUBJECT);
+		formSubject.setVisible((type==TypeArticle.NOUN) || (type==TypeArticle.PRONOUN));
 		formAdjective.setVisible(type==TypeArticle.ADJECTIVE);
 	}
 	
