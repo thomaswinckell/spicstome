@@ -19,12 +19,10 @@ public abstract class SyntaxState {
 		this.analyser=analyser;
 	}
 	
+	
+	
 	public String conjugueVerb(SubjectDTO subject,VerbDTO verb)
 	{
-		String infinitif = analyser.syntaxFrenchManager.getVerb(verb.getNegation(), verb.getName());
-		analyser.stateVerb.acceptAdjective=analyser.syntaxFrenchManager.canBeFollowedByAdjective(infinitif);
-		analyser.stateVerb.acceptVerb=analyser.syntaxFrenchManager.canBeFollowedByVerb(infinitif);
-		analyser.stateVerb.acceptNoun=true;
 		
 		analyser.currentState=analyser.stateVerb;
 		

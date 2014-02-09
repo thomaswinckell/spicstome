@@ -20,6 +20,7 @@ public class StateNounAdjectiveSubject extends SyntaxState{
 			VerbDTO verb = (VerbDTO) article;
 			SubjectDTO subject = (SubjectDTO) analyser.extractArticle(0);
 
+			analyser.stateVerb.setAcceptNext(verb.getNegation(), verb.getName());
 			return conjugueVerb(subject,verb);
 		}
 		else

@@ -32,6 +32,7 @@ public class StateNounSubject extends SyntaxState{
 		{
 			VerbDTO verb = (VerbDTO) article;
 
+			analyser.stateVerb.setAcceptNext(verb.getNegation(), verb.getName());
 			return conjugueVerb(subject,verb);
 		}
 		else

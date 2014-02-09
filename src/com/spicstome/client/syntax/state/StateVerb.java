@@ -18,6 +18,15 @@ public class StateVerb extends SyntaxState{
 		super(true, analyser);
 	}
 	
+	public void setAcceptNext(int negation,String verbName)
+	{
+	
+		String infinitif = analyser.syntaxFrenchManager.getVerb(negation, verbName);
+		analyser.stateVerb.acceptAdjective=analyser.syntaxFrenchManager.canBeFollowedByAdjective(infinitif);
+		analyser.stateVerb.acceptVerb=analyser.syntaxFrenchManager.canBeFollowedByVerb(infinitif);
+		analyser.stateVerb.acceptNoun=true;
+	}
+	
 	@Override
 	public  String check(ArticleDTO article,int range)
 	{
@@ -27,9 +36,12 @@ public class StateVerb extends SyntaxState{
 			analyser.currentState=analyser.stateAdjectiveComplement;
 			return null;
 		}
+		
+	
 		else if(acceptVerb && article instanceof VerbDTO)
 		{
-			analyser.currentState=analyser.statefinal;
+			VerbDTO verb = (VerbDTO)article;
+			setAcceptNext(verb.getNegation(), verb.getName());
 			return null;
 		}
 		else if(acceptAdjective && article instanceof AdjectiveDTO)
