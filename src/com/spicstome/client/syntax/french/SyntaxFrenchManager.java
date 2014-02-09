@@ -2,6 +2,40 @@ package com.spicstome.client.syntax.french;
 
 public class SyntaxFrenchManager {
 	
+
+	public boolean canBeFollowedByVerb(String infinitif)
+	{
+		String[] list = {"adorer","descendre","laisser","rentrer","affirmer","désirer","monter",
+					"retourner","aimer","détester","nier","revenir","aller","devoir","savoir",
+					"apercevoir","écouter","paraître","sembler","assurer","emmener","partir",
+					"sentir","entendre","penser","sortir","avouer","entrer","pouvoir","souhaiter",
+					"compter","envoyer","préférer","venir","courir","espérer","prétendre",
+					"voir","croire","faillir","vouloir","daigner","faire","reconnaître","déclarer",
+					"falloir","regarder"};
+		
+		for(int i=0;i<list.length;i++)
+		{
+			if(list[i].equals(infinitif))
+				return true;
+		}
+		
+		return false;
+
+	}
+	
+	public boolean canBeFollowedByAdjective(String infinitif)
+	{
+		String[] list = {"être", "devenir", "paraître", "sembler", "demeurer", "rester"};
+		
+		for(int i=0;i<list.length;i++)
+		{
+			if(list[i].equals(infinitif))
+				return true;
+		}
+		
+		return false;
+	}
+	
 	public SyntaxVerb analyseSpecificGroup(String infinitif)
 	{
 		
@@ -22,21 +56,31 @@ public class SyntaxFrenchManager {
 		return null;
 	}
 	
+	public String getVerb(int verbNegation,String infinitif)
+	{
+
+		if(verbNegation==1)
+		{
+			String[] split = infinitif.split(" ");
+			return split[split.length-1];
+		}
+		else
+		{
+			return infinitif;
+		}
+	
+		
+	
+	}
+	
 	public String conjugate(int subjectNature,int subjectNumber,
 			String verbName,int verbNegation,int verbGroup,
 			String irregular1,String irregular2,String irregular3,
 			String irregular4,String irregular5,String irregular6)
 	{
-		String infinitif;
-		if(verbNegation==1)
-		{
-			String[] split = verbName.split(" ");
-			infinitif = split[split.length-1];
-		}
-		else
-		{
-			infinitif = verbName;
-		}
+		
+		String infinitif=getVerb(verbNegation,verbName);
+	
 		
 		String conjugateVerb = "";
 			
@@ -70,7 +114,7 @@ public class SyntaxFrenchManager {
 		
 		if(verbNegation==1)
 		{
-			conjugateVerb = "ne "+ conjugateVerb +" pas";
+			conjugateVerb = negation(conjugateVerb)+ conjugateVerb +" pas";
 		}
 		
 		
@@ -78,6 +122,11 @@ public class SyntaxFrenchManager {
 		return conjugateVerb;
 			
 
+	}
+	
+	public boolean isVoyel(char c)
+	{
+		return (c=='a') || (c=='e') || (c=='i') || (c=='o') || (c=='u');
 	}
 	
 	public String conjugateVerb1stOr2ndGroup(String infinitif,int subjectNature,int subjectNumber)
@@ -103,6 +152,30 @@ public class SyntaxFrenchManager {
 		}
 		
 		return "-";
+	}
+	
+	public String negation(String next)
+	{
+		char firstChar = next.charAt(0);
+		if(isVoyel(firstChar))
+			return "n'";
+		else
+			return "ne ";
+		
+	}
+	
+	public String formatPronoun(String pronoun,String next)
+	{
+		if(pronoun.equals("je"))
+		{
+			char firstChar = next.charAt(0);
+			if(isVoyel(firstChar))
+				return "j'";
+			else
+				return "je";
+		}
+		else
+			return pronoun;
 	}
 	
 	public String match(int subjectGender,int subjectNumber,

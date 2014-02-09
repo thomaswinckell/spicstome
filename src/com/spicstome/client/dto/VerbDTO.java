@@ -9,7 +9,7 @@ public class VerbDTO extends ArticleDTO implements Serializable {
 	
 	private int negation;
 	private int group;
-	private int type;
+
 	private String irregular1;
 	private String irregular2;
 	private String irregular3;
@@ -27,13 +27,12 @@ public class VerbDTO extends ArticleDTO implements Serializable {
 	}
 	
 	public VerbDTO(Long id, String name, int order, FolderDTO folder, ImageDTO image, Set<LogDTO> logs,int favorite,
-			int negation,int group,int type,String irregular1,String irregular2,String irregular3,String irregular4,String irregular5,String irregular6)
+			int negation,int group,String irregular1,String irregular2,String irregular3,String irregular4,String irregular5,String irregular6)
 	{
 		super(id, name, order, folder, image,logs,favorite);
 		
 		this.negation=negation;
 		this.group=group;
-		this.type=type;
 		this.irregular1=irregular1;
 		this.irregular2=irregular2;
 		this.irregular3=irregular3;
@@ -103,13 +102,6 @@ public class VerbDTO extends ArticleDTO implements Serializable {
 		return "Verb []";
 	}
 
-	public int getType() {
-		return type;
-	}
-
-	public void setType(int type) {
-		this.type = type;
-	}
 
 	public int getNegation() {
 		return negation;

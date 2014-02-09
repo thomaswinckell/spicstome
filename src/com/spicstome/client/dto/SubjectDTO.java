@@ -8,7 +8,6 @@ public class SubjectDTO extends ArticleDTO implements Serializable {
 	private static final long serialVersionUID = -5401723683221445029L;
 
 	private int gender;
-	private int person;
 	private int number;
 	
 	public SubjectDTO()
@@ -21,13 +20,12 @@ public class SubjectDTO extends ArticleDTO implements Serializable {
 		super(id);
 	}
 	
-	public SubjectDTO(Long id, String name, int order, FolderDTO folder, ImageDTO image, Set<LogDTO> logs,int favorite,int gender,int person,int number)
+	public SubjectDTO(Long id, String name, int order, FolderDTO folder, ImageDTO image, Set<LogDTO> logs,int favorite,int gender,int number)
 	{
 		super(id, name, order, folder, image,logs,favorite);
 		
 		this.gender=gender;
 		this.number=number;
-		this.person=person;
 	}
 	
 	public int getGender() {
@@ -36,13 +34,7 @@ public class SubjectDTO extends ArticleDTO implements Serializable {
 	public void setGender(int gender) {
 		this.gender = gender;
 	}
-	public int getPerson() {
-		return person;
-	}
-
-	public void setPerson(int person) {
-		this.person = person;
-	}
+	
 	public int getNumber() {
 		return number;
 	}

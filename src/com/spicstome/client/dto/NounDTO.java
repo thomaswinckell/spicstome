@@ -18,9 +18,9 @@ public class NounDTO extends SubjectDTO implements Serializable {
 		super(id);
 	}
 	
-	public NounDTO(Long id, String name, int order, FolderDTO folder, ImageDTO image, Set<LogDTO> logs,int favorite,int gender,int person,int number)
+	public NounDTO(Long id, String name, int order, FolderDTO folder, ImageDTO image, Set<LogDTO> logs,int favorite,int gender,int number)
 	{
-		super(id, name, order, folder, image,logs,favorite,gender,person,number);
+		super(id, name, order, folder, image,logs,favorite,gender,number);
 	}
 	
 	

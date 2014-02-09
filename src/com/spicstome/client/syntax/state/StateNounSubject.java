@@ -2,13 +2,13 @@ package com.spicstome.client.syntax.state;
 
 import com.spicstome.client.dto.AdjectiveDTO;
 import com.spicstome.client.dto.ArticleDTO;
-import com.spicstome.client.dto.SubjectDTO;
+import com.spicstome.client.dto.NounDTO;
 import com.spicstome.client.dto.VerbDTO;
 
 
-public class State1 extends SyntaxState{
+public class StateNounSubject extends SyntaxState{
 
-	public State1(SyntaxAnalyser analyser) {
+	public StateNounSubject(SyntaxAnalyser analyser) {
 		super(true, analyser);
 	}
 
@@ -17,13 +17,13 @@ public class State1 extends SyntaxState{
 		
 		
 		
-		SubjectDTO subject = (SubjectDTO) analyser.extractArticle(0);
+		NounDTO subject = (NounDTO) analyser.extractArticle(0);
 		
 		if(article instanceof AdjectiveDTO)
 		{
 			AdjectiveDTO adjective = (AdjectiveDTO) article;
 
-			analyser.currentState=analyser.state2;
+			analyser.currentState=analyser.stateNounAdjectiveSubject;
 			
 			return analyser.syntaxFrenchManager.match(subject.getGender(),subject.getNumber(), 
 					adjective.getMatching1(),adjective.getMatching2(),adjective.getMatching3(),adjective.getMatching4());

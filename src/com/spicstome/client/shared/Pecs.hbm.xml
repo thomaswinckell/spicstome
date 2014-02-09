@@ -33,7 +33,6 @@
 				<key column="id" />
 				<property name="gender" type="int" column="gender" />
 				<property name="number" type="int" column="number" />
-				<property name="person" type="int" column="person" />
 				
 				<joined-subclass name="Noun" table="noun"
 					extends="Subject">
@@ -43,6 +42,7 @@
 				<joined-subclass name="Pronoun" table="pronoun"
 					extends="Subject">
 					<key column="id" />
+					<property name="person" type="int" column="person" />
 				</joined-subclass>
 
 			</joined-subclass>
@@ -52,7 +52,6 @@
 				
 				<property name="negation" type="int" column="negation" />
 				<property name="group" type="int" column="group_verb" />
-				<property name="type" type="int" column="type" />
 				
 				<property name="irregular1" type="string" column="irregular1" />
 				<property name="irregular2" type="string" column="irregular2" />

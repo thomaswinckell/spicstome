@@ -10,7 +10,7 @@ public class Verb extends Article implements Serializable {
 	
 	private int negation;
 	private int group;
-	private int type;
+
 	private String irregular1;
 	private String irregular2;
 	private String irregular3;
@@ -31,7 +31,6 @@ public class Verb extends Article implements Serializable {
 		
 		this.negation=verbDTO.getNegation();
 		this.group=verbDTO.getGroup();
-		this.type=verbDTO.getType();
 		this.irregular1=verbDTO.getIrregular1();
 		this.irregular2=verbDTO.getIrregular2();
 		this.irregular3=verbDTO.getIrregular3();
@@ -103,13 +102,6 @@ public class Verb extends Article implements Serializable {
 		return "Verb []";
 	}
 
-	public int getType() {
-		return type;
-	}
-
-	public void setType(int type) {
-		this.type = type;
-	}
 
 	public int getNegation() {
 		return negation;

@@ -3,17 +3,22 @@ package com.spicstome.client.ui.widget;
 import java.util.ArrayList;
 
 import com.smartgwt.client.data.RecordList;
-import com.smartgwt.client.widgets.IconButton;
+import com.smartgwt.client.widgets.Img;
+import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.layout.HLayout;
+import com.smartgwt.client.widgets.layout.VLayout;
 import com.spicstome.client.dto.ArticleDTO;
 import com.spicstome.client.syntax.state.SyntaxAnalyser;
 import com.spicstome.client.ui.widget.ImageTileGrid.Mode;
 
-public class MailDropZone extends HLayout{
+public class MailDropZone extends VLayout{
 
 	ImageTileGrid dropZone;
 	private SyntaxAnalyser analyser;
-	protected IconButton valid = new IconButton("");
+	protected Img validImg = new Img("check.png");
+	protected Label label = new Label();
+	HLayout validationLayout = new HLayout();
+
 	
 	public MailDropZone(int iconSize) {
 		
@@ -37,18 +42,30 @@ public class MailDropZone extends HLayout{
 		dropZone.setStyleName("bloc");
 		dropZone.removeOnDragOver();
 		
-		valid.setIconSize(50);
-		valid.setIcon("check.png");
+		validImg.setSize(30);
+		label.setContents("La phrase est correcte !");
+		label.setWidth(200);
+		label.setMargin(10);
+		validationLayout.addMember(validImg);
+		validationLayout.addMember(label);
 		
 		addMember(dropZone);
-		addMember(valid);
+		addMember(validationLayout);
+		
+		
 		
 		analyser = new SyntaxAnalyser();
 	}
 	
 	public void UpdateValidation(Boolean b)
 	{
-		valid.setVisible(b);
+		validationLayout.setVisible(b);
+	}
+	
+	public void init()
+	{
+		dropZone.clearItems();
+		UpdateValidation(false);
 	}
 	
 	public void UpdateMail()
@@ -65,17 +82,7 @@ public class MailDropZone extends HLayout{
 		}
 		
 		analyser.init(articles);
-		
-		for(int i=0;i<articles.size();i++)
-		{
-			
-			String modif = analyser.check(i);
-			
-			if(modif!=null)
-			{
-				articles.get(i).setAttribute(ImageRecord.PICTURE_NAME, modif);
-			}
-		}
+		analyser.analyse();
 		
 		UpdateValidation(analyser.currentState.acceptance);
 	

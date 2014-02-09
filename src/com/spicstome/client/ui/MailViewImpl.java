@@ -31,6 +31,7 @@ public class MailViewImpl extends UserViewImpl  implements MailView{
 	public void setStudent(StudentDTO owner) {
 		
 		album.setStudent(owner);
+		dropZone.init();
 		
 	}
 }

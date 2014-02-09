@@ -3,6 +3,8 @@ package com.spicstome.client.syntax.state;
 import java.util.ArrayList;
 
 import com.spicstome.client.dto.ArticleDTO;
+import com.spicstome.client.dto.PronounDTO;
+import com.spicstome.client.dto.VerbDTO;
 import com.spicstome.client.syntax.french.SyntaxFrenchManager;
 import com.spicstome.client.ui.widget.ImageRecord;
 
@@ -12,40 +14,36 @@ public class SyntaxAnalyser {
 	public SyntaxFrenchManager syntaxFrenchManager;
 	protected ArrayList<ImageRecord> arrayRecord;
 	
-	public State0 state0;
-	public State1 state1;
-	public State2 state2;
-	public State3 state3;
-	public State4 state4;
-	public State5 state5;
-	public State6 state6;
-	public State7 state7;
-	public State8 state8;
+	public StateInit stateInit;
+	public StateNounSubject stateNounSubject;
+	public StateNounAdjectiveSubject stateNounAdjectiveSubject;
+	public StatePronounSubject statePronounSubject;
+	public StateVerb stateVerb;
+	public StateAdjectiveComplement stateAdjectiveComplement;
+	public StateF statefinal;
 	
-	public TrashState trashState;
+	public StateTrash trashState;
 	
 	public SyntaxAnalyser()
 	{
 		syntaxFrenchManager= new SyntaxFrenchManager();
 		
-		state0 = new State0(this);
-		state1 = new State1(this);
-		state2 = new State2(this);
-		state3 = new State3(this);
-		state4 = new State4(this);
-		state5 = new State5(this);
-		state6 = new State6(this);
-		state7= new State7(this);
-		state8 = new State8(this);
+		stateInit = new StateInit(this);
+		stateNounSubject = new StateNounSubject(this);
+		stateNounAdjectiveSubject = new StateNounAdjectiveSubject(this);
+		statePronounSubject = new StatePronounSubject(this);
+		stateVerb = new StateVerb(this);
+		stateAdjectiveComplement= new StateAdjectiveComplement(this);
+		statefinal = new StateF(this);
 		
-		trashState = new TrashState(this);
+		trashState = new StateTrash(this);
 		
-		currentState = state0;
+		currentState = stateInit;
 	}
 	
 	public void init(ArrayList<ImageRecord> arrayRecord)
 	{
-		currentState = state0;
+		currentState = stateInit;
 		this.arrayRecord=arrayRecord;
 	}
 
@@ -58,6 +56,62 @@ public class SyntaxAnalyser {
 	{
 		return currentState.check(extractArticle(range), range);
 	}
+	
+	public void updateText(int rang,String text)
+	{
+		arrayRecord.get(rang).setAttribute(ImageRecord.PICTURE_NAME, text);
+	}
+	
+	public String getText(int rang)
+	{
+		return arrayRecord.get(rang).getAttribute(ImageRecord.PICTURE_NAME);
+	}
+	
+	public void addSentencesMarkers()
+	{
+		String firstWord =getText(0) ;
+		char firstChar = firstWord.charAt(0);
+		String F = String.valueOf(firstChar);
+		F = F.toUpperCase();
+		String rest = firstWord.substring(1);
+		updateText(0,F+rest);
+		
+		String lastWord = getText(arrayRecord.size()-1);
+		updateText(arrayRecord.size()-1,lastWord+".");
+	}
+	
+	public void analyse()
+	{
+		/* matching and conjugate */
+		for(int i=0;i<arrayRecord.size();i++)
+		{
+			String modif = check(i);
+			
+			if(modif!=null)
+			{
+				updateText(i, modif);
+			}
+		}
+		
+		/* formatting subject */
+		
+		if(arrayRecord.size()>=2)
+		{
+			if((extractArticle(0) instanceof PronounDTO) && (extractArticle(1) instanceof VerbDTO))
+			{
+				PronounDTO pronoun = (PronounDTO) extractArticle(0);
+				VerbDTO verb = (VerbDTO) extractArticle(1);
+				
+				updateText(0, syntaxFrenchManager.formatPronoun(pronoun.getName(), verb.getName()));
+			}
+		}
+		
+		if(arrayRecord.size()>=1)
+		{
+			addSentencesMarkers();
+		}
+	}
+	
 	
 	
 }

@@ -9,7 +9,6 @@ public class Subject extends Article implements Serializable {
 	private static final long serialVersionUID = -5191013846944671225L;
 
 	private int gender;
-	private int person;
 	private int number;
 	
 	public Subject() {		
@@ -24,7 +23,6 @@ public class Subject extends Article implements Serializable {
 		super(subjectDTO,parent);
 		
 		gender = subjectDTO.getGender();
-		person = subjectDTO.getPerson();
 		number = subjectDTO.getNumber();
 	}
 	
@@ -47,12 +45,6 @@ public class Subject extends Article implements Serializable {
 		return "Subject []";
 	}
 
-	public int getPerson() {
-		return person;
-	}
-
-	public void setPerson(int person) {
-		this.person = person;
-	}
+	
 	
 }

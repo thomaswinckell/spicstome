@@ -1,6 +1,8 @@
 package com.spicstome.client.syntax.state;
 
 import com.spicstome.client.dto.ArticleDTO;
+import com.spicstome.client.dto.NounDTO;
+import com.spicstome.client.dto.PronounDTO;
 import com.spicstome.client.dto.SubjectDTO;
 import com.spicstome.client.dto.VerbDTO;
 
@@ -19,16 +21,26 @@ public abstract class SyntaxState {
 	
 	public String conjugueVerb(SubjectDTO subject,VerbDTO verb)
 	{
-		if(verb.getType()==0)
-			analyser.currentState=analyser.state4;
-		else if(verb.getType()==1)
-			analyser.currentState=analyser.state5;
-		else if(verb.getType()==2)
-			analyser.currentState=analyser.state6;
-		else if(verb.getType()==3)
-			analyser.currentState=analyser.state7;
+		String infinitif = analyser.syntaxFrenchManager.getVerb(verb.getNegation(), verb.getName());
+		analyser.stateVerb.acceptAdjective=analyser.syntaxFrenchManager.canBeFollowedByAdjective(infinitif);
+		analyser.stateVerb.acceptVerb=analyser.syntaxFrenchManager.canBeFollowedByVerb(infinitif);
+		analyser.stateVerb.acceptNoun=true;
 		
-		return analyser.syntaxFrenchManager.conjugate(subject.getPerson(),subject.getNumber(),
+		analyser.currentState=analyser.stateVerb;
+		
+		int subjectPerson;
+		
+		if(subject instanceof NounDTO)
+		{
+			subjectPerson=2;
+		}
+		else
+		{
+			PronounDTO pronoun = (PronounDTO) subject;
+			subjectPerson = pronoun.getPerson();
+		}
+		
+		return analyser.syntaxFrenchManager.conjugate(subjectPerson,subject.getNumber(),
 				verb.getName(),verb.getNegation(),verb.getGroup(),
 				verb.getIrregular1(),verb.getIrregular2(),verb.getIrregular3(),
 				verb.getIrregular4(),verb.getIrregular5(),verb.getIrregular6())	;

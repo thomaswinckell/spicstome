@@ -4,9 +4,9 @@ import com.spicstome.client.dto.ArticleDTO;
 import com.spicstome.client.dto.NounDTO;
 import com.spicstome.client.dto.PronounDTO;
 
-public class State0 extends SyntaxState{
+public class StateInit extends SyntaxState{
 
-	public State0(SyntaxAnalyser analyser) {
+	public StateInit(SyntaxAnalyser analyser) {
 		super(false, analyser);
 	}
 	
@@ -17,12 +17,12 @@ public class State0 extends SyntaxState{
 		
 		if(article instanceof NounDTO)
 		{
-			analyser.currentState=analyser.state1;
+			analyser.currentState=analyser.stateNounSubject;
 			
 		}
 		else if(article instanceof PronounDTO)
 		{
-			analyser.currentState=analyser.state3;
+			analyser.currentState=analyser.statePronounSubject;
 			
 		}
 		else

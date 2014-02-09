@@ -67,7 +67,6 @@ public class Transtypage {
 				verb.getFavorite(),
 				verb.getNegation(),
 				verb.getGroup(),
-				verb.getType(),
 				verb.getIrregular1(),
 				verb.getIrregular2(),
 				verb.getIrregular3(),
@@ -94,7 +93,7 @@ public class Transtypage {
 	public static NounDTO createNounDTO(Noun noun,FolderDTO parentDTO)
 	{
 		return new NounDTO(noun.getId(),noun.getName(),noun.getOrder(),parentDTO,createImageDTO(noun.getImage()),
-				createListLogDTO(noun.getLogs()),noun.getFavorite(),noun.getGender(),noun.getPerson(),noun.getNumber());
+				createListLogDTO(noun.getLogs()),noun.getFavorite(),noun.getGender(),noun.getNumber());
 	}
 	public static LogDTO createLogDTO(Log log)
 	{

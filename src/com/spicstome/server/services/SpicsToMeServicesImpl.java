@@ -697,7 +697,7 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 			if(article instanceof NounDTO)
 			{
 				NounDTO nounDTO = (NounDTO) article;
-				NounDTO copyNoun= new NounDTO((long)-1,nounDTO.getName(),nounDTO.getOrder(),parent,copyImage,new HashSet<LogDTO>(),0,nounDTO.getGender(),nounDTO.getPerson(),nounDTO.getNumber()) ;
+				NounDTO copyNoun= new NounDTO((long)-1,nounDTO.getName(),nounDTO.getOrder(),parent,copyImage,new HashSet<LogDTO>(),0,nounDTO.getGender(),nounDTO.getNumber()) ;
 				
 				copyNoun.getImage().setId(idImageArticle);
 				Long id = saveArticle(copyNoun);
@@ -722,7 +722,7 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 		{
 			VerbDTO verbDTO = (VerbDTO) article;
 			VerbDTO copyVerb= new VerbDTO((long)-1,verbDTO.getName(),verbDTO.getOrder(),parent,copyImage,new HashSet<LogDTO>(),0,
-					verbDTO.getNegation(),verbDTO.getGroup(),verbDTO.getType(),verbDTO.getIrregular1(),verbDTO.getIrregular2(),verbDTO.getIrregular3(),verbDTO.getIrregular4(),verbDTO.getIrregular5(),verbDTO.getIrregular6()) ;
+					verbDTO.getNegation(),verbDTO.getGroup(),verbDTO.getIrregular1(),verbDTO.getIrregular2(),verbDTO.getIrregular3(),verbDTO.getIrregular4(),verbDTO.getIrregular5(),verbDTO.getIrregular6()) ;
 			
 			copyVerb.getImage().setId(idImageArticle);
 			Long id = saveArticle(copyVerb);

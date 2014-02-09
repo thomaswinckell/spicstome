@@ -1,14 +1,13 @@
 package com.spicstome.client.syntax.state;
 
 import com.spicstome.client.dto.ArticleDTO;
-import com.spicstome.client.dto.NounDTO;
+import com.spicstome.client.dto.PronounDTO;
 import com.spicstome.client.dto.VerbDTO;
 
-/* Wish */
 
-public class State5 extends SyntaxState{
+public class StatePronounSubject extends SyntaxState{
 
-	public State5(SyntaxAnalyser analyser) {
+	public StatePronounSubject(SyntaxAnalyser analyser) {
 		super(true, analyser);
 	}
 	
@@ -16,22 +15,20 @@ public class State5 extends SyntaxState{
 	public  String check(ArticleDTO article,int range)
 	{
 
-		
 		if(article instanceof VerbDTO)
 		{
-			analyser.currentState=analyser.state8;
-			return null;
-		}
-		else if(article instanceof NounDTO)
-		{
-			analyser.currentState=analyser.state8;
-			return null;
+			VerbDTO verb = (VerbDTO) article;
+			PronounDTO subject = (PronounDTO) analyser.extractArticle(0);
+			
+			return conjugueVerb(subject,verb);
+
 		}
 		else
 		{
 			analyser.currentState=analyser.trashState;
 			return null;
 		}
+		
 		
 	}
 

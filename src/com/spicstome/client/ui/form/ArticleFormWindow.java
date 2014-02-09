@@ -40,7 +40,6 @@ public class ArticleFormWindow extends Window{
 	
 	RadioGroupItem radioGroupType = new RadioGroupItem();
 	RadioGroupItem radioGroupGroup = new RadioGroupItem();
-	RadioGroupItem radioGroupVerbType = new RadioGroupItem();
 	CheckboxItem checkBoxFavorite = new CheckboxItem("favorite","Favoris");
 	
 	
@@ -51,6 +50,8 @@ public class ArticleFormWindow extends Window{
 	public DynamicForm formIrregularVerb = new DynamicForm();
 	public DynamicForm formSubject = new DynamicForm();
 	public DynamicForm formAdjective = new DynamicForm();
+	
+	public DynamicForm formPronoun = new DynamicForm();
 	
 	RadioGroupItem radioGroupGender = new RadioGroupItem();
 	RadioGroupItem radioGroupPerson = new RadioGroupItem();
@@ -144,15 +145,7 @@ public class ArticleFormWindow extends Window{
 		radioGroupGender.setValueMap(mapRadioGroupGender);
 		radioGroupGender.setDefaultValue(0);
 		
-		/* Nature */
 		
-		radioGroupPerson.setTitle("Personne");
-		LinkedHashMap<Integer, String> mapRadioGroupNature = new LinkedHashMap<Integer, String>(2);
-		mapRadioGroupNature.put(0, "1ère");
-		mapRadioGroupNature.put(1,"2ème");
-		mapRadioGroupNature.put(2,"3ème");
-		radioGroupPerson.setValueMap(mapRadioGroupNature);
-		radioGroupPerson.setDefaultValue(0);
 		
 		/* Number */
 		
@@ -163,7 +156,22 @@ public class ArticleFormWindow extends Window{
 		radioGroupNumber.setValueMap(mapRadioGroupNumber);
 		radioGroupNumber.setDefaultValue(0);
 		
-		formSubject.setFields(radioGroupGender,radioGroupPerson,radioGroupNumber);
+		formSubject.setFields(radioGroupGender,radioGroupNumber);
+		
+		
+		/* PRONOUN */
+		
+		/* Nature */
+		
+		radioGroupPerson.setTitle("Personne");
+		LinkedHashMap<Integer, String> mapRadioGroupNature = new LinkedHashMap<Integer, String>(2);
+		mapRadioGroupNature.put(0, "1ère");
+		mapRadioGroupNature.put(1,"2ème");
+		mapRadioGroupNature.put(2,"3ème");
+		radioGroupPerson.setValueMap(mapRadioGroupNature);
+		radioGroupPerson.setDefaultValue(0);
+		
+		formPronoun.setFields(radioGroupPerson);
 		
 		/* Verb */
 		
@@ -189,20 +197,8 @@ public class ArticleFormWindow extends Window{
 
 			}
 		});
-		
-		/* Verb Type */
-		radioGroupVerbType.setTitle("Type du verbe");
-		LinkedHashMap<Integer, String> mapRadioGroupVerbType = new LinkedHashMap<Integer, String>(2);
-		mapRadioGroupVerbType.put(0,"Verbe d'action");
-		mapRadioGroupVerbType.put(1,"Verbe de volonté");
-		mapRadioGroupVerbType.put(2,"Verbe d'état");
-		mapRadioGroupVerbType.put(3,"Verbe d'appréciation");
-		radioGroupVerbType.setValueMap(mapRadioGroupVerbType);
-		radioGroupVerbType.setDefaultValue(0);
-		
-		
-		
-		formNormalVerb.setFields(checkBoxNegation,radioGroupVerbType,radioGroupGroup);
+
+		formNormalVerb.setFields(checkBoxNegation,radioGroupGroup);
 		formNormalVerb.setWidth(250);
 		
 		
@@ -258,7 +254,14 @@ public class ArticleFormWindow extends Window{
 					
 					subj.setGender(Integer.valueOf(radioGroupGender.getValue().toString()));
 					subj.setNumber(Integer.valueOf(radioGroupNumber.getValue().toString()));
-					subj.setPerson(Integer.valueOf(radioGroupPerson.getValue().toString()));
+					
+					if(type==TypeArticle.PRONOUN)
+					{
+						PronounDTO pronoun = (PronounDTO)article;
+						pronoun.setPerson(Integer.valueOf(radioGroupPerson.getValue().toString()));
+					}
+
+					
 				}
 				else if(type==TypeArticle.VERB)
 				{
@@ -266,7 +269,6 @@ public class ArticleFormWindow extends Window{
 					
 					verb.setNegation((checkBoxNegation.getValueAsBoolean()?1:0));
 					verb.setGroup(Integer.valueOf(radioGroupGroup.getValue().toString()));
-					verb.setType(Integer.valueOf(radioGroupVerbType.getValue().toString()));
 					verb.setIrregular1(irregularText1.getValueAsString());
 					verb.setIrregular2(irregularText2.getValueAsString());
 					verb.setIrregular3(irregularText3.getValueAsString());
@@ -295,6 +297,7 @@ public class ArticleFormWindow extends Window{
 		verticalLayout.addMember(formArticle);
 		verticalLayout.addMember(labelType);
 		verticalLayout.addMember(formSubject);
+		verticalLayout.addMember(formPronoun);
 		verticalLayout.addMember(formAdjective);
 		verticalLayout.addMember(verbLayout);
 		verticalLayout.addMember(buttonValidate);
@@ -370,8 +373,14 @@ public class ArticleFormWindow extends Window{
 			SubjectDTO subj = (SubjectDTO)article;
 			
 			radioGroupGender.setValue(subj.getGender());
-			radioGroupPerson.setValue(subj.getPerson());
 			radioGroupNumber.setValue(subj.getNumber());
+			
+			if(article instanceof PronounDTO)
+			{
+				PronounDTO pronoun = (PronounDTO) article;
+				radioGroupPerson.setValue(pronoun.getPerson());
+			}
+			
 			
 		}
 		else if(article instanceof VerbDTO)
@@ -379,7 +388,6 @@ public class ArticleFormWindow extends Window{
 			VerbDTO verb = (VerbDTO)article;
 			checkBoxNegation.setValue(verb.getNegation()==1);
 			radioGroupGroup.setValue(verb.getGroup());
-			radioGroupVerbType.setValue(verb.getType());
 			irregularText1.setValue(verb.getIrregular1());
 			irregularText2.setValue(verb.getIrregular2());
 			irregularText3.setValue(verb.getIrregular3());
@@ -416,7 +424,7 @@ public class ArticleFormWindow extends Window{
 					order,
 					parent,
 					new ImageDTO((long) -1, "default_article.png"),
-					new HashSet<LogDTO>(),0,0,0,0,"","","","","","");
+					new HashSet<LogDTO>(),0,0,0,"","","","","","");
 			
 		}
 		else if(type==TypeArticle.NOUN)
@@ -426,7 +434,7 @@ public class ArticleFormWindow extends Window{
 					order,
 					parent,
 					new ImageDTO((long) -1, "default_article.png"),
-					new HashSet<LogDTO>(),0,0,0,0);
+					new HashSet<LogDTO>(),0,0,0);
 		}
 		else if(type==TypeArticle.PRONOUN)
 		{
@@ -452,6 +460,7 @@ public class ArticleFormWindow extends Window{
 	{
 		verbLayout.setVisible(type==TypeArticle.VERB);
 		formSubject.setVisible((type==TypeArticle.NOUN) || (type==TypeArticle.PRONOUN));
+		formPronoun.setVisible(type==TypeArticle.PRONOUN);
 		formAdjective.setVisible(type==TypeArticle.ADJECTIVE);
 	}
 	

@@ -4,9 +4,9 @@ import com.spicstome.client.dto.ArticleDTO;
 
 /* if something is coming it's not valid anymore */
 
-public class State8 extends SyntaxState{
+public class StateF extends SyntaxState{
 
-	public State8(SyntaxAnalyser analyser) {
+	public StateF(SyntaxAnalyser analyser) {
 		super(true, analyser);
 	}
 	
