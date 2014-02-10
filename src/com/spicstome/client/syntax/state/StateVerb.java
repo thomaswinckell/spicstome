@@ -13,6 +13,7 @@ public class StateVerb extends SyntaxState{
 	boolean acceptVerb = false;
 	boolean acceptAdjective = false;
 	boolean acceptNoun = false;
+	int nbInfinitifVerb = 0;
 	
 	public StateVerb(SyntaxAnalyser analyser) {
 		super(true, analyser);
@@ -38,8 +39,9 @@ public class StateVerb extends SyntaxState{
 		}
 		
 	
-		else if(acceptVerb && article instanceof VerbDTO)
+		else if(acceptVerb && nbInfinitifVerb<2 && article instanceof VerbDTO)
 		{
+			nbInfinitifVerb++;
 			VerbDTO verb = (VerbDTO)article;
 			setAcceptNext(verb.getNegation(), verb.getName());
 			return null;

@@ -45,6 +45,7 @@ public class SyntaxAnalyser {
 	{
 		currentState = stateInit;
 		this.arrayRecord=arrayRecord;
+		stateVerb.nbInfinitifVerb=0;
 	}
 
 	public ArticleDTO extractArticle(int i)
