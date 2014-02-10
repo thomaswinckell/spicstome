@@ -124,9 +124,9 @@ public class Transtypage {
 				else if(article instanceof Pronoun)
 					listDTO.add(createPronounDTO((Pronoun)article,null));
 			}		
-			if(article instanceof Verb)
+			else if(article instanceof Verb)
 				listDTO.add(createVerbDTO((Verb)article,null));
-			if(article instanceof Adjective)
+			else if(article instanceof Adjective)
 				listDTO.add(createAdjectiveDTO((Adjective)article,null));
 		}
 
@@ -151,9 +151,9 @@ public class Transtypage {
 					else if(p instanceof Pronoun)
 						listDTO.add(createPronounDTO((Pronoun)p,parent));
 				}		
-				if(p instanceof Verb)
+				else if(p instanceof Verb)
 					listDTO.add(createVerbDTO((Verb)p,parent));
-				if(p instanceof Adjective)
+				else if(p instanceof Adjective)
 					listDTO.add(createAdjectiveDTO((Adjective)p,parent));
 			}
 				

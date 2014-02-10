@@ -5,9 +5,14 @@ import java.util.ArrayList;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+
+import com.spicstome.client.dto.AdjectiveDTO;
 import com.spicstome.client.dto.FolderDTO;
+import com.spicstome.client.dto.NounDTO;
 import com.spicstome.client.dto.PecsDTO;
+import com.spicstome.client.dto.PronounDTO;
 import com.spicstome.client.dto.SubjectDTO;
+import com.spicstome.client.dto.VerbDTO;
 
 public class Folder extends Pecs implements Serializable {
 	
@@ -33,7 +38,21 @@ public class Folder extends Pecs implements Serializable {
 				else
 				{
 					if(pecsDTO instanceof SubjectDTO)
-						pecs.add(new Subject((SubjectDTO) pecsDTO,this));
+					{
+						if(pecsDTO instanceof NounDTO)
+							pecs.add(new Noun((NounDTO) pecsDTO,this));
+						else if(pecsDTO instanceof PronounDTO)
+							pecs.add(new Pronoun((PronounDTO) pecsDTO,this));
+					}
+					else if(pecsDTO instanceof VerbDTO)
+					{
+						pecs.add(new Verb((VerbDTO) pecsDTO,this));
+					}
+					else if(pecsDTO instanceof AdjectiveDTO)
+					{
+						pecs.add(new Adjective((AdjectiveDTO) pecsDTO,this));
+					}
+						
 				}
 					
 			}

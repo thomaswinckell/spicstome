@@ -217,9 +217,7 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 			@Override
 			public void onFailure(Throwable caught) {}
 			@Override
-			public void onSuccess(Boolean result) {
-				UpdateStudentDTO();
-			}
+			public void onSuccess(Boolean result) {}
 		});
 		
 	}
@@ -452,6 +450,7 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 		});
 		
 	}
+
 
 
 
