@@ -5,7 +5,7 @@ import java.sql.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.spicstome.client.dto.ArticleDTO;
+import com.spicstome.client.dto.WordDTO;
 import com.spicstome.client.dto.LogDTO;
 import com.spicstome.client.dto.SubjectDTO;
 
@@ -17,7 +17,7 @@ public class Log implements Serializable {
 	private Student student;
 	private String emailRecipient;
 	private Date date;
-	private Set<Article> articles;
+	private Set<Word> articles;
 	
 	public Log() {
 	}
@@ -33,10 +33,10 @@ public class Log implements Serializable {
 		emailRecipient = logDTO.getEmailRecipient();
 		date = logDTO.getDate();
 		
-		Set<ArticleDTO> articleDTOs = logDTO.getArticles();
+		Set<WordDTO> articleDTOs = logDTO.getArticles();
 		if (articleDTOs != null) {
-			Set<Article> articles = new HashSet<Article>(articleDTOs.size());
-			for (ArticleDTO articleDTO : articleDTOs) {
+			Set<Word> articles = new HashSet<Word>(articleDTOs.size());
+			for (WordDTO articleDTO : articleDTOs) {
 				if(articleDTO instanceof SubjectDTO)
 					articles.add(new Subject((SubjectDTO)articleDTO,null));
 			}
@@ -76,22 +76,22 @@ public class Log implements Serializable {
 		this.id = id;
 	}
 	
-	public Set<Article> getArticles() {
+	public Set<Word> getArticles() {
 		return articles;
 	}
 
-	public void setArticles(Set<Article> articles) {
+	public void setArticles(Set<Word> articles) {
 		this.articles = articles;
 	}
 
-	public void addArticle(Article article) {
+	public void addArticle(Word article) {
 		if (articles == null) {
-		      articles = new HashSet<Article>();
+		      articles = new HashSet<Word>();
 		}
 		articles.add(article);
 	}
 	
-	public void removeLog(Article article) {
+	public void removeLog(Word article) {
 		if (articles == null) {
 		      return;
 		}

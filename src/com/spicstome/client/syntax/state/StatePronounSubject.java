@@ -1,6 +1,6 @@
 package com.spicstome.client.syntax.state;
 
-import com.spicstome.client.dto.ArticleDTO;
+import com.spicstome.client.dto.WordDTO;
 import com.spicstome.client.dto.PronounDTO;
 import com.spicstome.client.dto.VerbDTO;
 
@@ -12,12 +12,12 @@ public class StatePronounSubject extends SyntaxState{
 	}
 	
 	@Override
-	public  String check(ArticleDTO article,int range)
+	public  String check(WordDTO word,int range)
 	{
 
-		if(article instanceof VerbDTO)
+		if(word instanceof VerbDTO)
 		{
-			VerbDTO verb = (VerbDTO) article;
+			VerbDTO verb = (VerbDTO) word;
 			PronounDTO subject = (PronounDTO) analyser.extractArticle(0);
 			
 			analyser.stateVerb.setAcceptNext(verb.getNegation(), verb.getName());

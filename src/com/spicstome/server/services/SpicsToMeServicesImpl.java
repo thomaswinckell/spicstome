@@ -13,6 +13,7 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.spicstome.client.dto.AdjectiveDTO;
 import com.spicstome.client.dto.AlbumDTO;
 import com.spicstome.client.dto.ArticleDTO;
+import com.spicstome.client.dto.WordDTO;
 import com.spicstome.client.dto.FolderDTO;
 import com.spicstome.client.dto.ImageDTO;
 import com.spicstome.client.dto.LogDTO;
@@ -29,6 +30,7 @@ import com.spicstome.client.services.SpicsToMeServices;
 import com.spicstome.client.shared.Adjective;
 import com.spicstome.client.shared.Album;
 import com.spicstome.client.shared.Article;
+import com.spicstome.client.shared.Word;
 import com.spicstome.client.shared.Folder;
 import com.spicstome.client.shared.Image;
 import com.spicstome.client.shared.Noun;
@@ -296,15 +298,7 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	
 
 	private Long saveStudent(StudentDTO studentDTO) {
-			/*
-		ImageDTO imageFolder = new ImageDTO((long) -1, "all.png");
-		Long idImage = saveImage(imageFolder);
-		imageFolder.setId(idImage);		
-		
-		FolderDTO folder = new FolderDTO((long) -1, "Tout", 0, null, imageFolder, new ArrayList<PecsDTO>());
-		Long idFolder = saveFolder(folder);
-		folder.setId(idFolder);*/
-		
+
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
 		
@@ -392,43 +386,50 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	}
 	
 	@Override
-	public Long saveArticle(ArticleDTO articleDTO) {
+	public Long saveWord(WordDTO wordDTO) {
 
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();   
 	    session.beginTransaction();
 	    
 	    long idRes = 0;
 		
-	    if(articleDTO instanceof SubjectDTO)
+	    if(wordDTO instanceof SubjectDTO)
 	    {
-	    	if(articleDTO instanceof NounDTO)
+	    	if(wordDTO instanceof NounDTO)
 	 	    {
-	    		NounDTO nounDTO = (NounDTO)articleDTO;
+	    		NounDTO nounDTO = (NounDTO)wordDTO;
 		    	Noun noun = new Noun(nounDTO,new Folder(nounDTO.getFolder(),null));	 	
 				session.save(noun);		
 				idRes = noun.getId();
 	 	    }
-	    	else if(articleDTO instanceof PronounDTO)
+	    	else if(wordDTO instanceof PronounDTO)
 	 	    {
-	    		PronounDTO pronounDTO = (PronounDTO)articleDTO;
+	    		PronounDTO pronounDTO = (PronounDTO)wordDTO;
 		    	Pronoun pronoun = new Pronoun(pronounDTO,new Folder(pronounDTO.getFolder(),null));	 	
 				session.save(pronoun);		
 				idRes = pronoun.getId();
 	 	    }
+	    	else if(wordDTO instanceof ArticleDTO)
+	 	    {
+	    		ArticleDTO articleDTO = (ArticleDTO)wordDTO;
+		    	Article article = new Article(articleDTO,new Folder(articleDTO.getFolder(),null));	 	
+				session.save(article);		
+				idRes = article.getId();
+	 	    }
 	    	
 	    }
-	    else if(articleDTO instanceof VerbDTO)
+	    else if(wordDTO instanceof VerbDTO)
 	    {
-	    	VerbDTO verbDTO = (VerbDTO)articleDTO;
+	    	VerbDTO verbDTO = (VerbDTO)wordDTO;
 	    	Verb verb = new Verb(verbDTO,new Folder(verbDTO.getFolder(),null));	
 	    	
 			session.save(verb);
 			
 			idRes = verb.getId();
 	    }
-	    else if(articleDTO instanceof AdjectiveDTO)
+	    else if(wordDTO instanceof AdjectiveDTO)
 	    {
-	    	AdjectiveDTO adjectiveDTO = (AdjectiveDTO)articleDTO;
+	    	AdjectiveDTO adjectiveDTO = (AdjectiveDTO)wordDTO;
 	    	Adjective adjective = new Adjective(adjectiveDTO,new Folder(adjectiveDTO.getFolder(),null));	
 	    	
 			session.save(adjective);
@@ -476,36 +477,42 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 
 	
 	@Override
-	public boolean updateArticle(ArticleDTO articleDTO) {
+	public boolean updateWord(WordDTO wordDTO) {
 		
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.beginTransaction();	 
 		
-		if(articleDTO instanceof SubjectDTO)
+		if(wordDTO instanceof SubjectDTO)
 		{
-			if(articleDTO instanceof NounDTO)
+			if(wordDTO instanceof NounDTO)
 			{
-				NounDTO nounDTO = (NounDTO)articleDTO;
+				NounDTO nounDTO = (NounDTO)wordDTO;
 				Noun noun = new  Noun(nounDTO,new Folder(nounDTO.getFolder(),null));
 			    session.update(noun);
 			}
-			else if(articleDTO instanceof PronounDTO)
+			else if(wordDTO instanceof PronounDTO)
 			{
-				PronounDTO pronounDTO = (PronounDTO)articleDTO;
+				PronounDTO pronounDTO = (PronounDTO)wordDTO;
 				Pronoun pronoun = new  Pronoun(pronounDTO,new Folder(pronounDTO.getFolder(),null));
 			    session.update(pronoun);
 			}
+			else if(wordDTO instanceof ArticleDTO)
+			{
+				ArticleDTO pronounDTO = (ArticleDTO)wordDTO;
+				Article article = new  Article(pronounDTO,new Folder(pronounDTO.getFolder(),null));
+			    session.update(article);
+			}
 			
 		}
-		else if(articleDTO instanceof VerbDTO)
+		else if(wordDTO instanceof VerbDTO)
 		{
-			VerbDTO verbDTO = (VerbDTO)articleDTO;
+			VerbDTO verbDTO = (VerbDTO)wordDTO;
 			Verb verb = new  Verb(verbDTO,new Folder(verbDTO.getFolder(),null));
 		    session.update(verb);
 		}
-		else if(articleDTO instanceof AdjectiveDTO)
+		else if(wordDTO instanceof AdjectiveDTO)
 		{
-			AdjectiveDTO adjectiveDTO = (AdjectiveDTO)articleDTO;
+			AdjectiveDTO adjectiveDTO = (AdjectiveDTO)wordDTO;
 			Adjective adjective = new  Adjective(adjectiveDTO,new Folder(adjectiveDTO.getFolder(),null));
 		    session.update(adjective);
 		}
@@ -617,13 +624,13 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	/* DELETE */
 	
 	@Override
-	public boolean deleteArticle(long id) {
+	public boolean deleteWord(long id) {
 	
 		
 	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();    
 	    session.beginTransaction();
-	    Article article = (Article) session.load(Article.class, id);	
-	    session.delete(article);
+	    Word word = (Word) session.load(Word.class, id);	
+	    session.delete(word);
 	    session.getTransaction().commit();
 	    return true;
 		
@@ -705,57 +712,68 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 
 	/* COPY */
 	
-	public ArticleDTO copyArticle(ArticleDTO article,FolderDTO parent)
+	public WordDTO copyWord(WordDTO word,FolderDTO parent)
 	{
-		ImageDTO copyImage = new ImageDTO((long)-1, article.getImage().getFilename());	
-		Long idImageArticle = saveImage(copyImage);
+		ImageDTO copyImage = new ImageDTO((long)-1, word.getImage().getFilename());	
+		Long idImageWord = saveImage(copyImage);
 		
-		if(article instanceof SubjectDTO)
+		if(word instanceof SubjectDTO)
 		{
-			if(article instanceof NounDTO)
+			if(word instanceof NounDTO)
 			{
-				NounDTO nounDTO = (NounDTO) article;
+				NounDTO nounDTO = (NounDTO) word;
 				NounDTO copyNoun= new NounDTO((long)-1,nounDTO.getName(),nounDTO.getOrder(),parent,copyImage,new HashSet<LogDTO>(),0,nounDTO.getGender(),nounDTO.getNumber()) ;
 				
-				copyNoun.getImage().setId(idImageArticle);
-				Long id = saveArticle(copyNoun);
+				copyNoun.getImage().setId(idImageWord);
+				Long id = saveWord(copyNoun);
 				copyNoun.setId(id);
 				
 				return copyNoun;
 			}
-			else if(article instanceof PronounDTO)
+			else if(word instanceof PronounDTO)
 			{
-				PronounDTO pronounDTO = (PronounDTO) article;
+				PronounDTO pronounDTO = (PronounDTO) word;
 				PronounDTO copyPronoun= new PronounDTO((long)-1,pronounDTO.getName(),pronounDTO.getOrder(),parent,copyImage,new HashSet<LogDTO>(),0,pronounDTO.getGender(),pronounDTO.getPerson(),pronounDTO.getNumber()) ;
 				
-				copyPronoun.getImage().setId(idImageArticle);
-				Long id = saveArticle(copyPronoun);
+				copyPronoun.getImage().setId(idImageWord);
+				Long id = saveWord(copyPronoun);
+				copyPronoun.setId(id);
+				
+				return copyPronoun;
+			}
+			else if(word instanceof ArticleDTO)
+			{
+				ArticleDTO articleDTO = (ArticleDTO) word;
+				ArticleDTO copyPronoun= new ArticleDTO((long)-1,articleDTO.getName(),articleDTO.getOrder(),parent,copyImage,new HashSet<LogDTO>(),0,articleDTO.getGender(),articleDTO.getNumber()) ;
+				
+				copyPronoun.getImage().setId(idImageWord);
+				Long id = saveWord(copyPronoun);
 				copyPronoun.setId(id);
 				
 				return copyPronoun;
 			}
 			
 		}
-		else if(article instanceof VerbDTO)
+		else if(word instanceof VerbDTO)
 		{
-			VerbDTO verbDTO = (VerbDTO) article;
+			VerbDTO verbDTO = (VerbDTO) word;
 			VerbDTO copyVerb= new VerbDTO((long)-1,verbDTO.getName(),verbDTO.getOrder(),parent,copyImage,new HashSet<LogDTO>(),0,
 					verbDTO.getNegation(),verbDTO.getGroup(),verbDTO.getIrregular1(),verbDTO.getIrregular2(),verbDTO.getIrregular3(),verbDTO.getIrregular4(),verbDTO.getIrregular5(),verbDTO.getIrregular6()) ;
 			
-			copyVerb.getImage().setId(idImageArticle);
-			Long id = saveArticle(copyVerb);
+			copyVerb.getImage().setId(idImageWord);
+			Long id = saveWord(copyVerb);
 			copyVerb.setId(id);
 			
 			return copyVerb;
 		}
-		else if(article instanceof AdjectiveDTO)
+		else if(word instanceof AdjectiveDTO)
 		{
-			AdjectiveDTO ajectiveDTO = (AdjectiveDTO) article;
+			AdjectiveDTO ajectiveDTO = (AdjectiveDTO) word;
 			AdjectiveDTO copyAdjective= new AdjectiveDTO((long)-1,ajectiveDTO.getName(),ajectiveDTO.getOrder(),parent,copyImage,new HashSet<LogDTO>(),0,
 					ajectiveDTO.getMatching1(),ajectiveDTO.getMatching2(),ajectiveDTO.getMatching3(),ajectiveDTO.getMatching4()) ;
 			
-			copyAdjective.getImage().setId(idImageArticle);
-			Long id = saveArticle(copyAdjective);
+			copyAdjective.getImage().setId(idImageWord);
+			Long id = saveWord(copyAdjective);
 			copyAdjective.setId(id);
 			
 			return copyAdjective;
@@ -783,10 +801,10 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 		for(PecsDTO pecs :folderDTO.getContent())
 		{
 
-			if(pecs instanceof ArticleDTO)
+			if(pecs instanceof WordDTO)
 			{
-				ArticleDTO copyArticle = copyArticle((ArticleDTO)pecs, copyFolder);	
-				copyFolder.getContent().add(copyArticle);
+				WordDTO copyWord = copyWord((WordDTO)pecs, copyFolder);	
+				copyFolder.getContent().add(copyWord);
 			}
 			else
 			{

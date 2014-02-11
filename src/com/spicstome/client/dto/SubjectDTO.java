@@ -3,7 +3,7 @@ package com.spicstome.client.dto;
 import java.io.Serializable;
 import java.util.Set;
 
-public class SubjectDTO extends ArticleDTO implements Serializable {
+public class SubjectDTO extends WordDTO implements Serializable {
 
 	private static final long serialVersionUID = -5401723683221445029L;
 

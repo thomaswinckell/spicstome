@@ -19,7 +19,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.spicstome.client.dto.AlbumDTO;
-import com.spicstome.client.dto.ArticleDTO;
+import com.spicstome.client.dto.WordDTO;
 import com.spicstome.client.dto.FolderDTO;
 import com.spicstome.client.dto.ImageDTO;
 import com.spicstome.client.dto.ReferentDTO;
@@ -64,24 +64,24 @@ public interface SpicsToMeServices extends RemoteService {
 	public Long saveImage(ImageDTO imageDTO);
 	public Long saveFolder(FolderDTO folderDTO);
 	public Long saveAlbum(AlbumDTO albumDTO);
-	public Long saveArticle(ArticleDTO articleDTO);
+	public Long saveWord(WordDTO wordDTO);
 	public Long saveUser(UserDTO userDTO);
 
 	/* UPDATE */
 	public boolean updateFolder(FolderDTO folderDTO);
-	public boolean updateArticle(ArticleDTO articleDTO);
+	public boolean updateWord(WordDTO wordDTO);
 	public Long updateImage(ImageDTO imageDTO);
 	public Long updateUser(UserDTO userDTO, boolean isNewPassword);
 	public boolean updateAlbum(AlbumDTO album);
 	public boolean updateFolderAndChild(FolderDTO folder);
 	
 	/* DELETE */
-	public boolean deleteArticle(long id);
+	public boolean deleteWord(long id);
 	public boolean deleteFolder(long id);
 	public boolean deleteUser(long id);
 	
 	/*COPY*/
 	public FolderDTO copyFolder(FolderDTO folderDTO,FolderDTO parent);
-	public ArticleDTO copyArticle(ArticleDTO articleDTO,FolderDTO parent);
+	public WordDTO copyWord(WordDTO articleDTO,FolderDTO parent);
 	public AlbumDTO copyAlbum(AlbumDTO albumDTO);
 }

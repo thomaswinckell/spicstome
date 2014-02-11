@@ -13,13 +13,13 @@ import com.smartgwt.client.widgets.tree.events.FolderDropEvent;
 import com.smartgwt.client.widgets.tree.events.FolderDropHandler;
 import com.smartgwt.client.widgets.tree.events.NodeClickEvent;
 import com.spicstome.client.dto.AlbumDTO;
-import com.spicstome.client.dto.ArticleDTO;
+import com.spicstome.client.dto.WordDTO;
 import com.spicstome.client.dto.FolderDTO;
 import com.spicstome.client.dto.PecsDTO;
 import com.spicstome.client.dto.StudentDTO;
-import com.spicstome.client.ui.form.ArticleFormWindow;
+import com.spicstome.client.ui.form.WordFormWindow;
 import com.spicstome.client.ui.form.FolderFormWindow;
-import com.spicstome.client.ui.picker.ArticlePickerWindow;
+import com.spicstome.client.ui.picker.WordPickerWindow;
 import com.spicstome.client.ui.picker.FolderPickerWindow;
 import com.spicstome.client.ui.widget.ImageRecord;
 import com.spicstome.client.ui.widget.ImageTileGrid;
@@ -29,11 +29,11 @@ import com.spicstome.client.ui.widget.ImageTileGrid.Mode;
 public abstract class AlbumEditPanel extends AlbumPanel{
 
 	ActionPanel actionFoldersPanel;
-	ActionPanel actionArticlePanel;
-	ImageTileGrid articlesGrid;
+	ActionPanel actionWordsPanel;
+	ImageTileGrid wordsGrid;
 	List<StudentDTO> allStudents;
 
-	VLayout articleVerticalPanel = new VLayout();
+	VLayout wordVerticalPanel = new VLayout();
 
 	
 	
@@ -82,7 +82,7 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 		});
 
 	    
-	    actionArticlePanel = new ActionPanel(40,true,true,false,true,false,true,true)
+	    actionWordsPanel = new ActionPanel(40,true,true,false,true,false,true,true)
 	    {
 
 			@Override
@@ -90,20 +90,20 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 				
 				FolderDTO parent = getSelectedFolder();
 				
-				ArticleFormWindow articleFormWindow = new ArticleFormWindow(ArticleFormWindow.Mode.NEW,null,parent){
+				WordFormWindow wordFormWindow = new WordFormWindow(WordFormWindow.Mode.NEW,null,parent){
 					@Override
 					public void onDestroy()
 					{
 					
 						/* getting the new article */
-						ArticleDTO a = this.article;
+						WordDTO a = this.word;
 						
 						/* saving business data */
-						onSaveArticle(a);
+						onSaveWord(a);
 						
 					}
 				};
-				articleFormWindow.show();
+				wordFormWindow.show();
 
 			}
 			
@@ -111,15 +111,15 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 			public void onEdit() {
 				
 				FolderDTO parent = getSelectedFolder();
-				ArticleDTO article = getSelectedArticle();
-				ArticleFormWindow articleFormWindow = new ArticleFormWindow(ArticleFormWindow.Mode.EDIT,article,parent){
+				WordDTO article = getSelectedWord();
+				WordFormWindow articleFormWindow = new WordFormWindow(WordFormWindow.Mode.EDIT,article,parent){
 					@Override
 					public void onDestroy()
 					{	
-						ArticleDTO a= this.article;	
+						WordDTO a= this.word;	
 						
 						/* save business data */
-						onUpdateArticle(a);
+						onUpdateWord(a);
 						
 					}
 				};
@@ -131,16 +131,16 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 			@Override
 			public void onImport()
 			{
-				ArticlePickerWindow win = new ArticlePickerWindow(allStudents){
+				WordPickerWindow win = new WordPickerWindow(allStudents){
 					@Override
 					public void onDestroy()
 					{
 						/* getting original article to import */
-						ArticleDTO article = (ArticleDTO)book.selectedImage.getAttributeAsObject(ImageRecord.DATA);
+						WordDTO article = (WordDTO)book.selectedImage.getAttributeAsObject(ImageRecord.DATA);
 						
 						/* creating a copy of the article with out folder parent */
 
-						onCopyArticle(article, getSelectedFolder());
+						onCopyWord(article, getSelectedFolder());
 					
 					}
 				};			 
@@ -156,10 +156,10 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 						if (value != null && value) 
 						{
 							
-							ArticleDTO articleDTO = getSelectedArticle();
+							WordDTO articleDTO = getSelectedWord();
 							
 							/* delete business data */
-							onDeleteArticle(articleDTO);
+							onDeleteWord(articleDTO);
 
 						}
 					}
@@ -171,7 +171,7 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 			public void onMove()
 			{
 				/* the student is not upto date */
-				final ArticleDTO article = getSelectedArticle();
+				final WordDTO article = getSelectedWord();
 				List<StudentDTO> set = new ArrayList<StudentDTO>();
 				set.add(student);
 				
@@ -182,7 +182,7 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 						/* getting original article to import */
 						FolderDTO folder = (FolderDTO)albumPanel.getSelectedFolder();
 						
-						onMoveArticle(article, folder);
+						onMoveWord(article, folder);
 
 					}
 				};			 
@@ -295,9 +295,9 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 	    verticalLayout.addMember(actionFoldersPanel);
 	    
 	    verticalLayout.setStyleName("bloc");
-	    articleVerticalPanel.setStyleName("bloc");
+	    wordVerticalPanel.setStyleName("bloc");
 	    
-	    articlesGrid = new ImageTileGrid(Mode.DRAG_AND_DROP,150,150,100){
+	    wordsGrid = new ImageTileGrid(Mode.DRAG_AND_DROP,150,150,100){
 	    	
 	    	@Override
 			public void OnSelectChanged(ImageRecord object) {
@@ -306,28 +306,28 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 			}
 	    	
 	    	@Override
-			public void OnDropOrReorder(ArticleDTO article)
+			public void OnDropOrReorder(WordDTO article)
 	    	{
-	    		RecordList list = articlesGrid.getDataAsRecordList();
+	    		RecordList list = wordsGrid.getDataAsRecordList();
 	    		
 	    		
 	    		for(int i=0;i<list.getLength();i++)
 	    		{
-	    			ArticleDTO a = (ArticleDTO)((ImageRecord)(list.get(i))).getAttributeAsObject(ImageRecord.DATA);  			
+	    			WordDTO a = (WordDTO)((ImageRecord)(list.get(i))).getAttributeAsObject(ImageRecord.DATA);  			
 	    			a.setOrder(i);
 	    		
-	    			onReorderArticle(a);
+	    			onReorderWord(a);
 	    		}
 	    	}
 	    	
 	    };
 	    
-	    articleVerticalPanel.addMember(actionArticlePanel);
+	    wordVerticalPanel.addMember(actionWordsPanel);
 	       
 	    verticalLayout.setHeight(450);
-	    articleVerticalPanel.setHeight(450);
+	    wordVerticalPanel.setHeight(450);
 	    
-	    horizontalLayout.addMember(articleVerticalPanel);
+	    horizontalLayout.addMember(wordVerticalPanel);
 
 	    UpdateActionPanels();
 	    
@@ -357,11 +357,11 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 		folderTree.treeGrid.setData(folderTree.tree);		
 		folderTree.treeGrid.getData().openAll();
 		
-		articlesGrid.deselectAllRecords();	
+		wordsGrid.deselectAllRecords();	
 		folderTree.selectFolderNode=null;
 		folderTree.treeGrid.deselectAllRecords();
 		
-		articlesGrid.clearItems();
+		wordsGrid.clearItems();
 		UpdateActionPanels();
 	}
 	
@@ -380,21 +380,21 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 		folderTree.treeGrid.getData().openAll();
 	}
 	
-	public void updateArticleIntoGrid(FolderDTO folder)
+	public void updateWordIntoGrid(FolderDTO folder)
 	{		
-		ArrayList<ImageRecord> articles = new ArrayList<ImageRecord>();
+		ArrayList<ImageRecord> words = new ArrayList<ImageRecord>();
 		
 		for(PecsDTO pecsDTO:folder.getContent())
 		{
-			if(pecsDTO instanceof ArticleDTO)
+			if(pecsDTO instanceof WordDTO)
 			{
-				articles.add(new ImageRecord((ArticleDTO)pecsDTO));
+				words.add(new ImageRecord((WordDTO)pecsDTO));
 			}
 				
 		}
 		
-		articlesGrid.setItems(articles);
-		articleVerticalPanel.addMember(articlesGrid,0);
+		wordsGrid.setItems(words);
+		wordVerticalPanel.addMember(wordsGrid,0);
 		
 		UpdateActionPanels();
 		
@@ -402,29 +402,29 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 	
 	
 	
-	public void insertArticleIntoGrid(ArticleDTO articleDTO)
+	public void insertWordIntoGrid(WordDTO wordDTO)
 	{
-			articlesGrid.addItem(new ImageRecord(articleDTO));
+			wordsGrid.addItem(new ImageRecord(wordDTO));
 	}
 	
-	public void removeArticleFromGrid(ArticleDTO articleDTO)
+	public void removeWordFromGrid(WordDTO wordDTO)
 	{
-		articlesGrid.removeItem((ImageRecord)articlesGrid.getSelectedRecord());
-		articlesGrid.deselectAllRecords();	
+		wordsGrid.removeItem((ImageRecord)wordsGrid.getSelectedRecord());
+		wordsGrid.deselectAllRecords();	
 		UpdateActionPanels();
 	}
 	
-	public ArticleDTO getSelectedArticle()
+	public WordDTO getSelectedWord()
 	{
-		return (ArticleDTO)((ImageRecord)(articlesGrid.getSelectedRecord())).getAttributeAsObject(ImageRecord.DATA);
+		return (WordDTO)((ImageRecord)(wordsGrid.getSelectedRecord())).getAttributeAsObject(ImageRecord.DATA);
 	}
 	
 	
 	
 	public void UpdateActionPanels()
 	{
-		actionArticlePanel.setHiddenActionVisible(articlesGrid.getSelectedRecord()!=null);
-		actionArticlePanel.setVisible(folderTree.selectFolderNode!=null);
+		actionWordsPanel.setHiddenActionVisible(wordsGrid.getSelectedRecord()!=null);
+		actionWordsPanel.setVisible(folderTree.selectFolderNode!=null);
 		actionFoldersPanel.setHiddenActionVisible(folderTree.selectFolderNode!=null);
 	}
 
@@ -433,7 +433,7 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 	{
 		super.setStudent(student);
 		
-		articlesGrid.clearItems();
+		wordsGrid.clearItems();
 		UpdateActionPanels();
 	}
 	
@@ -475,18 +475,18 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 	
 	
 	
-	public abstract void onSaveArticle(ArticleDTO articleDTO);
+	public abstract void onSaveWord(WordDTO wordDTO);
 	public abstract void onSaveFolder(FolderDTO folderDTO);
-	public abstract void onDeleteArticle(ArticleDTO a);
+	public abstract void onDeleteWord(WordDTO wordDTO);
 	public abstract void onDeleteFolder(FolderDTO f);
 	public abstract void onMoveFolder(FolderDTO child,FolderDTO parent);
-	public abstract void onMoveArticle(ArticleDTO child,FolderDTO parent);
+	public abstract void onMoveWord(WordDTO child,FolderDTO parent);
 	public abstract void onUpdateFolder(FolderDTO folderDTO);
-	public abstract void onUpdateArticle(ArticleDTO articleDTO);
+	public abstract void onUpdateWord(WordDTO wordDTO);
 	public abstract void onLoadFolder(FolderDTO folder);
-	public abstract void onReorderArticle(ArticleDTO article);
+	public abstract void onReorderWord(WordDTO word);
 	public abstract void onReorderFolder(FolderDTO folder);
 	public abstract void onCopyFolder(FolderDTO folder,FolderDTO parent);
-	public abstract void onCopyArticle(ArticleDTO article,FolderDTO parent);
+	public abstract void onCopyWord(WordDTO word,FolderDTO parent);
 
 }

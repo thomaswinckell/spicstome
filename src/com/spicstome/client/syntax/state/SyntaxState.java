@@ -1,11 +1,9 @@
 package com.spicstome.client.syntax.state;
 
-import com.spicstome.client.dto.ArticleDTO;
-import com.spicstome.client.dto.NounDTO;
+import com.spicstome.client.dto.WordDTO;
 import com.spicstome.client.dto.PronounDTO;
 import com.spicstome.client.dto.SubjectDTO;
 import com.spicstome.client.dto.VerbDTO;
-
 
 public abstract class SyntaxState {
 
@@ -28,14 +26,14 @@ public abstract class SyntaxState {
 		
 		int subjectPerson;
 		
-		if(subject instanceof NounDTO)
-		{
-			subjectPerson=2;
-		}
-		else
+		if(subject instanceof PronounDTO)
 		{
 			PronounDTO pronoun = (PronounDTO) subject;
 			subjectPerson = pronoun.getPerson();
+		}
+		else
+		{
+			subjectPerson=2;
 		}
 		
 		return analyser.syntaxFrenchManager.conjugate(subjectPerson,subject.getNumber(),
@@ -44,5 +42,5 @@ public abstract class SyntaxState {
 				verb.getIrregular4(),verb.getIrregular5(),verb.getIrregular6())	;
 	}
 	
-	public  abstract String check(ArticleDTO article,int range);
+	public  abstract String check(WordDTO word,int range);
 }

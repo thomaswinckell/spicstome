@@ -1,23 +1,23 @@
 package com.spicstome.client.syntax.state;
 
-import com.spicstome.client.dto.ArticleDTO;
+import com.spicstome.client.dto.WordDTO;
 import com.spicstome.client.dto.SubjectDTO;
 import com.spicstome.client.dto.VerbDTO;
 
 
-public class StateNounAdjectiveSubject extends SyntaxState{
+public class StateAdjectiveSubject extends SyntaxState{
 
-	public StateNounAdjectiveSubject(SyntaxAnalyser analyser) {
+	public StateAdjectiveSubject(SyntaxAnalyser analyser) {
 		super(true, analyser);
 	}
 	
 	@Override
-	public  String check(ArticleDTO article,int range)
+	public  String check(WordDTO word,int range)
 	{
 		
-		if(article instanceof VerbDTO)
+		if(word instanceof VerbDTO)
 		{
-			VerbDTO verb = (VerbDTO) article;
+			VerbDTO verb = (VerbDTO) word;
 			SubjectDTO subject = (SubjectDTO) analyser.extractArticle(0);
 
 			analyser.stateVerb.setAcceptNext(verb.getNegation(), verb.getName());

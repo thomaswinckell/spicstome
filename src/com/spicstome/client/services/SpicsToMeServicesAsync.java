@@ -18,7 +18,7 @@ import java.util.List;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.spicstome.client.dto.AlbumDTO;
-import com.spicstome.client.dto.ArticleDTO;
+import com.spicstome.client.dto.WordDTO;
 import com.spicstome.client.dto.FolderDTO;
 import com.spicstome.client.dto.ImageDTO;
 import com.spicstome.client.dto.ReferentDTO;
@@ -51,25 +51,25 @@ public interface SpicsToMeServicesAsync {
 	void saveImage(ImageDTO imageDTO, AsyncCallback<Long> callback);
 	void saveFolder(FolderDTO folderDTO, AsyncCallback<Long> callback);
 	void saveAlbum(AlbumDTO albumDTO, AsyncCallback<Long> callback);
-	void saveArticle(ArticleDTO articleDTO, AsyncCallback<Long> callback);
+	void saveWord(WordDTO articleDTO, AsyncCallback<Long> callback);
 	void saveUser(UserDTO userDTO, AsyncCallback<Long> callback);
 	
 	/* UPDATE */
 	void updateFolder(FolderDTO folderDTO,AsyncCallback<Boolean> callack);
-	void updateArticle(ArticleDTO articleDTO,AsyncCallback<Boolean> callack);
+	void updateWord(WordDTO articleDTO,AsyncCallback<Boolean> callack);
 	void updateImage(ImageDTO imageDTO, AsyncCallback<Long> callback);
 	void updateUser(UserDTO userDTO, boolean isNewPassword, AsyncCallback<Long> callback);
 	void updateAlbum(AlbumDTO album,AsyncCallback<Boolean> callback);
 	void updateFolderAndChild(FolderDTO folder,AsyncCallback<Boolean> callback);
 
 	/* DELETE */	
-	void deleteArticle(long id,AsyncCallback<Boolean> callback);
+	void deleteWord(long id,AsyncCallback<Boolean> callback);
 	void deleteFolder(long id,AsyncCallback<Boolean> callback);
 	void deleteUser(long id,AsyncCallback<Boolean> callback);
 	
 	/*COPY*/
 	void copyFolder(FolderDTO folderDTO,FolderDTO parent,AsyncCallback<FolderDTO> callback);
-	void copyArticle(ArticleDTO articleDTO,FolderDTO parent,AsyncCallback<ArticleDTO> callback);
+	void copyWord(WordDTO wordDTO,FolderDTO parent,AsyncCallback<WordDTO> callback);
 	void copyAlbum(AlbumDTO albumDTO,AsyncCallback<AlbumDTO> callback);
 	
 }

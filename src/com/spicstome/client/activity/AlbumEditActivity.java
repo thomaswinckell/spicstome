@@ -7,7 +7,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.spicstome.client.ClientFactory;
 import com.spicstome.client.dto.AlbumDTO;
-import com.spicstome.client.dto.ArticleDTO;
+import com.spicstome.client.dto.WordDTO;
 import com.spicstome.client.dto.FolderDTO;
 import com.spicstome.client.dto.PecsDTO;
 import com.spicstome.client.dto.ReferentDTO;
@@ -117,23 +117,23 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 	}
 
 	@Override
-	public void save(final ArticleDTO a) {
+	public void save(final WordDTO wordDTO) {
 		
-		SpicsToMeServices.Util.getInstance().saveImage(a.getImage(), new AsyncCallback<Long>() {
+		SpicsToMeServices.Util.getInstance().saveImage(wordDTO.getImage(), new AsyncCallback<Long>() {
 			@Override
 			public void onFailure(Throwable caught) {}
 			@Override
 			public void onSuccess(Long result) {
 				
-				a.getImage().setId(result);
+				wordDTO.getImage().setId(result);
 							
-				SpicsToMeServices.Util.getInstance().saveArticle(a, new AsyncCallback<Long>() {
+				SpicsToMeServices.Util.getInstance().saveWord(wordDTO, new AsyncCallback<Long>() {
 					@Override
 					public void onSuccess(Long result) {
 						
-						a.setId(result);
-						a.getFolder().getContent().add(a);
-						editview.insertArticle(a);
+						wordDTO.setId(result);
+						wordDTO.getFolder().getContent().add(wordDTO);
+						editview.insertWord(wordDTO);
 					}			
 					@Override
 					public void onFailure(Throwable caught) {}
@@ -174,16 +174,16 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 	}
 
 	@Override
-	public void delete(final ArticleDTO a) {
+	public void delete(final WordDTO word) {
 		
-		SpicsToMeServices.Util.getInstance().deleteArticle(a.getId(), new AsyncCallback<Boolean>() {
+		SpicsToMeServices.Util.getInstance().deleteWord(word.getId(), new AsyncCallback<Boolean>() {
 			@Override
 			public void onFailure(Throwable caught) {}
 			@Override
 			public void onSuccess(Boolean result) {
 				
-				a.getFolder().getContent().remove(a);
-				editview.deleteArticle(a);
+				word.getFolder().getContent().remove(word);
+				editview.deleteWord(word);
 			}
 		});
 	}
@@ -223,7 +223,7 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 	}
 	
 	@Override
-	public void move(final ArticleDTO child, FolderDTO parent) {
+	public void move(final WordDTO child, FolderDTO parent) {
 		
 		/* delete old linking */
 		child.getFolder().getContent().remove(child);
@@ -231,13 +231,13 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 		child.setFolder(parent);
 		parent.getContent().add(child);
 		
-		SpicsToMeServices.Util.getInstance().updateArticle(child, new AsyncCallback<Boolean>() {
+		SpicsToMeServices.Util.getInstance().updateWord(child, new AsyncCallback<Boolean>() {
 
 			@Override
 			public void onFailure(Throwable caught) {}
 			@Override
 			public void onSuccess(Boolean result) {
-				editview.deleteArticle(child);
+				editview.deleteWord(child);
 			}
 		});
 		
@@ -271,9 +271,9 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 	}
 
 	@Override
-	public void update(final ArticleDTO a) {
+	public void update(final WordDTO word) {
 		
-		SpicsToMeServices.Util.getInstance().updateImage(a.getImage(),new AsyncCallback<Long>() {
+		SpicsToMeServices.Util.getInstance().updateImage(word.getImage(),new AsyncCallback<Long>() {
 
 			@Override
 			public void onFailure(Throwable caught) {}
@@ -281,20 +281,20 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 			@Override
 			public void onSuccess(Long result) {
 				
-				SpicsToMeServices.Util.getInstance().updateArticle(a, new AsyncCallback<Boolean>() {
+				SpicsToMeServices.Util.getInstance().updateWord(word, new AsyncCallback<Boolean>() {
 
 					@Override
 					public void onFailure(Throwable caught) {}
 					@Override
 					public void onSuccess(Boolean result) {
-						SpicsToMeServices.Util.getInstance().getFolder(a.getFolder().getId(), new AsyncCallback<FolderDTO>() {
+						SpicsToMeServices.Util.getInstance().getFolder(word.getFolder().getId(), new AsyncCallback<FolderDTO>() {
 
 							@Override
 							public void onFailure(Throwable caught) {}
 
 							@Override
 							public void onSuccess(FolderDTO result) {
-								editview.updateArticle(result);		
+								editview.updateWord(result);		
 								
 							}
 						});		
@@ -319,16 +319,16 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 			@Override
 			public void onSuccess(FolderDTO result) {
 				
-				editview.updateArticle(result);			
+				editview.updateWord(result);			
 			}
 		});
 		
 	}
 
 	@Override
-	public void reorder(ArticleDTO a) {
+	public void reorder(WordDTO wordDTO) {
 		
-		SpicsToMeServices.Util.getInstance().updateArticle(a, new AsyncCallback<Boolean>() {
+		SpicsToMeServices.Util.getInstance().updateWord(wordDTO, new AsyncCallback<Boolean>() {
 			@Override
 			public void onFailure(Throwable caught) {}
 			@Override
@@ -437,17 +437,17 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 	}
 
 	@Override
-	public void copy(ArticleDTO a, FolderDTO parent) {
+	public void copy(WordDTO word, FolderDTO parent) {
 		
-		a.setOrder(parent.getContent().size());
+		word.setOrder(parent.getContent().size());
 		
-		SpicsToMeServices.Util.getInstance().copyArticle(a,parent,new AsyncCallback<ArticleDTO>() {
+		SpicsToMeServices.Util.getInstance().copyWord(word,parent,new AsyncCallback<WordDTO>() {
 			@Override
 			public void onFailure(Throwable caught) {}
 			
 			@Override
-			public void onSuccess(ArticleDTO result) {
-				editview.insertArticle(result);
+			public void onSuccess(WordDTO result) {
+				editview.insertWord(result);
 			}
 		});
 		

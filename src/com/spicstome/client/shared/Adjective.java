@@ -3,7 +3,7 @@ package com.spicstome.client.shared;
 import java.io.Serializable;
 import com.spicstome.client.dto.AdjectiveDTO;
 
-public class Adjective extends Article implements Serializable {
+public class Adjective extends Word implements Serializable {
 
 
 	private static final long serialVersionUID = -5088774969872700461L;
@@ -34,7 +34,7 @@ public class Adjective extends Article implements Serializable {
 	
 	@Override
 	public String toString() {
-		return "Subject []";
+		return "Adjective []";
 	}
 
 	public String getMatching1() {

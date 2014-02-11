@@ -2,7 +2,7 @@ package com.spicstome.client.ui;
 
 import java.util.List;
 import com.spicstome.client.dto.AlbumDTO;
-import com.spicstome.client.dto.ArticleDTO;
+import com.spicstome.client.dto.WordDTO;
 import com.spicstome.client.dto.FolderDTO;
 import com.spicstome.client.dto.StudentDTO;
 import com.spicstome.client.place.AlbumManagementPlace;
@@ -37,9 +37,9 @@ public class AlbumEditViewImpl extends UserViewImpl  implements AlbumEditView{
 		this.albumEditPanel = new AlbumEditPanel(){
 
 			@Override
-			public void onSaveArticle(ArticleDTO articleDTO) {
+			public void onSaveWord(WordDTO wordDTO) {
 	
-				((AlbumEditView.Presenter)(listener)).save(articleDTO);	
+				((AlbumEditView.Presenter)(listener)).save(wordDTO);	
 
 			}
 
@@ -51,9 +51,9 @@ public class AlbumEditViewImpl extends UserViewImpl  implements AlbumEditView{
 			}
 
 			@Override
-			public void onDeleteArticle(ArticleDTO a) {
+			public void onDeleteWord(WordDTO word) {
 				
-				((AlbumEditView.Presenter)(listener)).delete(a);
+				((AlbumEditView.Presenter)(listener)).delete(word);
 
 			}
 
@@ -79,9 +79,9 @@ public class AlbumEditViewImpl extends UserViewImpl  implements AlbumEditView{
 			}
 
 			@Override
-			public void onUpdateArticle(ArticleDTO a) {
+			public void onUpdateWord(WordDTO word) {
 				
-				((AlbumEditView.Presenter)(listener)).update(a);
+				((AlbumEditView.Presenter)(listener)).update(word);
 			}
 
 			@Override
@@ -91,9 +91,9 @@ public class AlbumEditViewImpl extends UserViewImpl  implements AlbumEditView{
 			}
 
 			@Override
-			public void onReorderArticle(ArticleDTO article) {
+			public void onReorderWord(WordDTO word) {
 				
-				((AlbumEditView.Presenter)(listener)).reorder(article);
+				((AlbumEditView.Presenter)(listener)).reorder(word);
 				
 			}
 
@@ -112,19 +112,17 @@ public class AlbumEditViewImpl extends UserViewImpl  implements AlbumEditView{
 			}
 
 			@Override
-			public void onCopyArticle(ArticleDTO article, FolderDTO parent) {
+			public void onCopyWord(WordDTO article, FolderDTO parent) {
 				((AlbumEditView.Presenter)(listener)).copy(article,parent);
 				
 			}
 
 			@Override
-			public void onMoveArticle(ArticleDTO child, FolderDTO parent) {
+			public void onMoveWord(WordDTO child, FolderDTO parent) {
 				
 				((AlbumEditView.Presenter)(listener)).move(child,parent);
 				
 			}
-
-		
 			
 		};
 		
@@ -148,15 +146,15 @@ public class AlbumEditViewImpl extends UserViewImpl  implements AlbumEditView{
 	}
 
 	@Override
-	public void insertArticle(ArticleDTO articleDTO) {
+	public void insertWord(WordDTO wordDTO) {
 		
-		albumEditPanel.insertArticleIntoGrid(articleDTO);
+		albumEditPanel.insertWordIntoGrid(wordDTO);
 	}
 
 	@Override
-	public void deleteArticle(ArticleDTO articleDTO) {
+	public void deleteWord(WordDTO wordDTO) {
 
-		albumEditPanel.removeArticleFromGrid(articleDTO);
+		albumEditPanel.removeWordFromGrid(wordDTO);
 	}
 
 
@@ -184,9 +182,9 @@ public class AlbumEditViewImpl extends UserViewImpl  implements AlbumEditView{
 
 
 	@Override
-	public void updateArticle(FolderDTO folder) {
+	public void updateWord(FolderDTO folder) {
 
-		albumEditPanel.updateArticleIntoGrid(folder);
+		albumEditPanel.updateWordIntoGrid(folder);
 	}
 
 

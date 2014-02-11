@@ -4,7 +4,7 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.cfg.Configuration;
 import com.spicstome.client.shared.Album;
-import com.spicstome.client.shared.Article;
+import com.spicstome.client.shared.Word;
 import com.spicstome.client.shared.Image;
 import com.spicstome.client.shared.Pecs;
 import com.spicstome.client.shared.User;
@@ -70,8 +70,8 @@ public class HibernateManager {
 		return (User)session.load(User.class, id);
 	}
 	
-	public Article article(int id){
-		return (Article)session.load(Article.class, id);
+	public Word article(int id){
+		return (Word)session.load(Word.class, id);
 	}
 	
 	public void ClearAll()

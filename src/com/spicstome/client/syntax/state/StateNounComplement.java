@@ -1,14 +1,14 @@
 package com.spicstome.client.syntax.state;
 
 import com.spicstome.client.dto.AdjectiveDTO;
-import com.spicstome.client.dto.SubjectDTO;
 import com.spicstome.client.dto.WordDTO;
+import com.spicstome.client.dto.NounDTO;
 import com.spicstome.client.dto.VerbDTO;
 
 
-public class StateNounSubject extends SyntaxState{
+public class StateNounComplement extends SyntaxState{
 
-	public StateNounSubject(SyntaxAnalyser analyser) {
+	public StateNounComplement(SyntaxAnalyser analyser) {
 		super(true, analyser);
 	}
 
@@ -17,15 +17,13 @@ public class StateNounSubject extends SyntaxState{
 		
 		
 		
-		SubjectDTO subject = (SubjectDTO) analyser.extractArticle(0);
-		
-		
+		NounDTO subject = (NounDTO) analyser.extractArticle(range-1);
 		
 		if(word instanceof AdjectiveDTO)
 		{
 			AdjectiveDTO adjective = (AdjectiveDTO) word;
 
-			analyser.currentState=analyser.stateAdjectiveSubject;
+			analyser.currentState=analyser.stateAdjectiveComplement;
 			
 			return analyser.syntaxFrenchManager.match(subject.getGender(),subject.getNumber(), 
 					adjective.getMatching1(),adjective.getMatching2(),adjective.getMatching3(),adjective.getMatching4());

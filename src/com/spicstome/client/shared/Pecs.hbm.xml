@@ -20,7 +20,7 @@
 		<many-to-one name="image" column="id_image" class="Image"
 			unique="false" cascade="delete" />
 
-		<joined-subclass name="Article" table="article"
+		<joined-subclass name="Word" table="word"
 			extends="Pecs">
 			<key column="id" />
 			<property name="favorite" type="int" column="favorite" />
@@ -29,12 +29,17 @@
 				<many-to-many class="Log" column="id_log" />
 			</set>
 			<joined-subclass name="Subject" table="subject"
-				extends="Article">
+				extends="Word">
 				<key column="id" />
 				<property name="gender" type="int" column="gender" />
 				<property name="number" type="int" column="number" />
 				
 				<joined-subclass name="Noun" table="noun"
+					extends="Subject">
+					<key column="id" />
+				</joined-subclass>
+				
+				<joined-subclass name="Article" table="article"
 					extends="Subject">
 					<key column="id" />
 				</joined-subclass>
@@ -47,7 +52,7 @@
 
 			</joined-subclass>
 
-			<joined-subclass name="Verb" table="verb" extends="Article">
+			<joined-subclass name="Verb" table="verb" extends="Word">
 				<key column="id" />
 				
 				<property name="negation" type="int" column="negation" />
@@ -62,7 +67,7 @@
 
 			</joined-subclass>
 			
-			<joined-subclass name="Adjective" table="adjective" extends="Article">
+			<joined-subclass name="Adjective" table="adjective" extends="Word">
 				<key column="id" />
 						
 				<property name="matching1" type="string" column="matching1" />

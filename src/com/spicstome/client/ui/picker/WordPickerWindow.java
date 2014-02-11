@@ -7,11 +7,11 @@ import com.spicstome.client.ui.panel.AlbumBookPanel;
 import com.spicstome.client.ui.panel.Book;
 import com.spicstome.client.ui.widget.ImageRecord;
 
-public class ArticlePickerWindow extends PickerWindow {
+public class WordPickerWindow extends PickerWindow {
 
     public Book book;
 	
-	public ArticlePickerWindow(List<StudentDTO> list) {
+	public WordPickerWindow(List<StudentDTO> list) {
 		super(list,Type.IMPORT, 1000, 450);
 		
 	}

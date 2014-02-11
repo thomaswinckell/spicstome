@@ -4,6 +4,7 @@ import java.util.TreeSet;
 
 import com.spicstome.client.shared.Adjective;
 import com.spicstome.client.shared.Album;
+import com.spicstome.client.shared.Article;
 import com.spicstome.client.shared.Folder;
 import com.spicstome.client.shared.Image;
 import com.spicstome.client.shared.Noun;
@@ -64,11 +65,25 @@ public class Test {
 		noun.setFolder(parent);
 		noun.setOrder(order);
 		HibernateManager.getInstance().save(noun);
+
+	}
+	
+	public static void generateArticle(int order,String name,String image,Folder parent,int gender,int number)
+	{
+		Image imageSubject = new Image((long)-1);
+		imageSubject.setFilename(image);
 		
+		HibernateManager.getInstance().save(imageSubject);
 		
-		
-		
-		
+		Article article = new Article((long)-1);
+		article.setName(name);
+		article.setGender(gender);
+		article.setNumber(number);
+		article.setImage(imageSubject);
+		article.setFolder(parent);
+		article.setOrder(order);
+		HibernateManager.getInstance().save(article);
+
 	}
 	
 	public static void generatePronoun(int order,String name,String image,Folder parent,int gender,int number,int person)
@@ -144,12 +159,22 @@ public class Test {
 	{
 		Folder racine = generateFolder(0,"Tout", "all.png", null);
 		
+			
+			
+			if(type==Type.GENERAL)
+			{
+				Folder articles = generateFolder(0,"Articles", "articles.gif", racine);	
+				
+					generateArticle(0, "le", "le.gif", articles, 0, 0);
+					generateArticle(1, "une", "une.gif", articles, 1, 0);
+			}
+				
 			Folder qui = generateFolder(0,"Qui", "qui.gif", racine);	
 			
 				Folder commercants = generateFolder(0,"Commerçants", "commercants.gif", qui);
 				
-					generateNoun(0,"le boulanger", "boulanger.gif", commercants, 0, 0);
-					generateNoun(1,"le coiffeur", "coiffeur.gif", commercants, 0, 0);
+					generateNoun(0,"boulanger", "boulanger.gif", commercants, 0, 0);
+					generateNoun(1,"coiffeur", "coiffeur.gif", commercants, 0, 0);
 					
 				generatePronoun(0,"je", "je_1.JPG", qui, 0, 0, 0);
 				generatePronoun(1,"je", "je_2.JPG", qui, 1, 0, 0);
@@ -160,7 +185,7 @@ public class Test {
 				{	
 					generatePronoun(4,"il", "il_1.JPG", qui, 0, 0, 2);
 					generatePronoun(5,"elle", "elle_1.JPG", qui, 1, 0, 2);
-					generateNoun(6, "mes parent", "parent.gif", qui, 0, 1);
+					generateNoun(6, "parent", "parent.gif", qui, 0, 1);
 					generateNoun(7, "papa", "pere.gif", qui, 0, 0);
 					generateNoun(8, "maman", "mere.gif", qui, 1, 0);
 					generatePronoun(9,"nous", "nous_1.JPG", qui, 0, 1, 0);
@@ -196,27 +221,27 @@ public class Test {
 				
 				if(type==Type.GENERAL)
 				{
-					generateNoun(0, "le yahourt", "yaourt.gif", nouriture, 0, 0);
-					generateNoun(1, "les biscuits", "biscuit.gif", nouriture, 0, 1);
+					generateNoun(0, "yahourt", "yaourt.gif", nouriture, 0, 0);
+					generateNoun(1, "biscuits", "biscuit.gif", nouriture, 0, 1);
 				}
 				
 					Folder fruits = generateFolder(0,"Fruits", "fruits.gif", nouriture);
 					
-						generateNoun(0,"les cerises", "cerises.gif", fruits, 1, 1);
+						generateNoun(0,"cerises", "cerises.gif", fruits, 1, 1);
 						
 						if(type==Type.GENERAL)
 						{
-							generateNoun(1, "l'abricot", "abricot.gif", fruits, 0, 0);
-							generateNoun(2, "la fraise", "fraise.gif", fruits, 1, 0);
+							generateNoun(1, "abricot", "abricot.gif", fruits, 0, 0);
+							generateNoun(2, "fraise", "fraise.gif", fruits, 1, 0);
 						}
 					
 				Folder boissons = generateFolder(1,"Boissons", "boissons.gif", quoi);
 				
-					generateNoun(0,"le coca", "bouteille de coca.gif", boissons, 1, 0);	
+					generateNoun(0,"coca", "bouteille de coca.gif", boissons, 1, 0);	
 					
 				Folder choses = generateFolder(2,"Choses", "choses.gif", quoi);
 				
-					generateNoun(0,"le livre", "livre.gif", choses, 0, 0);	
+					generateNoun(0,"livre", "livre.gif", choses, 0, 0);	
 							
 			Folder comment = generateFolder(2,"Comment", "comment.gif", racine);
 			
@@ -227,8 +252,8 @@ public class Test {
 			{
 				Folder ou = generateFolder(3,"Ou", "ou.gif", racine);
 				
-					generateNoun(0,"la boucherie", "boucherie.gif", ou, 1, 0);	
-					generateNoun(1,"la boulangerie", "boulangerie.gif", ou, 1, 0);
+					generateNoun(0,"boucherie", "boucherie.gif", ou, 1, 0);	
+					generateNoun(1,"boulangerie", "boulangerie.gif", ou, 1, 0);
 			}
 			
 			

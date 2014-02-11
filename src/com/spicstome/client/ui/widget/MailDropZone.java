@@ -7,7 +7,7 @@ import com.smartgwt.client.widgets.Img;
 import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
-import com.spicstome.client.dto.ArticleDTO;
+import com.spicstome.client.dto.WordDTO;
 import com.spicstome.client.syntax.state.SyntaxAnalyser;
 import com.spicstome.client.ui.widget.ImageTileGrid.Mode;
 
@@ -30,7 +30,7 @@ public class MailDropZone extends VLayout{
 			}
 			
 			@Override
-			public void OnDropOrReorder(ArticleDTO article)
+			public void OnDropOrReorder(WordDTO article)
 			{
 				UpdateMail();
 			}
@@ -43,7 +43,7 @@ public class MailDropZone extends VLayout{
 		dropZone.removeOnDragOver();
 		
 		validImg.setSize(30);
-		label.setContents("La phrase est correcte !");
+		label.setContents("BRAVO ! continue ainsi :)");
 		label.setWidth(200);
 		label.setMargin(10);
 		validationLayout.addMember(validImg);
@@ -71,24 +71,24 @@ public class MailDropZone extends VLayout{
 	public void UpdateMail()
 	{
 		RecordList list = dropZone.getDataAsRecordList();
-		ArrayList<ImageRecord> articles = new ArrayList<ImageRecord>();
+		ArrayList<ImageRecord> words = new ArrayList<ImageRecord>();
 		
 		for(int i=0;i<list.getLength();i++)
 		{
-			ArticleDTO article = (ArticleDTO)((ImageRecord)(list.get(i))).getAttributeAsObject(ImageRecord.DATA);
-			ImageRecord record = new ImageRecord(article);
-			record.setAttribute(ImageRecord.PICTURE_NAME, article.getName());
-			articles.add(record);
+			WordDTO word = (WordDTO)((ImageRecord)(list.get(i))).getAttributeAsObject(ImageRecord.DATA);
+			ImageRecord record = new ImageRecord(word);
+			record.setAttribute(ImageRecord.PICTURE_NAME, word.getName());
+			words.add(record);
 		}
 		
-		analyser.init(articles);
+		analyser.init(words);
 		analyser.analyse();
 		
 		UpdateValidation(analyser.currentState.acceptance);
 	
 		dropZone.clearItems();
 		
-		dropZone.setItems(articles);
+		dropZone.setItems(words);
 		
 		
 

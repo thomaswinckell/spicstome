@@ -12,7 +12,7 @@ public class LogDTO implements Serializable {
 	private StudentDTO student;
 	private String emailRecipient;
 	private Date date;
-	private Set<ArticleDTO> articles;
+	private Set<WordDTO> words;
 	
 	public LogDTO() {
 	}
@@ -21,12 +21,12 @@ public class LogDTO implements Serializable {
 		this.id = id;
 	}
 	
-	public LogDTO(Long id, StudentDTO student, String emailRecipient, Date date, Set<ArticleDTO> articles) {
+	public LogDTO(Long id, StudentDTO student, String emailRecipient, Date date, Set<WordDTO> words) {
 		this.id = id;
 		this.student = student;
 		this.emailRecipient = emailRecipient;
 		this.date = date;
-		this.articles = articles;
+		this.words = words;
 	}
 
 	public StudentDTO getStudent() {
@@ -61,16 +61,16 @@ public class LogDTO implements Serializable {
 		this.id = id;
 	}
 	
-	public Set<ArticleDTO> getArticles() {
-		return articles;
+	public Set<WordDTO> getArticles() {
+		return words;
 	}
 
-	public void setArticles(Set<ArticleDTO> articles) {
-		this.articles = articles;
+	public void setArticles(Set<WordDTO> articles) {
+		this.words = articles;
 	}
 
 	@Override
 	public String toString() {
-		return "Log [id=" + id + ", articles=" + articles + "]";
+		return "Log [id=" + id + ", words=" + words + "]";
 	}	
 }

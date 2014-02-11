@@ -3,7 +3,7 @@ package com.spicstome.client.shared;
 import java.io.Serializable;
 import com.spicstome.client.dto.VerbDTO;
 
-public class Verb extends Article implements Serializable {
+public class Verb extends Word implements Serializable {
 
 
 	private static final long serialVersionUID = 1333962488010340815L;

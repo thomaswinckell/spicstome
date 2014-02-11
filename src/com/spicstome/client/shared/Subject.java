@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import com.spicstome.client.dto.SubjectDTO;
 
-public class Subject extends Article implements Serializable {
+public class Subject extends Word implements Serializable {
 
 	private static final long serialVersionUID = -5191013846944671225L;
 

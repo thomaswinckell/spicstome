@@ -1,7 +1,7 @@
 package com.spicstome.client.syntax.state;
 
 import com.spicstome.client.dto.AdjectiveDTO;
-import com.spicstome.client.dto.ArticleDTO;
+import com.spicstome.client.dto.WordDTO;
 import com.spicstome.client.dto.SubjectDTO;
 
 /* Ajdective's complement */
@@ -13,7 +13,7 @@ public class StateAdjectiveComplement extends SyntaxState{
 	}
 	
 	@Override
-	public  String check(ArticleDTO article,int range)
+	public  String check(WordDTO article,int range)
 	{
 
 		SubjectDTO subject = (SubjectDTO) analyser.extractArticle(range-1);

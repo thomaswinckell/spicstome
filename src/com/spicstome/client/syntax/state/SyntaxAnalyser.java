@@ -2,7 +2,7 @@ package com.spicstome.client.syntax.state;
 
 import java.util.ArrayList;
 
-import com.spicstome.client.dto.ArticleDTO;
+import com.spicstome.client.dto.WordDTO;
 import com.spicstome.client.dto.PronounDTO;
 import com.spicstome.client.dto.VerbDTO;
 import com.spicstome.client.syntax.french.SyntaxFrenchManager;
@@ -15,11 +15,14 @@ public class SyntaxAnalyser {
 	protected ArrayList<ImageRecord> arrayRecord;
 	
 	public StateInit stateInit;
+	public StateArticleSubject stateArticleSubject;
 	public StateNounSubject stateNounSubject;
-	public StateNounAdjectiveSubject stateNounAdjectiveSubject;
+	public StateAdjectiveSubject stateAdjectiveSubject;
 	public StatePronounSubject statePronounSubject;
 	public StateVerb stateVerb;
 	public StateAdjectiveComplement stateAdjectiveComplement;
+	public StateArticleComplement stateArticleComplement;
+	public StateNounComplement stateNounComplement;
 	public StateF statefinal;
 	
 	public StateTrash trashState;
@@ -29,11 +32,14 @@ public class SyntaxAnalyser {
 		syntaxFrenchManager= new SyntaxFrenchManager();
 		
 		stateInit = new StateInit(this);
+		stateArticleSubject = new StateArticleSubject(this);
 		stateNounSubject = new StateNounSubject(this);
-		stateNounAdjectiveSubject = new StateNounAdjectiveSubject(this);
+		stateAdjectiveSubject = new StateAdjectiveSubject(this);
 		statePronounSubject = new StatePronounSubject(this);
 		stateVerb = new StateVerb(this);
 		stateAdjectiveComplement= new StateAdjectiveComplement(this);
+		stateNounComplement = new StateNounComplement(this);
+		stateArticleComplement = new StateArticleComplement(this);
 		statefinal = new StateF(this);
 		
 		trashState = new StateTrash(this);
@@ -48,9 +54,9 @@ public class SyntaxAnalyser {
 		stateVerb.nbInfinitifVerb=0;
 	}
 
-	public ArticleDTO extractArticle(int i)
+	public WordDTO extractArticle(int i)
 	{
-		return (ArticleDTO)arrayRecord.get(i).getAttributeAsObject(ImageRecord.DATA);
+		return (WordDTO)arrayRecord.get(i).getAttributeAsObject(ImageRecord.DATA);
 	}
 	
 	public String check(int range)

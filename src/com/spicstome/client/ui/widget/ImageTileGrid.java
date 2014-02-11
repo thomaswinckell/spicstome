@@ -13,7 +13,7 @@ import com.smartgwt.client.widgets.tile.TileGrid;
 import com.smartgwt.client.widgets.tile.events.RecordClickEvent;
 import com.smartgwt.client.widgets.tile.events.RecordClickHandler;
 import com.smartgwt.client.widgets.viewer.DetailViewerField;
-import com.spicstome.client.dto.ArticleDTO;
+import com.spicstome.client.dto.WordDTO;
 
 public abstract class ImageTileGrid extends TileGrid {
 
@@ -115,7 +115,7 @@ public abstract class ImageTileGrid extends TileGrid {
 				@Override
 				public void onDropComplete(DropCompleteEvent event) {
 					ImageRecord record = (ImageRecord) event.getTransferredRecords()[0];
-					OnDropOrReorder((ArticleDTO)(record.getAttributeAsObject(ImageRecord.DATA)));
+					OnDropOrReorder((WordDTO)(record.getAttributeAsObject(ImageRecord.DATA)));
 					
 				}
 			});
@@ -176,7 +176,7 @@ public abstract class ImageTileGrid extends TileGrid {
 		});
 	}
 	
-	public void OnDropOrReorder(ArticleDTO article)
+	public void OnDropOrReorder(WordDTO article)
 	{
 		
 	}

@@ -2,7 +2,7 @@ package com.spicstome.client.ui.panel;
 
 import java.util.ArrayList;
 import com.smartgwt.client.widgets.tree.events.NodeClickEvent;
-import com.spicstome.client.dto.ArticleDTO;
+import com.spicstome.client.dto.WordDTO;
 import com.spicstome.client.dto.FolderDTO;
 import com.spicstome.client.dto.PecsDTO;
 import com.spicstome.client.dto.StudentDTO;
@@ -41,9 +41,9 @@ public class AlbumBookPanel extends AlbumPanel{
 		
 		for(PecsDTO pecsDTO:folder.getContent())
 		{
-			if(pecsDTO instanceof ArticleDTO)
+			if(pecsDTO instanceof WordDTO)
 			{
-				articles.add(new ImageRecord((ArticleDTO)pecsDTO));
+				articles.add(new ImageRecord((WordDTO)pecsDTO));
 			}
 				
 		}

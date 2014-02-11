@@ -7,6 +7,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import com.spicstome.client.dto.AdjectiveDTO;
+import com.spicstome.client.dto.ArticleDTO;
 import com.spicstome.client.dto.FolderDTO;
 import com.spicstome.client.dto.NounDTO;
 import com.spicstome.client.dto.PecsDTO;
@@ -43,6 +44,8 @@ public class Folder extends Pecs implements Serializable {
 							pecs.add(new Noun((NounDTO) pecsDTO,this));
 						else if(pecsDTO instanceof PronounDTO)
 							pecs.add(new Pronoun((PronounDTO) pecsDTO,this));
+						else if(pecsDTO instanceof ArticleDTO)
+							pecs.add(new Article((ArticleDTO) pecsDTO,this));
 					}
 					else if(pecsDTO instanceof VerbDTO)
 					{
