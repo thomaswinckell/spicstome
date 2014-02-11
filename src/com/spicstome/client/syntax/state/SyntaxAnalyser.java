@@ -2,6 +2,9 @@ package com.spicstome.client.syntax.state;
 
 import java.util.ArrayList;
 
+import com.spicstome.client.dto.ArticleDTO;
+import com.spicstome.client.dto.NounDTO;
+import com.spicstome.client.dto.SubjectDTO;
 import com.spicstome.client.dto.WordDTO;
 import com.spicstome.client.dto.PronounDTO;
 import com.spicstome.client.dto.VerbDTO;
@@ -54,14 +57,14 @@ public class SyntaxAnalyser {
 		stateVerb.nbInfinitifVerb=0;
 	}
 
-	public WordDTO extractArticle(int i)
+	public WordDTO extractWord(int i)
 	{
 		return (WordDTO)arrayRecord.get(i).getAttributeAsObject(ImageRecord.DATA);
 	}
 	
 	public String check(int range)
 	{
-		return currentState.check(extractArticle(range), range);
+		return currentState.check(extractWord(range), range);
 	}
 	
 	public void updateText(int rang,String text)
@@ -90,6 +93,7 @@ public class SyntaxAnalyser {
 	public void analyse()
 	{
 		/* matching and conjugate */
+		/* backward update */
 		for(int i=0;i<arrayRecord.size();i++)
 		{
 			String modif = check(i);
@@ -100,16 +104,33 @@ public class SyntaxAnalyser {
 			}
 		}
 		
+		/*forward update */
 		/* formatting subject */
 		
 		if(arrayRecord.size()>=2)
 		{
-			if((extractArticle(0) instanceof PronounDTO) && (extractArticle(1) instanceof VerbDTO))
+			if((extractWord(0) instanceof PronounDTO) && (extractWord(1) instanceof VerbDTO))
 			{
-				PronounDTO pronoun = (PronounDTO) extractArticle(0);
-				VerbDTO verb = (VerbDTO) extractArticle(1);
-				
-				updateText(0, syntaxFrenchManager.formatPronoun(pronoun.getName(), verb.getName()));
+				PronounDTO pronoun = (PronounDTO) extractWord(0);
+				VerbDTO verb = (VerbDTO) extractWord(1);
+
+				updateText(0, syntaxFrenchManager.formatPronoun(pronoun.getName(),conjugueVerb(pronoun, verb)));
+			}
+		}
+		
+		for(int i=0;i<arrayRecord.size();i++)
+		{
+			WordDTO word = extractWord(i);
+			if(word instanceof ArticleDTO)
+			{
+				if(i+1<arrayRecord.size() && extractWord(i+1) instanceof NounDTO)
+				{
+					ArticleDTO article = (ArticleDTO)word;
+					NounDTO noun = (NounDTO) extractWord(i+1);
+					
+					if(syntaxFrenchManager.goodArticle(article.getGender(), article.getNumber(), noun.getGender(), noun.getNumber()))
+						updateText(i,syntaxFrenchManager.formatArticle(article.getName(), noun.getName()));
+				}
 			}
 		}
 		
@@ -119,6 +140,25 @@ public class SyntaxAnalyser {
 		}
 	}
 	
-	
+	public String conjugueVerb(SubjectDTO subject,VerbDTO verb)
+	{
+
+		int subjectPerson;
+		
+		if(subject instanceof PronounDTO)
+		{
+			PronounDTO pronoun = (PronounDTO) subject;
+			subjectPerson = pronoun.getPerson();
+		}
+		else
+		{
+			subjectPerson=2;
+		}
+		
+		return syntaxFrenchManager.conjugate(subjectPerson,subject.getNumber(),
+				verb.getName(),verb.getNegation(),verb.getGroup(),
+				verb.getIrregular1(),verb.getIrregular2(),verb.getIrregular3(),
+				verb.getIrregular4(),verb.getIrregular5(),verb.getIrregular6())	;
+	}
 	
 }

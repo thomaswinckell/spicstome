@@ -36,6 +36,18 @@ public class SyntaxFrenchManager {
 		return false;
 	}
 	
+	public boolean goodArticle(int genderArticle,int numberArticle,int genderNoun,int numberNoun)
+	{
+		if((numberArticle==1)&& (numberNoun==1))
+		{
+			return true;
+		}
+		else
+		{
+			return ((numberArticle==numberNoun) && (genderArticle==genderNoun));
+		}
+	}
+	
 	public SyntaxVerb analyseSpecificGroup(String infinitif)
 	{
 		
@@ -73,7 +85,7 @@ public class SyntaxFrenchManager {
 	
 	}
 	
-	public String conjugate(int subjectNature,int subjectNumber,
+	public String conjugate(int subjectPerson,int subjectNumber,
 			String verbName,int verbNegation,int verbGroup,
 			String irregular1,String irregular2,String irregular3,
 			String irregular4,String irregular5,String irregular6)
@@ -87,27 +99,28 @@ public class SyntaxFrenchManager {
 		if(verbGroup==0 || verbGroup==1)
 		{
 			
-			conjugateVerb = conjugateVerb1stOr2ndGroup(infinitif, subjectNature,subjectNumber);
+			conjugateVerb = conjugateVerb1stOr2ndGroup(infinitif, subjectPerson,subjectNumber);
 		}	
 		else
-		{			
-			if(subjectNumber==0)
+		{		
+			
+			if(subjectNumber==0 || subjectNumber==2)
 			{
 
-				if(subjectNature==0)
+				if(subjectPerson==0)
 					conjugateVerb = irregular1;
-				else if(subjectNature==1)
+				else if(subjectPerson==1)
 					conjugateVerb = irregular2;
-				else if(subjectNature==2)
+				else if(subjectPerson==2)
 					conjugateVerb = irregular3;	
 			}
 			else
 			{
-				if(subjectNature==0)
+				if(subjectPerson==0)
 					conjugateVerb = irregular4;
-				else if(subjectNature==1)
+				else if(subjectPerson==1)
 					conjugateVerb = irregular5;
-				else if(subjectNature==2)
+				else if(subjectPerson==2)
 					conjugateVerb = irregular6;
 			}
 		}	
@@ -126,28 +139,28 @@ public class SyntaxFrenchManager {
 	
 	public boolean isVoyel(char c)
 	{
-		return (c=='a') || (c=='e') || (c=='i') || (c=='o') || (c=='u');
+		return (c=='a') || (c=='e') || (c=='ê')|| (c=='é') || (c=='i') || (c=='o') || (c=='u');
 	}
 	
-	public String conjugateVerb1stOr2ndGroup(String infinitif,int subjectNature,int subjectNumber)
+	public String conjugateVerb1stOr2ndGroup(String infinitif,int subjectPerson,int subjectNumber)
 	{
-		if(subjectNumber == 0)
+		if(subjectNumber == 0 || subjectNumber == 2)
 		{
-			if(subjectNature==0)
+			if(subjectPerson==0)
 				return analyseSpecificGroup(infinitif).conjugue1erePersonneSingulier();
-			else if(subjectNature==1)
+			else if(subjectPerson==1)
 				return analyseSpecificGroup(infinitif).conjugue2emePersonneSingulier();
-			else if(subjectNature==2)
+			else if(subjectPerson==2)
 				return analyseSpecificGroup(infinitif).conjugue3emePersonneSingulier();
 			
 		}
 		else
 		{
-			if(subjectNature==0)
+			if(subjectPerson==0)
 				return analyseSpecificGroup(infinitif).conjugue1erePersonnePluriel();
-			else if(subjectNature==1)
+			else if(subjectPerson==1)
 				return analyseSpecificGroup(infinitif).conjugue2emePersonnePluriel();
-			else if(subjectNature==2)
+			else if(subjectPerson==2)
 				return analyseSpecificGroup(infinitif).conjugue3emePersonnePluriel();
 		}
 		
@@ -162,6 +175,18 @@ public class SyntaxFrenchManager {
 		else
 			return "ne ";
 		
+	}
+	
+	public String formatArticle(String article,String next)
+	{
+		char firstChar = next.charAt(0);
+		
+		if(article.equals("de la") && isVoyel(firstChar))
+		{
+			return "de l'";
+		}
+		else
+			return article;
 	}
 	
 	public String formatPronoun(String pronoun,String next)

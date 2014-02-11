@@ -157,7 +157,7 @@ public class WordFormWindow extends Window{
 		LinkedHashMap<Integer, String> mapRadioGroupNumber = new LinkedHashMap<Integer, String>(2);
 		mapRadioGroupNumber.put(0, "singulier");
 		mapRadioGroupNumber.put(1,"pluriel");
-		mapRadioGroupNumber.put(2,"indeterminé");
+		mapRadioGroupNumber.put(2,"indénombrable");
 		radioGroupNumber.setValueMap(mapRadioGroupNumber);
 		radioGroupNumber.setDefaultValue(0);
 		

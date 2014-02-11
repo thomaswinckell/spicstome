@@ -16,7 +16,7 @@ public class StateAdjectiveComplement extends SyntaxState{
 	public  String check(WordDTO article,int range)
 	{
 
-		SubjectDTO subject = (SubjectDTO) analyser.extractArticle(range-1);
+		SubjectDTO subject = (SubjectDTO) analyser.extractWord(range-1);
 	
 		if(article instanceof AdjectiveDTO)
 		{

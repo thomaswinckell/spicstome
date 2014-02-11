@@ -17,7 +17,7 @@ public class StateNounComplement extends SyntaxState{
 		
 		
 		
-		NounDTO subject = (NounDTO) analyser.extractArticle(range-1);
+		NounDTO subject = (NounDTO) analyser.extractWord(range-1);
 		
 		if(word instanceof AdjectiveDTO)
 		{

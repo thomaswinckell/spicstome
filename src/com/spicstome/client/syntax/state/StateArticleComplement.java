@@ -12,7 +12,7 @@ public class StateArticleComplement extends SyntaxState{
 	int number = 0;
 	
 	public StateArticleComplement(SyntaxAnalyser analyser) {
-		super(true, analyser);
+		super(false, analyser);
 	}
 	
 	public void setAcceptNext(int gender,int number)
@@ -30,7 +30,7 @@ public class StateArticleComplement extends SyntaxState{
 		{	
 			NounDTO noun = (NounDTO) word;
 			
-			if((noun.getNumber()==number) && noun.getGender()==gender)
+			if(analyser.syntaxFrenchManager.goodArticle(gender, number, noun.getGender(), noun.getNumber()))
 			{
 				analyser.currentState=analyser.stateNounComplement;
 				return null;

@@ -18,7 +18,7 @@ public class StateAdjectiveSubject extends SyntaxState{
 		if(word instanceof VerbDTO)
 		{
 			VerbDTO verb = (VerbDTO) word;
-			SubjectDTO subject = (SubjectDTO) analyser.extractArticle(0);
+			SubjectDTO subject = (SubjectDTO) analyser.extractWord(0);
 
 			analyser.stateVerb.setAcceptNext(verb.getNegation(), verb.getName());
 			return conjugueVerb(subject,verb);

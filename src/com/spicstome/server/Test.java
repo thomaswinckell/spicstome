@@ -166,7 +166,13 @@ public class Test {
 				Folder articles = generateFolder(0,"Articles", "articles.gif", racine);	
 				
 					generateArticle(0, "le", "le.gif", articles, 0, 0);
-					generateArticle(1, "une", "une.gif", articles, 1, 0);
+					generateArticle(1, "la", "la.gif", articles, 1, 0);
+					generateArticle(2, "un", "un.gif", articles, 0, 0);
+					generateArticle(3, "une", "une.gif", articles, 1, 0);
+					generateArticle(4, "des", "des.gif", articles, 0, 1);
+					generateArticle(5, "les", "les.gif", articles, 0, 1);
+					generateArticle(6, "de la", "dela.gif", articles, 1, 2);
+					generateArticle(7, "du", "du.gif", articles, 0, 2);
 			}
 				
 			Folder qui = generateFolder(0,"Qui", "qui.gif", racine);	
@@ -222,7 +228,7 @@ public class Test {
 				if(type==Type.GENERAL)
 				{
 					generateNoun(0, "yahourt", "yaourt.gif", nouriture, 0, 0);
-					generateNoun(1, "biscuits", "biscuit.gif", nouriture, 0, 1);
+					generateNoun(1, "biscuit", "biscuit.gif", nouriture, 0, 0);
 				}
 				
 					Folder fruits = generateFolder(0,"Fruits", "fruits.gif", nouriture);
@@ -233,11 +239,15 @@ public class Test {
 						{
 							generateNoun(1, "abricot", "abricot.gif", fruits, 0, 0);
 							generateNoun(2, "fraise", "fraise.gif", fruits, 1, 0);
+							generateNoun(3, "banane", "banane.gif", fruits, 1, 0);
 						}
 					
 				Folder boissons = generateFolder(1,"Boissons", "boissons.gif", quoi);
 				
-					generateNoun(0,"coca", "bouteille de coca.gif", boissons, 1, 0);	
+					generateNoun(0,"coca", "bouteille de coca.gif", boissons, 0, 2);
+					generateNoun(1,"eau", "eau.gif", boissons, 1, 2);	
+					generateNoun(2,"bière", "biere.gif", boissons, 1, 2);
+					generateNoun(3, "jus de fruit", "jusdefruit.gif", fruits, 0, 2);
 					
 				Folder choses = generateFolder(2,"Choses", "choses.gif", quoi);
 				

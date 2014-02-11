@@ -17,7 +17,7 @@ public class StateNounSubject extends SyntaxState{
 		
 		
 		
-		SubjectDTO subject = (SubjectDTO) analyser.extractArticle(0);
+		SubjectDTO subject = (SubjectDTO) analyser.extractWord(0);
 		
 		
 		

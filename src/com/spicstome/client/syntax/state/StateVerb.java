@@ -54,7 +54,7 @@ public class StateVerb extends SyntaxState{
 		else if(acceptAdjective && word instanceof AdjectiveDTO)
 		{
 			AdjectiveDTO adjective = (AdjectiveDTO) word;
-			SubjectDTO subject = (SubjectDTO) analyser.extractArticle(0);
+			SubjectDTO subject = (SubjectDTO) analyser.extractWord(0);
 			
 			analyser.currentState=analyser.statefinal;
 			
