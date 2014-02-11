@@ -339,13 +339,15 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 
 	@Override
 	public void reorder(FolderDTO f) {
-		SpicsToMeServices.Util.getInstance().updateFolder(f,new AsyncCallback<Boolean>() {
+		SpicsToMeServices.Util.getInstance().updateFolderAndChild(f,new AsyncCallback<Boolean>() {
 
 			@Override
 			public void onFailure(Throwable caught) {}
 
 			@Override
-			public void onSuccess(Boolean result) {}
+			public void onSuccess(Boolean result) {
+				UpdateStudentDTO();
+			}
 		});
 		
 	}

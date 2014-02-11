@@ -73,8 +73,11 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 				
 				AlbumTreeNode f = (AlbumTreeNode)(folderTree.tree.getChildren(folderTree.tree.getRoot())[0]);
 				
+				/* set the order of all folder recursively */
 				ReorderFolder(f);
 				
+				/*save business data*/
+				onReorderFolder(f.getFolderDTO());
 			}
 		});
 
@@ -341,8 +344,6 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 			System.out.println(fo.getName());
 			
 			fo.setOrder(order);
-			
-			onReorderFolder(fo);
 			
 			ReorderFolder((AlbumTreeNode)childNode);
 			

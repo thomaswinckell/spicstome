@@ -457,6 +457,24 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	
 	/* UPDATE */
 	
+	
+	@Override
+	public boolean updateFolderAndChild(FolderDTO folder) {
+		
+		updateFolder(folder);
+		
+		for(PecsDTO pecsDTO:folder.getContent())
+		{
+			if(pecsDTO instanceof FolderDTO)	
+			{
+				updateFolderAndChild((FolderDTO)pecsDTO);
+			}
+		}
+		
+		return true;
+	}
+
+	
 	@Override
 	public boolean updateArticle(ArticleDTO articleDTO) {
 		
@@ -793,5 +811,6 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 		
 	}
 
+	
 
 }

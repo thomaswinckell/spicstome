@@ -70,11 +70,10 @@ public interface SpicsToMeServices extends RemoteService {
 	/* UPDATE */
 	public boolean updateFolder(FolderDTO folderDTO);
 	public boolean updateArticle(ArticleDTO articleDTO);
-
 	public Long updateImage(ImageDTO imageDTO);
 	public Long updateUser(UserDTO userDTO, boolean isNewPassword);
-	
 	public boolean updateAlbum(AlbumDTO album);
+	public boolean updateFolderAndChild(FolderDTO folder);
 	
 	/* DELETE */
 	public boolean deleteArticle(long id);

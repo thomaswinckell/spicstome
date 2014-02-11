@@ -60,6 +60,7 @@ public interface SpicsToMeServicesAsync {
 	void updateImage(ImageDTO imageDTO, AsyncCallback<Long> callback);
 	void updateUser(UserDTO userDTO, boolean isNewPassword, AsyncCallback<Long> callback);
 	void updateAlbum(AlbumDTO album,AsyncCallback<Boolean> callback);
+	void updateFolderAndChild(FolderDTO folder,AsyncCallback<Boolean> callback);
 
 	/* DELETE */	
 	void deleteArticle(long id,AsyncCallback<Boolean> callback);
