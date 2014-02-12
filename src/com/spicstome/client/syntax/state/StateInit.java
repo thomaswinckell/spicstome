@@ -19,7 +19,7 @@ public class StateInit extends SyntaxState{
 		if(word instanceof ArticleDTO)
 		{
 			ArticleDTO article = (ArticleDTO)word;
-			analyser.stateArticleSubject.setAcceptNext(article.getGender(), article.getNumber());
+			analyser.stateArticleSubject.setArticle(article);
 			analyser.currentState=analyser.stateArticleSubject;
 		}
 		else if(word instanceof NounDTO)

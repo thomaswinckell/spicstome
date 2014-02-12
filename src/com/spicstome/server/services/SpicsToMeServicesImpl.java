@@ -722,7 +722,7 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 			if(word instanceof NounDTO)
 			{
 				NounDTO nounDTO = (NounDTO) word;
-				NounDTO copyNoun= new NounDTO((long)-1,nounDTO.getName(),nounDTO.getOrder(),parent,copyImage,new HashSet<LogDTO>(),0,nounDTO.getGender(),nounDTO.getNumber()) ;
+				NounDTO copyNoun= new NounDTO((long)-1,nounDTO.getName(),nounDTO.getOrder(),parent,copyImage,new HashSet<LogDTO>(),0,nounDTO.getGender(),nounDTO.getNumber(),nounDTO.getUncountable()) ;
 				
 				copyNoun.getImage().setId(idImageWord);
 				Long id = saveWord(copyNoun);

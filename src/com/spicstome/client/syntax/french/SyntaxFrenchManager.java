@@ -36,15 +36,27 @@ public class SyntaxFrenchManager {
 		return false;
 	}
 	
-	public boolean goodArticle(int genderArticle,int numberArticle,int genderNoun,int numberNoun)
+	public boolean goodArticle(String article,int genderArticle,int numberArticle,int genderNoun,int numberNoun,int uncountableNoun)
 	{
-		if((numberArticle==1)&& (numberNoun==1))
+		
+		if(((numberArticle==1)&& (numberNoun==1)))
 		{
 			return true;
 		}
 		else
 		{
-			return ((numberArticle==numberNoun) && (genderArticle==genderNoun));
+			if((article.equals("de la") || (article.equals("du"))))
+			{
+				if((article.equals("de la") && genderNoun==1 && numberNoun==0 && uncountableNoun==1)
+						|| (article.equals("du") && genderNoun==0 && numberNoun==0 && uncountableNoun==1))
+				{
+					return true;
+				}
+				else
+					return false;
+			}
+			else
+				return ((numberArticle==numberNoun) && (genderArticle==genderNoun));
 		}
 	}
 	
@@ -104,7 +116,7 @@ public class SyntaxFrenchManager {
 		else
 		{		
 			
-			if(subjectNumber==0 || subjectNumber==2)
+			if(subjectNumber==0)
 			{
 
 				if(subjectPerson==0)
@@ -144,7 +156,7 @@ public class SyntaxFrenchManager {
 	
 	public String conjugateVerb1stOr2ndGroup(String infinitif,int subjectPerson,int subjectNumber)
 	{
-		if(subjectNumber == 0 || subjectNumber == 2)
+		if(subjectNumber == 0)
 		{
 			if(subjectPerson==0)
 				return analyseSpecificGroup(infinitif).conjugue1erePersonneSingulier();
@@ -185,15 +197,24 @@ public class SyntaxFrenchManager {
 		{
 			return "de l'";
 		}
+		else if(article.equals("la") && isVoyel(firstChar))
+		{
+			return "l'";
+		}
+		else if(article.equals("le") && isVoyel(firstChar))
+		{
+			return "l'";
+		}
 		else
 			return article;
 	}
 	
 	public String formatPronoun(String pronoun,String next)
 	{
+		char firstChar = next.charAt(0);
+		
 		if(pronoun.equals("je"))
-		{
-			char firstChar = next.charAt(0);
+		{		
 			if(isVoyel(firstChar))
 				return "j'";
 			else

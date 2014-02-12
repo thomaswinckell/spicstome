@@ -35,7 +35,7 @@ public class StateVerb extends SyntaxState{
 		if(word instanceof ArticleDTO)
 		{	
 			ArticleDTO article = (ArticleDTO)word;
-			analyser.stateArticleComplement.setAcceptNext(article.getGender(), article.getNumber());
+			analyser.stateArticleComplement.setArticle(article);
 			analyser.currentState=analyser.stateArticleComplement;
 			return null;
 		}

@@ -23,7 +23,7 @@ public class SyntaxAnalyser {
 	public StateAdjectiveSubject stateAdjectiveSubject;
 	public StatePronounSubject statePronounSubject;
 	public StateVerb stateVerb;
-	public StateAdjectiveComplement stateAdjectiveComplement;
+
 	public StateArticleComplement stateArticleComplement;
 	public StateNounComplement stateNounComplement;
 	public StateF statefinal;
@@ -40,7 +40,7 @@ public class SyntaxAnalyser {
 		stateAdjectiveSubject = new StateAdjectiveSubject(this);
 		statePronounSubject = new StatePronounSubject(this);
 		stateVerb = new StateVerb(this);
-		stateAdjectiveComplement= new StateAdjectiveComplement(this);
+
 		stateNounComplement = new StateNounComplement(this);
 		stateArticleComplement = new StateArticleComplement(this);
 		statefinal = new StateF(this);
@@ -128,7 +128,7 @@ public class SyntaxAnalyser {
 					ArticleDTO article = (ArticleDTO)word;
 					NounDTO noun = (NounDTO) extractWord(i+1);
 					
-					if(syntaxFrenchManager.goodArticle(article.getGender(), article.getNumber(), noun.getGender(), noun.getNumber()))
+					if(syntaxFrenchManager.goodArticle(article.getName(),article.getGender(), article.getNumber(), noun.getGender(), noun.getNumber(),noun.getUncountable()))
 						updateText(i,syntaxFrenchManager.formatArticle(article.getName(), noun.getName()));
 				}
 			}

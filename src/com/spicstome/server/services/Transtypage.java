@@ -95,7 +95,7 @@ public class Transtypage {
 	public static NounDTO createNounDTO(Noun noun,FolderDTO parentDTO)
 	{
 		return new NounDTO(noun.getId(),noun.getName(),noun.getOrder(),parentDTO,createImageDTO(noun.getImage()),
-				createListLogDTO(noun.getLogs()),noun.getFavorite(),noun.getGender(),noun.getNumber());
+				createListLogDTO(noun.getLogs()),noun.getFavorite(),noun.getGender(),noun.getNumber(),noun.getUncountable());
 	}
 	
 	public static ArticleDTO createArticleDTO(Article article,FolderDTO parentDTO)

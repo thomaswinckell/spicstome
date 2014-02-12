@@ -1,5 +1,6 @@
 package com.spicstome.client.syntax.state;
 
+import com.spicstome.client.dto.ArticleDTO;
 import com.spicstome.client.dto.NounDTO;
 import com.spicstome.client.dto.WordDTO;
 
@@ -8,18 +9,15 @@ import com.spicstome.client.dto.WordDTO;
 
 public class StateArticleComplement extends SyntaxState{
 
-	int gender  = 0;
-	int number = 0;
+	ArticleDTO article;
 	
 	public StateArticleComplement(SyntaxAnalyser analyser) {
 		super(false, analyser);
 	}
 	
-	public void setAcceptNext(int gender,int number)
+	public void setArticle(ArticleDTO article)
 	{
-	
-		this.gender=gender;
-		this.number=number;
+		this.article=article;
 	}
 	
 	@Override
@@ -30,7 +28,7 @@ public class StateArticleComplement extends SyntaxState{
 		{	
 			NounDTO noun = (NounDTO) word;
 			
-			if(analyser.syntaxFrenchManager.goodArticle(gender, number, noun.getGender(), noun.getNumber()))
+			if(analyser.syntaxFrenchManager.goodArticle(article.getName(),article.getGender(), article.getNumber(), noun.getGender(), noun.getNumber(),noun.getUncountable()))
 			{
 				analyser.currentState=analyser.stateNounComplement;
 				return null;

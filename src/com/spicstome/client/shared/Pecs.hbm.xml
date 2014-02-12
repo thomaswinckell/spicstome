@@ -37,6 +37,7 @@
 				<joined-subclass name="Noun" table="noun"
 					extends="Subject">
 					<key column="id" />
+					<property name="uncountable" type="int" column="uncountable" />
 				</joined-subclass>
 				
 				<joined-subclass name="Article" table="article"

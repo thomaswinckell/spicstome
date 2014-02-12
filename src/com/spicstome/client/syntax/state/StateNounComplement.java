@@ -23,7 +23,7 @@ public class StateNounComplement extends SyntaxState{
 		{
 			AdjectiveDTO adjective = (AdjectiveDTO) word;
 
-			analyser.currentState=analyser.stateAdjectiveComplement;
+			analyser.currentState=analyser.statefinal;
 			
 			return analyser.syntaxFrenchManager.match(subject.getGender(),subject.getNumber(), 
 					adjective.getMatching1(),adjective.getMatching2(),adjective.getMatching3(),adjective.getMatching4());
