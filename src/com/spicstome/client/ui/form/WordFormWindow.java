@@ -157,8 +157,7 @@ public class WordFormWindow extends Window{
 		mapRadioGroupNumber.put(1,"pluriel");
 		radioGroupNumber.setValueMap(mapRadioGroupNumber);
 		radioGroupNumber.setDefaultValue(0);
-		
-		
+
 		formSubject.setFields(radioGroupGender,radioGroupNumber);
 		
 		/* NOUN */
