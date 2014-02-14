@@ -174,6 +174,9 @@ public class Test {
 					generateArticle(5, "les", "les.gif", articles, 0, 1);
 					generateArticle(6, "de la", "dela.gif", articles, 1, 0);
 					generateArticle(7, "du", "du.gif", articles, 0, 0);
+					generateArticle(8, "mon", "mon.gif", articles, 0, 0);
+					generateArticle(9, "ma", "ma.gif", articles, 1, 0);
+					generateArticle(10, "mes", "mes.gif", articles, 1, 1);
 			}
 				
 			Folder qui = generateFolder(0,"Qui", "qui.gif", racine);	
