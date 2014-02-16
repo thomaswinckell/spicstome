@@ -93,6 +93,7 @@ public class FolderTree extends VLayout
 	
 	}
 	
+	
 	public AlbumTreeNode getFolderNodeWithId(long id)
 	{
 		TreeNode[] nodes = tree.getAllNodes();

@@ -20,7 +20,7 @@ public abstract class AlbumPanel extends VLayout{
 	protected HLayout titleLayout = new HLayout();
 	protected Label title = new Label();
 	protected Img imgBook;
-	protected StudentDTO student;
+	public StudentDTO student;
 		
 	HLayout horizontalLayout = new HLayout();
 	VLayout verticalLayout = new VLayout();
@@ -77,8 +77,6 @@ public abstract class AlbumPanel extends VLayout{
 		
 		res.add(folder);
 
-		
-			
 		for(PecsDTO p:folder.getContent())
 		{
 			if(p instanceof FolderDTO)
@@ -87,9 +85,7 @@ public abstract class AlbumPanel extends VLayout{
 				
 			}
 		}	
-		
-		
-		
+
 		return res;
 	}
 
@@ -122,9 +118,7 @@ public abstract class AlbumPanel extends VLayout{
 
 	public void onFolderClick(NodeClickEvent event)
 	{
-	
 		folderTree.selectFolderNode = (AlbumTreeNode)event.getNode();		
-		
 	}
 }
 

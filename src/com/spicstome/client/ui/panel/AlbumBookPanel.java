@@ -11,6 +11,7 @@ import com.spicstome.client.ui.widget.ImageRecord;
 public class AlbumBookPanel extends AlbumPanel{
 
 	public Book book;
+	public boolean favoriteFilter=false;
 
 	public AlbumBookPanel(Book book) {
 		super();
@@ -25,32 +26,32 @@ public class AlbumBookPanel extends AlbumPanel{
 	@Override
 	public void setStudent(StudentDTO student)
 	{
-		super.setStudent(student);		
+		super.setStudent(student);	
+		favoriteFilter=false;
 		book.setList(new ArrayList<ImageRecord>());
 	}
 	
 	@Override
 	public void onFolderClick(NodeClickEvent event)
 	{
-		ArrayList<ImageRecord> articles = new ArrayList<ImageRecord>();
-		
 		super.onFolderClick(event);
-		
 		FolderDTO folder = (FolderDTO)folderTree.selectFolderNode.getAttributeAsObject("data");
-		
+		setFolderContent(folder);
+	}
+	
+	public void setFolderContent(FolderDTO folder)
+	{
+		ArrayList<ImageRecord> articles = new ArrayList<ImageRecord>();
 		
 		for(PecsDTO pecsDTO:folder.getContent())
 		{
 			if(pecsDTO instanceof WordDTO)
 			{
-				articles.add(new ImageRecord((WordDTO)pecsDTO));
+				WordDTO word = (WordDTO)pecsDTO;
+				if(!favoriteFilter || (favoriteFilter && word.getFavorite()==1))
+					articles.add(new ImageRecord(word));
 			}
-				
 		}
-	
 		book.setList(articles);
-			
-	
 	}
-
 }

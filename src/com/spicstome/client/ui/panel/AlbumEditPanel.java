@@ -2,6 +2,7 @@ package com.spicstome.client.ui.panel;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import com.smartgwt.client.data.RecordList;
 import com.smartgwt.client.util.BooleanCallback;
 import com.smartgwt.client.util.SC;
@@ -19,12 +20,12 @@ import com.spicstome.client.dto.PecsDTO;
 import com.spicstome.client.dto.StudentDTO;
 import com.spicstome.client.ui.form.WordFormWindow;
 import com.spicstome.client.ui.form.FolderFormWindow;
-import com.spicstome.client.ui.picker.WordPickerWindow;
-import com.spicstome.client.ui.picker.FolderPickerWindow;
 import com.spicstome.client.ui.widget.ImageRecord;
 import com.spicstome.client.ui.widget.ImageTileGrid;
 import com.spicstome.client.ui.widget.FolderTree.AlbumTreeNode;
 import com.spicstome.client.ui.widget.ImageTileGrid.Mode;
+import com.spicstome.client.ui.window.FolderPickerWindow;
+import com.spicstome.client.ui.window.WordPickerWindow;
 
 public abstract class AlbumEditPanel extends AlbumPanel{
 
@@ -321,12 +322,12 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 	    	}
 	    	
 	    };
-	    
+	    wordVerticalPanel.addMember(wordsGrid);
 	    wordVerticalPanel.addMember(actionWordsPanel);
 	       
 	    verticalLayout.setHeight(450);
 	    wordVerticalPanel.setHeight(450);
-	    
+	   
 	    horizontalLayout.addMember(wordVerticalPanel);
 
 	    UpdateActionPanels();
@@ -394,7 +395,6 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 		}
 		
 		wordsGrid.setItems(words);
-		wordVerticalPanel.addMember(wordsGrid,0);
 		
 		UpdateActionPanels();
 		

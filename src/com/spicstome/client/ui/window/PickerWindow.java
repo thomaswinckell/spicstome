@@ -1,4 +1,4 @@
-package com.spicstome.client.ui.picker;
+package com.spicstome.client.ui.window;
 
 import java.util.LinkedHashMap;
 import java.util.List;

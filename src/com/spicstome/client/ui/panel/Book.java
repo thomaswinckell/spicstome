@@ -32,8 +32,8 @@ public class Book extends VLayout{
 			
 	public ImageRecord selectedImage=null;
 	
-	int nbRowPerPage=2;
-	int nbColPerPage=2;
+	public int nbRowPerPage=2;
+	public int nbColPerPage=2;
 	
 	int iLeftPage=0;
 	int lastPage=0;
@@ -98,6 +98,21 @@ public class Book extends VLayout{
 		UpdateNextPrev();
 	}
 	
+	public void selectItem(int i)
+	{
+		int nbPerPage=nbColPerPage*nbRowPerPage;
+
+		if(i<(nbPerPage))
+			listPage.get(iLeftPage).selectRecord(i);	
+		else
+			listPage.get(iLeftPage+1).selectRecord(i-nbPerPage);
+	}
+	
+	public void selectPage(int i)
+	{
+		iLeftPage=i;
+		UpdatePage();
+	}
 
 	public void setList(ArrayList<ImageRecord> list)
 	{
@@ -118,12 +133,8 @@ public class Book extends VLayout{
 		if(lastPage%2==1)
 			lastPage++;
 
-		
-		
-		
 		for(int i=0;i<lastPage;i++)
 		{
-
 			final Book book=this;
 			
 			final ImageTileGrid imageList = new ImageTileGrid(Mode.DRAG,tileWidth,tileHeight,imageSize){
@@ -162,14 +173,7 @@ public class Book extends VLayout{
 		for(int i=0;i<list.size();i++)
 		{
 			int nPage = i/nbElementPerPage;
-				 
-			//int d = i - (nPage*nbElementPerPage);
-			
-			//int nRow = d / nbColPerPage;
-			//int nCol = d-(nRow*nbColPerPage);
-
 			listPage.get(nPage).addItem(list.get(i));
-			
 		}
 
 		UpdatePage();
@@ -196,8 +200,6 @@ public class Book extends VLayout{
 		
 		onChangePage();
 		
-		//listPage.get(iLeftPage).animShow();
-		//listPage.get(iLeftPage+1).animShow();
 	}
 	
 	public void onChangePage()
