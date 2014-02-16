@@ -2,7 +2,10 @@ package com.spicstome.client.ui.window;
 
 import java.util.ArrayList;
 
+
+
 import com.smartgwt.client.widgets.IconButton;
+import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.Window;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
@@ -23,6 +26,7 @@ public class SearchWordWindow extends Window {
 	VLayout layout = new VLayout();
 	ImageTileGrid wordGrid;
 	IconButton valid = new IconButton("Selectionner ce mot");
+	Label labelNothing = new Label();
 	ArrayList<WordDTO> words = new ArrayList<WordDTO>();
 	DynamicForm form = new DynamicForm();
 	TextItem item = new TextItem();
@@ -89,7 +93,11 @@ public class SearchWordWindow extends Window {
 			}
 		});
 		
+		labelNothing.setContents("Aucun mot ne correspond à votre recherche");
+		labelNothing.setHeight(40);
+		
 		layout.addMember(form);
+		layout.addMember(labelNothing);
 		layout.addMember(wordGrid);
 		layout.addMember(valid);
 		addItem(layout);
@@ -113,6 +121,7 @@ public class SearchWordWindow extends Window {
 				
 		}
 		
+		labelNothing.setVisible(wordsRecord.size()==0);
 		
 		wordGrid.setItems(wordsRecord);
 		

@@ -7,13 +7,12 @@ import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.spicstome.client.dto.FolderDTO;
 import com.spicstome.client.dto.StudentDTO;
-import com.spicstome.client.dto.WordDTO;
-import com.spicstome.client.ui.form.WordFormWindow;
 import com.spicstome.client.ui.panel.AlbumBookPanel;
 import com.spicstome.client.ui.panel.Book;
 import com.spicstome.client.ui.panel.MenuRightPanel;
 import com.spicstome.client.ui.widget.Crumb;
 import com.spicstome.client.ui.widget.MailDropZone;
+import com.spicstome.client.ui.widget.FolderTree.AlbumTreeNode;
 import com.spicstome.client.ui.window.SearchWordWindow;
 
 
@@ -67,12 +66,11 @@ public class MailViewImpl extends UserViewImpl  implements MailView{
 						int nbPerDoublePage = 2*(nbPerPage);
 						int nPageLeft = 2*(selectedWord.getOrder()/nbPerDoublePage);
 						int nInDoublePage = selectedWord.getOrder()-(nbPerPage*nPageLeft);
-						
-						System.out.println(selectedWord.getFolder().getName());
-						System.out.println(selectedWord.getFolder().getOrder());
-						
+
 						album.folderTree.treeGrid.deselectAllRecords();
-						album.folderTree.treeGrid.selectRecord(album.folderTree.getFolderNodeWithId(selectedWord.getFolder().getId()));
+						AlbumTreeNode node = album.folderTree.getFolderNodeWithId(selectedWord.getFolder().getId());
+						album.folderTree.treeGrid.selectRecord(node);
+						album.folderTree.selectFolderNode=node;
 						album.book.selectPage(nPageLeft);
 						album.book.selectItem(nInDoublePage);
 					}
