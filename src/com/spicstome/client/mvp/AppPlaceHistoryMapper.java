@@ -8,6 +8,7 @@ import com.spicstome.client.place.AlbumManagementPlace;
 import com.spicstome.client.place.AlbumPlace;
 import com.spicstome.client.place.LogoutPlace;
 import com.spicstome.client.place.MailPlace;
+import com.spicstome.client.place.NewMailPlace;
 import com.spicstome.client.place.MainMenuPlace;
 import com.spicstome.client.place.LoginPlace;
 import com.spicstome.client.place.UsersManagementPlace;
@@ -24,6 +25,7 @@ import com.spicstome.client.place.UsersManagementPlace;
 					AlbumManagementPlace.Tokenizer.class,
 					AlbumPlace.Tokenizer.class,
 					AlbumEditPlace.Tokenizer.class,
+					NewMailPlace.Tokenizer.class,
 					MailPlace.Tokenizer.class,
 					UsersManagementPlace.Tokenizer.class,
 					AddUserPlace.Tokenizer.class})

@@ -11,6 +11,7 @@ public interface AlbumManagementView extends IsWidget{
 	
 	void insertStudentAlbum(ArrayList<StudentDTO> list);
 	void insertMainAlbum(List<AlbumDTO> list);
+	void init();
 	
 	public interface Presenter 
 	{

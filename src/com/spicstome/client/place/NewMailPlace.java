@@ -3,26 +3,26 @@ package com.spicstome.client.place;
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceTokenizer;
 
-public class MailPlace extends Place{
+public class NewMailPlace extends Place{
 	
 	
-	public MailPlace() {
+	public NewMailPlace() {
 		
 	}
 	
 	/**
 	 * PlaceTokenizer knows how to serialize the Place's state to a URL token.
 	 */
-	public static class Tokenizer implements PlaceTokenizer<MailPlace> {
+	public static class Tokenizer implements PlaceTokenizer<NewMailPlace> {
 
 		@Override
-		public String getToken(MailPlace place) {
+		public String getToken(NewMailPlace place) {
 			return "mail";
 		}
 
 		@Override
-		public MailPlace getPlace(String token) {
-			return new MailPlace();
+		public NewMailPlace getPlace(String token) {
+			return new NewMailPlace();
 		}
 
 	}

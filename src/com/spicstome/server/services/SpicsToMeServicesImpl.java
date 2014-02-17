@@ -91,7 +91,16 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 	    session.beginTransaction();
 	    User user = (User) session.load(User.class, id);
-	    UserDTO userDTO = Transtypage.createUserDTO(user);
+	    
+	    UserDTO userDTO=null;
+	    
+	    if(user instanceof Student)
+	    	userDTO = Transtypage.createStudentDTO((Student)user);
+	    else if(user instanceof Teacher)
+	    	userDTO = Transtypage.createTeacherDTO((Teacher)user);
+	    else if(user instanceof Referent)
+	    	userDTO = Transtypage.createReferentDTO((Referent)user);
+	    
 	    session.getTransaction().commit();
 	    
 		return userDTO;

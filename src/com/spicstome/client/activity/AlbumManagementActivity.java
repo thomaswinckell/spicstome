@@ -1,12 +1,14 @@
 package com.spicstome.client.activity;
 
 import java.util.List;
+
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.spicstome.client.ClientFactory;
 import com.spicstome.client.dto.AlbumDTO;
 import com.spicstome.client.dto.ReferentDTO;
+import com.spicstome.client.dto.UserDTO;
 import com.spicstome.client.place.AlbumManagementPlace;
 import com.spicstome.client.services.SpicsToMeServices;
 import com.spicstome.client.ui.AlbumManagementView;
@@ -31,6 +33,7 @@ public class AlbumManagementActivity extends UserActivity implements AlbumManage
 		super.start(containerWidget, eventBus);
 		
 		managementView = clientFactory.getAlbumManagementView();
+		managementView.init();
 		
 		
 		SpicsToMeServices.Util.getInstance().getGeneralAndExampleAlbum(new AsyncCallback<List<AlbumDTO>>() {
@@ -47,16 +50,19 @@ public class AlbumManagementActivity extends UserActivity implements AlbumManage
 		});
 				
 		
-		SpicsToMeServices.Util.getInstance().getReferentConnected( new AsyncCallback<ReferentDTO>() {
+		SpicsToMeServices.Util.getInstance().getCurrentUser( new AsyncCallback<UserDTO>() {
 			
 			@Override
 			public void onFailure(Throwable caught) {}
 			@Override
-			public void onSuccess(ReferentDTO result) {
+			public void onSuccess(UserDTO result) {
 
+				if(result instanceof ReferentDTO)
+				{
+					ReferentDTO referent = (ReferentDTO) result;
+					managementView.insertStudentAlbum(referent.getStudents());
+				}
 				
-				
-				managementView.insertStudentAlbum(result.getStudents());
 				
 			}			
 		});	

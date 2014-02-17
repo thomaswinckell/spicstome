@@ -1,73 +1,53 @@
 package com.spicstome.client.ui;
 
-
-import java.util.List;
-
-import com.smartgwt.client.widgets.layout.HLayout;
-import com.smartgwt.client.widgets.layout.VLayout;
-import com.spicstome.client.dto.StudentDTO;
-import com.spicstome.client.dto.UserDTO;
-import com.spicstome.client.ui.panel.AlbumBookPanel;
-import com.spicstome.client.ui.panel.Book;
-import com.spicstome.client.ui.panel.MailMenuRightPanel;
-import com.spicstome.client.ui.panel.RecipientPanel;
+import java.util.ArrayList;
+import com.spicstome.client.place.NewMailPlace;
 import com.spicstome.client.ui.widget.Crumb;
-import com.spicstome.client.ui.widget.MailDropZone;
+import com.spicstome.client.ui.widget.ImageRecord;
+import com.spicstome.client.ui.widget.ImageTileGrid;
+import com.spicstome.client.ui.widget.ImageTileGrid.Mode;
 
+public class MailViewImpl extends UserViewImpl  implements MailView
+{
 
-
-public class MailViewImpl extends UserViewImpl  implements MailView{
-	
-	
-	AlbumBookPanel album;
-	MailDropZone dropZone;
-	MailMenuRightPanel menuRight;
-	RecipientPanel recipient;
-	HLayout horizontalLayout = new HLayout();
-	VLayout mailLayout = new VLayout();
-
+	ImageTileGrid imageList;
 	
 	public MailViewImpl()
 	{
 		super();
-
+	
+		
 		addCrumb(new Crumb("Mail"){});
+	
+		
+		ArrayList<ImageRecord> modules = new ArrayList<ImageRecord>();
+		modules.add(new ImageRecord(0,"Lire mes mail","lire.gif"));
+		modules.add(new ImageRecord(1,"Ecrire un mail","ecrire.gif"));
 
-        album = new AlbumBookPanel(new Book(100));  
-    	dropZone = new MailDropZone(album.book.imageSize);
-    	menuRight = new MailMenuRightPanel(album);
-    	recipient = new RecipientPanel();
-        
-    	mailLayout.addMember(recipient);
-    	mailLayout.addMember(album);
-    	mailLayout.addMember(dropZone);
-    	
-    	
+		
+		
+		imageList = new ImageTileGrid(Mode.CLICK,250,150,100){
+			@Override
+			public void OnSelectChanged(ImageRecord object) {
+				
+				switch (object.getAttributeAsInt(ImageRecord.PICTURE_ID)) {
+					case 0 :
+						//goTo(new AlbumManagementPlace());
+						break;
+					case 1 :
+						goTo(new NewMailPlace());
+						break;
+				
+				}
+			}
+		};
+		
+		imageList.setItems(modules);
+		
+		imageList.setHeight(200);
 
-    	
-        horizontalLayout.addMember(mailLayout);
-        horizontalLayout.addMember(menuRight);
-        mainPanel.addMember(horizontalLayout);
+		mainPanel.addMember(imageList);
 	}
 
 	
-	
-	@Override
-	public void setStudent(StudentDTO owner) {
-		
-		album.setStudent(owner);
-		dropZone.init();
-		menuRight.updateFavorite();
-    	menuRight.setIconsVisible(false);
-		
-	}
-
-
-
-	@Override
-	public void setRecipients(List<UserDTO> recipients) {
-		
-		recipient.setRecipients(recipients);
-		
-	}
 }

@@ -12,13 +12,14 @@ import com.spicstome.client.dto.UserDTO;
 import com.spicstome.client.ui.window.RecipientChooseWindow;
 
 
-public class RecipientPanel extends HLayout{
+public abstract class RecipientPanel extends HLayout{
 
 	IconButton img = new IconButton("");
 	int iconsize = 60;
 	DynamicForm form = new DynamicForm();
 	TextItem mail = new TextItem("mail","Destinataire");
 	List<UserDTO> userList;
+	
 		
 	public RecipientPanel()
 	{
@@ -27,7 +28,7 @@ public class RecipientPanel extends HLayout{
 		
 		setStyleName("bloc");
 		
-		img.setIcon("upload/"+"default_user.png");
+		
 		img.setIconSize(iconsize);
 		
 		img.addClickHandler(new ClickHandler() {
@@ -41,6 +42,8 @@ public class RecipientPanel extends HLayout{
 					{	
 						img.setIcon("upload/"+selectedUser.getImage().getFilename());
 						mail.setValue(selectedUser.getEmail());
+						
+						onChangeRecipient(selectedUser);
 					}
 				};
 				
@@ -51,9 +54,19 @@ public class RecipientPanel extends HLayout{
 
 		form.setFields(mail);
 		
+		init();
+		
 		addMember(img);
 		addMember(form);
 	}
+	
+	public void init()
+	{
+		img.setIcon("upload/"+"default_user.png");
+		mail.setValue("");
+	}
+	
+	public abstract void onChangeRecipient(UserDTO user);
 	
 	public void setRecipients(List<UserDTO> list)
 	{

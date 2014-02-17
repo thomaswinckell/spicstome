@@ -11,6 +11,7 @@ public class UserViewImpl extends VLayout implements UserView{
 	protected VLayout mainPanel = new VLayout();
 	protected Presenter listener;
 	protected MenuTopPanel connectPanel;
+
 	
 	public UserViewImpl() {
 		
@@ -43,4 +44,11 @@ public class UserViewImpl extends VLayout implements UserView{
 		this.listener=listener;
 		
 	}
+
+
+
+
+	
+
+
 }

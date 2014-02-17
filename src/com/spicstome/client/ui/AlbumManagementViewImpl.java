@@ -144,8 +144,6 @@ public class AlbumManagementViewImpl extends UserViewImpl  implements AlbumManag
 	@Override
 	public void insertStudentAlbum(ArrayList<StudentDTO> list) {
 
-		imageListStudentAlbum.clearItems();
-		
 		actionPanelStudentAlbum.setHiddenActionVisible(false);
 		
 		for(StudentDTO student :list)
@@ -157,9 +155,7 @@ public class AlbumManagementViewImpl extends UserViewImpl  implements AlbumManag
 	
 	@Override
 	public void insertMainAlbum(List<AlbumDTO> list) {
-		
-		imageListMainAlbum.clearItems();
-		
+
 		actionPanelMainAlbum.setHiddenActionVisible(false);
 		
 		for(AlbumDTO album:list)
@@ -169,6 +165,16 @@ public class AlbumManagementViewImpl extends UserViewImpl  implements AlbumManag
 			if(album.getId()==2)
 				imageListMainAlbum.addItem(new ImageRecord(album,"Album exemple"));
 		}
+		
+	}
+
+
+
+	@Override
+	public void init() {
+		
+		imageListMainAlbum.clearItems();
+		imageListStudentAlbum.clearItems();
 		
 	}
 

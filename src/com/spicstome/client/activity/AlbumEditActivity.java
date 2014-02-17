@@ -2,11 +2,13 @@ package com.spicstome.client.activity;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.spicstome.client.ClientFactory;
 import com.spicstome.client.dto.AlbumDTO;
+import com.spicstome.client.dto.UserDTO;
 import com.spicstome.client.dto.WordDTO;
 import com.spicstome.client.dto.FolderDTO;
 import com.spicstome.client.dto.PecsDTO;
@@ -85,23 +87,25 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 				}
 				
 				
-				SpicsToMeServices.Util.getInstance().getReferentConnected( new AsyncCallback<ReferentDTO>() {
+				SpicsToMeServices.Util.getInstance().getCurrentUser( new AsyncCallback<UserDTO>() {
 					
 					@Override
 					public void onFailure(Throwable caught) {}
 					@Override
-					public void onSuccess(ReferentDTO result) {
-						
-
-						for(StudentDTO student : result.getStudents())
+					public void onSuccess(UserDTO result) {
+	
+						if(result instanceof ReferentDTO)
 						{
-							if(student.getAlbum().getId()!=place.idAlbum)
-								mergedListStudent.add(student);
+							ReferentDTO referent = (ReferentDTO)result;
 							
+							for(StudentDTO student : referent.getStudents())
+							{
+								if(student.getAlbum().getId()!=place.idAlbum)
+									mergedListStudent.add(student);
+							}		
+							editview.setAllStudents(mergedListStudent);
 						}
-						
-						editview.setAllStudents(mergedListStudent);
-						
+
 					}			
 				});	
 				

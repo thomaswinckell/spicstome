@@ -14,10 +14,13 @@ import com.spicstome.client.services.SpicsToMeServices;
 import com.spicstome.client.ui.UserView;
 import com.spicstome.client.ui.UserViewImpl;
 
+
 public class UserActivity extends AbstractActivity implements UserView.Presenter{
 
 	protected UserViewImpl userView;
 	protected ClientFactory clientFactory;
+
+	
 	
 	public UserActivity(Place place, ClientFactory clientFactory,UserViewImpl userView) 
 	{
@@ -36,9 +39,11 @@ public class UserActivity extends AbstractActivity implements UserView.Presenter
 						
 						if(user!=null) {
 							userView.setName(user.getLogin());
+
 						} else {
 							goTo(new LoginPlace());
 						}
+
 					}
 					@Override
 					public void onFailure(Throwable caught) {

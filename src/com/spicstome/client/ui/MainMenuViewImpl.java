@@ -1,11 +1,6 @@
 package com.spicstome.client.ui;
 
 import java.util.ArrayList;
-
-
-
-
-
 import com.spicstome.client.place.AlbumManagementPlace;
 import com.spicstome.client.place.MailPlace;
 import com.spicstome.client.place.UsersManagementPlace;
