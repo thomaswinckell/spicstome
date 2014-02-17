@@ -108,6 +108,8 @@ public class Book extends VLayout{
 			listPage.get(iLeftPage+1).selectRecord(i-nbPerPage);
 	}
 	
+	
+	
 	public void selectPage(int i)
 	{
 		iLeftPage=i;

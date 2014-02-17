@@ -230,6 +230,7 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 		/* new linking */
 		child.setFolder(parent);
 		parent.getContent().add(child);
+		child.setOrder(parent.getContent().size());
 		
 		SpicsToMeServices.Util.getInstance().updateWord(child, new AsyncCallback<Boolean>() {
 
@@ -439,8 +440,9 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 	@Override
 	public void copy(WordDTO word, FolderDTO parent) {
 		
+		parent.getContent().add(word);
 		word.setOrder(parent.getContent().size());
-		
+	
 		SpicsToMeServices.Util.getInstance().copyWord(word,parent,new AsyncCallback<WordDTO>() {
 			@Override
 			public void onFailure(Throwable caught) {}

@@ -265,6 +265,29 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 		return referentDTOs;
 	}
 	
+	@Override
+	public List<UserDTO> getEverybody() {
+		
+		List<UserDTO> all = new ArrayList<UserDTO>();
+		
+		List<ReferentDTO> referents =  getAllReferents();
+		
+		for(ReferentDTO referent:referents)
+			all.add(referent);
+		
+		List<TeacherDTO> teachers =  getAllTeachers();
+		
+		for(TeacherDTO teacher:teachers)
+			all.add(teacher);
+		
+		List<StudentDTO> students =  getAllStudents();
+		
+		for(StudentDTO student:students)
+			all.add(student);
+		
+		return all;
+	}
+	
 	/* SAVE */
 	@Override
 	public Long saveImage(ImageDTO imageDTO) {

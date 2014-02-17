@@ -46,6 +46,7 @@ public interface SpicsToMeServicesAsync {
 	void getAllStudents(AsyncCallback<List<StudentDTO>> callback);
 	void getAllTeachers(AsyncCallback<List<TeacherDTO>> callback);
 	void getAllReferents(AsyncCallback<List<ReferentDTO>> callback);
+	void getEverybody(AsyncCallback<List<UserDTO>> callback);
 	
 	/* SAVE */
 	void saveImage(ImageDTO imageDTO, AsyncCallback<Long> callback);

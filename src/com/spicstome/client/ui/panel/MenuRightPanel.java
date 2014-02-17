@@ -11,19 +11,22 @@ import com.smartgwt.client.widgets.events.MouseOutEvent;
 import com.smartgwt.client.widgets.events.MouseOutHandler;
 import com.smartgwt.client.widgets.layout.VLayout;
 
+
 public class MenuRightPanel extends VLayout{
 
 	Img img = new Img("details.png");
 	ArrayList<IconButton> icons = new ArrayList<IconButton>();
+	int iconsize = 60;
 	
 	public MenuRightPanel()
 	{
 		setHeight100();
-		img.setSize(60);
+		img.setSize(iconsize);
 		img.setLayoutAlign(Alignment.CENTER);
 		
 		addMember(img);		
 		setCanHover(true);
+		setStyleName("menuRight");
 				
 		addMouseMoveHandler(new MouseMoveHandler() {
 			
@@ -44,8 +47,11 @@ public class MenuRightPanel extends VLayout{
 				
 			}
 		});
-	
+		
+
+    	
 	}
+	
 	public void addIcon(IconButton icon)
 	{
 		icons.add(icon);

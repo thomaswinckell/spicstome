@@ -1,11 +1,14 @@
 package com.spicstome.client.activity;
 
+import java.util.List;
+
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.spicstome.client.ClientFactory;
 import com.spicstome.client.dto.AlbumDTO;
 import com.spicstome.client.dto.StudentDTO;
+import com.spicstome.client.dto.UserDTO;
 import com.spicstome.client.place.MailPlace;
 import com.spicstome.client.services.SpicsToMeServices;
 import com.spicstome.client.ui.MailView;
@@ -28,6 +31,17 @@ public class MailActivity extends UserActivity{
 				falseStudent.setAlbum(result);
 				
 				mailview.setStudent(falseStudent);
+			}
+
+			@Override
+			public void onFailure(Throwable caught) {}
+		});
+		
+		SpicsToMeServices.Util.getInstance().getEverybody(new AsyncCallback<List<UserDTO>>() {
+			@Override
+			public void onSuccess(List<UserDTO> result) {
+				
+				mailview.setRecipients(result);
 			}
 
 			@Override

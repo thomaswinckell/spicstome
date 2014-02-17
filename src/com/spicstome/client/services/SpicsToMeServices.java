@@ -59,6 +59,7 @@ public interface SpicsToMeServices extends RemoteService {
 	public List<StudentDTO> getAllStudents();
 	public List<TeacherDTO> getAllTeachers();
 	public List<ReferentDTO> getAllReferents();
+	public List<UserDTO> getEverybody();
 	
 	/* SAVE */
 	public Long saveImage(ImageDTO imageDTO);

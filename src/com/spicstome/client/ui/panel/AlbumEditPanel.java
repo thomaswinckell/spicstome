@@ -18,13 +18,13 @@ import com.spicstome.client.dto.WordDTO;
 import com.spicstome.client.dto.FolderDTO;
 import com.spicstome.client.dto.PecsDTO;
 import com.spicstome.client.dto.StudentDTO;
-import com.spicstome.client.ui.form.WordFormWindow;
-import com.spicstome.client.ui.form.FolderFormWindow;
 import com.spicstome.client.ui.widget.ImageRecord;
 import com.spicstome.client.ui.widget.ImageTileGrid;
 import com.spicstome.client.ui.widget.FolderTree.AlbumTreeNode;
 import com.spicstome.client.ui.widget.ImageTileGrid.Mode;
+import com.spicstome.client.ui.window.FolderFormWindow;
 import com.spicstome.client.ui.window.FolderPickerWindow;
+import com.spicstome.client.ui.window.WordFormWindow;
 import com.spicstome.client.ui.window.WordPickerWindow;
 
 public abstract class AlbumEditPanel extends AlbumPanel{
@@ -309,6 +309,7 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 	    	@Override
 			public void OnDropOrReorder(WordDTO article)
 	    	{
+
 	    		RecordList list = wordsGrid.getDataAsRecordList();
 	    		
 	    		

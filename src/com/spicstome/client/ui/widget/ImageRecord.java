@@ -2,6 +2,7 @@ package com.spicstome.client.ui.widget;
 
 import com.smartgwt.client.widgets.tile.TileRecord;
 import com.spicstome.client.dto.AlbumDTO;
+import com.spicstome.client.dto.UserDTO;
 import com.spicstome.client.dto.WordDTO;
 import com.spicstome.client.dto.StudentDTO;
 
@@ -37,6 +38,16 @@ public class ImageRecord extends TileRecord {
 		setAttribute(PICTURE_NAME, "Album de "+student.getFirstName());
 		setAttribute(PICTURE_PATH, "albumlogo.png");
 		setAttribute(DATA, albumDTO);
+	}
+	
+	public ImageRecord(UserDTO userDTO)
+	{
+		super();
+		
+		setAttribute(PICTURE_ID, userDTO.getId());
+		setAttribute(PICTURE_NAME, userDTO.getFirstName()+" "+userDTO.getName()+"<br/>"+userDTO.getEmail());
+		setAttribute(PICTURE_PATH, "upload/"+userDTO.getImage().getFilename());
+		setAttribute(DATA, userDTO);
 	}
 	
 	public ImageRecord(WordDTO wordDTO)

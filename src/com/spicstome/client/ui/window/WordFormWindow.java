@@ -1,4 +1,4 @@
-package com.spicstome.client.ui.form;
+package com.spicstome.client.ui.window;
 
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -27,6 +27,7 @@ import com.spicstome.client.dto.NounDTO;
 import com.spicstome.client.dto.PronounDTO;
 import com.spicstome.client.dto.SubjectDTO;
 import com.spicstome.client.dto.VerbDTO;
+import com.spicstome.client.ui.form.ImageUploadForm;
 
 public class WordFormWindow extends Window{
 	
