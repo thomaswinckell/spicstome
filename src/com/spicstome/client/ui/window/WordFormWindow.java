@@ -1,8 +1,6 @@
 package com.spicstome.client.ui.window;
 
-import java.util.HashSet;
 import java.util.LinkedHashMap;
-
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.widgets.IconButton;
 import com.smartgwt.client.widgets.Label;
@@ -22,7 +20,6 @@ import com.spicstome.client.dto.ArticleDTO;
 import com.spicstome.client.dto.WordDTO;
 import com.spicstome.client.dto.FolderDTO;
 import com.spicstome.client.dto.ImageDTO;
-import com.spicstome.client.dto.LogDTO;
 import com.spicstome.client.dto.NounDTO;
 import com.spicstome.client.dto.PronounDTO;
 import com.spicstome.client.dto.SubjectDTO;
@@ -444,7 +441,7 @@ public class WordFormWindow extends Window{
 					order,
 					parent,
 					new ImageDTO((long) -1, "default_article.png"),
-					new HashSet<LogDTO>(),0,0,0,"","","","","","");
+					0,0,0,"","","","","","");
 			
 		}
 		else if(type==TypeWord.NOUN)
@@ -454,7 +451,7 @@ public class WordFormWindow extends Window{
 					order,
 					parent,
 					new ImageDTO((long) -1, "default_article.png"),
-					new HashSet<LogDTO>(),0,0,0,0);
+					0,0,0,0);
 		}
 		else if(type==TypeWord.PRONOUN)
 		{
@@ -463,7 +460,7 @@ public class WordFormWindow extends Window{
 					order,
 					parent,
 					new ImageDTO((long) -1, "default_article.png"),
-					new HashSet<LogDTO>(),0,0,0,0);
+					0,0,0,0);
 		}
 		else if(type==TypeWord.ARTICLE)
 		{
@@ -472,7 +469,7 @@ public class WordFormWindow extends Window{
 					order,
 					parent,
 					new ImageDTO((long) -1, "default_article.png"),
-					new HashSet<LogDTO>(),0,0,0);
+					0,0,0);
 		}
 		else
 		{
@@ -481,7 +478,7 @@ public class WordFormWindow extends Window{
 					order,
 					parent,
 					new ImageDTO((long) -1, "default_article.png"),
-					new HashSet<LogDTO>(),0,"","","","");
+					0,"","","","");
 		}
 		
 	}

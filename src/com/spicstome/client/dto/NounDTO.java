@@ -1,7 +1,6 @@
 package com.spicstome.client.dto;
 
 import java.io.Serializable;
-import java.util.Set;
 
 public class NounDTO extends SubjectDTO implements Serializable {
 
@@ -20,9 +19,9 @@ public class NounDTO extends SubjectDTO implements Serializable {
 		super(id);
 	}
 	
-	public NounDTO(Long id, String name, int order, FolderDTO folder, ImageDTO image, Set<LogDTO> logs,int favorite,int gender,int number,int uncountable)
+	public NounDTO(Long id, String name, int order, FolderDTO folder, ImageDTO image,int favorite,int gender,int number,int uncountable)
 	{
-		super(id, name, order, folder, image,logs,favorite,gender,number);
+		super(id, name, order, folder, image,favorite,gender,number);
 		
 		this.uncountable=uncountable;
 	}

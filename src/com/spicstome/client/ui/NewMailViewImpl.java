@@ -1,11 +1,16 @@
 package com.spicstome.client.ui;
 
+import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
+import com.spicstome.client.dto.LogDTO;
 import com.spicstome.client.dto.StudentDTO;
 import com.spicstome.client.dto.UserDTO;
+import com.spicstome.client.dto.WordDTO;
 import com.spicstome.client.place.MailPlace;
 import com.spicstome.client.ui.panel.AlbumBookPanel;
 import com.spicstome.client.ui.panel.Book;
@@ -121,6 +126,14 @@ public class NewMailViewImpl extends UserViewImpl  implements NewMailView{
 		int seconds = (int) (now/1000);
 		
 		System.out.println("mouvement= "+dropZone.getMovementCount()+" temps="+seconds+" seconds");
+		
+
+
+		LogDTO logDTO = new LogDTO((long)-1, null, recipient.mail.getValue().toString(), new Date(),
+				dropZone.message.size(),
+				seconds,dropZone.getMovementCount());
+		
+		((NewMailView.Presenter)(listener)).saveLog(logDTO);
 	}
 
 	@Override

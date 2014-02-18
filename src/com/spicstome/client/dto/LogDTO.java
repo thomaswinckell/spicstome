@@ -1,8 +1,7 @@
 package com.spicstome.client.dto;
 
 import java.io.Serializable;
-import java.sql.Date;
-import java.util.Set;
+import java.util.Date;
 
 public class LogDTO implements Serializable {
 
@@ -12,7 +11,9 @@ public class LogDTO implements Serializable {
 	private StudentDTO student;
 	private String emailRecipient;
 	private Date date;
-	private Set<WordDTO> words;
+	private int messageLength;
+	private int executionTime;
+	private int actions;
 	
 	public LogDTO() {
 	}
@@ -21,12 +22,14 @@ public class LogDTO implements Serializable {
 		this.id = id;
 	}
 	
-	public LogDTO(Long id, StudentDTO student, String emailRecipient, Date date, Set<WordDTO> words) {
+	public LogDTO(Long id, StudentDTO student, String emailRecipient, Date date,int messageLength,int executionTime,int actions) {
 		this.id = id;
 		this.student = student;
 		this.emailRecipient = emailRecipient;
 		this.date = date;
-		this.words = words;
+		this.executionTime=executionTime;
+		this.actions=actions;
+		this.messageLength=messageLength;
 	}
 
 	public StudentDTO getStudent() {
@@ -61,16 +64,34 @@ public class LogDTO implements Serializable {
 		this.id = id;
 	}
 	
-	public Set<WordDTO> getArticles() {
-		return words;
-	}
 
-	public void setArticles(Set<WordDTO> articles) {
-		this.words = articles;
-	}
 
 	@Override
 	public String toString() {
-		return "Log [id=" + id + ", words=" + words + "]";
+		return "Log ";
+	}
+
+	public int getMessageLength() {
+		return messageLength;
+	}
+
+	public void setMessageLength(int messageLength) {
+		this.messageLength = messageLength;
+	}
+
+	public int getExecutionTime() {
+		return executionTime;
+	}
+
+	public void setExecutionTime(int executionTime) {
+		this.executionTime = executionTime;
+	}
+
+	public int getActions() {
+		return actions;
+	}
+
+	public void setActions(int actions) {
+		this.actions = actions;
 	}	
 }

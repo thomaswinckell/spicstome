@@ -55,7 +55,6 @@ public class Transtypage {
 			return null;
 		
 		FolderDTO folderDTO = new FolderDTO(folder.getId(),folder.getName(),folder.getOrder(),parentDTO,createImageDTO(folder.getImage()),null);
-		//on donne à createListPecsDTO le folderDTO créer ici , pour éviter les boucle infini
 		folderDTO.setContent(createListPecsDTO(folder.getContent(),folderDTO));
 		return folderDTO;
 	}
@@ -65,7 +64,6 @@ public class Transtypage {
 	public static VerbDTO createVerbDTO(Verb verb,FolderDTO parentDTO)
 	{
 		return new VerbDTO(verb.getId(),verb.getName(),verb.getOrder(),parentDTO,createImageDTO(verb.getImage()),
-				createListLogDTO(verb.getLogs()),
 				verb.getFavorite(),
 				verb.getNegation(),
 				verb.getGroup(),
@@ -80,7 +78,6 @@ public class Transtypage {
 	public static AdjectiveDTO createAdjectiveDTO(Adjective adjective,FolderDTO parentDTO)
 	{
 		return new AdjectiveDTO(adjective.getId(),adjective.getName(),adjective.getOrder(),parentDTO,createImageDTO(adjective.getImage()),
-				createListLogDTO(adjective.getLogs()),
 				adjective.getFavorite(),	
 				adjective.getMatching1(),
 				adjective.getMatching2(),
@@ -90,31 +87,31 @@ public class Transtypage {
 	public static PronounDTO createPronounDTO(Pronoun pronoun,FolderDTO parentDTO)
 	{
 		return new PronounDTO(pronoun.getId(),pronoun.getName(),pronoun.getOrder(),parentDTO,createImageDTO(pronoun.getImage()),
-				createListLogDTO(pronoun.getLogs()),pronoun.getFavorite(),pronoun.getGender(),pronoun.getPerson(),pronoun.getNumber());
+				pronoun.getFavorite(),pronoun.getGender(),pronoun.getPerson(),pronoun.getNumber());
 	}
 	public static NounDTO createNounDTO(Noun noun,FolderDTO parentDTO)
 	{
 		return new NounDTO(noun.getId(),noun.getName(),noun.getOrder(),parentDTO,createImageDTO(noun.getImage()),
-				createListLogDTO(noun.getLogs()),noun.getFavorite(),noun.getGender(),noun.getNumber(),noun.getUncountable());
+				noun.getFavorite(),noun.getGender(),noun.getNumber(),noun.getUncountable());
 	}
 	
 	public static ArticleDTO createArticleDTO(Article article,FolderDTO parentDTO)
 	{
 		return new ArticleDTO(article.getId(),article.getName(),article.getOrder(),parentDTO,createImageDTO(article.getImage()),
-				createListLogDTO(article.getLogs()),article.getFavorite(),article.getGender(),article.getNumber());
+				article.getFavorite(),article.getGender(),article.getNumber());
 	}
-	public static LogDTO createLogDTO(Log log)
+	public static LogDTO createLogDTO(Log log,StudentDTO student)
 	{
-		return new LogDTO(log.getId(),createStudentDTO(log.getStudent()),
-				log.getEmailRecipient(),log.getDate(),createListWordDTO(log.getArticles()));
+		return new LogDTO(log.getId(),student,
+				log.getEmailRecipient(),log.getDate(),log.getMessageLength(),log.getExecutionTime(),log.getActions());
 	}
 	
-	public static Set<LogDTO> createListLogDTO(Set<Log> list)
+	public static Set<LogDTO> createListLogDTO(Set<Log> list,StudentDTO student)
 	{
 		Set<LogDTO> listDTO=new HashSet<>();
 		
 		for(Log log:list){		
-			listDTO.add(createLogDTO(log));
+			listDTO.add(createLogDTO(log,student));
 		}
 
 		return listDTO;
@@ -221,16 +218,15 @@ public class Transtypage {
 	
 	public static StudentDTO createStudentDTO(Student student) {
 				
-		Set<Log> logs = student.getLogs();
-		Set<LogDTO> logDTOs = new HashSet<LogDTO>(logs != null ? logs.size() : 0);
-		if (logs != null) {
-			for (Log log : logs) {
-				logDTOs.add(createLogDTO(log));
-			}
-		}
-		
-		return new StudentDTO(student.getId(), student.getSubscriptionDate(), student.getFirstName(), 
+		StudentDTO studentDTO = new StudentDTO(student.getId(), student.getSubscriptionDate(), student.getFirstName(), 
 				student.getName(), student.getEmail(), student.getLogin(), student.getPassword(), createImageDTO(student.getImage()), 
-				createAlbumDTO(student.getAlbum()), logDTOs);
+				createAlbumDTO(student.getAlbum()),null);
+		
+		studentDTO.setLogs(createListLogDTO(student.getLogs(), studentDTO));
+		
+		for(LogDTO logDTO:studentDTO.getLogs())
+			System.out.println(logDTO.getId()+" "+logDTO.getStudent().getId().toString());
+		
+		return studentDTO;
 	}
 }

@@ -3,9 +3,7 @@ package com.spicstome.client.shared;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
-
 import com.spicstome.client.dto.WordDTO;
-import com.spicstome.client.dto.LogDTO;
 
 public abstract class Word extends Pecs implements Serializable {
 	
@@ -23,14 +21,6 @@ public abstract class Word extends Pecs implements Serializable {
 
 	public Word(WordDTO wordDTO,Folder parent) {
 		super(wordDTO,parent);
-		Set<LogDTO> logDTOs = wordDTO.getLogs();
-		if (logDTOs != null) {
-			Set<Log> logs = new HashSet<Log>(logDTOs.size());
-			for (LogDTO logDTO : logDTOs) {
-				logs.add(new Log(logDTO));
-			}
-			this.logs = logs;
-		}
 		this.favorite=wordDTO.getFavorite();
 	}
 	

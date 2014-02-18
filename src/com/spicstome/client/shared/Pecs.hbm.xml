@@ -24,10 +24,7 @@
 			extends="Pecs">
 			<key column="id" />
 			<property name="favorite" type="int" column="favorite" />
-			<set name="logs" table="logs_articles" lazy="true">
-				<key column="id_article" />
-				<many-to-many class="Log" column="id_log" />
-			</set>
+
 			<joined-subclass name="Subject" table="subject"
 				extends="Word">
 				<key column="id" />

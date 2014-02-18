@@ -17,7 +17,7 @@ public abstract class RecipientPanel extends HLayout{
 	IconButton img = new IconButton("");
 	int iconsize = 60;
 	DynamicForm form = new DynamicForm();
-	TextItem mail = new TextItem("mail","Destinataire");
+	public TextItem mail = new TextItem("mail","Destinataire");
 	List<UserDTO> userList;
 	
 		

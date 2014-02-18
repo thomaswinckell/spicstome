@@ -1,7 +1,6 @@
 package com.spicstome.client.dto;
 
 import java.io.Serializable;
-import java.util.Set;
 
 public class PronounDTO extends SubjectDTO implements Serializable {
 
@@ -21,9 +20,9 @@ public class PronounDTO extends SubjectDTO implements Serializable {
 		super(id);
 	}
 	
-	public PronounDTO(Long id, String name, int order, FolderDTO folder, ImageDTO image, Set<LogDTO> logs,int favorite,int gender,int person,int number)
+	public PronounDTO(Long id, String name, int order, FolderDTO folder, ImageDTO image,int favorite,int gender,int person,int number)
 	{
-		super(id, name, order, folder, image,logs,favorite,gender,number);
+		super(id, name, order, folder, image,favorite,gender,number);
 		
 		this.person=person;
 	}

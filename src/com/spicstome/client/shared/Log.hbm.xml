@@ -11,17 +11,14 @@
 	</id>
 	
 	<many-to-one name="student" class="Student" fetch="select">
-        <column name="id_student" not-null="true" />
+        <column name="id_student" not-null="false" />
     </many-to-one>
     
 	<property name="emailRecipient" type="string" column="email_recipient" />
-	
 	<property name="date" type="timestamp" column="date" />
-
-	<set name="articles" table="logs_articles" lazy="false">
-		<key column="id_log" />
-		<many-to-many class="Log" column="id_article" />
-	</set>
+	<property name="messageLength" type="int" column="messageLength" />
+	<property name="actions" type="int" column="actions" />
+	<property name="executionTime" type="int" column="executionTime" />
 
 </class>
         

@@ -1,7 +1,6 @@
 package com.spicstome.client.dto;
 
 import java.io.Serializable;
-import java.util.Set;
 
 public class AdjectiveDTO extends WordDTO implements Serializable {
 
@@ -23,10 +22,10 @@ public class AdjectiveDTO extends WordDTO implements Serializable {
 		super(id);
 	}
 	
-	public AdjectiveDTO(Long id, String name, int order, FolderDTO folder, ImageDTO image, Set<LogDTO> logs,int favorite,
+	public AdjectiveDTO(Long id, String name, int order, FolderDTO folder, ImageDTO image,int favorite,
 			String matching1,String matching2,String matching3,String matching4)
 	{
-		super(id, name, order, folder, image,logs,favorite);
+		super(id, name, order, folder, image,favorite);
 		
 		this.matching1=matching1;
 		this.matching2=matching2;

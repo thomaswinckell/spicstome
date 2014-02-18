@@ -336,7 +336,6 @@ public class Test {
 		/* Student */
 		Student dagobert = populateWithStudent("Dagobert", "Albert", "albert", "albert");
 		Student maxime = populateWithStudent("Hass", "Maxime", "mofo", "mofo");
-		Student thomas = populateWithStudent("Winckell", "Thomas", "tomtom", "tomtom");
 		
 		/* Referant */
 		Image imageReferant = populateWithImageUser();
@@ -352,7 +351,6 @@ public class Test {
 		referent.setStudents(new TreeSet<Student>());
 		referent.addStudent(dagobert);
 		referent.addStudent(maxime);
-		referent.addStudent(thomas);
 		
 		HibernateManager.getInstance().save(referent);
 		

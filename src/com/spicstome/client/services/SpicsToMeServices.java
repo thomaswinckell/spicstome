@@ -15,10 +15,12 @@
 package com.spicstome.client.services;
 
 import java.util.List;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.spicstome.client.dto.AlbumDTO;
+import com.spicstome.client.dto.LogDTO;
 import com.spicstome.client.dto.WordDTO;
 import com.spicstome.client.dto.FolderDTO;
 import com.spicstome.client.dto.ImageDTO;
@@ -67,6 +69,7 @@ public interface SpicsToMeServices extends RemoteService {
 	public Long saveAlbum(AlbumDTO albumDTO);
 	public Long saveWord(WordDTO wordDTO);
 	public Long saveUser(UserDTO userDTO);
+	public Long saveLog(LogDTO logDTO);
 
 	/* UPDATE */
 	public boolean updateFolder(FolderDTO folderDTO);

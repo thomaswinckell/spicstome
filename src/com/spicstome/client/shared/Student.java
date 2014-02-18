@@ -28,7 +28,7 @@ public class Student extends User implements Serializable {
 		if (logDTOs != null) {
 			Set<Log> logs = new HashSet<Log>(logDTOs.size());
 			for (LogDTO logDTO : logDTOs) {
-				logs.add(new Log(logDTO));
+				logs.add(new Log(logDTO,this));
 			}
 			this.logs = logs;
 		}		

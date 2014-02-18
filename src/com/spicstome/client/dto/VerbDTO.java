@@ -1,7 +1,6 @@
 package com.spicstome.client.dto;
 
 import java.io.Serializable;
-import java.util.Set;
 
 public class VerbDTO extends WordDTO implements Serializable {
 
@@ -26,10 +25,10 @@ public class VerbDTO extends WordDTO implements Serializable {
 		super(id);
 	}
 	
-	public VerbDTO(Long id, String name, int order, FolderDTO folder, ImageDTO image, Set<LogDTO> logs,int favorite,
+	public VerbDTO(Long id, String name, int order, FolderDTO folder, ImageDTO image,int favorite,
 			int negation,int group,String irregular1,String irregular2,String irregular3,String irregular4,String irregular5,String irregular6)
 	{
-		super(id, name, order, folder, image,logs,favorite);
+		super(id, name, order, folder, image,favorite);
 		
 		this.negation=negation;
 		this.group=group;

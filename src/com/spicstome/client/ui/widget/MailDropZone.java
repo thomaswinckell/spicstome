@@ -22,6 +22,7 @@ public class MailDropZone extends VLayout{
 	private int movementCount;
 	HLayout horizontalLayout = new HLayout();
 	Img drophere = new Img("drophere.gif");
+	public ArrayList<WordDTO> message=new ArrayList<WordDTO>();
 
 	public MailDropZone(int iconSize) {
 		
@@ -103,6 +104,7 @@ public class MailDropZone extends VLayout{
 	
 		RecordList list = dropZone.getDataAsRecordList();
 		ArrayList<ImageRecord> words = new ArrayList<ImageRecord>();
+		message.clear();
 		
 		for(int i=0;i<list.getLength();i++)
 		{
@@ -110,6 +112,7 @@ public class MailDropZone extends VLayout{
 			ImageRecord record = new ImageRecord(word);
 			record.setAttribute(ImageRecord.PICTURE_NAME, word.getName());
 			words.add(record);
+			message.add(word);
 		}
 		
 		analyser.init(words);

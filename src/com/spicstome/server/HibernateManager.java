@@ -1,9 +1,12 @@
 package com.spicstome.server;
 
 import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.cfg.Configuration;
+
 import com.spicstome.client.shared.Album;
+import com.spicstome.client.shared.Log;
 import com.spicstome.client.shared.Word;
 import com.spicstome.client.shared.Image;
 import com.spicstome.client.shared.Pecs;
@@ -77,6 +80,12 @@ public class HibernateManager {
 	public void ClearAll()
 	{
 		session.beginTransaction();
+		
+		@SuppressWarnings("unchecked")
+		List<Log> logss = session.createCriteria(Log.class).list();
+		for (Log log : logss) {
+			session.delete(log);
+		}
 		
 		@SuppressWarnings("unchecked")
 		List<User> users = session.createCriteria(User.class).list();

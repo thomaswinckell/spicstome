@@ -1,14 +1,10 @@
 package com.spicstome.server.services;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-
 import javax.servlet.ServletException;
-
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
-
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.spicstome.client.dto.AdjectiveDTO;
 import com.spicstome.client.dto.AlbumDTO;
@@ -30,6 +26,7 @@ import com.spicstome.client.services.SpicsToMeServices;
 import com.spicstome.client.shared.Adjective;
 import com.spicstome.client.shared.Album;
 import com.spicstome.client.shared.Article;
+import com.spicstome.client.shared.Log;
 import com.spicstome.client.shared.Word;
 import com.spicstome.client.shared.Folder;
 import com.spicstome.client.shared.Image;
@@ -398,6 +395,19 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	
 	/* SAVE */
 
+	@Override
+	public Long saveLog(LogDTO logDTO) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();   
+		session.beginTransaction();
+		
+		Student student = new Student(logDTO.getStudent());
+		
+		Log log = new Log(logDTO,student);
+		session.save(log);
+		
+		session.getTransaction().commit();
+		return log.getId();
+	}
 	
 	@Override
 	public Long saveFolder(FolderDTO folderDTO) {
@@ -678,6 +688,8 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	    session.getTransaction().commit();
 	    return true;
 	}
+	
+
 
 	@Override
 	public boolean deleteUser(long id) {
@@ -687,7 +699,16 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	    
 	    if (user instanceof Student) {
 	    	
+	    	
+	    	/*
+	    	for(Log log:((Student) user).getLogs())
+	    	{
+	    		 session.delete(log);
+	    	}
+	    	
 	    	((Student) user).getLogs().clear();
+	    	*/
+	    	
 	    	UserDTO userDTO = Transtypage.createUserDTO(user);
 	    	
 	    	/* Suppressing the link between referents and students */
@@ -721,6 +742,8 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 		    /* Updating student, teachers and referents */
 	    	
 	    	updateUser(userDTO, false);
+	    	
+	    
 		    
 		    for(ReferentDTO referent : referents) {
 		    	updateUser(referent, false);
@@ -754,7 +777,7 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 			if(word instanceof NounDTO)
 			{
 				NounDTO nounDTO = (NounDTO) word;
-				NounDTO copyNoun= new NounDTO((long)-1,nounDTO.getName(),nounDTO.getOrder(),parent,copyImage,new HashSet<LogDTO>(),0,nounDTO.getGender(),nounDTO.getNumber(),nounDTO.getUncountable()) ;
+				NounDTO copyNoun= new NounDTO((long)-1,nounDTO.getName(),nounDTO.getOrder(),parent,copyImage,0,nounDTO.getGender(),nounDTO.getNumber(),nounDTO.getUncountable()) ;
 				
 				copyNoun.getImage().setId(idImageWord);
 				Long id = saveWord(copyNoun);
@@ -765,7 +788,7 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 			else if(word instanceof PronounDTO)
 			{
 				PronounDTO pronounDTO = (PronounDTO) word;
-				PronounDTO copyPronoun= new PronounDTO((long)-1,pronounDTO.getName(),pronounDTO.getOrder(),parent,copyImage,new HashSet<LogDTO>(),0,pronounDTO.getGender(),pronounDTO.getPerson(),pronounDTO.getNumber()) ;
+				PronounDTO copyPronoun= new PronounDTO((long)-1,pronounDTO.getName(),pronounDTO.getOrder(),parent,copyImage,0,pronounDTO.getGender(),pronounDTO.getPerson(),pronounDTO.getNumber()) ;
 				
 				copyPronoun.getImage().setId(idImageWord);
 				Long id = saveWord(copyPronoun);
@@ -776,7 +799,7 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 			else if(word instanceof ArticleDTO)
 			{
 				ArticleDTO articleDTO = (ArticleDTO) word;
-				ArticleDTO copyPronoun= new ArticleDTO((long)-1,articleDTO.getName(),articleDTO.getOrder(),parent,copyImage,new HashSet<LogDTO>(),0,articleDTO.getGender(),articleDTO.getNumber()) ;
+				ArticleDTO copyPronoun= new ArticleDTO((long)-1,articleDTO.getName(),articleDTO.getOrder(),parent,copyImage,0,articleDTO.getGender(),articleDTO.getNumber()) ;
 				
 				copyPronoun.getImage().setId(idImageWord);
 				Long id = saveWord(copyPronoun);
@@ -789,7 +812,7 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 		else if(word instanceof VerbDTO)
 		{
 			VerbDTO verbDTO = (VerbDTO) word;
-			VerbDTO copyVerb= new VerbDTO((long)-1,verbDTO.getName(),verbDTO.getOrder(),parent,copyImage,new HashSet<LogDTO>(),0,
+			VerbDTO copyVerb= new VerbDTO((long)-1,verbDTO.getName(),verbDTO.getOrder(),parent,copyImage,0,
 					verbDTO.getNegation(),verbDTO.getGroup(),verbDTO.getIrregular1(),verbDTO.getIrregular2(),verbDTO.getIrregular3(),verbDTO.getIrregular4(),verbDTO.getIrregular5(),verbDTO.getIrregular6()) ;
 			
 			copyVerb.getImage().setId(idImageWord);
@@ -801,7 +824,7 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 		else if(word instanceof AdjectiveDTO)
 		{
 			AdjectiveDTO ajectiveDTO = (AdjectiveDTO) word;
-			AdjectiveDTO copyAdjective= new AdjectiveDTO((long)-1,ajectiveDTO.getName(),ajectiveDTO.getOrder(),parent,copyImage,new HashSet<LogDTO>(),0,
+			AdjectiveDTO copyAdjective= new AdjectiveDTO((long)-1,ajectiveDTO.getName(),ajectiveDTO.getOrder(),parent,copyImage,0,
 					ajectiveDTO.getMatching1(),ajectiveDTO.getMatching2(),ajectiveDTO.getMatching3(),ajectiveDTO.getMatching4()) ;
 			
 			copyAdjective.getImage().setId(idImageWord);
@@ -860,6 +883,8 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 		return copyAlbum;
 		
 	}
+
+
 
 	
 

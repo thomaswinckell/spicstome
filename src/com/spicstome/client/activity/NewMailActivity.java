@@ -7,6 +7,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.spicstome.client.ClientFactory;
 import com.spicstome.client.dto.AlbumDTO;
+import com.spicstome.client.dto.LogDTO;
 import com.spicstome.client.dto.StudentDTO;
 import com.spicstome.client.dto.UserDTO;
 import com.spicstome.client.place.NewMailPlace;
@@ -14,9 +15,10 @@ import com.spicstome.client.services.SpicsToMeServices;
 import com.spicstome.client.ui.NewMailView;
 import com.spicstome.client.ui.UserViewImpl;
 
-public class NewMailActivity extends UserActivity{
+public class NewMailActivity extends UserActivity implements NewMailView.Presenter{
 	
 	NewMailView newMailview;
+	UserDTO user;
 	
 	public NewMailActivity(NewMailPlace place, ClientFactory clientFactory) {
 		super(place, clientFactory,(UserViewImpl)clientFactory.getNewMailView());		
@@ -31,6 +33,8 @@ public class NewMailActivity extends UserActivity{
 
 			@Override
 			public void onSuccess(UserDTO result) {
+				
+				user=result;
 				
 				if(result instanceof StudentDTO)
 				{
@@ -75,6 +79,28 @@ public class NewMailActivity extends UserActivity{
 	public void start(AcceptsOneWidget containerWidget, EventBus eventBus) 
 	{
 		super.start(containerWidget, eventBus);
+	}
+
+
+	@Override
+	public void saveLog(LogDTO log) {
+		
+		if(user instanceof StudentDTO)
+		{
+			StudentDTO student = (StudentDTO)user;
+			log.setStudent(student);
+			
+			SpicsToMeServices.Util.getInstance().saveLog(log, new AsyncCallback<Long>() {
+
+				@Override
+				public void onFailure(Throwable caught) {}
+
+				@Override
+				public void onSuccess(Long result) {
+
+				}
+			});
+		}
 	}
 
 }
