@@ -12,7 +12,7 @@ public class WordPickerWindow extends PickerWindow {
     public Book book;
 	
 	public WordPickerWindow(List<StudentDTO> list) {
-		super(list,Type.IMPORT, 1000, 450);
+		super(list,Type.IMPORT, 1200, 600);
 		
 	}
 	@Override
@@ -20,23 +20,23 @@ public class WordPickerWindow extends PickerWindow {
 	{
 		setTitle("Importer un article depuis autre album");
 		
-		 book = new Book(50){
-	        	@Override
-	        	public void onSelectChangeBook(ImageRecord image)
-	        	{
-	        		super.onSelectChangeBook(image);
-	        		
-	        		UpdateValidButton();
-	        	}
-	        	
-	        	@Override
-	        	public void onChangePage()
-	        	{
-	        		super.onChangePage();
-	        		
-	        		UpdateValidButton();
-	        	}
-	        };
+		 book = new Book(100){
+	        @Override
+        	public void onSelectChangeBook(ImageRecord image)
+        	{
+        		super.onSelectChangeBook(image);
+        		
+        		UpdateValidButton();
+        	}
+        	
+        	@Override
+        	public void onChangePage()
+        	{
+        		super.onChangePage();
+        		
+        		UpdateValidButton();
+        	}
+        };
 		
 		albumPanel =  new AlbumBookPanel(book){
         	@Override

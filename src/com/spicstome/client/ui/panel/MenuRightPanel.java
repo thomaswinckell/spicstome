@@ -20,7 +20,7 @@ public class MenuRightPanel extends VLayout{
 	
 	public MenuRightPanel()
 	{
-		setHeight100();
+
 		img.setSize(iconsize);
 		img.setLayoutAlign(Alignment.CENTER);
 		

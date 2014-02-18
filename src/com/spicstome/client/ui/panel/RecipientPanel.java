@@ -9,7 +9,7 @@ import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.TextItem;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.spicstome.client.dto.UserDTO;
-import com.spicstome.client.ui.window.RecipientChooseWindow;
+import com.spicstome.client.ui.window.SearchRecipientWindow;
 
 
 public abstract class RecipientPanel extends HLayout{
@@ -30,13 +30,14 @@ public abstract class RecipientPanel extends HLayout{
 		
 		
 		img.setIconSize(iconsize);
+		img.setPrompt("Selectionner un destinataire");
 		
 		img.addClickHandler(new ClickHandler() {
 			
 			@Override
 			public void onClick(ClickEvent event) {
 				
-				RecipientChooseWindow recipientWindow = new RecipientChooseWindow(userList){
+				SearchRecipientWindow recipientWindow = new SearchRecipientWindow(userList){
 					@Override
 					public void onDestroy()
 					{	

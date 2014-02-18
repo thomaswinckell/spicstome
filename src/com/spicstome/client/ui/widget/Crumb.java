@@ -22,7 +22,7 @@ public abstract class Crumb extends HLayout{
 	
 	public Crumb(String s)
 	{
-		this.label=new Label(s);
+		this.label=new Label();
 		
 		this.label.addClickHandler(new ClickHandler() {
 			
@@ -35,6 +35,9 @@ public abstract class Crumb extends HLayout{
 		
 		setWidth(150);
 		label.setWidth100();
+		label.setShowHover(true);
+		
+		setCrumbTitle(s);
 		
 		label.setStyleName("crumb");
 		
@@ -44,6 +47,7 @@ public abstract class Crumb extends HLayout{
 	public void setCrumbTitle(String s)
 	{
 		this.label.setContents(s);
+		this.label.setPrompt("Accéder à '"+s+"'");
 	}
 	
 	public void onClickCrumb()

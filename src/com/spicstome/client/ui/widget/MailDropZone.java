@@ -3,6 +3,7 @@ package com.spicstome.client.ui.widget;
 import java.util.ArrayList;
 
 import com.smartgwt.client.data.RecordList;
+import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.widgets.Img;
 import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.layout.HLayout;
@@ -15,14 +16,16 @@ public class MailDropZone extends VLayout{
 
 	ImageTileGrid dropZone;
 	private SyntaxAnalyser analyser;
-	protected Img validImg = new Img("check.png");
-	protected Label label = new Label();
-	HLayout validationLayout = new HLayout();
+	protected Img validImg = new Img("goodgame.png");
+	protected Label labelGood = new Label();
+	VLayout validationLayout = new VLayout();
+	private int movementCount;
+	HLayout horizontalLayout = new HLayout();
+	Img drophere = new Img("drophere.gif");
 
-	
 	public MailDropZone(int iconSize) {
 		
-		dropZone = new ImageTileGrid(Mode.DRAG_AND_DROP, iconSize+50, iconSize+50, iconSize){
+		dropZone = new ImageTileGrid(Mode.DRAG_AND_DROP, iconSize+50, iconSize+30, iconSize){
 			@Override
 			public void OnRemove()
 			{
@@ -42,34 +45,62 @@ public class MailDropZone extends VLayout{
 		dropZone.setStyleName("bloc");
 		dropZone.removeOnDragOver();
 		
-		validImg.setSize(30);
-		label.setContents("BRAVO ! continue ainsi :)");
-		label.setWidth(200);
-		label.setMargin(10);
+		validationLayout.setWidth(220);
+		validImg.setWidth(130);
+		validImg.setHeight(90);
+		labelGood.setContents("BRAVO ! continue ainsi !");
+		labelGood.setStyleName("title");
 		validationLayout.addMember(validImg);
-		validationLayout.addMember(label);
+		validationLayout.addMember(labelGood);
 		
-		addMember(dropZone);
-		addMember(validationLayout);
+		horizontalLayout.addMember(dropZone);
+		horizontalLayout.addMember(validationLayout);
+
+		drophere.setSize(60);
+		drophere.setLayoutAlign(Alignment.CENTER);
+		drophere.setPrompt("Glissez les mots dans le bandeau ci-dessous");
+		
+		addMember(drophere);
+		addMember(horizontalLayout);
 		
 		
 		
 		analyser = new SyntaxAnalyser();
 	}
 	
-	public void UpdateValidation(Boolean b)
+	public void UpdateValidation(Boolean b,int nbElement)
 	{
 		validationLayout.setVisible(b);
+		
+		if(b)
+		{
+			dropZone.setBackgroundColor("lightgreen");
+		}
+		else if(nbElement>0)
+		{
+			dropZone.setBackgroundColor("lightpink");
+		}
+		else
+		{
+			dropZone.setBackgroundColor("white");
+		}
 	}
 	
 	public void init()
 	{
+		movementCount=0;
 		dropZone.clearItems();
-		UpdateValidation(false);
+		UpdateValidation(false,0);
+		drophere.setVisible(true);
+		
 	}
 	
 	public void UpdateMail()
 	{
+		movementCount++;
+		
+		drophere.setVisible(false);
+	
 		RecordList list = dropZone.getDataAsRecordList();
 		ArrayList<ImageRecord> words = new ArrayList<ImageRecord>();
 		
@@ -84,7 +115,7 @@ public class MailDropZone extends VLayout{
 		analyser.init(words);
 		analyser.analyse();
 		
-		UpdateValidation(analyser.currentState.acceptance);
+		UpdateValidation(analyser.currentState.acceptance,list.getLength());
 	
 		dropZone.clearItems();
 		
@@ -94,6 +125,8 @@ public class MailDropZone extends VLayout{
 
 	}
 	
-	
+	public int getMovementCount() {
+		return movementCount;
+	}
 
 }

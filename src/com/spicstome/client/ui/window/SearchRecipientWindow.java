@@ -18,7 +18,7 @@ import com.spicstome.client.ui.widget.ImageRecord;
 import com.spicstome.client.ui.widget.ImageTileGrid;
 import com.spicstome.client.ui.widget.ImageTileGrid.Mode;
 
-public class RecipientChooseWindow extends Window {
+public class SearchRecipientWindow extends Window {
 
 	VLayout layout = new VLayout();
 	ImageTileGrid userGrid;
@@ -29,7 +29,7 @@ public class RecipientChooseWindow extends Window {
 	TextItem item = new TextItem();
 	public UserDTO selectedUser;
 	
-	public RecipientChooseWindow(List<UserDTO> userList) {
+	public SearchRecipientWindow(List<UserDTO> userList) {
 		super();
 		
 		setWidth(800);
@@ -90,7 +90,7 @@ public class RecipientChooseWindow extends Window {
 			}
 		});
 		
-		labelNothing.setContents("Aucun mot ne correspond à votre recherche");
+		labelNothing.setContents("Aucun utilisateur ne correspond à votre recherche");
 		labelNothing.setHeight(40);
 		
 		layout.addMember(form);

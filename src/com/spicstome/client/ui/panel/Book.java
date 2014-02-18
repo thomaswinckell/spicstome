@@ -45,8 +45,8 @@ public class Book extends VLayout{
 		setMargin(20);
 		this.imageSize=imageSize;
 		
-		tileWidth  = imageSize+50;
-		tileHeight = imageSize+50;
+		tileWidth  = imageSize+10;
+		tileHeight = imageSize+30;
 		
 		widthPage =(nbColPerPage*(tileWidth+20));
 		heightPage = (nbRowPerPage*(tileHeight+20));
@@ -55,6 +55,8 @@ public class Book extends VLayout{
 		buttonPrev.setIcon("prev-icon.png");
 		buttonNext.setIconSize(30);
 		buttonPrev.setIconSize(30);
+		buttonNext.setPrompt("Page suivante");
+		buttonPrev.setPrompt("Page précédente");
 		
 		buttonNext.setWidth(30);
 		buttonPrev.setWidth(30);
