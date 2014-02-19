@@ -28,7 +28,7 @@
 	    <key column="id"/>
 		<many-to-one name="album" class="Album" column="id_album" unique="true" cascade="delete"/>
 		
-		<set name="logs" table="logs"  lazy="true" fetch="select" >
+		<set name="logs" table="logs"  lazy="true" fetch="select" cascade="delete" >
 			<key>
 				<column name="id_student" not-null="false" />
 			</key>

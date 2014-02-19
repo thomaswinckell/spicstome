@@ -9,10 +9,9 @@
 	<id name="id" type="long" column="id">
 		<generator class="increment" />
 	</id>
-	
-	<many-to-one name="student" class="Student" fetch="select">
-        <column name="id_student" not-null="false" />
-    </many-to-one>
+
+	<many-to-one name="student" class="Student" column="id_student"
+			not-null="false" unique="false" />
     
 	<property name="emailRecipient" type="string" column="email_recipient" />
 	<property name="date" type="timestamp" column="date" />

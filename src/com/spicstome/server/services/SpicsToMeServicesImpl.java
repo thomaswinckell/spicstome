@@ -740,10 +740,7 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 		    //session.getTransaction().commit();
 		    
 		    /* Updating student, teachers and referents */
-	    	
-	    	updateUser(userDTO, false);
-	    	
-	    
+  
 		    
 		    for(ReferentDTO referent : referents) {
 		    	updateUser(referent, false);

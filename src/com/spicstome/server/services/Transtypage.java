@@ -223,10 +223,7 @@ public class Transtypage {
 				createAlbumDTO(student.getAlbum()),null);
 		
 		studentDTO.setLogs(createListLogDTO(student.getLogs(), studentDTO));
-		
-		for(LogDTO logDTO:studentDTO.getLogs())
-			System.out.println(logDTO.getId()+" "+logDTO.getStudent().getId().toString());
-		
+
 		return studentDTO;
 	}
 }

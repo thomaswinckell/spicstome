@@ -48,8 +48,7 @@ public class Test {
 		return imageUser;
 	}
 	
-	
-	
+
 	public static void generateNoun(int order,String name,String image,Folder parent,int gender,int number,int uncountable)
 	{
 		Image imageSubject = new Image((long)-1);
@@ -330,9 +329,7 @@ public class Test {
 		superAdmin.setImage(imageAdmin);
 		
 		HibernateManager.getInstance().save(superAdmin);
-		
-		
-		
+
 		/* Student */
 		Student dagobert = populateWithStudent("Dagobert", "Albert", "albert", "albert");
 		Student maxime = populateWithStudent("Hass", "Maxime", "mofo", "mofo");
@@ -353,9 +350,7 @@ public class Test {
 		referent.addStudent(maxime);
 		
 		HibernateManager.getInstance().save(referent);
-		
 
 	}
-	
-	
+
 }

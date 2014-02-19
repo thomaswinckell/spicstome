@@ -93,6 +93,7 @@ public class MailDropZone extends VLayout{
 		dropZone.clearItems();
 		UpdateValidation(false,0);
 		drophere.setVisible(true);
+		message.clear();
 		
 	}
 	
