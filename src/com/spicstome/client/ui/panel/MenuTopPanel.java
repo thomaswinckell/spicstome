@@ -7,6 +7,11 @@ import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
+import com.smartgwt.client.widgets.layout.VLayout;
+import com.spicstome.client.dto.ReferentDTO;
+import com.spicstome.client.dto.StudentDTO;
+import com.spicstome.client.dto.TeacherDTO;
+import com.spicstome.client.dto.UserDTO;
 import com.spicstome.client.place.LogoutPlace;
 import com.spicstome.client.place.MainMenuPlace;
 import com.spicstome.client.ui.UserViewImpl;
@@ -15,27 +20,28 @@ import com.spicstome.client.ui.widget.Crumb;
 
 public class MenuTopPanel extends HLayout{
 
-	protected Label labelUser = new Label();
-	protected IconButton buttonLogout = new IconButton("");
-	private Img image ;
+	Label userName = new Label();
+	Label userFirstName = new Label();
+	Label userType = new Label();
+	protected Label buttonLogout = new Label();
+	private Img logo =new Img("logo.png");
 	public BreadCrumb breadcrumb=new BreadCrumb();
 	protected UserViewImpl mainView;
+	HLayout userLayout = new HLayout();
+	VLayout userDetail = new VLayout();
+	private IconButton imageUser= new IconButton("");
+	
 	
 	public MenuTopPanel(UserViewImpl main)
 	{
 		super();
 		
 		this.mainView=main;
-		
-		
+			
 		setStyleName("connectPanel");
 		
-		image = new Img("logo.png");
-		image.setSize(100);
-		image.setMargin(10);
-		
-		buttonLogout.setIcon("exit.png");
-		buttonLogout.setIconSize(64);
+		logo.setSize(100);
+		logo.setMargin(10);
 		
 		buttonLogout.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {				
@@ -43,34 +49,64 @@ public class MenuTopPanel extends HLayout{
 			}
 		});
 		
-		image.setLayoutAlign(Alignment.LEFT);
-		buttonLogout.setLayoutAlign(Alignment.RIGHT);
+		logo.setLayoutAlign(Alignment.LEFT);
+	
 		
 		breadcrumb.addCrumb(new Crumb("Accueil"){
 
 			@Override
-			public void onClickCrumb() {
-				
+			public void onClickCrumb() {		
 				mainView.goTo(new MainMenuPlace());
-				
 			}
-			
 		});
 		
 		breadcrumb.setMargin(10);
-
+		imageUser.setIconSize(100);
 		
-		addMember(image);
-		addMember(labelUser);
+		userFirstName.setHeight(10);
+		userName.setHeight(10);
+		userType.setHeight(10);
+		buttonLogout.setHeight(10);
+		
+		buttonLogout.setContents("deconnexion");
+		
+		userDetail.addMember(userFirstName);	
+		userDetail.addMember(userName);	
+		userDetail.addMember(userType);	
+		userDetail.addMember(buttonLogout);
+		
+		userLayout.setWidth(200);
+		
+		userLayout.addMember(imageUser);
+		userLayout.addMember(userDetail);
+		
+		userLayout.setLayoutAlign(Alignment.RIGHT);
+		
+		addMember(logo);
 		addMember(breadcrumb);
-		addMember(buttonLogout);
+		addMember(userLayout);
+
 		
 	
 		
 	}
 	
-	public void setNameUser(String s)
+	public void setUser(UserDTO u)
 	{
-		labelUser.setContents("User: ["+s+"]");
+		if(u!=null)
+		{
+			userName.setContents(u.getName());
+			userFirstName.setContents(u.getFirstName());
+				
+			imageUser.setIcon("upload/"+u.getImage().getFilename());
+
+			if(u instanceof StudentDTO)
+				userType.setContents("étudiant");
+			else if(u instanceof TeacherDTO)
+				userType.setContents("enseignant");
+			else if(u instanceof ReferentDTO)
+				userType.setContents("référent");
+		}
+		
 	}
 }

@@ -38,7 +38,7 @@ public class UserActivity extends AbstractActivity implements UserView.Presenter
 					public void onSuccess(UserDTO user) {
 						
 						if(user!=null) {
-							userView.setName(user.getLogin());
+							userView.setUser(user);
 
 						} else {
 							goTo(new LoginPlace());
@@ -55,7 +55,7 @@ public class UserActivity extends AbstractActivity implements UserView.Presenter
 		
 		panel.setWidget(userView.asWidget());
 		userView.setPresenter(this);
-		userView.setName("?");
+		userView.setUser(null);
 	}
 
 	@Override

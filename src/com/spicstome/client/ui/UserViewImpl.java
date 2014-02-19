@@ -2,6 +2,7 @@ package com.spicstome.client.ui;
 
 import com.google.gwt.place.shared.Place;
 import com.smartgwt.client.widgets.layout.VLayout;
+import com.spicstome.client.dto.UserDTO;
 import com.spicstome.client.ui.panel.MenuTopPanel;
 import com.spicstome.client.ui.widget.Crumb;
 
@@ -35,8 +36,8 @@ public class UserViewImpl extends VLayout implements UserView{
 		this.connectPanel.breadcrumb.addCrumb(crumb);
 	}
 
-	public void setName(String name) {
-		connectPanel.setNameUser(name);
+	public void setUser(UserDTO user) {
+		connectPanel.setUser(user);
 	}
 
 	@Override
