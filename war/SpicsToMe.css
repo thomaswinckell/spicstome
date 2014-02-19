@@ -20,6 +20,13 @@ h1 {
 }
 
 
+.mainTitle
+{
+	font-size:50px;
+	color:white;
+	text-shadow: 0 3px 7px #4B4B4B;
+}
+
 .title
 {
 	font-size:30px;
@@ -74,27 +81,30 @@ h1 {
 
 .page
 {
-	
 	border-style:inset;
 	border-width:1px;
 	border-color:grey;
-	
 	border-radius:20px 20px 0px 0px;
-	
 	background-color: #f2f2e5;
-	
 }
 
 
 .crumb:hover
 {
 	cursor:pointer;
+	background-color:#8DEB8D;
 }
 .crumb
 {
-
 	font-size:18px;
-	color:darkblue;
+	color:black;
+	background-color:#7AD87A;
+	border-top:outset;
+	border-right:outset;
+	border-width:1px;
+	border-color:darkgreen;
+	border-radius: 0px 10px 0px 0px;
+	text-align:center;
 }
 
 .bloc

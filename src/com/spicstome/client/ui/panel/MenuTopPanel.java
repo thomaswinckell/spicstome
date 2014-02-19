@@ -18,7 +18,7 @@ import com.spicstome.client.ui.UserViewImpl;
 import com.spicstome.client.ui.widget.BreadCrumb;
 import com.spicstome.client.ui.widget.Crumb;
 
-public class MenuTopPanel extends HLayout{
+public class MenuTopPanel extends VLayout{
 
 	Label userName = new Label();
 	Label userFirstName = new Label();
@@ -29,8 +29,9 @@ public class MenuTopPanel extends HLayout{
 	protected UserViewImpl mainView;
 	HLayout userLayout = new HLayout();
 	VLayout userDetail = new VLayout();
+	Label labelTitle = new Label();
 	private IconButton imageUser= new IconButton("");
-	
+	HLayout topLayout = new HLayout();
 	
 	public MenuTopPanel(UserViewImpl main)
 	{
@@ -42,15 +43,13 @@ public class MenuTopPanel extends HLayout{
 		
 		logo.setSize(100);
 		logo.setMargin(10);
-		
-		buttonLogout.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {				
-				mainView.goTo(new LogoutPlace());
-			}
-		});
-		
 		logo.setLayoutAlign(Alignment.LEFT);
-	
+		
+		labelTitle.setContents(".::SpicsToMe::.");
+		labelTitle.setHeight(20);
+		labelTitle.setWidth100();
+		labelTitle.setStyleName("mainTitle");
+		labelTitle.setMargin(10);
 		
 		breadcrumb.addCrumb(new Crumb("Accueil"){
 
@@ -60,15 +59,21 @@ public class MenuTopPanel extends HLayout{
 			}
 		});
 		
-		breadcrumb.setMargin(10);
+
 		imageUser.setIconSize(100);
 		
 		userFirstName.setHeight(10);
 		userName.setHeight(10);
 		userType.setHeight(10);
-		buttonLogout.setHeight(10);
 		
+		buttonLogout.setHeight(10);
 		buttonLogout.setContents("deconnexion");
+		
+		buttonLogout.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {				
+				mainView.goTo(new LogoutPlace());
+			}
+		});
 		
 		userDetail.addMember(userFirstName);	
 		userDetail.addMember(userName);	
@@ -82,11 +87,12 @@ public class MenuTopPanel extends HLayout{
 		
 		userLayout.setLayoutAlign(Alignment.RIGHT);
 		
-		addMember(logo);
-		addMember(breadcrumb);
-		addMember(userLayout);
+		topLayout.addMember(logo);
+		topLayout.addMember(labelTitle);
+		topLayout.addMember(userLayout);
 
-		
+		addMember(topLayout);
+		addMember(breadcrumb);
 	
 		
 	}

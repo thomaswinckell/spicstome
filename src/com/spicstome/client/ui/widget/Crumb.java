@@ -33,7 +33,7 @@ public abstract class Crumb extends HLayout{
 		});
 		
 		
-		setWidth(150);
+		setWidth(300);
 		label.setWidth100();
 		label.setShowHover(true);
 		

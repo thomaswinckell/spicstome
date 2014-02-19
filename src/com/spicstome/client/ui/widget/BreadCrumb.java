@@ -19,9 +19,9 @@ public class BreadCrumb extends HLayout{
 	{
 		if(crumbs.size()>0)
 		{
-			Label separator = new Label(">");
-			separator.setWidth(30);
-			addMember(separator);
+			//Label separator = new Label(">");
+			//separator.setWidth(30);
+			//addMember(separator);
 		}
 		
 		crumbs.add(crumb);
