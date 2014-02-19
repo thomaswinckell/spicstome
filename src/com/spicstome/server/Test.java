@@ -1,12 +1,14 @@
 package com.spicstome.server;
 
+import java.util.Date;
+import java.util.HashSet;
 import java.util.TreeSet;
-
 import com.spicstome.client.shared.Adjective;
 import com.spicstome.client.shared.Album;
 import com.spicstome.client.shared.Article;
 import com.spicstome.client.shared.Folder;
 import com.spicstome.client.shared.Image;
+import com.spicstome.client.shared.Log;
 import com.spicstome.client.shared.Noun;
 import com.spicstome.client.shared.Pronoun;
 import com.spicstome.client.shared.Referent;
@@ -32,8 +34,22 @@ public class Test {
 		student.setPassword(Encryption.toSHA256(password));
 		student.setImage(imageUser);
 		student.setAlbum(album);
+		student.setLogs(new HashSet<Log>());
 		
 		HibernateManager.getInstance().save(student);
+		
+		Log log = new Log((long)-1);
+		log.setActions(3);
+		log.setDate(new Date());
+		log.setEmailRecipient("recipient");
+		log.setExecutionTime(15);
+		log.setMessageLength(3);
+		log.setStudent(student);
+		
+		student.getLogs().add(log);
+		
+		for(Log logg:student.getLogs())
+			HibernateManager.getInstance().save(logg);
 		
 		return student;
 	}
@@ -331,8 +347,13 @@ public class Test {
 		HibernateManager.getInstance().save(superAdmin);
 
 		/* Student */
+		
 		Student dagobert = populateWithStudent("Dagobert", "Albert", "albert", "albert");
 		Student maxime = populateWithStudent("Hass", "Maxime", "mofo", "mofo");
+		
+		
+		
+	
 		
 		/* Referant */
 		Image imageReferant = populateWithImageUser();

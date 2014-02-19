@@ -34,8 +34,6 @@
 			</key>
 			<one-to-many class="Log" />
 		</set>
-		
-	
 	</joined-subclass>
 	
 	<joined-subclass name="Referent" table="referent" extends="User">

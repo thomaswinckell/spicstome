@@ -61,6 +61,14 @@ public class HibernateManager {
 		}
 	}
 	
+	public void save(Log log){
+		synchronized (Log.class) {
+			session.beginTransaction();
+			session.save(log);
+			session.getTransaction().commit();
+		}
+	}
+	
 	public void save(Pecs pecs){
 		synchronized (Pecs.class) {
 			session.beginTransaction();

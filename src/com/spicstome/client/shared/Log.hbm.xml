@@ -4,7 +4,7 @@
 
 <hibernate-mapping package="com.spicstome.client.shared" default-lazy="false">
 
-<class name="Log" table="log">
+<class name="Log" select-before-update="true" table="log">
 
 	<id name="id" type="long" column="id">
 		<generator class="increment" />
