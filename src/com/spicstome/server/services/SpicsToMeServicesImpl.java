@@ -709,8 +709,6 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	    	((Student) user).getLogs().clear();
 	    	*/
 	    	
-	    	UserDTO userDTO = Transtypage.createUserDTO(user);
-	    	
 	    	/* Suppressing the link between referents and students */
 		    
 		    List<ReferentDTO> referents = getAllReferents();
