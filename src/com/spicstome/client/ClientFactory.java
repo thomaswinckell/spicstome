@@ -10,6 +10,8 @@ import com.spicstome.client.ui.AlbumManagementView;
 import com.spicstome.client.ui.AlbumManagementViewImpl;
 import com.spicstome.client.ui.AlbumView;
 import com.spicstome.client.ui.AlbumViewImpl;
+import com.spicstome.client.ui.HistoryManagementView;
+import com.spicstome.client.ui.HistoryManagementViewImpl;
 import com.spicstome.client.ui.LogoutView;
 import com.spicstome.client.ui.LogoutViewImpl;
 import com.spicstome.client.ui.MailView;
@@ -47,6 +49,7 @@ public class ClientFactory
 	private static final UsersManagementView usersManagementView = new UsersManagementViewImpl();
 	private static final AddUserView addUserView = new AddUserViewImpl();
 	private static final MailView mailView = new MailViewImpl();
+	private static final HistoryManagementView historyManagementView = new HistoryManagementViewImpl();
 
 	public SimpleEventBus getEventBus() {
 		return eventBus;
@@ -94,5 +97,9 @@ public class ClientFactory
 	
 	public AddUserView getAddUserView() {
 		return addUserView;
+	}
+
+	public HistoryManagementView getHistoryManagementView() {
+		return historyManagementView;
 	}
 }

@@ -13,6 +13,7 @@ public class ImageRecord extends TileRecord {
 	public final static String PICTURE_PATH = "path";
 	public final static String DATA = "data";
 
+	public static enum others{HISTORY};
 	
 	public ImageRecord(int id,String name,String image){
 		super();
@@ -29,6 +30,20 @@ public class ImageRecord extends TileRecord {
 		setAttribute(PICTURE_NAME, name);
 		setAttribute(PICTURE_PATH, "albumlogo.png");
 		setAttribute(DATA, albumDTO);
+	}
+	
+	public ImageRecord(others type,StudentDTO student)
+	{
+		super();
+		
+		if(type==others.HISTORY)
+		{
+			setAttribute(PICTURE_ID, student.getId());
+			setAttribute(PICTURE_NAME, "Historique de "+student.getFirstName());
+			setAttribute(PICTURE_PATH, "history.png");
+			setAttribute(DATA, student);
+		}
+		
 	}
 	
 	public ImageRecord(AlbumDTO albumDTO,StudentDTO student)

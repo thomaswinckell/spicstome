@@ -6,6 +6,7 @@ import com.spicstome.client.place.AddUserPlace;
 import com.spicstome.client.place.AlbumEditPlace;
 import com.spicstome.client.place.AlbumManagementPlace;
 import com.spicstome.client.place.AlbumPlace;
+import com.spicstome.client.place.HistoryManagementPlace;
 import com.spicstome.client.place.LogoutPlace;
 import com.spicstome.client.place.MailPlace;
 import com.spicstome.client.place.NewMailPlace;
@@ -27,6 +28,7 @@ import com.spicstome.client.place.UsersManagementPlace;
 					AlbumEditPlace.Tokenizer.class,
 					NewMailPlace.Tokenizer.class,
 					MailPlace.Tokenizer.class,
+					HistoryManagementPlace.Tokenizer.class,
 					UsersManagementPlace.Tokenizer.class,
 					AddUserPlace.Tokenizer.class})
 public interface AppPlaceHistoryMapper extends PlaceHistoryMapper {

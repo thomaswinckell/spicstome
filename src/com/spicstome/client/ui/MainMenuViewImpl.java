@@ -1,7 +1,9 @@
 package com.spicstome.client.ui;
 
 import java.util.ArrayList;
+
 import com.spicstome.client.place.AlbumManagementPlace;
+import com.spicstome.client.place.HistoryManagementPlace;
 import com.spicstome.client.place.MailPlace;
 import com.spicstome.client.place.UsersManagementPlace;
 import com.spicstome.client.ui.widget.ImageTileGrid;
@@ -16,8 +18,8 @@ public class MainMenuViewImpl extends UserViewImpl implements MainMenuView {
 		super();
 		
 		ArrayList<ImageRecord> modules = new ArrayList<ImageRecord>();
-		modules.add(new ImageRecord(0,"Gestion des albums","albumlogo.png"));
-		modules.add(new ImageRecord(1,"Gestion des utilisateurs","userlogo.png"));
+		modules.add(new ImageRecord(0,"Gestion les albums","albumlogo.png"));
+		modules.add(new ImageRecord(1,"Gestion les utilisateurs","userlogo.png"));
 		modules.add(new ImageRecord(2,"Mail","mail.png"));
 		modules.add(new ImageRecord(3,"Historique","history.png"));
 		
@@ -35,6 +37,9 @@ public class MainMenuViewImpl extends UserViewImpl implements MainMenuView {
 						break;
 					case 2 :
 						goTo(new MailPlace());
+						break;
+					case 3 :
+						goTo(new HistoryManagementPlace());
 						break;
 				}
 			}

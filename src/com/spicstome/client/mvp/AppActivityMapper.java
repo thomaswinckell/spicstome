@@ -8,6 +8,7 @@ import com.spicstome.client.activity.AddUserActivity;
 import com.spicstome.client.activity.AlbumActivity;
 import com.spicstome.client.activity.AlbumEditActivity;
 import com.spicstome.client.activity.AlbumManagementActivity;
+import com.spicstome.client.activity.HistoryManagementActivity;
 import com.spicstome.client.activity.LogoutActivity;
 import com.spicstome.client.activity.MailActivity;
 import com.spicstome.client.activity.NewMailActivity;
@@ -18,6 +19,7 @@ import com.spicstome.client.place.AddUserPlace;
 import com.spicstome.client.place.AlbumEditPlace;
 import com.spicstome.client.place.AlbumManagementPlace;
 import com.spicstome.client.place.AlbumPlace;
+import com.spicstome.client.place.HistoryManagementPlace;
 import com.spicstome.client.place.LogoutPlace;
 import com.spicstome.client.place.MailPlace;
 import com.spicstome.client.place.NewMailPlace;
@@ -62,6 +64,8 @@ public class AppActivityMapper implements ActivityMapper {
 			return new NewMailActivity((NewMailPlace) place, clientFactory);
 		else if (place instanceof MailPlace)
 			return new MailActivity((MailPlace) place, clientFactory);
+		else if (place instanceof HistoryManagementPlace)
+			return new HistoryManagementActivity((HistoryManagementPlace) place, clientFactory);
 		else if (place instanceof LogoutPlace)
 			return new LogoutActivity((LogoutPlace) place, clientFactory);
 		else if (place instanceof UsersManagementPlace)
