@@ -12,7 +12,7 @@ import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.spicstome.client.dto.UserDTO;
-import com.spicstome.client.place.AddUserPlace;
+import com.spicstome.client.place.UserEditPlace;
 import com.spicstome.client.services.SpicsToMeServices;
 import com.spicstome.client.ui.UsersManagementViewImpl;
 
@@ -74,7 +74,7 @@ public class TeachersEditForm extends HLayout {
 				} else {				
 					Long idTeacher = Long.parseLong(val);
 					
-					view.goTo(new AddUserPlace(idTeacher.toString()));
+					view.goTo(new UserEditPlace(idTeacher.toString()));
 				}
 			}				
 		});

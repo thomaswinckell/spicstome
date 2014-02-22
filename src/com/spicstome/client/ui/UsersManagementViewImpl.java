@@ -26,7 +26,7 @@ import com.spicstome.client.dto.ReferentDTO;
 import com.spicstome.client.dto.StudentDTO;
 import com.spicstome.client.dto.TeacherDTO;
 import com.spicstome.client.dto.UserDTO;
-import com.spicstome.client.place.AddUserPlace;
+import com.spicstome.client.place.UserEditPlace;
 import com.spicstome.client.ui.form.ReferentsEditForm;
 import com.spicstome.client.ui.form.StudentsEditForm;
 import com.spicstome.client.ui.form.TeachersEditForm;
@@ -61,7 +61,7 @@ public class UsersManagementViewImpl extends UserViewImpl implements UsersManage
 		buttonAddUser.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				goTo(new AddUserPlace(null));
+				goTo(new UserEditPlace(null));
 			}			
 		});
 		

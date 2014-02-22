@@ -2,8 +2,8 @@ package com.spicstome.client;
 
 import com.google.gwt.place.shared.PlaceController;
 import com.google.web.bindery.event.shared.SimpleEventBus;
-import com.spicstome.client.ui.AddUserView;
-import com.spicstome.client.ui.AddUserViewImpl;
+import com.spicstome.client.ui.UserEditView;
+import com.spicstome.client.ui.UserEditViewImpl;
 import com.spicstome.client.ui.AlbumEditView;
 import com.spicstome.client.ui.AlbumEditViewImpl;
 import com.spicstome.client.ui.AlbumManagementView;
@@ -12,6 +12,8 @@ import com.spicstome.client.ui.AlbumView;
 import com.spicstome.client.ui.AlbumViewImpl;
 import com.spicstome.client.ui.HistoryManagementView;
 import com.spicstome.client.ui.HistoryManagementViewImpl;
+import com.spicstome.client.ui.HistoryView;
+import com.spicstome.client.ui.HistoryViewImpl;
 import com.spicstome.client.ui.LogoutView;
 import com.spicstome.client.ui.LogoutViewImpl;
 import com.spicstome.client.ui.MailView;
@@ -47,9 +49,12 @@ public class ClientFactory
 	private static final AlbumEditView albumEditView = new AlbumEditViewImpl();
 	private static final NewMailView newMailView = new NewMailViewImpl();
 	private static final UsersManagementView usersManagementView = new UsersManagementViewImpl();
-	private static final AddUserView addUserView = new AddUserViewImpl();
+	private static final UserEditView addUserView = new UserEditViewImpl();
 	private static final MailView mailView = new MailViewImpl();
 	private static final HistoryManagementView historyManagementView = new HistoryManagementViewImpl();
+	private static final HistoryView historyView = new HistoryViewImpl();
+
+
 
 	public SimpleEventBus getEventBus() {
 		return eventBus;
@@ -95,11 +100,15 @@ public class ClientFactory
 		return usersManagementView;
 	}
 	
-	public AddUserView getAddUserView() {
+	public UserEditView getAddUserView() {
 		return addUserView;
 	}
 
 	public HistoryManagementView getHistoryManagementView() {
 		return historyManagementView;
+	}
+	
+	public  HistoryView getHistoryView() {
+		return historyView;
 	}
 }

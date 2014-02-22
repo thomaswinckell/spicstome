@@ -1,12 +1,12 @@
 package com.spicstome.client.ui;
 
 import java.util.ArrayList;
+
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.layout.HLayout;
-import com.spicstome.client.dto.AlbumDTO;
 import com.spicstome.client.dto.StudentDTO;
-import com.spicstome.client.place.AlbumPlace;
+import com.spicstome.client.place.HistoryPlace;
 import com.spicstome.client.ui.panel.ActionPanel;
 import com.spicstome.client.ui.widget.Crumb;
 import com.spicstome.client.ui.widget.ImageRecord;
@@ -18,7 +18,7 @@ public class HistoryManagementViewImpl extends UserViewImpl  implements HistoryM
 {
 
 	
-	ImageTileGrid imageListStudentAlbum;
+	ImageTileGrid imageListStudent;
 	
 	HLayout verticalLayoutStudent = new HLayout();
 	
@@ -40,15 +40,15 @@ public class HistoryManagementViewImpl extends UserViewImpl  implements HistoryM
 			
 			@Override
 			public void onVisualize() {
-				AlbumDTO a = (AlbumDTO)imageListStudentAlbum.getSelectedItem().getAttributeAsObject(ImageRecord.DATA);
-				listener.goTo(new AlbumPlace(a.getId()));
+				StudentDTO s = (StudentDTO)imageListStudent.getSelectedItem().getAttributeAsObject(ImageRecord.DATA);
+				listener.goTo(new HistoryPlace(s.getId()));
 			}
 
 		};
 		
 	
 		
-		imageListStudentAlbum = new ImageTileGrid(Mode.CLICK,200,100,60){
+		imageListStudent = new ImageTileGrid(Mode.CLICK,200,100,60){
 			
 
 			@Override
@@ -68,10 +68,10 @@ public class HistoryManagementViewImpl extends UserViewImpl  implements HistoryM
 		labelStudent.setStyleName("title");
 		
 
-		imageListStudentAlbum.setHeight(170);
+		imageListStudent.setHeight(170);
 
 		
-		verticalLayoutStudent.addMember(imageListStudentAlbum);
+		verticalLayoutStudent.addMember(imageListStudent);
 		verticalLayoutStudent.addMember(actionPanelStudentAlbum);
 		
 	
@@ -94,7 +94,7 @@ public class HistoryManagementViewImpl extends UserViewImpl  implements HistoryM
 		
 		for(StudentDTO student :list)
 		{
-			imageListStudentAlbum.addItem(new ImageRecord(ImageRecord.others.HISTORY, student));
+			imageListStudent.addItem(new ImageRecord(ImageRecord.others.HISTORY, student));
 		}
 
 	}
@@ -106,7 +106,7 @@ public class HistoryManagementViewImpl extends UserViewImpl  implements HistoryM
 	@Override
 	public void init() {
 
-		imageListStudentAlbum.clearItems();
+		imageListStudent.clearItems();
 	}
 
 	

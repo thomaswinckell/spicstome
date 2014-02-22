@@ -2,11 +2,12 @@ package com.spicstome.client.mvp;
 
 import com.google.gwt.place.shared.PlaceHistoryMapper;
 import com.google.gwt.place.shared.WithTokenizers;
-import com.spicstome.client.place.AddUserPlace;
+import com.spicstome.client.place.UserEditPlace;
 import com.spicstome.client.place.AlbumEditPlace;
 import com.spicstome.client.place.AlbumManagementPlace;
 import com.spicstome.client.place.AlbumPlace;
 import com.spicstome.client.place.HistoryManagementPlace;
+import com.spicstome.client.place.HistoryPlace;
 import com.spicstome.client.place.LogoutPlace;
 import com.spicstome.client.place.MailPlace;
 import com.spicstome.client.place.NewMailPlace;
@@ -29,7 +30,8 @@ import com.spicstome.client.place.UsersManagementPlace;
 					NewMailPlace.Tokenizer.class,
 					MailPlace.Tokenizer.class,
 					HistoryManagementPlace.Tokenizer.class,
+					HistoryPlace.Tokenizer.class,
 					UsersManagementPlace.Tokenizer.class,
-					AddUserPlace.Tokenizer.class})
+					UserEditPlace.Tokenizer.class})
 public interface AppPlaceHistoryMapper extends PlaceHistoryMapper {
 }
