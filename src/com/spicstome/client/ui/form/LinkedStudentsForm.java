@@ -128,9 +128,19 @@ public class LinkedStudentsForm extends VLayout {
 			@Override
 			public void onSuccess(List<StudentDTO> students) {
 				List<UserDTO> users = new ArrayList<UserDTO>();
+				
+				boolean isLinked = false;
+				
 				for (StudentDTO student : students) {
-					if (!linkedStudentsSelectItem.getUsers().contains((UserDTO) student))
+					
+					for (UserDTO user : linkedStudentsSelectItem.getUsers())
+						if (student.getId().longValue() == user.getId().longValue())
+							isLinked = true;
+							
+					if (!isLinked)
 						users.add((UserDTO) student);
+					
+					isLinked = false;
 				}
 				nonLinkedStudentsSelectItem.setUsers(users);
 				
