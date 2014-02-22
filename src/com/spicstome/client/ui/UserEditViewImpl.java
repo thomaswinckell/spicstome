@@ -3,9 +3,11 @@ package com.spicstome.client.ui;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.types.Alignment;
 import com.spicstome.client.dto.UserDTO;
+import com.spicstome.client.place.UserEditPlace;
 import com.spicstome.client.place.UsersManagementPlace;
 import com.spicstome.client.ui.form.FormUtils;
 import com.spicstome.client.ui.form.UserForm;
+import com.spicstome.client.ui.widget.Crumb;
 
 public class UserEditViewImpl extends UserViewImpl  implements UserEditView {
 
@@ -15,12 +17,19 @@ public class UserEditViewImpl extends UserViewImpl  implements UserEditView {
 		
 		super();
 		
-		/*addCrumb(new Crumb("Ajout d'un utilisateur"){
+		addCrumb(new Crumb("Gestion des utilisateurs") {
 			@Override
 			public void onClickCrumb() {			
-				goTo(new AddUserPlace(null));
+				goTo(new UsersManagementPlace());
 			}
-		});*/
+		});
+		
+		addCrumb(new Crumb("Ajout/Edition d'utilisateur"){
+			@Override
+			public void onClickCrumb() {			
+				goTo(new UserEditPlace(null));
+			}
+		});
 		
 		userForm = new UserForm(new AsyncCallback<Long> () {
 			@Override

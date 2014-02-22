@@ -27,9 +27,11 @@ import com.spicstome.client.dto.StudentDTO;
 import com.spicstome.client.dto.TeacherDTO;
 import com.spicstome.client.dto.UserDTO;
 import com.spicstome.client.place.UserEditPlace;
+import com.spicstome.client.place.UsersManagementPlace;
 import com.spicstome.client.ui.form.ReferentsEditForm;
 import com.spicstome.client.ui.form.StudentsEditForm;
 import com.spicstome.client.ui.form.TeachersEditForm;
+import com.spicstome.client.ui.widget.Crumb;
 
 /**
  * Sample implementation of {@link UsersManagementView}.
@@ -44,12 +46,12 @@ public class UsersManagementViewImpl extends UserViewImpl implements UsersManage
 
 		super();
 		
-		/*addCrumb(new Crumb("Gestion des utilisateurs") {
+		addCrumb(new Crumb("Gestion des utilisateurs") {
 			@Override
 			public void onClickCrumb() {			
 				goTo(new UsersManagementPlace());
 			}
-		});*/
+		});
 		
 		/* Add a user */
 		
