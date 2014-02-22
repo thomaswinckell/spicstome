@@ -63,46 +63,43 @@ public class ImageUploadForm {
 			@Override
 			public void onClick(ClickEvent event) {
 				image.setSrc(FormUtils.UPLOAD_IMAGE_PATH+imageFileName);
-				window.destroy();
+				window.hide();
 			}
 		});
 
 		window.addItem(uploaderImage);       
 		window.addItem(uploader);
 		window.addItem(saveImageButton);
+		
+		uploader.addOnFinishUploadHandler(new OnFinishUploaderHandler() {
+			public void onFinish(IUploader uploader) {
+
+				if (uploader.getStatus() == Status.SUCCESS) {
+					String response = uploader.getServerResponse();
+					//System.out.println(response);
+					if (response != null) {
+						Document doc = XMLParser.parse(response);
+						String fileName = Utils.getXmlNodeValue(doc, "name");
+						if (fileName != null) {
+							imageFileName = fileName;
+							uploaderImage.setSrc(FormUtils.UPLOAD_IMAGE_PATH+imageFileName);
+							saveImageButton.enable();
+						}
+					} else {
+						SC.say("Unaccessible server response");
+					}
+
+					uploader.reset();
+				} else {
+					SC.say("Statut du chargement : \n" + uploader.getStatus());
+				}
+			}
+		});
 
 		uploadButton.addClickHandler(new ClickHandler() {
 
 			@Override
 			public void onClick(ClickEvent event) {
-
-				
-
-				uploader.addOnFinishUploadHandler(new OnFinishUploaderHandler() {
-					public void onFinish(IUploader uploader) {
-
-						if (uploader.getStatus() == Status.SUCCESS) {
-							String response = uploader.getServerResponse();
-							//System.out.println(response);
-							if (response != null) {
-								Document doc = XMLParser.parse(response);
-								String fileName = Utils.getXmlNodeValue(doc, "name");
-								if (fileName != null) {
-									imageFileName = fileName;
-									uploaderImage.setSrc(FormUtils.UPLOAD_IMAGE_PATH+imageFileName);
-									saveImageButton.enable();
-								}
-							} else {
-								SC.say("Unaccessible server response");
-							}
-
-							uploader.reset();
-						} else {
-							SC.say("Statut du chargement : \n" + uploader.getStatus());
-						}
-
-					}
-				});
 
 				window.show();
 			}
