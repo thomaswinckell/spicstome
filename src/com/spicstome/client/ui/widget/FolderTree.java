@@ -131,6 +131,11 @@ public class FolderTree extends VLayout
 	    	setAttribute("data",folder);
 	    }
 	    
+	    public void setFolderDTO(FolderDTO folder)
+	    {
+	    	setAttribute("data", folder);
+	    }
+	    
 	    public FolderDTO getFolderDTO()
 	    {
 	    	return (FolderDTO) getAttributeAsObject("data");

@@ -6,6 +6,8 @@ import java.util.List;
 import com.smartgwt.client.data.RecordList;
 import com.smartgwt.client.util.BooleanCallback;
 import com.smartgwt.client.util.SC;
+import com.smartgwt.client.widgets.Img;
+import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.events.DropCompleteEvent;
 import com.smartgwt.client.widgets.events.DropCompleteHandler;
 import com.smartgwt.client.widgets.layout.VLayout;
@@ -36,7 +38,9 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 
 	VLayout wordVerticalPanel = new VLayout();
 
-	
+	VLayout emptyLayout = new VLayout();
+	Label emptyLabel = new Label();
+	Img imgHere = new Img("drophere.gif");
 	
 	public AlbumEditPanel() {
 		super();
@@ -323,11 +327,24 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 	    	}
 	    	
 	    };
+	    
+	    emptyLabel.setContents("C'est vide ici ! Vous pouvez ajouter ou importer des mots depuis "+
+	    "d'autre albums ou depuis votre ordinateur");
+	    emptyLabel.setStyleName("title");
+	    emptyLabel.setMargin(50);
+	    emptyLayout.addMember(emptyLabel);
+	    imgHere.setSize(60);
+		imgHere.setPrompt("Ajouter ou importer des mots grâce aux icones ci-dessous");
+	    emptyLayout.addMember(imgHere);
+	    
+	    wordVerticalPanel.addMember(emptyLayout);
 	    wordVerticalPanel.addMember(wordsGrid);
 	    wordVerticalPanel.addMember(actionWordsPanel);
 	       
 	    verticalLayout.setHeight(450);
 	    wordVerticalPanel.setHeight(450);
+	    
+	    
 	   
 	    horizontalLayout.addMember(wordVerticalPanel);
 
@@ -365,6 +382,7 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 		
 		wordsGrid.clearItems();
 		UpdateActionPanels();
+		UpdateEmptyFolder();
 	}
 	
 	public void insertFolderIntoTree(FolderDTO folderDTO)
@@ -397,7 +415,10 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 		
 		wordsGrid.setItems(words);
 		
+		folderTree.selectFolderNode.setFolderDTO(folder);
+		
 		UpdateActionPanels();
+		UpdateEmptyFolder();
 		
 	}
 	
@@ -406,6 +427,7 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 	public void insertWordIntoGrid(WordDTO wordDTO)
 	{
 			wordsGrid.addItem(new ImageRecord(wordDTO));
+			UpdateEmptyFolder();
 	}
 	
 	public void removeWordFromGrid(WordDTO wordDTO)
@@ -413,6 +435,7 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 		wordsGrid.removeItem((ImageRecord)wordsGrid.getSelectedRecord());
 		wordsGrid.deselectAllRecords();	
 		UpdateActionPanels();
+		UpdateEmptyFolder();
 	}
 	
 	public WordDTO getSelectedWord()
@@ -420,7 +443,26 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 		return (WordDTO)((ImageRecord)(wordsGrid.getSelectedRecord())).getAttributeAsObject(ImageRecord.DATA);
 	}
 	
+	public int getWordCountInFolder()
+	{
+		int n=0;
+		for(PecsDTO pecsDTO:getSelectedFolder().getContent())
+		{
+			if(pecsDTO instanceof WordDTO)
+				n++;		
+		}
+		
+		return n;
+	}
 	
+	public void UpdateEmptyFolder()
+	{
+		boolean empty = (folderTree.selectFolderNode!=null) && (getWordCountInFolder()==0);
+		
+		emptyLayout.setVisible(empty);
+		wordsGrid.setVisible(!empty);
+		
+	}
 	
 	public void UpdateActionPanels()
 	{
@@ -436,6 +478,7 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 		
 		wordsGrid.clearItems();
 		UpdateActionPanels();
+		UpdateEmptyFolder();
 	}
 	
 	
