@@ -8,7 +8,7 @@
   
   <inherits name="com.smartgwt.SmartGwt"/>
   <inherits name="gwtupload.GWTUpload"/>
-  <inherits name='com.googlecode.gchart.GChart'/>
+	
 
   <!-- Entry Point is the first class called at the begining of the application -->
   
