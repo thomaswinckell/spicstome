@@ -14,7 +14,9 @@
  *******************************************************************************/
 package com.spicstome.client.services;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.spicstome.client.dto.AlbumDTO;
@@ -48,6 +50,9 @@ public interface SpicsToMeServicesAsync {
 	void getAllTeachers(AsyncCallback<List<TeacherDTO>> callback);
 	void getAllReferents(AsyncCallback<List<ReferentDTO>> callback);
 	void getEverybody(AsyncCallback<List<UserDTO>> callback);
+	void getAverageMessageLength(Set<LogDTO> set,AsyncCallback<Double> callback);
+	void getAverageTimeExecution(Set<LogDTO> set,AsyncCallback<Double> callback);
+	void getMailPerWeek(Set<LogDTO> set,AsyncCallback<ArrayList<Integer>> callback);
 	
 	/* SAVE */
 	void saveImage(ImageDTO imageDTO, AsyncCallback<Long> callback);

@@ -1,8 +1,10 @@
 package com.spicstome.server;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.TreeSet;
+
 import com.spicstome.client.shared.Adjective;
 import com.spicstome.client.shared.Album;
 import com.spicstome.client.shared.Article;
@@ -37,21 +39,39 @@ public class Test {
 		student.setLogs(new HashSet<Log>());
 		
 		HibernateManager.getInstance().save(student);
+
 		
+		Calendar calendar = Calendar.getInstance();
+		Date now = new Date();
+		calendar.setTime(now);
+		calendar.set(Calendar.MONTH, calendar.get(Calendar.MONTH)-1);
+		Date prevMonth = calendar.getTime();
+		calendar.set(Calendar.MONTH, calendar.get(Calendar.MONTH)-1);
+		Date prevprevMonth = calendar.getTime();
+		String falseRecipient = "fake@gmail.com";
+		
+		generateLog(student, now, falseRecipient, 15, 3, 3);
+		generateLog(student, now, falseRecipient, 45, 5, 2);
+		generateLog(student, now, falseRecipient, 120, 3, 6);
+		generateLog(student, prevMonth, falseRecipient, 15, 3, 3);
+		generateLog(student, prevMonth, falseRecipient, 30, 3, 3);
+		generateLog(student, prevprevMonth, falseRecipient, 15, 3, 3);
+		generateLog(student, prevprevMonth, falseRecipient, 30, 3, 3);
+
+		return student;
+	}
+	
+	public static void generateLog(Student student,Date date,String recipientMail,int executionTime,int nbAction,int messageLength)
+	{
 		Log log = new Log((long)-1);
-		log.setActions(3);
-		log.setDate(new Date());
-		log.setEmailRecipient("recipient");
-		log.setExecutionTime(15);
-		log.setMessageLength(3);
+		log.setActions(nbAction);
+		log.setDate(date);
+		log.setEmailRecipient(recipientMail);
+		log.setExecutionTime(executionTime);
+		log.setMessageLength(messageLength);
 		log.setStudent(student);
 		
-		student.getLogs().add(log);
-		
-		for(Log logg:student.getLogs())
-			HibernateManager.getInstance().save(logg);
-		
-		return student;
+		HibernateManager.getInstance().save(log);
 	}
 	
 	public static Image populateWithImageUser()

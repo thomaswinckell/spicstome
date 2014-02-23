@@ -1,10 +1,16 @@
 package com.spicstome.server.services;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Set;
+
 import javax.servlet.ServletException;
+
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
+
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.spicstome.client.dto.AdjectiveDTO;
 import com.spicstome.client.dto.AlbumDTO;
@@ -293,6 +299,89 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 		
 		return all;
 	}
+	
+
+	@Override
+	public Double getAverageMessageLength(Set<LogDTO> set) {
+		
+		double sum=0.0;	
+		
+		if(set.size()==0)
+			return 0.0;
+		
+		for(LogDTO log:set)
+			sum+=log.getMessageLength();
+
+		return sum/set.size();
+		
+	}
+	
+	@Override
+	public Double getAverageTimeExecution(Set<LogDTO> set) {
+		
+		double sum=0.0;	
+		
+		if(set.size()==0)
+			return 0.0;
+		
+		for(LogDTO log:set)
+			sum+=log.getExecutionTime();
+		
+
+		return sum/set.size();
+		
+	}
+	
+	public int getMailInAWeek(int nWeekInCalendar,int nYearInCalendar,Set<LogDTO> set)
+	{
+		Calendar calendar = Calendar.getInstance();
+		
+		int sum=0;	
+		int nWeek=-1;
+		int nYear=-1;
+
+		for(LogDTO log:set)
+		{
+			calendar.setTime(log.getDate());
+			nWeek = calendar.get(Calendar.WEEK_OF_YEAR);
+			nYear = calendar.get(Calendar.YEAR);
+			
+			if(nWeek==nWeekInCalendar && nYear==nYearInCalendar)
+			{
+				sum++;
+			}
+		}
+
+		return sum;
+	}
+
+	@Override
+	public ArrayList<Integer> getMailPerWeek(Set<LogDTO> set) {
+		
+		ArrayList<Integer> res = new ArrayList<Integer>();
+		int nbMonthBack=6;
+		int nW;
+		int nY;
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(new Date());
+		int currentWeek = cal.get(Calendar.WEEK_OF_YEAR);
+		cal.set(Calendar.MONTH, cal.get(Calendar.MONTH)-nbMonthBack);
+		
+		do{
+			
+			nW = cal.get(Calendar.WEEK_OF_YEAR);
+			nY = cal.get(Calendar.YEAR);
+			res.add(getMailInAWeek(nW,nY, set));
+			cal.set(Calendar.WEEK_OF_YEAR, cal.get(Calendar.WEEK_OF_YEAR)+1);
+			
+		}while(nW!=currentWeek);
+		
+		
+		return res;
+	}
+
+
+
 	
 	/* SAVE */
 	@Override
@@ -878,8 +967,8 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 		return copyAlbum;
 		
 	}
-
-
+	
+	
 
 	
 

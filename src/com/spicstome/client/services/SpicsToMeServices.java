@@ -14,7 +14,9 @@
  *******************************************************************************/
 package com.spicstome.client.services;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.RemoteService;
@@ -62,6 +64,9 @@ public interface SpicsToMeServices extends RemoteService {
 	public List<TeacherDTO> getAllTeachers();
 	public List<ReferentDTO> getAllReferents();
 	public List<UserDTO> getEverybody();
+	public Double getAverageMessageLength(Set<LogDTO> set);
+	public Double getAverageTimeExecution(Set<LogDTO> set);
+	public ArrayList<Integer> getMailPerWeek(Set<LogDTO> set);
 	
 	/* SAVE */
 	public Long saveImage(ImageDTO imageDTO);
