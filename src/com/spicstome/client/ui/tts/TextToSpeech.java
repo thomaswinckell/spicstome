@@ -1,7 +1,5 @@
 package com.spicstome.client.ui.tts;
 
-import java.util.ArrayList;
-
 import com.allen_sauer.gwt.voices.client.Sound;
 import com.allen_sauer.gwt.voices.client.SoundController;
 import com.allen_sauer.gwt.voices.client.Sound.LoadState;
@@ -9,44 +7,27 @@ import com.allen_sauer.gwt.voices.client.handler.PlaybackCompleteEvent;
 import com.allen_sauer.gwt.voices.client.handler.SoundHandler;
 import com.allen_sauer.gwt.voices.client.handler.SoundLoadStateChangeEvent;
 import com.google.gwt.http.client.URL;
-import com.smartgwt.client.widgets.layout.VLayout;
-import com.spicstome.client.dto.WordDTO;
 
 public class TextToSpeech {
 
 	private SoundController soundController;
 	
-	private static String SERVICE_PROTOCOLE = "http://";
 	private static String SERVICE_URL = "/spicstome/textToSpeech";
-	private static String SERVICE_PARAMS = "?ie=UTF-8&tl=fr";
 	
 	public TextToSpeech() {
 		soundController = new SoundController();
 	}
 	
-	private String getAudioFileURL(ArrayList<WordDTO> message) {
+	private String getAudioFileURL(String message) {
 		
-		String query = "?q=";
-		boolean isFirstWord = true;
-		
-		for(WordDTO word : message) {
-			
-			if (isFirstWord)
-				isFirstWord = false;
-			else
-				query += " ";
-			
-			query += word.getName();
-		}
+		String query = "?q="+message;
 		
 		String res = URL.encode(SERVICE_URL+query);
-		
-		System.out.println(res);
 		
 		return res;
 	}
 	
-	public void playMessage(ArrayList<WordDTO> message) {
+	public void playMessage(String message) {
 		
 		final Sound sound = soundController.createSound(Sound.MIME_TYPE_AUDIO_MPEG_MP3,
 				getAudioFileURL(message));

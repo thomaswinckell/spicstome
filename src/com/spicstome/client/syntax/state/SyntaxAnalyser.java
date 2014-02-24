@@ -90,6 +90,22 @@ public class SyntaxAnalyser {
 		updateText(arrayRecord.size()-1,lastWord+".");
 	}
 	
+	public String getSentence() {
+		String s = "";
+		
+		boolean isFirst = true;
+		for (ImageRecord img : arrayRecord) {
+			if (isFirst)
+				isFirst = false;
+			else
+				s += " ";
+			
+			s += img.getAttribute(ImageRecord.PICTURE_NAME);
+		}
+		
+		return s;
+	}
+	
 	public void analyse()
 	{
 		/* matching and conjugate */
