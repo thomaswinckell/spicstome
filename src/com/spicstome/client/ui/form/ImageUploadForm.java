@@ -63,6 +63,7 @@ public class ImageUploadForm {
 			@Override
 			public void onClick(ClickEvent event) {
 				image.setSrc(FormUtils.UPLOAD_IMAGE_PATH+imageFileName);
+				uploaderImage.setSrc(FormUtils.UPLOAD_IMAGE_PATH+FormUtils.DEFAULT_IMAGE_FILENAME);
 				window.hide();
 			}
 		});
