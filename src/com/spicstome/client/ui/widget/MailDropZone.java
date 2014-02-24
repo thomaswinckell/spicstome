@@ -4,12 +4,16 @@ import java.util.ArrayList;
 
 import com.smartgwt.client.data.RecordList;
 import com.smartgwt.client.types.Alignment;
+import com.smartgwt.client.widgets.IconButton;
 import com.smartgwt.client.widgets.Img;
 import com.smartgwt.client.widgets.Label;
+import com.smartgwt.client.widgets.events.ClickEvent;
+import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.spicstome.client.dto.WordDTO;
 import com.spicstome.client.syntax.state.SyntaxAnalyser;
+import com.spicstome.client.ui.tts.TextToSpeech;
 import com.spicstome.client.ui.widget.ImageTileGrid.Mode;
 
 public class MailDropZone extends VLayout{
@@ -23,6 +27,8 @@ public class MailDropZone extends VLayout{
 	HLayout horizontalLayout = new HLayout();
 	Img drophere = new Img("drophere.gif");
 	public ArrayList<WordDTO> message=new ArrayList<WordDTO>();
+	private TextToSpeech textToSpeech = new TextToSpeech();
+	protected IconButton speakButton = new IconButton("");
 
 	public MailDropZone(int iconSize) {
 		
@@ -39,6 +45,14 @@ public class MailDropZone extends VLayout{
 				UpdateMail();
 			}
 		};
+		
+		speakButton.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				textToSpeech.playMessage(analyser.getSentence());
+			}			
+		});
 	
 		
 		dropZone.setWidth100();
@@ -51,8 +65,11 @@ public class MailDropZone extends VLayout{
 		validImg.setHeight(90);
 		labelGood.setContents("BRAVO ! continue ainsi !");
 		labelGood.setStyleName("title");
+		speakButton.setIcon("sound.png");
+		speakButton.setIconSize(128);
 		validationLayout.addMember(validImg);
 		validationLayout.addMember(labelGood);
+		validationLayout.addMember(speakButton);
 		
 		horizontalLayout.addMember(dropZone);
 		horizontalLayout.addMember(validationLayout);

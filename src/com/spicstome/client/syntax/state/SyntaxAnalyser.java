@@ -77,6 +77,22 @@ public class SyntaxAnalyser {
 		return arrayRecord.get(rang).getAttribute(ImageRecord.PICTURE_NAME);
 	}
 	
+	public String getSentence() {
+		String s = "";
+		
+		boolean isFirst = true;
+		for(ImageRecord img : arrayRecord) {
+			if (isFirst)
+				isFirst = false;
+			else
+				s += " ";
+			
+			s += img.getAttribute(ImageRecord.PICTURE_NAME);
+		}
+		
+		return s;
+	}
+	
 	public void addSentencesMarkers()
 	{
 		String firstWord =getText(0) ;
