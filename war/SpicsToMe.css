@@ -27,6 +27,12 @@ h1 {
 	text-shadow: 0 3px 7px #4B4B4B;
 }
 
+.subTitle
+{
+	font-size:25px;
+	color:lightblue;
+}
+
 .title
 {
 	font-size:30px;

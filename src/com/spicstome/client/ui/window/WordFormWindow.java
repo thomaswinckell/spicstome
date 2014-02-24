@@ -298,6 +298,14 @@ public class WordFormWindow extends Window{
 		});
 		
 		labelType.setHeight(10);
+		imageUploadForm.getUploadButton().setWidth(200);
+		imageUploadForm.getImage().setLayoutAlign(Alignment.CENTER);
+		imageUploadForm.getUploadButton().setLayoutAlign(Alignment.CENTER);
+		
+
+		verticalLayout.setWidth(300);
+		verticalLayout.setLayoutAlign(Alignment.CENTER);
+		verticalLayout.setMargin(20);
 		
 	    verticalLayout.addMember(imageUploadForm.getImage());
 	    verticalLayout.addMember(imageUploadForm.getUploadButton());

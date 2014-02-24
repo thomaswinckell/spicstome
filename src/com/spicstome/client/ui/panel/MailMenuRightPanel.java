@@ -21,9 +21,6 @@ public class MailMenuRightPanel extends MenuRightPanel{
 		
 		this.mailView=mailView;
 		
-		IconButton help = new IconButton("Aide");
-		help.setIcon("aide.gif");
-		help.setIconSize(iconsize);
 		
 		IconButton expand = new IconButton("Plein écran");
 		expand.setIcon("expand.png");
@@ -109,7 +106,6 @@ public class MailMenuRightPanel extends MenuRightPanel{
 			}
 		});
 
-		addIcon(help);
 		addIcon(search);
 		addIcon(favoriteIcon);
 		addIcon(expand);

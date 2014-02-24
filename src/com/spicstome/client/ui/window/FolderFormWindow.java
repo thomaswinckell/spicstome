@@ -95,6 +95,15 @@ public class FolderFormWindow extends Window{
 		});
 		
 		nameDetail.setValue(this.folder.getName());
+		
+		imageUploadForm.getUploadButton().setWidth(200);
+		imageUploadForm.getImage().setLayoutAlign(Alignment.CENTER);
+		imageUploadForm.getUploadButton().setLayoutAlign(Alignment.CENTER);
+		form.setAlign(Alignment.CENTER);
+		
+		verticalLayout.setWidth(300);
+		verticalLayout.setLayoutAlign(Alignment.CENTER);
+		verticalLayout.setMargin(20);
 
 	    verticalLayout.addMember(imageUploadForm.getImage());
 	    verticalLayout.addMember(imageUploadForm.getUploadButton());

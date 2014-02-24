@@ -1,9 +1,11 @@
 package com.spicstome.client.ui;
 
-
 import java.util.ArrayList;
-
+import com.google.gwt.i18n.client.NumberFormat;
+import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.widgets.Label;
+import com.smartgwt.client.widgets.layout.HLayout;
+import com.smartgwt.client.widgets.layout.VLayout;
 import com.spicstome.client.dto.StudentDTO;
 import com.spicstome.client.place.HistoryManagementPlace;
 import com.spicstome.client.ui.chart.Curve;
@@ -19,7 +21,18 @@ public class HistoryViewImpl extends UserViewImpl  implements HistoryView{
 	Label labelNbMails = new Label();
 	Label labelAverageMessageLength = new Label();
 	Label labelAverageExecutionTime = new Label();
-
+	Label labelResultNbMails = new Label();
+	Label labelResultAverageMessageLength = new Label();
+	Label labelResultAverageExecutionTime = new Label();
+	
+	HLayout horizontalLayout = new HLayout();
+	VLayout verticalLayout = new VLayout();
+	VLayout firstResults = new VLayout();
+	
+	HLayout nbMailLayout = new HLayout();
+	HLayout averageMessageLengthLayout = new HLayout();
+	HLayout averageExecutionTimeLayout = new HLayout();
+	
 	SingleCurveChart singleCurveChart;
 	
 	public HistoryViewImpl()
@@ -41,15 +54,49 @@ public class HistoryViewImpl extends UserViewImpl  implements HistoryView{
 		
 		addCrumb(crumb);
 
+		labelTitle.setStyleName("title");
+		labelNbMails.setStyleName("subTitle");
+		labelAverageMessageLength.setStyleName("subTitle");
+		labelAverageExecutionTime.setStyleName("subTitle");
+		labelResultNbMails.setStyleName("title");
+		labelResultAverageMessageLength.setStyleName("title");
+		labelResultAverageExecutionTime.setStyleName("title");
+		labelNbMails.setWidth100();
+		labelAverageMessageLength.setWidth100();
+		labelAverageExecutionTime.setWidth100();
+		labelResultNbMails.setWidth(50);
+		labelResultAverageMessageLength.setWidth(50);
+		labelResultAverageExecutionTime.setWidth(50);
 		
-		mainPanel.addMember(labelTitle);
-		mainPanel.addMember(labelNbMails);
-		mainPanel.addMember(labelAverageMessageLength);
-		mainPanel.addMember(labelAverageExecutionTime);
+		
+		labelNbMails.setContents("Nombre de mail envoyés: ");
+		labelAverageMessageLength.setContents("Longueur moyenne des messages: ");
+		labelAverageExecutionTime.setContents("Temps moyen d'écriture d'un message: ");
+		
+		nbMailLayout.addMember(labelNbMails);
+		nbMailLayout.addMember(labelResultNbMails);
+		averageExecutionTimeLayout.addMember(labelAverageExecutionTime);
+		averageExecutionTimeLayout.addMember(labelResultAverageExecutionTime);
+		averageMessageLengthLayout.addMember(labelAverageMessageLength);
+		averageMessageLengthLayout.addMember(labelResultAverageMessageLength);
+		
+		firstResults.setStyleName("bloc");
+		labelTitle.setAlign(Alignment.CENTER);
+		
+		
+		firstResults.addMember(nbMailLayout);
+		firstResults.addMember(averageExecutionTimeLayout);
+		firstResults.addMember(averageMessageLengthLayout);
+		
+		verticalLayout.addMember(labelTitle);
+		verticalLayout.addMember(firstResults);
 
 		singleCurveChart = new SingleCurveChart(1000,500,50,50, "semaine", "mails envoyés");
 
-		mainPanel.addMember(singleCurveChart);
+		horizontalLayout.addMember(verticalLayout);
+		horizontalLayout.addMember(singleCurveChart);
+	
+		mainPanel.addMember(horizontalLayout);
 	}
 	
 	
@@ -60,7 +107,7 @@ public class HistoryViewImpl extends UserViewImpl  implements HistoryView{
 		String title = "Historique de "+student.getFirstName();
 		crumb.setCrumbTitle(title);
 		labelTitle.setContents(title);
-		labelNbMails.setContents("Nombre de mail envoyés: "+student.getLogs().size());
+		labelResultNbMails.setContents(String.valueOf(student.getLogs().size()));
 		
 
 	}
@@ -68,7 +115,8 @@ public class HistoryViewImpl extends UserViewImpl  implements HistoryView{
 	@Override
 	public void setAverageMessageLength(double d) {
 		
-		labelAverageMessageLength.setContents("Longueur moyenne des messages: "+d);
+		
+		labelResultAverageMessageLength.setContents(NumberFormat.getFormat("#0.00").format(d));
 		
 	}
 
@@ -78,7 +126,7 @@ public class HistoryViewImpl extends UserViewImpl  implements HistoryView{
 		int minute = (int) (d/60);
 		int seconds = (int) (d-(minute*60));
 		
-		labelAverageExecutionTime.setContents("Temps moyen d'écriture d'un message: "+minute+":"+seconds);
+		labelResultAverageExecutionTime.setContents(+minute+":"+seconds);
 		
 	}
 
@@ -94,7 +142,7 @@ public class HistoryViewImpl extends UserViewImpl  implements HistoryView{
 			coords.add(new Point2D(x,list.get(x)));
 		}
 			
-
+		
 		
 		singleCurveChart.addCurve(new Curve(coords, "x", "y", "red"));
 
