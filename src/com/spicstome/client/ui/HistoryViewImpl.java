@@ -1,9 +1,14 @@
 package com.spicstome.client.ui;
 
 
+import java.util.ArrayList;
+
 import com.smartgwt.client.widgets.Label;
 import com.spicstome.client.dto.StudentDTO;
 import com.spicstome.client.place.HistoryManagementPlace;
+import com.spicstome.client.ui.chart.Curve;
+import com.spicstome.client.ui.chart.Point2D;
+import com.spicstome.client.ui.chart.SingleCurveChart;
 import com.spicstome.client.ui.widget.Crumb;
 
 public class HistoryViewImpl extends UserViewImpl  implements HistoryView{
@@ -14,7 +19,8 @@ public class HistoryViewImpl extends UserViewImpl  implements HistoryView{
 	Label labelNbMails = new Label();
 	Label labelAverageMessageLength = new Label();
 	Label labelAverageExecutionTime = new Label();
-
+	
+	SingleCurveChart singleCurveChart;
 	
 	public HistoryViewImpl()
 	{
@@ -41,6 +47,9 @@ public class HistoryViewImpl extends UserViewImpl  implements HistoryView{
 		mainPanel.addMember(labelAverageMessageLength);
 		mainPanel.addMember(labelAverageExecutionTime);
 
+		singleCurveChart = new SingleCurveChart(500,500,50,50);
+
+		mainPanel.addMember(singleCurveChart);
 	}
 	
 	
@@ -53,7 +62,21 @@ public class HistoryViewImpl extends UserViewImpl  implements HistoryView{
 		labelTitle.setContents(title);
 		labelNbMails.setContents("Nombre de mail envoyés: "+student.getLogs().size());
 		
+		ArrayList<Point2D> coords = new ArrayList<Point2D>();
 		
+		coords.add(new Point2D(5.0,5.0));
+		coords.add(new Point2D(10.0,10.0));
+		
+		singleCurveChart.addCurve(new Curve(coords, "x", "y", "red"));
+		
+		ArrayList<Point2D> coords2 = new ArrayList<Point2D>();
+		
+		coords2.add(new Point2D(0.0,10.0));
+		coords2.add(new Point2D(5.0,5.0));
+		
+		singleCurveChart.addCurve(new Curve(coords2, "x", "y", "yellow"));
+		
+		singleCurveChart.drawChart();
 	}
 
 	@Override

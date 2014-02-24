@@ -7,13 +7,21 @@
   <inherits name="com.google.gwt.place.Place"/>
   
   <inherits name="com.smartgwt.SmartGwt"/>
+  
+  <inherits name="com.smartgwt.Drawing"/>
+  
   <inherits name="gwtupload.GWTUpload"/>
-	
+  
+  <inherits name='com.allen_sauer.gwt.voices.gwt-voices'/>
+  
+  <inherits name="com.google.gwt.http.HTTP"/>
 
   <!-- Entry Point is the first class called at the begining of the application -->
   
   <entry-point class='com.spicstome.client.SpicsToMe'/>
 
   <servlet path="/imageUpload" class="com.spicstome.server.services.ImageUploadImpl"/>
+  
+  <servlet path="/textToSpeech" class="com.spicstome.server.services.TextToSpeechImpl"/>
 	
 </module>
