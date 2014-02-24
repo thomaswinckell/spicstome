@@ -47,7 +47,7 @@ public class HistoryViewImpl extends UserViewImpl  implements HistoryView{
 		mainPanel.addMember(labelAverageMessageLength);
 		mainPanel.addMember(labelAverageExecutionTime);
 
-		singleCurveChart = new SingleCurveChart(500,500,50,50);
+		singleCurveChart = new SingleCurveChart(1000,500,50,50, "semaine", "mails envoyés");
 
 		mainPanel.addMember(singleCurveChart);
 	}
@@ -62,7 +62,7 @@ public class HistoryViewImpl extends UserViewImpl  implements HistoryView{
 		labelTitle.setContents(title);
 		labelNbMails.setContents("Nombre de mail envoyés: "+student.getLogs().size());
 		
-	
+
 	}
 
 	@Override
@@ -86,6 +86,8 @@ public class HistoryViewImpl extends UserViewImpl  implements HistoryView{
 	public void setNbMailPerWeek(ArrayList<Integer> list) {
 		
 		ArrayList<Point2D> coords = new ArrayList<Point2D>();
+		
+		singleCurveChart.clearCurves();
 		
 		for(int x=0;x<list.size();x++)
 		{
