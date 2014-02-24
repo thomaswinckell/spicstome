@@ -14,17 +14,12 @@
  *******************************************************************************/
 package com.spicstome.client.ui;
 
-import java.util.ArrayList;
 import java.util.List;
-
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.widgets.IconButton;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.layout.VLayout;
-import com.spicstome.client.dto.ReferentDTO;
-import com.spicstome.client.dto.StudentDTO;
-import com.spicstome.client.dto.TeacherDTO;
 import com.spicstome.client.dto.UserDTO;
 import com.spicstome.client.place.UserEditPlace;
 import com.spicstome.client.place.UsersManagementPlace;

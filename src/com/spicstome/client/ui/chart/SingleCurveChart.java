@@ -28,8 +28,8 @@ public class SingleCurveChart extends HLayout {
     	this.stringY = stringY;
     	
     	drawPane = new DrawPane();
-    	drawPane.setHeight(width);
-        drawPane.setWidth(height);
+    	drawPane.setHeight(height);
+        drawPane.setWidth(width);
     	addMember(drawPane);
     }
 
