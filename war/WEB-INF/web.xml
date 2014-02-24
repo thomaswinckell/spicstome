@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE web-app
 	PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
@@ -36,3 +37,43 @@
 
 </web-app>
 
+=======
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE web-app
+	PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+	"http://java.sun.com/dtd/web-app_2_3.dtd">
+
+<web-app>
+
+	<!-- Default page to serve -->
+	<welcome-file-list>
+		<welcome-file>SpicsToMe.html</welcome-file>
+	</welcome-file-list>
+	<servlet>
+		<servlet-name>SpicsToMeServices</servlet-name>
+		<servlet-class>com.spicstome.server.services.SpicsToMeServicesImpl</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>TextToSpeechImpl</servlet-name>
+		<servlet-class>com.spicstome.server.services.TextToSpeechImpl</servlet-class>
+	</servlet>  
+	<servlet-mapping>
+		<servlet-name>SpicsToMeServices</servlet-name>
+		<url-pattern>/spicstome/SpicsToMeServices</url-pattern>
+	</servlet-mapping>
+	<servlet>
+	  <servlet-name>imageUploadImpl</servlet-name>
+	  <servlet-class>com.spicstome.server.services.ImageUploadImpl</servlet-class>
+	</servlet>
+	<servlet-mapping>
+	  <servlet-name>imageUploadImpl</servlet-name>
+	  <url-pattern>/spicstome/imageUpload</url-pattern>
+	</servlet-mapping>
+    <servlet-mapping>  
+     <servlet-name>TextToSpeechImpl</servlet-name>  
+     <url-pattern>/spicstome/textToSpeech</url-pattern>  
+    </servlet-mapping>  
+
+</web-app>
+
+>>>>>>> branch 'master' of https://github.com/thomaswinckell/spicstome.git
