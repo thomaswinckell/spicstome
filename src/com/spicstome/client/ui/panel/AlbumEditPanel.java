@@ -2,14 +2,17 @@ package com.spicstome.client.ui.panel;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import com.smartgwt.client.data.RecordList;
 import com.smartgwt.client.util.BooleanCallback;
 import com.smartgwt.client.util.SC;
+import com.smartgwt.client.widgets.IconButton;
 import com.smartgwt.client.widgets.Img;
 import com.smartgwt.client.widgets.Label;
+import com.smartgwt.client.widgets.events.ClickEvent;
+import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.events.DropCompleteEvent;
 import com.smartgwt.client.widgets.events.DropCompleteHandler;
+import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.smartgwt.client.widgets.tree.TreeNode;
 import com.smartgwt.client.widgets.tree.events.FolderDropEvent;
@@ -31,10 +34,25 @@ import com.spicstome.client.ui.window.WordPickerWindow;
 
 public abstract class AlbumEditPanel extends AlbumPanel{
 
-	ActionPanel actionFoldersPanel;
-	ActionPanel actionWordsPanel;
 	ImageTileGrid wordsGrid;
 	List<StudentDTO> allStudents;
+	
+	int iconsize=40;
+	
+	HLayout actionWordLayout = new HLayout();
+	HLayout actionFolderLayout = new HLayout();
+	
+	protected IconButton buttonWordNew = new IconButton("");
+	protected IconButton buttonWordImport = new IconButton("");
+	protected IconButton buttonWordEdit = new IconButton("");
+	protected IconButton buttonWordDelete = new IconButton("");
+	protected IconButton buttonWordMove = new IconButton("");
+	
+	protected IconButton buttonFolderNew = new IconButton("");
+	protected IconButton buttonFolderImport = new IconButton("");
+	protected IconButton buttonFolderEdit = new IconButton("");
+	protected IconButton buttonFolderDelete = new IconButton("");
+
 
 	VLayout wordVerticalPanel = new VLayout();
 
@@ -87,11 +105,10 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 		});
 
 	    
-	    actionWordsPanel = new ActionPanel(40,true,true,false,true,false,true,true)
-	    {
-
+	   buttonWordNew.addClickHandler(new ClickHandler() {
+		
 			@Override
-			public void onNew() {
+			public void onClick(ClickEvent event) {
 				
 				FolderDTO parent = getSelectedFolder();
 				
@@ -109,11 +126,14 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 					}
 				};
 				wordFormWindow.show();
-
+				
 			}
-			
+	   });
+	   
+	   buttonWordEdit.addClickHandler(new ClickHandler() {
+		
 			@Override
-			public void onEdit() {
+			public void onClick(ClickEvent event) {
 				
 				FolderDTO parent = getSelectedFolder();
 				WordDTO article = getSelectedWord();
@@ -132,10 +152,13 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 				articleFormWindow.show();
 				
 			}
-			
+	   });
+		
+	   buttonWordImport.addClickHandler(new ClickHandler() {
+		
 			@Override
-			public void onImport()
-			{
+			public void onClick(ClickEvent event) {
+				
 				WordPickerWindow win = new WordPickerWindow(allStudents){
 					@Override
 					public void onDestroy()
@@ -150,10 +173,14 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 					}
 				};			 
 				win.show();
+				
 			}
+		});
 
+		buttonWordDelete.addClickHandler(new ClickHandler() {
+			
 			@Override
-			public void onDelete() {
+			public void onClick(ClickEvent event) {
 				
 				SC.confirm("Êtes vous sure de vouloir supprimer cet article ?", new BooleanCallback() {
 					
@@ -169,12 +196,14 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 						}
 					}
 				});
-				
 			}
+		});
+			
+		buttonWordMove.addClickHandler(new ClickHandler() {
 			
 			@Override
-			public void onMove()
-			{
+			public void onClick(ClickEvent event) {
+				
 				/* the student is not upto date */
 				final WordDTO article = getSelectedWord();
 				List<StudentDTO> set = new ArrayList<StudentDTO>();
@@ -192,13 +221,16 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 					}
 				};			 
 				win.show();
+				
 			}
-		};
-	    
-	    actionFoldersPanel = new ActionPanel(40,true,true,false,true,false,false,true) {
+		});
 
+			
+		buttonFolderEdit.addClickHandler(new ClickHandler() {
+			
 			@Override
-			public void onEdit() {
+			public void onClick(ClickEvent event) {
+				
 				FolderDTO folder = getSelectedFolder();
 				FolderFormWindow folderFormWindow = new FolderFormWindow(FolderFormWindow.Mode.EDIT,folder,null){
 					@Override
@@ -212,10 +244,14 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 				};
 			
 				folderFormWindow.show();
+				
 			}
-
+		});	
+		
+		buttonFolderNew.addClickHandler(new ClickHandler() {
+			
 			@Override
-			public void onNew() {
+			public void onClick(ClickEvent event) {
 				
 				FolderDTO parent = getSelectedFolder();
 				
@@ -237,12 +273,15 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 				{
 					SC.warn("Aucun dossier parent séléctionné");
 				}
-
+				
 			}
+		});
+		
+		buttonFolderImport.addClickHandler(new ClickHandler() {
 			
 			@Override
-			public void onImport()
-			{
+			public void onClick(ClickEvent event) {
+				
 				final FolderDTO parent = getSelectedFolder();
 				
 				if(parent!=null)
@@ -265,11 +304,14 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 				{
 					SC.warn("Vous devez selectionner un dossier de destination");
 				}
-			
+				
 			}
-
+		});
+		
+		buttonFolderDelete.addClickHandler(new ClickHandler() {
+			
 			@Override
-			public void onDelete() {
+			public void onClick(ClickEvent event) {
 				
 				final FolderDTO folderDTO = getSelectedFolder();
 				
@@ -291,13 +333,59 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 					SC.warn("Vous ne pouvez pas supprimer la racine");
 				}
 				
-				
 			}
-		};
-		
-		
+		});
 	    
-	    verticalLayout.addMember(actionFoldersPanel);
+	    
+	
+		buttonWordNew.setIconSize(iconsize);
+		buttonWordImport.setIconSize(iconsize);
+		buttonWordEdit.setIconSize(iconsize);
+		buttonWordMove.setIconSize(iconsize);
+		buttonWordDelete.setIconSize(iconsize);
+		
+		buttonFolderNew.setIconSize(iconsize);
+		buttonFolderImport.setIconSize(iconsize);
+		buttonFolderEdit.setIconSize(iconsize);
+		buttonFolderDelete.setIconSize(iconsize);
+		
+		buttonWordNew.setIcon("new.png");
+		buttonWordNew.setPrompt("Ajouter un nouveau mot");
+		buttonWordEdit.setIcon("edit.png");
+		buttonWordEdit.setPrompt("Modifier un mot");
+		buttonWordMove.setIcon("move.png");
+		buttonWordMove.setPrompt("Déplacer un mot");
+		buttonWordDelete.setIcon("delete.png");
+		buttonWordDelete.setPrompt("Supprimer un mot");
+		buttonWordImport.setIcon("import.png");
+		buttonWordImport.setPrompt("Importer un mot");
+		
+		buttonFolderNew.setIcon("new.png");
+		buttonFolderNew.setPrompt("Ajouter un nouveau dossier");
+		buttonFolderEdit.setIcon("edit.png");
+		buttonFolderEdit.setPrompt("Modifier un dossier");
+		buttonFolderDelete.setIcon("delete.png");
+		buttonFolderDelete.setPrompt("Supprimer un dossier");
+		buttonFolderImport.setIcon("import.png");
+		buttonFolderImport.setPrompt("Importer un dossier ou un album");
+		
+		actionWordLayout.addMember(buttonWordNew);
+		actionWordLayout.addMember(buttonWordImport);
+		actionWordLayout.addMember(buttonWordEdit);
+		actionWordLayout.addMember(buttonWordMove);
+		actionWordLayout.addMember(buttonWordDelete);
+		
+		actionFolderLayout.addMember(buttonFolderNew);
+		actionFolderLayout.addMember(buttonFolderImport);
+		actionFolderLayout.addMember(buttonFolderEdit);
+		actionFolderLayout.addMember(buttonFolderDelete);
+		
+		actionFolderLayout.setHeight(iconsize);
+		actionFolderLayout.setWidth(4*iconsize);
+		actionWordLayout.setHeight(iconsize);
+		actionWordLayout.setWidth(5*iconsize);
+	    
+	    verticalLayout.addMember(actionFolderLayout);
 	    
 	    verticalLayout.setStyleName("bloc");
 	    wordVerticalPanel.setStyleName("bloc");
@@ -339,7 +427,7 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 	    
 	    wordVerticalPanel.addMember(emptyLayout);
 	    wordVerticalPanel.addMember(wordsGrid);
-	    wordVerticalPanel.addMember(actionWordsPanel);
+	    wordVerticalPanel.addMember(actionWordLayout);
 	       
 	    verticalLayout.setHeight(450);
 	    wordVerticalPanel.setHeight(450);
@@ -466,9 +554,15 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 	
 	public void UpdateActionPanels()
 	{
-		actionWordsPanel.setHiddenActionVisible(wordsGrid.getSelectedRecord()!=null);
-		actionWordsPanel.setVisible(folderTree.selectFolderNode!=null);
-		actionFoldersPanel.setHiddenActionVisible(folderTree.selectFolderNode!=null);
+		actionWordLayout.setVisible(folderTree.selectFolderNode!=null);
+		
+		buttonFolderEdit.setVisible(folderTree.selectFolderNode!=null);
+		buttonFolderDelete.setVisible(folderTree.selectFolderNode!=null);
+		
+		buttonWordEdit.setVisible(wordsGrid.getSelectedRecord()!=null);
+		buttonWordDelete.setVisible(wordsGrid.getSelectedRecord()!=null);
+		buttonWordMove.setVisible(wordsGrid.getSelectedRecord()!=null);
+		
 	}
 
 	@Override

@@ -12,7 +12,7 @@ public class UserViewImpl extends VLayout implements UserView{
 	protected VLayout mainPanel = new VLayout();
 	protected Presenter listener;
 	protected MenuTopPanel connectPanel;
-
+	protected boolean admin=false;
 	
 	public UserViewImpl() {
 		
@@ -44,6 +44,12 @@ public class UserViewImpl extends VLayout implements UserView{
 	public void setPresenter(Presenter listener) {
 		this.listener=listener;
 		
+	}
+	
+	@Override
+	public void init(boolean a)
+	{
+		this.admin=a;
 	}
 
 

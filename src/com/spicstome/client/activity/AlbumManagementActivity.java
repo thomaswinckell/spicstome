@@ -33,21 +33,10 @@ public class AlbumManagementActivity extends UserActivity implements AlbumManage
 		super.start(containerWidget, eventBus);
 		
 		managementView = clientFactory.getAlbumManagementView();
-		managementView.init();
 		
 		
-		SpicsToMeServices.Util.getInstance().getGeneralAndExampleAlbum(new AsyncCallback<List<AlbumDTO>>() {
-
-			@Override
-			public void onFailure(Throwable caught) {}
-
-			@Override
-			public void onSuccess(List<AlbumDTO> result) {
 		
-				managementView.insertMainAlbum(result);
-
-			}
-		});
+		
 				
 		
 		SpicsToMeServices.Util.getInstance().getCurrentUser( new AsyncCallback<UserDTO>() {
@@ -60,17 +49,31 @@ public class AlbumManagementActivity extends UserActivity implements AlbumManage
 				if(result instanceof ReferentDTO)
 				{
 					ReferentDTO referent = (ReferentDTO) result;
+					managementView.init(true);
 					managementView.insertStudentAlbum(referent.getStudents());
+					
+				}
+				else
+				{
+					managementView.init(false);
 				}
 				
+				SpicsToMeServices.Util.getInstance().getGeneralAndExampleAlbum(new AsyncCallback<List<AlbumDTO>>() {
+
+					@Override
+					public void onFailure(Throwable caught) {}
+
+					@Override
+					public void onSuccess(List<AlbumDTO> result) {
+				
+						managementView.insertMainAlbum(result);
+
+					}
+				});
 				
 			}			
 		});	
-		
-		
-		
-		
-		
+
 	}
 
 }

@@ -3,11 +3,14 @@ package com.spicstome.client.ui;
 import java.util.ArrayList;
 
 import com.smartgwt.client.types.Alignment;
+import com.smartgwt.client.widgets.IconButton;
 import com.smartgwt.client.widgets.Label;
+import com.smartgwt.client.widgets.events.ClickEvent;
+import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
+import com.smartgwt.client.widgets.layout.VLayout;
 import com.spicstome.client.dto.StudentDTO;
 import com.spicstome.client.place.HistoryPlace;
-import com.spicstome.client.ui.panel.ActionPanel;
 import com.spicstome.client.ui.widget.Crumb;
 import com.spicstome.client.ui.widget.ImageRecord;
 import com.spicstome.client.ui.widget.ImageTileGrid;
@@ -20,11 +23,13 @@ public class HistoryManagementViewImpl extends UserViewImpl  implements HistoryM
 	
 	ImageTileGrid imageListStudent;
 	
-	HLayout verticalLayoutStudent = new HLayout();
+	VLayout verticalLayoutStudent = new VLayout();
 	
 	Label labelStudent = new Label();
 
-	ActionPanel actionPanelStudentAlbum;
+	protected int iconsize=40;
+	protected IconButton buttonHistoryVisualize= new IconButton("");
+	protected HLayout actionLayout = new HLayout();
 	
 	public HistoryManagementViewImpl()
 	{
@@ -34,17 +39,18 @@ public class HistoryManagementViewImpl extends UserViewImpl  implements HistoryM
 		addCrumb(new Crumb("Les historiques"){});
 		
 		
-		
-		
-		actionPanelStudentAlbum = new ActionPanel(50,false,false,true,false,false,false,false) {
+		buttonHistoryVisualize.addClickHandler(new ClickHandler() {
 			
 			@Override
-			public void onVisualize() {
+			public void onClick(ClickEvent event) {
+				
 				StudentDTO s = (StudentDTO)imageListStudent.getSelectedItem().getAttributeAsObject(ImageRecord.DATA);
 				listener.goTo(new HistoryPlace(s.getId()));
+				
 			}
-
-		};
+		});
+		
+		
 		
 	
 		
@@ -54,13 +60,18 @@ public class HistoryManagementViewImpl extends UserViewImpl  implements HistoryM
 			@Override
 			public void OnSelectChanged(ImageRecord object) {
 
-	                actionPanelStudentAlbum.setHiddenActionVisible(getSelectedItem()!=null);
-				
+	                actionLayout.setVisible(getSelectedItem()!=null);
 			};
 		};
 		
-	
+		buttonHistoryVisualize.setIcon("visualize.png");
+		buttonHistoryVisualize.setIconSize(iconsize);
+		buttonHistoryVisualize.setPrompt("Consulter l'historique");
 		
+		actionLayout.setHeight(iconsize);
+		actionLayout.setWidth(iconsize);
+		
+		actionLayout.addMember(buttonHistoryVisualize);
 		
 		labelStudent.setContents("Historiques individuels");
 		labelStudent.setHeight(20);
@@ -72,7 +83,7 @@ public class HistoryManagementViewImpl extends UserViewImpl  implements HistoryM
 
 		
 		verticalLayoutStudent.addMember(imageListStudent);
-		verticalLayoutStudent.addMember(actionPanelStudentAlbum);
+		verticalLayoutStudent.addMember(actionLayout);
 		
 	
 		verticalLayoutStudent.setStyleName("bloc");
@@ -90,7 +101,7 @@ public class HistoryManagementViewImpl extends UserViewImpl  implements HistoryM
 	@Override
 	public void insertStudentAlbum(ArrayList<StudentDTO> list) {
 
-		actionPanelStudentAlbum.setHiddenActionVisible(false);
+		actionLayout.setVisible(false);
 		
 		for(StudentDTO student :list)
 		{
@@ -98,10 +109,6 @@ public class HistoryManagementViewImpl extends UserViewImpl  implements HistoryM
 		}
 
 	}
-	
-	
-
-
 
 	@Override
 	public void init() {
@@ -109,5 +116,4 @@ public class HistoryManagementViewImpl extends UserViewImpl  implements HistoryM
 		imageListStudent.clearItems();
 	}
 
-	
 }
