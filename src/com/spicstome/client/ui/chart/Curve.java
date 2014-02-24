@@ -5,26 +5,15 @@ import java.util.ArrayList;
 public class Curve {
 	
 	private ArrayList<Point2D> coords;
-	private String stringX, stringY;
 	private String color;
 	
-	public Curve(ArrayList<Point2D> coords, String stringX, String stringY, String color) {
+	public Curve(ArrayList<Point2D> coords, String color) {
 		this.coords = coords;
-		this.stringX = stringX;
-		this.stringY = stringY;
 		this.color = color;
 	}
 
 	public ArrayList<Point2D> getCoords() {
 		return coords;
-	}
-
-	public String getStringX() {
-		return stringX;
-	}
-
-	public String getStringY() {
-		return stringY;
 	}
 	
 	public String getColor() {
@@ -63,7 +52,6 @@ public class Curve {
 
 	@Override
 	public String toString() {
-		return "Curve [coords=" + coords + ", stringX=" + stringX
-				+ ", stringY=" + stringY + "]";
+		return "Curve [coords=" + coords + "]";
 	}	
 }

@@ -47,7 +47,7 @@ public class HistoryViewImpl extends UserViewImpl  implements HistoryView{
 		mainPanel.addMember(labelAverageMessageLength);
 		mainPanel.addMember(labelAverageExecutionTime);
 
-		singleCurveChart = new SingleCurveChart(500,500,50,50);
+		singleCurveChart = new SingleCurveChart(500,500,50,50, "aaaaaaaaaaaaaaa", "bbbbbbbbbbbbb");
 
 		mainPanel.addMember(singleCurveChart);
 	}
@@ -64,17 +64,15 @@ public class HistoryViewImpl extends UserViewImpl  implements HistoryView{
 		
 		ArrayList<Point2D> coords = new ArrayList<Point2D>();
 		
-		coords.add(new Point2D(5.0,5.0));
-		coords.add(new Point2D(10.0,10.0));
+		coords.add(new Point2D(0.0,0.0));
+		coords.add(new Point2D(1000.0,1000.0));
+		coords.add(new Point2D(2000.0,0.0));
+		coords.add(new Point2D(3000.0,1000.0));
+		coords.add(new Point2D(4000.0,2000.0));
+		coords.add(new Point2D(5000.0,1000.0));
+		coords.add(new Point2D(6000.0,3000.0));
 		
-		singleCurveChart.addCurve(new Curve(coords, "x", "y", "red"));
-		
-		ArrayList<Point2D> coords2 = new ArrayList<Point2D>();
-		
-		coords2.add(new Point2D(0.0,10.0));
-		coords2.add(new Point2D(5.0,5.0));
-		
-		singleCurveChart.addCurve(new Curve(coords2, "x", "y", "yellow"));
+		singleCurveChart.addCurve(new Curve(coords, "red"));
 		
 		singleCurveChart.drawChart();
 	}
