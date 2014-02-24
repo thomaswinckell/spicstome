@@ -4,7 +4,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.TreeSet;
-
 import com.spicstome.client.shared.Adjective;
 import com.spicstome.client.shared.Album;
 import com.spicstome.client.shared.Article;
@@ -20,11 +19,11 @@ import com.spicstome.client.shared.Verb;
 
 public class Test {
 	
-	public enum Type {EXAMPLE,GENERAL};
+	public enum Type {EXAMPLE,GENERAL,EMPTY};
 	
 	public static Student populateWithStudent(String name,String firstname,String login,String password)
 	{
-		Album album = generateAlbum(Type.EXAMPLE);
+		Album album = generateAlbum(Type.EMPTY);
 		
 		Image imageUser = populateWithImageUser();
 		
@@ -40,25 +39,48 @@ public class Test {
 		
 		HibernateManager.getInstance().save(student);
 
-		
-		Calendar calendar = Calendar.getInstance();
-		Date now = new Date();
-		calendar.setTime(now);
-		calendar.set(Calendar.MONTH, calendar.get(Calendar.MONTH)-1);
-		Date prevMonth = calendar.getTime();
-		calendar.set(Calendar.MONTH, calendar.get(Calendar.MONTH)-1);
-		Date prevprevMonth = calendar.getTime();
-		String falseRecipient = "fake@gmail.com";
-		
-		generateLog(student, now, falseRecipient, 15, 3, 3);
-		generateLog(student, now, falseRecipient, 45, 5, 2);
-		generateLog(student, now, falseRecipient, 120, 3, 6);
-		generateLog(student, prevMonth, falseRecipient, 15, 3, 3);
-		generateLog(student, prevMonth, falseRecipient, 30, 3, 3);
-		generateLog(student, prevprevMonth, falseRecipient, 15, 3, 3);
-		generateLog(student, prevprevMonth, falseRecipient, 30, 3, 3);
 
 		return student;
+	}
+	
+	public static int generateRandom(int x,int y)
+	{
+		return (int)(Math.random() * (y-x)) + x;
+	}
+	
+	public static void generateLogForStudent(Student student)
+	{
+		Calendar calendar = Calendar.getInstance();
+		String falseRecipient = "fake@gmail.com";
+		
+		Date now = new Date();
+		calendar.setTime(now);
+		
+		int currentWeek;
+		int currentYear;
+		
+		currentWeek = calendar.get(Calendar.WEEK_OF_YEAR);
+		currentYear = calendar.get(Calendar.YEAR);
+		
+		calendar.set(Calendar.MONTH, calendar.get(Calendar.MONTH)-6);
+
+		while(!(((currentWeek+1)==calendar.get(Calendar.WEEK_OF_YEAR)) && 
+				(currentYear==calendar.get(Calendar.YEAR))))
+		{
+			int random = generateRandom(2,10);
+			
+			for(int i=0;i<random;i++)
+			{
+				int nbAction = generateRandom(1, 4);
+				int timeExecution = generateRandom(0, 120);
+				int messageLength = generateRandom(1, 5);
+				
+				generateLog(student, calendar.getTime(), falseRecipient, timeExecution, nbAction, messageLength);
+			}
+			
+			calendar.set(Calendar.WEEK_OF_YEAR, calendar.get(Calendar.WEEK_OF_YEAR)+1);
+			
+		};
 	}
 	
 	public static void generateLog(Student student,Date date,String recipientMail,int executionTime,int nbAction,int messageLength)
@@ -195,8 +217,8 @@ public class Test {
 	{
 		Folder racine = generateFolder(0,"Tout", "all.png", null);
 		
-			
-			
+		if(type!=Type.EMPTY)
+		{
 			if(type==Type.GENERAL)
 			{
 				Folder articles = generateFolder(0,"Articles", "articles.gif", racine);	
@@ -214,7 +236,7 @@ public class Test {
 					generateArticle(10, "mes", "mes.gif", articles, 1, 1);
 			}
 				
-			Folder qui = generateFolder(0,"Qui", "qui.gif", racine);	
+			Folder qui = generateFolder(1,"Qui", "qui.gif", racine);	
 			
 				Folder commercants = generateFolder(0,"Commerçants", "commercants.gif", qui);
 				
@@ -239,7 +261,7 @@ public class Test {
 					generatePronoun(12,"vous", "vous_2.JPG", qui, 1, 1, 1);
 				}
 				
-			Folder quoi = generateFolder(1,"Quoi", "quoi.gif", racine);
+			Folder quoi = generateFolder(2,"Quoi", "quoi.gif", racine);
 			
 			generateVerb(0,"être", "etre.gif", quoi, 0,2,"suis","es","est","sommes","êtes","sont");
 			generateVerb(1,"ne pas être", "nepasetre.JPG", quoi, 1,2,"suis","es","est","sommes","êtes","sont");
@@ -292,21 +314,21 @@ public class Test {
 				
 					generateNoun(0,"livre", "livre.gif", choses, 0, 0,0);	
 							
-			Folder comment = generateFolder(2,"Comment", "comment.gif", racine);
+			Folder comment = generateFolder(3,"Comment", "comment.gif", racine);
 			
 					generateAdjective(0,"fatigué", "fatiguer.gif", comment,"fatigué","fatigués","fatiguée","fatiguées");	
 					generateAdjective(1,"heureux", "heureux.jpg", comment,"heureux","heureux","heureuse","heureuses");	
 			
 			if(type==Type.GENERAL)
 			{
-				Folder ou = generateFolder(3,"Ou", "ou.gif", racine);
+				Folder ou = generateFolder(4,"Ou", "ou.gif", racine);
 				
 					generateNoun(0,"boucherie", "boucherie.gif", ou, 1, 0,0);	
 					generateNoun(1,"boulangerie", "boulangerie.gif", ou, 1, 0,0);
 			}
 			
-			
-		
+		}
+
 		Album album = new Album((long)-1);
 		album.setFolder(racine);
 		
@@ -368,27 +390,30 @@ public class Test {
 
 		/* Student */
 		
-		Student dagobert = populateWithStudent("Dagobert", "Albert", "albert", "albert");
+		Student albert = populateWithStudent("Dupuis", "Albert", "albert", "albert");
 		Student maxime = populateWithStudent("Hass", "Maxime", "mofo", "mofo");
+		Student marcel = populateWithStudent("Dupont", "Marcel", "marcel", "marcel");
+		Student thomas = populateWithStudent("Winckell", "Thomas", "thomas", "thomas");
 		
-		
-		
+		generateLogForStudent(albert);
 	
 		
 		/* Referant */
 		Image imageReferant = populateWithImageUser();
 		
 		Referent referent = new Referent((long)-1);
-		referent.setName("La Fripouile");
-		referent.setFirstName("Jaquouille");
-		referent.setEmail("visiteur@gmail.com");
+		referent.setName("Martin");
+		referent.setFirstName("Jacques");
+		referent.setEmail("martinjacques@gmail.com");
 		referent.setLogin("referent");
 		referent.setPassword(Encryption.toSHA256("referent"));
 		referent.setImage(imageReferant);
 		
 		referent.setStudents(new TreeSet<Student>());
-		referent.addStudent(dagobert);
+		referent.addStudent(albert);
 		referent.addStudent(maxime);
+		referent.addStudent(thomas);
+		referent.addStudent(marcel);
 		
 		HibernateManager.getInstance().save(referent);
 

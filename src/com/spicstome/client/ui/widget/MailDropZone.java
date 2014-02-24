@@ -69,6 +69,11 @@ public class MailDropZone extends VLayout{
 		analyser = new SyntaxAnalyser();
 	}
 	
+	public void setDropZoneIconSize(int n)
+	{
+		dropZone.setTileSize(n);
+	}
+	
 	public void UpdateValidation(Boolean b,int nbElement)
 	{
 		validationLayout.setVisible(b);
@@ -97,7 +102,7 @@ public class MailDropZone extends VLayout{
 		
 	}
 	
-	public void UpdateMail()
+	public ArrayList<ImageRecord> UpdateMail()
 	{
 		movementCount++;
 		
@@ -125,7 +130,7 @@ public class MailDropZone extends VLayout{
 		
 		dropZone.setItems(words);
 		
-		
+		return words;
 
 	}
 	

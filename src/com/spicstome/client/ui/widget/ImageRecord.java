@@ -46,6 +46,13 @@ public class ImageRecord extends TileRecord {
 		
 	}
 	
+	public ImageRecord(ImageRecord record)
+	{
+		setAttribute(PICTURE_ID, record.getAttributeAsInt(ImageRecord.PICTURE_ID));
+		setAttribute(PICTURE_NAME, record.getAttributeAsString(ImageRecord.PICTURE_NAME));
+		setAttribute(PICTURE_PATH, record.getAttribute(ImageRecord.PICTURE_PATH));
+	}
+	
 	public ImageRecord(AlbumDTO albumDTO,StudentDTO student)
 	{
 		super();

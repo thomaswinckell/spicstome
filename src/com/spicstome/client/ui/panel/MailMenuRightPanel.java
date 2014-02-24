@@ -6,23 +6,38 @@ import com.smartgwt.client.widgets.events.ClickHandler;
 import com.spicstome.client.dto.FolderDTO;
 import com.spicstome.client.dto.PecsDTO;
 import com.spicstome.client.dto.WordDTO;
+import com.spicstome.client.ui.NewMailViewImpl;
 import com.spicstome.client.ui.widget.FolderTree.AlbumTreeNode;
 import com.spicstome.client.ui.window.SearchWordWindow;
 
 public class MailMenuRightPanel extends MenuRightPanel{
 	
-	AlbumBookPanel album;
+	NewMailViewImpl mailView;
 	IconButton favoriteIcon;
 
-	public MailMenuRightPanel(final AlbumBookPanel album)
+	public MailMenuRightPanel(final NewMailViewImpl mailView)
 	{
 		super();
 		
-		this.album=album;
+		this.mailView=mailView;
 		
 		IconButton help = new IconButton("Aide");
 		help.setIcon("aide.gif");
 		help.setIconSize(iconsize);
+		
+		IconButton expand = new IconButton("Plein écran");
+		expand.setIcon("expand.png");
+		expand.setIconSize(iconsize);
+		
+		expand.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				
+				mailView.expand(!mailView.expanded);
+				
+			}
+		});
 
 		IconButton search = new IconButton("Rechercher");
 		search.setIcon("chercher.gif");
@@ -33,26 +48,26 @@ public class MailMenuRightPanel extends MenuRightPanel{
 			@Override
 			public void onClick(ClickEvent event) {
 
-				FolderDTO root = album.student.getAlbum().getFolder();
+				FolderDTO root = mailView.album.student.getAlbum().getFolder();
 
 				SearchWordWindow searchWindow = new SearchWordWindow(root){
 					@Override
 					public void onDestroy()
 					{	
-						album.setFolderContent(this.selectedWord.getFolder());
+						mailView.album.setFolderContent(this.selectedWord.getFolder());
 
-						int nbPerPage = album.book.nbColPerPage*album.book.nbRowPerPage;
+						int nbPerPage = mailView.album.book.nbColPerPage*mailView.album.book.nbRowPerPage;
 						int nbPerDoublePage = 2*(nbPerPage);
 						int orderInBook = getOrderInBook(nbPerDoublePage, selectedWord);
 						int nPageLeft = 2*(orderInBook/nbPerDoublePage);
 						int nInDoublePage = orderInBook-(nbPerPage*nPageLeft);
 
-						album.folderTree.treeGrid.deselectAllRecords();
-						AlbumTreeNode node = album.folderTree.getFolderNodeWithId(selectedWord.getFolder().getId());
-						album.folderTree.treeGrid.selectRecord(node);
-						album.folderTree.selectFolderNode=node;
-						album.book.selectPage(nPageLeft);
-						album.book.selectItem(nInDoublePage);
+						mailView.album.folderTree.treeGrid.deselectAllRecords();
+						AlbumTreeNode node = mailView.album.folderTree.getFolderNodeWithId(selectedWord.getFolder().getId());
+						mailView.album.folderTree.treeGrid.selectRecord(node);
+						mailView.album.folderTree.selectFolderNode=node;
+						mailView.album.book.selectPage(nPageLeft);
+						mailView.album.book.selectItem(nInDoublePage);
 					}
 
 					public int getOrderInBook(int nbPerPage,WordDTO word)
@@ -87,21 +102,22 @@ public class MailMenuRightPanel extends MenuRightPanel{
 
 			@Override
 			public void onClick(ClickEvent event) {
-				album.favoriteFilter=!album.favoriteFilter;
+				mailView.album.favoriteFilter=!mailView.album.favoriteFilter;
 				updateFavorite();
-				if(album.getSelectedFolder()!=null)
-					album.setFolderContent(album.getSelectedFolder());
+				if(mailView.album.getSelectedFolder()!=null)
+					mailView.album.setFolderContent(mailView.album.getSelectedFolder());
 			}
 		});
 
 		addIcon(help);
 		addIcon(search);
 		addIcon(favoriteIcon);
+		addIcon(expand);
 
 	}
 
 	public void updateFavorite()
 	{
-		favoriteIcon.setIcon((album.favoriteFilter?"favorite_on.png":"favorite_off.png"));
+		favoriteIcon.setIcon((mailView.album.favoriteFilter?"favorite_on.png":"favorite_off.png"));
 	}
 }

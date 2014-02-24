@@ -24,7 +24,7 @@ public class NewMailActivity extends UserActivity implements NewMailView.Present
 		super(place, clientFactory,(UserViewImpl)clientFactory.getNewMailView());		
 		
 		newMailview = clientFactory.getNewMailView();
-		newMailview.init();
+		
 		
 		SpicsToMeServices.Util.getInstance().getCurrentUser(new AsyncCallback<UserDTO>() {
 
@@ -38,8 +38,9 @@ public class NewMailActivity extends UserActivity implements NewMailView.Present
 				
 				if(result instanceof StudentDTO)
 				{
+					newMailview.init(false);
 					newMailview.setStudent((StudentDTO)result);
-					newMailview.setIsStudent(true);
+					
 				}
 				else
 				{
@@ -50,8 +51,9 @@ public class NewMailActivity extends UserActivity implements NewMailView.Present
 							StudentDTO falseStudent = new StudentDTO((long)-1);
 							falseStudent.setAlbum(result);
 							
+							newMailview.init(true);
 							newMailview.setStudent(falseStudent);
-							newMailview.setIsStudent(false);
+							
 						}
 
 						@Override

@@ -590,13 +590,7 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 		{
 			this.allStudents=list;
 		}
-			
-		else
-		{
-		// cacher les boutons import
-		}
-		
-		
+
 	}
 	
 	

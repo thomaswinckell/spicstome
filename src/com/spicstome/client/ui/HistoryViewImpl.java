@@ -62,21 +62,7 @@ public class HistoryViewImpl extends UserViewImpl  implements HistoryView{
 		labelTitle.setContents(title);
 		labelNbMails.setContents("Nombre de mail envoyés: "+student.getLogs().size());
 		
-		ArrayList<Point2D> coords = new ArrayList<Point2D>();
-		
-		coords.add(new Point2D(5.0,5.0));
-		coords.add(new Point2D(10.0,10.0));
-		
-		singleCurveChart.addCurve(new Curve(coords, "x", "y", "red"));
-		
-		ArrayList<Point2D> coords2 = new ArrayList<Point2D>();
-		
-		coords2.add(new Point2D(0.0,10.0));
-		coords2.add(new Point2D(5.0,5.0));
-		
-		singleCurveChart.addCurve(new Curve(coords2, "x", "y", "yellow"));
-		
-		singleCurveChart.drawChart();
+	
 	}
 
 	@Override
@@ -93,6 +79,24 @@ public class HistoryViewImpl extends UserViewImpl  implements HistoryView{
 		int seconds = (int) (d-(minute*60));
 		
 		labelAverageExecutionTime.setContents("Temps moyen d'écriture d'un message: "+minute+":"+seconds);
+		
+	}
+
+	@Override
+	public void setNbMailPerWeek(ArrayList<Integer> list) {
+		
+		ArrayList<Point2D> coords = new ArrayList<Point2D>();
+		
+		for(int x=0;x<list.size();x++)
+		{
+			coords.add(new Point2D(x,list.get(x)));
+		}
+			
+
+		
+		singleCurveChart.addCurve(new Curve(coords, "x", "y", "red"));
+
+		singleCurveChart.drawChart();
 		
 	}
 }

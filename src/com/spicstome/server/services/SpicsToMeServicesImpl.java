@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 import javax.servlet.ServletException;
 
@@ -33,6 +34,7 @@ import com.spicstome.client.shared.Adjective;
 import com.spicstome.client.shared.Album;
 import com.spicstome.client.shared.Article;
 import com.spicstome.client.shared.Log;
+import com.spicstome.client.shared.Pecs;
 import com.spicstome.client.shared.Word;
 import com.spicstome.client.shared.Folder;
 import com.spicstome.client.shared.Image;
@@ -420,23 +422,27 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
 		
-		Album example = (Album) session.load(Album.class, (long)2);
-		AlbumDTO exampleDTO = Transtypage.createAlbumDTO(example);
+		Album album = new Album((long)-1);
 		
-		session.getTransaction().commit();
+		Image imageRoot = new Image((long)-1);
+		imageRoot.setFilename("all.png");
+		session.save(imageRoot);
 		
+		Folder root = new Folder((long)-1);
+		root.setContent(new TreeSet<Pecs>());
+		root.setImage(imageRoot);
+		root.setName("Tout");
+		session.save(root);
 		
-		
-		AlbumDTO album = copyAlbum(exampleDTO);
-		studentDTO.setAlbum(album);
+		album.setFolder(root);
+		session.save(album);
+	
+		studentDTO.setAlbum(Transtypage.createAlbumDTO(album));
 
-			
-	    Session session2 = HibernateUtil.getSessionFactory().getCurrentSession();
-	    session2.beginTransaction();
-	    
 	    Student student = new Student(studentDTO);	
-	    session2.save(student);
-	    session2.getTransaction().commit();
+	    session.save(student);
+	    
+	    session.getTransaction().commit();
 	    
 	    return student.getId();
 	}

@@ -10,9 +10,8 @@ import com.spicstome.client.dto.UserDTO;
 public interface NewMailView extends IsWidget{
 
 	void setStudent(StudentDTO owner);
-	void setIsStudent(boolean b);
 	void setRecipients(List<UserDTO> recipients);
-	void init();
+	void init(boolean admin);
 	
 	public interface Presenter 
 	{

@@ -71,7 +71,6 @@ public abstract class ImageTileGrid extends TileGrid {
 	}
 	
 
-
 	protected void initComponent(){
 		switch (this.mode) {
 		case CLICK :

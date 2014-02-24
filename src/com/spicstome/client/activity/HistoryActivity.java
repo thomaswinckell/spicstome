@@ -69,7 +69,7 @@ public class HistoryActivity extends UserActivity{
 						@Override
 						public void onSuccess(ArrayList<Integer> result) {
 							
-							
+							historyView.setNbMailPerWeek(result);
 							
 						}
 					});
