@@ -112,9 +112,8 @@ public class NewMailViewImpl extends UserViewImpl  implements NewMailView{
 		
 		defaultStudent=owner;
 		album.setStudent(owner);
-		menuRight.updateFavorite();
-    	menuRight.setIconsVisible(false);
 		
+		menuRight.init();
 	}
 
 
@@ -149,9 +148,11 @@ public class NewMailViewImpl extends UserViewImpl  implements NewMailView{
 		
 		dropZone.init();
 		recipient.init();
-		
+	
 		expand(false);
 		
+		
+
 		begin = System.currentTimeMillis();
 	}
 	

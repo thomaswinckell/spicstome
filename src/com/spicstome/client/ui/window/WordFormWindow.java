@@ -82,7 +82,7 @@ public class WordFormWindow extends Window{
 	public WordFormWindow(Mode mode,final WordDTO wordDTO,FolderDTO parent)
 	{
 		setWidth(500);
-		setHeight(530);
+		setHeight(550);
 		
 		this.parent=parent;
 
@@ -236,6 +236,7 @@ public class WordFormWindow extends Window{
 				matchingText4);
 		
 		buttonValidate.setIconSize(42);
+		buttonValidate.setPrompt("Valider");
 		buttonValidate.setIcon("check.png");
 		buttonValidate.setLayoutAlign(Alignment.CENTER);
 		buttonValidate.addClickHandler(new ClickHandler() {

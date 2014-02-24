@@ -14,6 +14,7 @@ public class MailMenuRightPanel extends MenuRightPanel{
 	
 	NewMailViewImpl mailView;
 	IconButton favoriteIcon;
+	IconButton expand;
 
 	public MailMenuRightPanel(final NewMailViewImpl mailView)
 	{
@@ -22,8 +23,7 @@ public class MailMenuRightPanel extends MenuRightPanel{
 		this.mailView=mailView;
 		
 		
-		IconButton expand = new IconButton("Plein écran");
-		expand.setIcon("expand.png");
+		expand = new IconButton("Plein écran");
 		expand.setIconSize(iconsize);
 		
 		expand.addClickHandler(new ClickHandler() {
@@ -32,12 +32,12 @@ public class MailMenuRightPanel extends MenuRightPanel{
 			public void onClick(ClickEvent event) {
 				
 				mailView.expand(!mailView.expanded);
-				
+				updateExpand();
 			}
 		});
 
 		IconButton search = new IconButton("Rechercher");
-		search.setIcon("chercher.gif");
+		search.setIcon("search.png");
 		search.setIconSize(iconsize);
 
 		search.addClickHandler(new ClickHandler() {
@@ -105,11 +105,23 @@ public class MailMenuRightPanel extends MenuRightPanel{
 					mailView.album.setFolderContent(mailView.album.getSelectedFolder());
 			}
 		});
-
-		addIcon(search);
+		
 		addIcon(favoriteIcon);
+		addIcon(search);
 		addIcon(expand);
 
+	}
+	
+	public void init()
+	{
+		updateFavorite();
+		updateExpand();
+    	setIconsVisible(false);
+	}
+	
+	public void updateExpand()
+	{
+		expand.setIcon((mailView.expanded?"shrink.png":"expand.png"));
 	}
 
 	public void updateFavorite()
