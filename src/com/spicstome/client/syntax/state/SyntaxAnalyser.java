@@ -78,16 +78,21 @@ public class SyntaxAnalyser {
 	}
 	
 	public String getSentence() {
-		String s = "";
+		String s = "", word = " ";
 		
 		boolean isFirst = true;
 		for(ImageRecord img : arrayRecord) {
+			
 			if (isFirst)
 				isFirst = false;
-			else
-				s += " ";
+			else {
+				if (word.charAt(word.length() - 1) != '\'')
+					s += " ";
+			}
 			
-			s += img.getAttribute(ImageRecord.PICTURE_NAME);
+			word = img.getAttribute(ImageRecord.PICTURE_NAME);
+			
+			s += word;
 		}
 		
 		return s;

@@ -2,20 +2,11 @@ package com.spicstome.server.services;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLConnection;
-import java.nio.ByteBuffer;
-import java.nio.CharBuffer;
+import java.net.URLEncoder;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -41,7 +32,7 @@ public class TextToSpeechImpl extends HttpServlet {
 		
         // Create url based on input params
         String strUrl = TEXT_TO_SPEECH_SERVICE + "?" + 
-                "tl=" + LANGUAGE + "&q=" + query.replace(" ", "%20");
+                "tl=" + LANGUAGE + "&q=" + URLEncoder.encode(query, "UTF-8");
         URL url = new URL(strUrl);
 
         // Etablish connection
