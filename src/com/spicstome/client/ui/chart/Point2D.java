@@ -1,4 +1,3 @@
-
 package com.spicstome.client.ui.chart;
 
 public class Point2D {
@@ -20,4 +19,3 @@ public class Point2D {
 		return "Point2D [x=" + x + ", y=" + y + "]";
 	}
 }
-
