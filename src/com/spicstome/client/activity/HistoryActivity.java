@@ -50,7 +50,7 @@ public class HistoryActivity extends UserActivity{
 						}
 					});
 					
-					SpicsToMeServices.Util.getInstance().getAverageTimeExecution(student.getLogs(), new AsyncCallback<Double>() {
+					SpicsToMeServices.Util.getInstance().getAverageTimeExecution(-1,-1,student.getLogs(), new AsyncCallback<Double>() {
 
 						@Override
 						public void onFailure(Throwable caught) {}
@@ -61,7 +61,7 @@ public class HistoryActivity extends UserActivity{
 						}
 					});
 					
-					SpicsToMeServices.Util.getInstance().getMailPerWeek(student.getLogs(), new AsyncCallback<ArrayList<Integer>>() {
+					SpicsToMeServices.Util.getInstance().getHistoryPerWeek(student.getLogs(), 0,new AsyncCallback<ArrayList<Integer>>() {
 
 						@Override
 						public void onFailure(Throwable caught) {}

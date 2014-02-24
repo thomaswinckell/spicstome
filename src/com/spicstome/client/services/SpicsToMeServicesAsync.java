@@ -51,8 +51,8 @@ public interface SpicsToMeServicesAsync {
 	void getAllReferents(AsyncCallback<List<ReferentDTO>> callback);
 	void getEverybody(AsyncCallback<List<UserDTO>> callback);
 	void getAverageMessageLength(Set<LogDTO> set,AsyncCallback<Double> callback);
-	void getAverageTimeExecution(Set<LogDTO> set,AsyncCallback<Double> callback);
-	void getMailPerWeek(Set<LogDTO> set,AsyncCallback<ArrayList<Integer>> callback);
+	void getAverageTimeExecution(int nW,int nY,Set<LogDTO> set,AsyncCallback<Double> callback);
+	void getHistoryPerWeek(Set<LogDTO> set,int type,AsyncCallback<ArrayList<Integer>> callback);
 	
 	/* SAVE */
 	void saveImage(ImageDTO imageDTO, AsyncCallback<Long> callback);

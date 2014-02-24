@@ -318,21 +318,7 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 		
 	}
 	
-	@Override
-	public Double getAverageTimeExecution(Set<LogDTO> set) {
-		
-		double sum=0.0;	
-		
-		if(set.size()==0)
-			return 0.0;
-		
-		for(LogDTO log:set)
-			sum+=log.getExecutionTime();
-		
-
-		return sum/set.size();
-		
-	}
+	
 	
 	public int getMailInAWeek(int nWeekInCalendar,int nYearInCalendar,Set<LogDTO> set)
 	{
@@ -356,9 +342,35 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 
 		return sum;
 	}
+	
+	@Override
+	public Double getAverageTimeExecution(int nWeekInCalendar,int nYearInCalendar,Set<LogDTO> set) {
+		
+		Calendar calendar = Calendar.getInstance();
+		double sum=0.0;	
+		
+		if(set.size()==0)
+			return 0.0;
+		
+		for(LogDTO log:set)
+		{
+			calendar.setTime(log.getDate());
+			int nWeek = calendar.get(Calendar.WEEK_OF_YEAR);
+			int nYear = calendar.get(Calendar.YEAR);
+			
+			if((nWeek==nWeekInCalendar && nYear==nYearInCalendar)|| nWeekInCalendar==-1 || nYearInCalendar==-1)
+			{
+				sum+=log.getExecutionTime();
+			}
+			
+		}
+
+		return sum/set.size();
+		
+	}
 
 	@Override
-	public ArrayList<Integer> getMailPerWeek(Set<LogDTO> set) {
+	public ArrayList<Integer> getHistoryPerWeek(Set<LogDTO> set,int type) {
 		
 		ArrayList<Integer> res = new ArrayList<Integer>();
 		int nbMonthBack=6;
@@ -373,7 +385,11 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 			
 			nW = cal.get(Calendar.WEEK_OF_YEAR);
 			nY = cal.get(Calendar.YEAR);
-			res.add(getMailInAWeek(nW,nY, set));
+			if(type==0)
+				res.add(getMailInAWeek(nW,nY, set));
+			else if(type==1)
+				res.add(Integer.valueOf(getAverageTimeExecution(nW,nY, set).toString()));
+
 			cal.set(Calendar.WEEK_OF_YEAR, cal.get(Calendar.WEEK_OF_YEAR)+1);
 			
 		}while(nW!=currentWeek);

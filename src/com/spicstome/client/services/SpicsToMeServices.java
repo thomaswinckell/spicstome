@@ -65,8 +65,8 @@ public interface SpicsToMeServices extends RemoteService {
 	public List<ReferentDTO> getAllReferents();
 	public List<UserDTO> getEverybody();
 	public Double getAverageMessageLength(Set<LogDTO> set);
-	public Double getAverageTimeExecution(Set<LogDTO> set);
-	public ArrayList<Integer> getMailPerWeek(Set<LogDTO> set);
+	public Double getAverageTimeExecution(int nW,int nY,Set<LogDTO> set);
+	public ArrayList<Integer> getHistoryPerWeek(Set<LogDTO> set,int type);
 	
 	/* SAVE */
 	public Long saveImage(ImageDTO imageDTO);
