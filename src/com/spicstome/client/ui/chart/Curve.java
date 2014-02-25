@@ -2,6 +2,8 @@ package com.spicstome.client.ui.chart;
 
 import java.util.ArrayList;
 
+import com.spicstome.client.shared.Point2D;
+
 public class Curve {
 	
 	private ArrayList<Point2D> coords;

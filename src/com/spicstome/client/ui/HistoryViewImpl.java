@@ -1,6 +1,7 @@
 package com.spicstome.client.ui;
 
 import java.util.ArrayList;
+
 import com.google.gwt.i18n.client.NumberFormat;
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.widgets.Label;
@@ -8,8 +9,8 @@ import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.spicstome.client.dto.StudentDTO;
 import com.spicstome.client.place.HistoryManagementPlace;
+import com.spicstome.client.shared.Point2D;
 import com.spicstome.client.ui.chart.Curve;
-import com.spicstome.client.ui.chart.Point2D;
 import com.spicstome.client.ui.chart.SingleCurveChart;
 import com.spicstome.client.ui.widget.Crumb;
 
@@ -26,6 +27,7 @@ public class HistoryViewImpl extends UserViewImpl  implements HistoryView{
 	Label labelResultAverageExecutionTime = new Label();
 	
 	HLayout horizontalLayout = new HLayout();
+	HLayout horizontalLayout2 = new HLayout();
 	VLayout verticalLayout = new VLayout();
 	VLayout firstResults = new VLayout();
 	
@@ -33,7 +35,9 @@ public class HistoryViewImpl extends UserViewImpl  implements HistoryView{
 	HLayout averageMessageLengthLayout = new HLayout();
 	HLayout averageExecutionTimeLayout = new HLayout();
 	
-	SingleCurveChart singleCurveChart;
+	SingleCurveChart singleCurveChartCountMail;
+	SingleCurveChart singleCurveChartMessageLength;
+	SingleCurveChart singleCurveChartExecutionTime;
 	
 	public HistoryViewImpl()
 	{
@@ -91,12 +95,18 @@ public class HistoryViewImpl extends UserViewImpl  implements HistoryView{
 		verticalLayout.addMember(labelTitle);
 		verticalLayout.addMember(firstResults);
 
-		singleCurveChart = new SingleCurveChart(1000,500,50,50, "semaine", "mails envoyés");
+		singleCurveChartCountMail = new SingleCurveChart(1000,500,50,50, "semaine", "mails envoyés");
+		singleCurveChartMessageLength = new SingleCurveChart(600,400,50,50, "semaine", "longueur moyenne des mails");
+		singleCurveChartExecutionTime = new SingleCurveChart(600,400,50,50, "semaine", "temps moyen d'écriture");
 
 		horizontalLayout.addMember(verticalLayout);
-		horizontalLayout.addMember(singleCurveChart);
+		horizontalLayout.addMember(singleCurveChartCountMail);
 	
+		horizontalLayout2.addMember(singleCurveChartMessageLength);
+		horizontalLayout2.addMember(singleCurveChartExecutionTime);
+		
 		mainPanel.addMember(horizontalLayout);
+		mainPanel.addMember(horizontalLayout2);
 	}
 	
 	
@@ -131,22 +141,67 @@ public class HistoryViewImpl extends UserViewImpl  implements HistoryView{
 	}
 
 	@Override
-	public void setNbMailPerWeek(ArrayList<Integer> list) {
+	public void setNbMailPerWeek(ArrayList<Point2D> list) {
 		
 		ArrayList<Point2D> coords = new ArrayList<Point2D>();
 		
-		singleCurveChart.clearCurves();
+		singleCurveChartCountMail.clearCurves();
 		
 		for(int x=0;x<list.size();x++)
 		{
-			coords.add(new Point2D(x,list.get(x)));
+			coords.add(new Point2D(x,list.get(x).y));
 		}
 			
 		
 		
-		singleCurveChart.addCurve(new Curve(coords, "x", "y", "red"));
+		singleCurveChartCountMail.addCurve(new Curve(coords, "x", "y", "red"));
 
-		singleCurveChart.drawChart();
+		singleCurveChartCountMail.drawChart();
+		
+	}
+
+
+
+	@Override
+	public void setMessageLengthPerWeek(ArrayList<Point2D> list) {
+		
+		ArrayList<Point2D> coords = new ArrayList<Point2D>();
+		
+		singleCurveChartMessageLength.clearCurves();
+		
+		for(int x=0;x<list.size();x++)
+		{
+			coords.add(new Point2D(x,list.get(x).y));
+		}
+			
+		
+		
+		singleCurveChartMessageLength.addCurve(new Curve(coords, "x", "y", "red"));
+
+		singleCurveChartMessageLength.drawChart();
+		
+	}
+
+
+
+	@Override
+	public void setExecutionTimePerWeek(ArrayList<Point2D> list) {
+		
+		ArrayList<Point2D> coords = new ArrayList<Point2D>();
+		
+		singleCurveChartExecutionTime.clearCurves();
+		
+		for(int x=0;x<list.size();x++)
+		{
+			coords.add(new Point2D(x,list.get(x).y));
+		}
+			
+		
+		
+		singleCurveChartExecutionTime.addCurve(new Curve(coords, "x", "y", "red"));
+
+		singleCurveChartExecutionTime.drawChart();
+		
 		
 	}
 }

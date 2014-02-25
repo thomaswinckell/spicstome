@@ -6,12 +6,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
-
 import javax.servlet.ServletException;
-
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
-
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.spicstome.client.dto.AdjectiveDTO;
 import com.spicstome.client.dto.AlbumDTO;
@@ -35,6 +32,7 @@ import com.spicstome.client.shared.Album;
 import com.spicstome.client.shared.Article;
 import com.spicstome.client.shared.Log;
 import com.spicstome.client.shared.Pecs;
+import com.spicstome.client.shared.Point2D;
 import com.spicstome.client.shared.Word;
 import com.spicstome.client.shared.Folder;
 import com.spicstome.client.shared.Image;
@@ -304,23 +302,40 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	
 
 	@Override
-	public Double getAverageMessageLength(Set<LogDTO> set) {
+	public Double getAverageMessageLength(int nWeekInCalendar,int nYearInCalendar,Set<LogDTO> set) {
 		
+		Calendar calendar = Calendar.getInstance();
+		int all=0;
+		boolean nonConstrained= (nWeekInCalendar==-1 || nYearInCalendar==-1);
 		double sum=0.0;	
 		
 		if(set.size()==0)
 			return 0.0;
 		
+		if(nonConstrained)
+			all=set.size();
+		
 		for(LogDTO log:set)
-			sum+=log.getMessageLength();
+		{
+			calendar.setTime(log.getDate());
+			int nWeek = calendar.get(Calendar.WEEK_OF_YEAR);
+			int nYear = calendar.get(Calendar.YEAR);
+			
+			if((nWeek==nWeekInCalendar && nYear==nYearInCalendar)|| nonConstrained)
+			{
+				sum+=log.getMessageLength();
+				all++;
+			}
+			
+		}
 
-		return sum/set.size();
+		return sum/all;
 		
 	}
 	
 	
 	
-	public int getMailInAWeek(int nWeekInCalendar,int nYearInCalendar,Set<LogDTO> set)
+	public double getCountMail(int nWeekInCalendar,int nYearInCalendar,Set<LogDTO> set)
 	{
 		Calendar calendar = Calendar.getInstance();
 		
@@ -347,10 +362,15 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	public Double getAverageTimeExecution(int nWeekInCalendar,int nYearInCalendar,Set<LogDTO> set) {
 		
 		Calendar calendar = Calendar.getInstance();
+		int all=0;
+		boolean nonConstrained= (nWeekInCalendar==-1 || nYearInCalendar==-1);
 		double sum=0.0;	
 		
 		if(set.size()==0)
 			return 0.0;
+		
+		if(nonConstrained)
+			all=set.size();
 		
 		for(LogDTO log:set)
 		{
@@ -358,21 +378,22 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 			int nWeek = calendar.get(Calendar.WEEK_OF_YEAR);
 			int nYear = calendar.get(Calendar.YEAR);
 			
-			if((nWeek==nWeekInCalendar && nYear==nYearInCalendar)|| nWeekInCalendar==-1 || nYearInCalendar==-1)
+			if((nWeek==nWeekInCalendar && nYear==nYearInCalendar)|| nonConstrained)
 			{
 				sum+=log.getExecutionTime();
+				all++;
 			}
 			
 		}
 
-		return sum/set.size();
+		return sum/all;
 		
 	}
 
 	@Override
-	public ArrayList<Integer> getHistoryPerWeek(Set<LogDTO> set,int type) {
+	public ArrayList<Point2D> getHistoryPerWeek(Set<LogDTO> set,int type) {
 		
-		ArrayList<Integer> res = new ArrayList<Integer>();
+		ArrayList<Point2D> res = new ArrayList<Point2D>();
 		int nbMonthBack=6;
 		int nW;
 		int nY;
@@ -385,10 +406,13 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 			
 			nW = cal.get(Calendar.WEEK_OF_YEAR);
 			nY = cal.get(Calendar.YEAR);
+
 			if(type==0)
-				res.add(getMailInAWeek(nW,nY, set));
+				res.add(new Point2D((double) nW,getCountMail(nW,nY, set)));
 			else if(type==1)
-				res.add(Integer.valueOf(getAverageTimeExecution(nW,nY, set).toString()));
+				res.add(new Point2D((double) nW,getAverageTimeExecution(nW,nY, set)));
+			else if(type==2)
+				res.add(new Point2D((double) nW,getAverageMessageLength(nW,nY, set)));
 
 			cal.set(Calendar.WEEK_OF_YEAR, cal.get(Calendar.WEEK_OF_YEAR)+1);
 			

@@ -10,6 +10,7 @@ import com.spicstome.client.dto.StudentDTO;
 import com.spicstome.client.dto.UserDTO;
 import com.spicstome.client.place.HistoryPlace;
 import com.spicstome.client.services.SpicsToMeServices;
+import com.spicstome.client.shared.Point2D;
 import com.spicstome.client.ui.HistoryView;
 import com.spicstome.client.ui.UserViewImpl;
 
@@ -39,7 +40,7 @@ public class HistoryActivity extends UserActivity{
 					
 					historyView.setStudent(student);
 					
-					SpicsToMeServices.Util.getInstance().getAverageMessageLength(student.getLogs(), new AsyncCallback<Double>() {
+					SpicsToMeServices.Util.getInstance().getAverageMessageLength(-1,-1,student.getLogs(), new AsyncCallback<Double>() {
 
 						@Override
 						public void onFailure(Throwable caught) {}
@@ -61,15 +62,41 @@ public class HistoryActivity extends UserActivity{
 						}
 					});
 					
-					SpicsToMeServices.Util.getInstance().getHistoryPerWeek(student.getLogs(), 0,new AsyncCallback<ArrayList<Integer>>() {
+					SpicsToMeServices.Util.getInstance().getHistoryPerWeek(student.getLogs(), 0,new AsyncCallback<ArrayList<Point2D>>() {
 
 						@Override
 						public void onFailure(Throwable caught) {}
 
 						@Override
-						public void onSuccess(ArrayList<Integer> result) {
+						public void onSuccess(ArrayList<Point2D> result) {
 							
 							historyView.setNbMailPerWeek(result);
+							
+						}
+					});
+					
+					SpicsToMeServices.Util.getInstance().getHistoryPerWeek(student.getLogs(), 2,new AsyncCallback<ArrayList<Point2D>>() {
+
+						@Override
+						public void onFailure(Throwable caught) {}
+
+						@Override
+						public void onSuccess(ArrayList<Point2D> result) {
+							
+							historyView.setMessageLengthPerWeek(result);
+							
+						}
+					});
+					
+					SpicsToMeServices.Util.getInstance().getHistoryPerWeek(student.getLogs(), 1,new AsyncCallback<ArrayList<Point2D>>() {
+
+						@Override
+						public void onFailure(Throwable caught) {}
+
+						@Override
+						public void onSuccess(ArrayList<Point2D> result) {
+							
+							historyView.setExecutionTimePerWeek(result);
 							
 						}
 					});

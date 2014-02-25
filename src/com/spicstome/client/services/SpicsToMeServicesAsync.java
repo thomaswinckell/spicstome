@@ -17,7 +17,6 @@ package com.spicstome.client.services;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.spicstome.client.dto.AlbumDTO;
 import com.spicstome.client.dto.LogDTO;
@@ -28,6 +27,7 @@ import com.spicstome.client.dto.ReferentDTO;
 import com.spicstome.client.dto.StudentDTO;
 import com.spicstome.client.dto.TeacherDTO;
 import com.spicstome.client.dto.UserDTO;
+import com.spicstome.client.shared.Point2D;
 
 
 public interface SpicsToMeServicesAsync {
@@ -50,9 +50,9 @@ public interface SpicsToMeServicesAsync {
 	void getAllTeachers(AsyncCallback<List<TeacherDTO>> callback);
 	void getAllReferents(AsyncCallback<List<ReferentDTO>> callback);
 	void getEverybody(AsyncCallback<List<UserDTO>> callback);
-	void getAverageMessageLength(Set<LogDTO> set,AsyncCallback<Double> callback);
+	void getAverageMessageLength(int nW,int nY,Set<LogDTO> set,AsyncCallback<Double> callback);
 	void getAverageTimeExecution(int nW,int nY,Set<LogDTO> set,AsyncCallback<Double> callback);
-	void getHistoryPerWeek(Set<LogDTO> set,int type,AsyncCallback<ArrayList<Integer>> callback);
+	void getHistoryPerWeek(Set<LogDTO> set,int type,AsyncCallback<ArrayList<Point2D>> callback);
 	
 	/* SAVE */
 	void saveImage(ImageDTO imageDTO, AsyncCallback<Long> callback);

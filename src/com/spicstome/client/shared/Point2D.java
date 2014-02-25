@@ -1,7 +1,11 @@
-package com.spicstome.client.ui.chart;
+package com.spicstome.client.shared;
 
-public class Point2D {
+import java.io.Serializable;
 
+public class Point2D implements Serializable{
+
+	private static final long serialVersionUID = 7216352410019645915L;
+	
 	public double x, y;
 	
 	public Point2D() {

@@ -17,7 +17,6 @@ package com.spicstome.client.services;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
@@ -30,6 +29,7 @@ import com.spicstome.client.dto.ReferentDTO;
 import com.spicstome.client.dto.StudentDTO;
 import com.spicstome.client.dto.TeacherDTO;
 import com.spicstome.client.dto.UserDTO;
+import com.spicstome.client.shared.Point2D;
 
 @RemoteServiceRelativePath("SpicsToMeServices")
 public interface SpicsToMeServices extends RemoteService {
@@ -64,9 +64,9 @@ public interface SpicsToMeServices extends RemoteService {
 	public List<TeacherDTO> getAllTeachers();
 	public List<ReferentDTO> getAllReferents();
 	public List<UserDTO> getEverybody();
-	public Double getAverageMessageLength(Set<LogDTO> set);
+	public Double getAverageMessageLength(int nW,int nY,Set<LogDTO> set);
 	public Double getAverageTimeExecution(int nW,int nY,Set<LogDTO> set);
-	public ArrayList<Integer> getHistoryPerWeek(Set<LogDTO> set,int type);
+	public ArrayList<Point2D> getHistoryPerWeek(Set<LogDTO> set,int type);
 	
 	/* SAVE */
 	public Long saveImage(ImageDTO imageDTO);
