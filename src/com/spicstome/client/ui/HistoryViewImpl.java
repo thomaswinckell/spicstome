@@ -185,4 +185,13 @@ public class HistoryViewImpl extends UserViewImpl  implements HistoryView{
 		
 		
 	}
+
+
+
+	@Override
+	public void setPartitionMessageLength(ArrayList<Double> list) {
+	
+		// pie chart
+		
+	}
 }

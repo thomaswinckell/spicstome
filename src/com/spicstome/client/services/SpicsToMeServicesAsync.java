@@ -53,6 +53,7 @@ public interface SpicsToMeServicesAsync {
 	void getAverageMessageLength(int nW,int nY,Set<LogDTO> set,AsyncCallback<Double> callback);
 	void getAverageTimeExecution(int nW,int nY,Set<LogDTO> set,AsyncCallback<Double> callback);
 	void getHistoryPerWeek(Set<LogDTO> set,int type,AsyncCallback<ArrayList<Point2D>> callback);
+	void getPartitionMessageLength(Set<LogDTO> set,AsyncCallback<ArrayList<Double>> callback);
 	
 	/* SAVE */
 	void saveImage(ImageDTO imageDTO, AsyncCallback<Long> callback);

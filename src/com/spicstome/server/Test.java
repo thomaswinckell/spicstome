@@ -73,7 +73,7 @@ public class Test {
 			{
 				int nbAction = generateRandom(1, 4);
 				int timeExecution = generateRandom(0, 120);
-				int messageLength = generateRandom(1, 5);
+				int messageLength = generateRandom(1, 6);
 				
 				generateLog(student, calendar.getTime(), falseRecipient, timeExecution, nbAction, messageLength);
 			}

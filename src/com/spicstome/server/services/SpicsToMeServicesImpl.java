@@ -6,9 +6,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+
 import javax.servlet.ServletException;
+
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
+
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.spicstome.client.dto.AdjectiveDTO;
 import com.spicstome.client.dto.AlbumDTO;
@@ -305,23 +308,20 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	public Double getAverageMessageLength(int nWeekInCalendar,int nYearInCalendar,Set<LogDTO> set) {
 		
 		Calendar calendar = Calendar.getInstance();
-		int all=0;
-		boolean nonConstrained= (nWeekInCalendar==-1 || nYearInCalendar==-1);
+		double all=0.0;
+		boolean nonConstrained= ((nWeekInCalendar==-1) || (nYearInCalendar==-1));
 		double sum=0.0;	
 		
 		if(set.size()==0)
 			return 0.0;
-		
-		if(nonConstrained)
-			all=set.size();
-		
+
 		for(LogDTO log:set)
 		{
 			calendar.setTime(log.getDate());
 			int nWeek = calendar.get(Calendar.WEEK_OF_YEAR);
 			int nYear = calendar.get(Calendar.YEAR);
 			
-			if((nWeek==nWeekInCalendar && nYear==nYearInCalendar)|| nonConstrained)
+			if(((nWeek==nWeekInCalendar) && (nYear==nYearInCalendar))|| nonConstrained)
 			{
 				sum+=log.getMessageLength();
 				all++;
@@ -362,23 +362,20 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	public Double getAverageTimeExecution(int nWeekInCalendar,int nYearInCalendar,Set<LogDTO> set) {
 		
 		Calendar calendar = Calendar.getInstance();
-		int all=0;
-		boolean nonConstrained= (nWeekInCalendar==-1 || nYearInCalendar==-1);
+		double all=0.0;
+		boolean nonConstrained= ((nWeekInCalendar==-1) || (nYearInCalendar==-1));
 		double sum=0.0;	
 		
 		if(set.size()==0)
 			return 0.0;
-		
-		if(nonConstrained)
-			all=set.size();
-		
+
 		for(LogDTO log:set)
 		{
 			calendar.setTime(log.getDate());
 			int nWeek = calendar.get(Calendar.WEEK_OF_YEAR);
 			int nYear = calendar.get(Calendar.YEAR);
 			
-			if((nWeek==nWeekInCalendar && nYear==nYearInCalendar)|| nonConstrained)
+			if(((nWeek==nWeekInCalendar) && (nYear==nYearInCalendar))|| nonConstrained)
 			{
 				sum+=log.getExecutionTime();
 				all++;
@@ -422,7 +419,53 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 		return res;
 	}
 
+	@Override
+	public ArrayList<Double> getPartitionMessageLength(Set<LogDTO> set) {
+		
+		ArrayList<Double> res  =new ArrayList<Double>();
+		
+		if(set.size()==0)
+		{
+			res.add(0.0);
+			return res;
+		}
 
+		int nbMessage1=0;
+		int nbMessage2=0;
+		int nbMessage3=0;
+		int nbMessage4=0;
+		int nbMessage5p=0;
+	
+		for(LogDTO log:set)
+		{
+			switch(log.getMessageLength())
+			{
+				case 1:
+					nbMessage1++;
+				break;
+				case 2:
+					nbMessage2++;
+				break;
+				case 3:
+					nbMessage3++;
+				break;
+				case 4:
+					nbMessage4++;
+				break;
+				default:
+					nbMessage5p++;
+				break;
+			}
+		}
+		
+		res.add((double)nbMessage1/set.size());
+		res.add((double)nbMessage2/set.size());
+		res.add((double)nbMessage3/set.size());
+		res.add((double)nbMessage4/set.size());
+		res.add((double)nbMessage5p/set.size());
+
+		return res;
+	}
 
 	
 	/* SAVE */
@@ -1013,6 +1056,8 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 		return copyAlbum;
 		
 	}
+
+	
 	
 	
 

@@ -67,6 +67,7 @@ public interface SpicsToMeServices extends RemoteService {
 	public Double getAverageMessageLength(int nW,int nY,Set<LogDTO> set);
 	public Double getAverageTimeExecution(int nW,int nY,Set<LogDTO> set);
 	public ArrayList<Point2D> getHistoryPerWeek(Set<LogDTO> set,int type);
+	public ArrayList<Double> getPartitionMessageLength(Set<LogDTO> set);
 	
 	/* SAVE */
 	public Long saveImage(ImageDTO imageDTO);

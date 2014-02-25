@@ -47,6 +47,7 @@ public class HistoryActivity extends UserActivity{
 
 						@Override
 						public void onSuccess(Double result) {
+							
 							historyView.setAverageMessageLength(result);
 						}
 					});
@@ -97,6 +98,19 @@ public class HistoryActivity extends UserActivity{
 						public void onSuccess(ArrayList<Point2D> result) {
 							
 							historyView.setExecutionTimePerWeek(result);
+							
+						}
+					});
+					
+					SpicsToMeServices.Util.getInstance().getPartitionMessageLength(student.getLogs(),new AsyncCallback<ArrayList<Double>>() {
+
+						@Override
+						public void onFailure(Throwable caught) {}
+
+						@Override
+						public void onSuccess(ArrayList<Double> result) {
+							
+							historyView.setPartitionMessageLength(result);
 							
 						}
 					});
