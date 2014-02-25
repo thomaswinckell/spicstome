@@ -95,10 +95,13 @@ public class HistoryViewImpl extends UserViewImpl  implements HistoryView{
 		verticalLayout.addMember(labelTitle);
 		verticalLayout.addMember(firstResults);
 
-		singleCurveChartCountMail = new SingleCurveChart(1000,500,50,50, "semaine", "mails envoyés");
-		singleCurveChartMessageLength = new SingleCurveChart(600,400,50,50, "semaine", "longueur moyenne des mails");
-		singleCurveChartExecutionTime = new SingleCurveChart(600,400,50,50, "semaine", "temps moyen d'écriture");
+		singleCurveChartCountMail = new SingleCurveChart(1000,500,100,50, "semaine", "mails envoyés");
+		singleCurveChartMessageLength = new SingleCurveChart(600,400,100,50, "semaine", "longueur moyenne des mails");
+		singleCurveChartExecutionTime = new SingleCurveChart(600,400,100,50, "semaine", "temps moyen d'écriture");
 
+		horizontalLayout.setStyleName("bloc");
+		horizontalLayout2.setStyleName("bloc");
+		
 		horizontalLayout.addMember(verticalLayout);
 		horizontalLayout.addMember(singleCurveChartCountMail);
 	
@@ -114,7 +117,7 @@ public class HistoryViewImpl extends UserViewImpl  implements HistoryView{
 	@Override
 	public void setStudent(StudentDTO student){
 		
-		String title = "Historique de "+student.getFirstName();
+		String title = "Historique général de "+student.getFirstName();
 		crumb.setCrumbTitle(title);
 		labelTitle.setContents(title);
 		labelResultNbMails.setContents(String.valueOf(student.getLogs().size()));
@@ -140,23 +143,27 @@ public class HistoryViewImpl extends UserViewImpl  implements HistoryView{
 		
 	}
 
-	@Override
-	public void setNbMailPerWeek(ArrayList<Point2D> list) {
-		
+	public void setDataInWeekIntoChart(ArrayList<Point2D> list,SingleCurveChart chart)
+	{
 		ArrayList<Point2D> coords = new ArrayList<Point2D>();
-		
-		singleCurveChartCountMail.clearCurves();
+		ArrayList<String> libelleX = new ArrayList<String>();
+		chart.clearCurves();
 		
 		for(int x=0;x<list.size();x++)
 		{
 			coords.add(new Point2D(x,list.get(x).y));
+			libelleX.add(String.valueOf((int)list.get(x).x));
 		}
-			
-		
-		
-		singleCurveChartCountMail.addCurve(new Curve(coords, "x", "y", "red"));
 
-		singleCurveChartCountMail.drawChart();
+		chart.addCurve(new Curve(coords,libelleX, "x", "y", "red"));
+
+		chart.drawChart();
+	}
+	
+	@Override
+	public void setNbMailPerWeek(ArrayList<Point2D> list) {
+		
+		setDataInWeekIntoChart(list, singleCurveChartCountMail);
 		
 	}
 
@@ -165,20 +172,7 @@ public class HistoryViewImpl extends UserViewImpl  implements HistoryView{
 	@Override
 	public void setMessageLengthPerWeek(ArrayList<Point2D> list) {
 		
-		ArrayList<Point2D> coords = new ArrayList<Point2D>();
-		
-		singleCurveChartMessageLength.clearCurves();
-		
-		for(int x=0;x<list.size();x++)
-		{
-			coords.add(new Point2D(x,list.get(x).y));
-		}
-			
-		
-		
-		singleCurveChartMessageLength.addCurve(new Curve(coords, "x", "y", "red"));
-
-		singleCurveChartMessageLength.drawChart();
+		setDataInWeekIntoChart(list, singleCurveChartMessageLength);
 		
 	}
 
@@ -187,20 +181,7 @@ public class HistoryViewImpl extends UserViewImpl  implements HistoryView{
 	@Override
 	public void setExecutionTimePerWeek(ArrayList<Point2D> list) {
 		
-		ArrayList<Point2D> coords = new ArrayList<Point2D>();
-		
-		singleCurveChartExecutionTime.clearCurves();
-		
-		for(int x=0;x<list.size();x++)
-		{
-			coords.add(new Point2D(x,list.get(x).y));
-		}
-			
-		
-		
-		singleCurveChartExecutionTime.addCurve(new Curve(coords, "x", "y", "red"));
-
-		singleCurveChartExecutionTime.drawChart();
+		setDataInWeekIntoChart(list, singleCurveChartExecutionTime);
 		
 		
 	}

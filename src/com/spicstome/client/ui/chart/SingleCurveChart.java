@@ -123,7 +123,8 @@ public class SingleCurveChart extends HLayout {
     		
     		drawLinePath(p.getX(), p.getY() + STEP_LINE_LENGTH, p.getX(), p.getY() - STEP_LINE_LENGTH);
     		
-    		drawLabel(p.getX(), p.getY() + STEP_LINE_LENGTH*2, ""+x, "center");
+    		String label = (curves.get(0).getLibelleX()==null?""+x:curves.get(0).getLibelleX().get(x));
+    		drawLabel(p.getX(), p.getY() + STEP_LINE_LENGTH*2, label, "center");
     		
     		x += stepX;
     	}

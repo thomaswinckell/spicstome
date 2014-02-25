@@ -7,11 +7,13 @@ import com.spicstome.client.shared.Point2D;
 public class Curve {
 	
 	private ArrayList<Point2D> coords;
+	private ArrayList<String> libelleX;
 	private String stringX, stringY;
 	private String color;
 	
-	public Curve(ArrayList<Point2D> coords, String stringX, String stringY, String color) {
+	public Curve(ArrayList<Point2D> coords,ArrayList<String> libelleX, String stringX, String stringY, String color) {
 		this.coords = coords;
+		this.libelleX=libelleX;
 		this.stringX = stringX;
 		this.stringY = stringY;
 		this.color = color;
@@ -62,6 +64,11 @@ public class Curve {
     	
     	return max;
     }
+
+	public ArrayList<String> getLibelleX() {
+		return libelleX;
+	}
+
 
 	@Override
 	public String toString() {
