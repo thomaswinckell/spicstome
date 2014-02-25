@@ -3,6 +3,7 @@ package com.spicstome.client.syntax.state;
 import java.util.ArrayList;
 
 import com.spicstome.client.dto.ArticleDTO;
+import com.spicstome.client.dto.ImageDTO;
 import com.spicstome.client.dto.NounDTO;
 import com.spicstome.client.dto.SubjectDTO;
 import com.spicstome.client.dto.WordDTO;
@@ -75,6 +76,16 @@ public class SyntaxAnalyser {
 	public String getText(int rang)
 	{
 		return arrayRecord.get(rang).getAttribute(ImageRecord.PICTURE_NAME);
+	}
+	
+	public ArrayList<String> getCorrectedWords() {
+		ArrayList<String> res = new ArrayList<String>();
+		
+		for(ImageRecord img : arrayRecord) {
+			res.add(img.getAttribute(ImageRecord.PICTURE_NAME));
+		}
+		
+		return res;
 	}
 	
 	public String getSentence() {

@@ -63,6 +63,8 @@ public class NewMailViewImpl extends UserViewImpl  implements NewMailView{
 				
 				getLogs();
 				
+				sendMail();
+				
 				goTo(new MailPlace());
 			}
     		
@@ -139,6 +141,11 @@ public class NewMailViewImpl extends UserViewImpl  implements NewMailView{
 				seconds,dropZone.getMovementCount());
 		
 		((NewMailView.Presenter)(listener)).saveLog(logDTO);
+	}
+	
+	public void sendMail()
+	{
+		((NewMailView.Presenter)(listener)).sendMail(recipient.getMail(), dropZone.message, dropZone.getCorrectedWords());
 	}
 
 	@Override

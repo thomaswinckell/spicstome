@@ -73,4 +73,8 @@ public abstract class RecipientPanel extends HLayout{
 	{
 		this.userList=list;
 	}
+	
+	public String getMail() {
+		return mail.getValueAsString();
+	}
 }
