@@ -79,12 +79,6 @@ public class SingleCurveChart extends HLayout {
     
     public void addCurve(Curve curve) {
     	curves.add(curve);
-    	
-    	// update MAX
-    	if (curve.getMaxX() > maxX)
-    		maxX = curve.getMaxX();
-    	if (curve.getMaxY() > maxY)
-    		maxY = curve.getMaxY();
     }
     
     private void drawCurve(Curve curve) {
@@ -95,6 +89,18 @@ public class SingleCurveChart extends HLayout {
     		} else {    			
         		drawLine(curve.getCoords().get(i-1), curve.getCoords().get(i), curve.getColor());
     		}
+    	}
+    }
+    
+    private void updateMax() {
+    	maxX = 0;
+    	maxY = 0;
+    	
+    	for (Curve c : curves) {
+        	if (c.getMaxX() > maxX)
+        		maxX = c.getMaxX();
+        	if (c.getMaxY() > maxY)
+        		maxY = c.getMaxY();
     	}
     }
     
@@ -195,6 +201,8 @@ public class SingleCurveChart extends HLayout {
     }
     
     public void drawChart() {
+    	
+    	updateMax();
     	
     	drawPane.erase();
     	
