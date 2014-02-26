@@ -129,7 +129,7 @@ public class HistoryViewImpl extends UserViewImpl  implements HistoryView{
 		horizontalLayout2.addMember(singleCurveChartMessageLength);
 		horizontalLayout2.addMember(pieChart);
 		
-		singleCurveChartExecutionTime = new SingleCurveChart(600,400,100,50, "semaine", "temps moyen d'écriture");
+		singleCurveChartExecutionTime = new SingleCurveChart(900,600,120,50, "semaine", "temps moyen d'écriture (secondes)");
 		
 		horizontalLayout3.addMember(singleCurveChartExecutionTime);
 		
@@ -154,9 +154,7 @@ public class HistoryViewImpl extends UserViewImpl  implements HistoryView{
 	@Override
 	public void setAverageMessageLength(double d) {
 		
-		
 		labelResultAverageMessageLength.setContents(NumberFormat.getFormat("#0.00").format(d));
-		
 	}
 
 	@Override
@@ -165,7 +163,7 @@ public class HistoryViewImpl extends UserViewImpl  implements HistoryView{
 		int minute = (int) (d/60);
 		int seconds = (int) (d-(minute*60));
 		
-		labelResultAverageExecutionTime.setContents(+minute+":"+seconds);
+		labelResultAverageExecutionTime.setContents(NumberFormat.getFormat("00").format(minute)+":"+NumberFormat.getFormat("00").format(seconds));
 		
 	}
 
