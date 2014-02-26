@@ -93,8 +93,8 @@ public class SingleCurveChart extends HLayout {
     }
     
     private void updateMax() {
-    	maxX = 0;
-    	maxY = 0;
+    	maxX = 1;
+    	maxY = 1;
     	
     	for (Curve c : curves) {
         	if (c.getMaxX() > maxX)
