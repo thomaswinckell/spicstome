@@ -48,6 +48,7 @@ import com.spicstome.client.shared.User;
 import com.spicstome.client.shared.Verb;
 import com.spicstome.server.Encryption;
 import com.spicstome.server.HibernateUtil;
+import com.spicstome.server.business.MailHelper;
 
 public class SpicsToMeServicesImpl extends RemoteServiceServlet implements SpicsToMeServices {
 	private static final long serialVersionUID = 1L;
@@ -64,26 +65,24 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	@Override
 	public UserDTO getUser(String login, String password) {
 		
-		password = Encryption.toSHA256(password);
+		String hash = Encryption.toSHA256(password);
 		
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 	    session.beginTransaction();
 	    @SuppressWarnings("unchecked")
-		List<User> users = session.createCriteria(User.class).add(Restrictions.eq("login",login)).add(Restrictions.eq("password",password)).list();
+		List<User> users = session.createCriteria(User.class).add(Restrictions.eq("login",login)).add(Restrictions.eq("password",hash)).list();
 	    
 	    if (users.isEmpty()) {
 	    	session.getTransaction().commit();
 	    	return null;
 	    } else {
-	    	UserDTO userDTO = Transtypage.createUserDTO(users.get(0));	    	
-	    	getThreadLocalRequest().getSession().setAttribute("currentUser", userDTO.getId());
+	    	UserDTO userDTO = Transtypage.createUserDTO(users.get(0));
+	    	userDTO.setPassword(password);
+	    	getThreadLocalRequest().getSession().setAttribute("currentUser", userDTO);
 	    	session.getTransaction().commit();
 	    	return userDTO;
 	    }
 	}
-	
-	
-
 
 	@Override
 	public UserDTO getCurrentUser() {
@@ -92,7 +91,7 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 		if(o==null)
 			return null;
 		
-		long id = Long.valueOf(o.toString());
+		/*long id = Long.valueOf(o.toString());
 		
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 	    session.beginTransaction();
@@ -107,9 +106,9 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	    else if(user instanceof Referent)
 	    	userDTO = Transtypage.createReferentDTO((Referent)user);
 	    
-	    session.getTransaction().commit();
+	    session.getTransaction().commit();*/
 	    
-		return userDTO;
+		return (UserDTO) o;
 	}
 	
 	@Override
@@ -1058,9 +1057,10 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	}
 
 	
-	
-	
-
-	
-
+	@Override
+	public boolean sendMail(UserDTO sender, String emailReceiver, ArrayList<WordDTO> words, 
+			ArrayList<String> correctedWords) {
+		
+		return MailHelper.sendMail(sender, emailReceiver, words, correctedWords);
+	}
 }

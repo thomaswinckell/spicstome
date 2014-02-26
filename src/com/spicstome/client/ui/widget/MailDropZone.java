@@ -11,6 +11,7 @@ import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
+import com.spicstome.client.dto.ImageDTO;
 import com.spicstome.client.dto.WordDTO;
 import com.spicstome.client.syntax.state.SyntaxAnalyser;
 import com.spicstome.client.ui.tts.TextToSpeech;
@@ -154,5 +155,8 @@ public class MailDropZone extends VLayout{
 	public int getMovementCount() {
 		return movementCount;
 	}
-
+	
+	public ArrayList<String> getCorrectedWords() {
+		return analyser.getCorrectedWords();
+	}
 }

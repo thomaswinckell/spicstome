@@ -1,5 +1,6 @@
 package com.spicstome.client.activity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gwt.event.shared.EventBus;
@@ -10,6 +11,7 @@ import com.spicstome.client.dto.AlbumDTO;
 import com.spicstome.client.dto.LogDTO;
 import com.spicstome.client.dto.StudentDTO;
 import com.spicstome.client.dto.UserDTO;
+import com.spicstome.client.dto.WordDTO;
 import com.spicstome.client.place.NewMailPlace;
 import com.spicstome.client.services.SpicsToMeServices;
 import com.spicstome.client.ui.NewMailView;
@@ -103,6 +105,23 @@ public class NewMailActivity extends UserActivity implements NewMailView.Present
 				}
 			});
 		}
+	}
+
+	@Override
+	public void sendMail(String emailReceiver, ArrayList<WordDTO> words, ArrayList<String> correctedWords) {
+		SpicsToMeServices.Util.getInstance().sendMail(user, emailReceiver, words, correctedWords, new AsyncCallback<Boolean>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				
+			}
+
+			@Override
+			public void onSuccess(Boolean result) {
+				
+			}
+			
+		});
 	}
 
 }

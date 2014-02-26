@@ -17,6 +17,7 @@ package com.spicstome.client.services;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.spicstome.client.dto.AlbumDTO;
 import com.spicstome.client.dto.LogDTO;
@@ -76,9 +77,11 @@ public interface SpicsToMeServicesAsync {
 	void deleteFolder(long id,AsyncCallback<Boolean> callback);
 	void deleteUser(long id,AsyncCallback<Boolean> callback);
 	
-	/*COPY*/
+	/* COPY */
 	void copyFolder(FolderDTO folderDTO,FolderDTO parent,AsyncCallback<FolderDTO> callback);
 	void copyWord(WordDTO wordDTO,FolderDTO parent,AsyncCallback<WordDTO> callback);
 	void copyAlbum(AlbumDTO albumDTO,AsyncCallback<AlbumDTO> callback);
 	
+	/* MAIL */
+	void sendMail(UserDTO sender, String emailReceiver, ArrayList<WordDTO> words, ArrayList<String> correctedWords, AsyncCallback<Boolean> callback);
 }

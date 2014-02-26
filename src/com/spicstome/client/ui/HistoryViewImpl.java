@@ -11,6 +11,7 @@ import com.spicstome.client.dto.StudentDTO;
 import com.spicstome.client.place.HistoryManagementPlace;
 import com.spicstome.client.shared.Point2D;
 import com.spicstome.client.ui.chart.Curve;
+import com.spicstome.client.ui.chart.PieChart;
 import com.spicstome.client.ui.chart.SingleCurveChart;
 import com.spicstome.client.ui.widget.Crumb;
 
@@ -28,6 +29,7 @@ public class HistoryViewImpl extends UserViewImpl  implements HistoryView{
 	
 	HLayout horizontalLayout = new HLayout();
 	HLayout horizontalLayout2 = new HLayout();
+	HLayout horizontalLayout3 = new HLayout();
 	VLayout verticalLayout = new VLayout();
 	VLayout firstResults = new VLayout();
 	
@@ -38,6 +40,7 @@ public class HistoryViewImpl extends UserViewImpl  implements HistoryView{
 	SingleCurveChart singleCurveChartCountMail;
 	SingleCurveChart singleCurveChartMessageLength;
 	SingleCurveChart singleCurveChartExecutionTime;
+	PieChart pieChart;
 	
 	public HistoryViewImpl()
 	{
@@ -101,6 +104,7 @@ public class HistoryViewImpl extends UserViewImpl  implements HistoryView{
 
 		horizontalLayout.setStyleName("bloc");
 		horizontalLayout2.setStyleName("bloc");
+		horizontalLayout3.setStyleName("bloc");
 		
 		horizontalLayout.addMember(verticalLayout);
 		horizontalLayout.addMember(singleCurveChartCountMail);
@@ -108,8 +112,31 @@ public class HistoryViewImpl extends UserViewImpl  implements HistoryView{
 		horizontalLayout2.addMember(singleCurveChartMessageLength);
 		horizontalLayout2.addMember(singleCurveChartExecutionTime);
 		
+		/* Test pie chart */
+		
+		ArrayList<Double> percents = new ArrayList<Double>();
+		ArrayList<String> strings = new ArrayList<String>();
+		ArrayList<String> colors = new ArrayList<String>();
+		
+		percents.add(10.0);
+		percents.add(50.0);
+		percents.add(100.0);
+		
+		colors.add("red");
+		colors.add("yellow");
+		colors.add("blue");
+		
+		strings.add("tessssst");
+		strings.add("aaaaaaa");
+		strings.add("bbbbbbbb");
+		
+		pieChart = new PieChart(200, percents, strings, colors, "test", 300);
+		
+		horizontalLayout3.addMember(pieChart);
+		
 		mainPanel.addMember(horizontalLayout);
 		mainPanel.addMember(horizontalLayout2);
+		mainPanel.addMember(horizontalLayout3);
 	}
 	
 	
@@ -122,7 +149,7 @@ public class HistoryViewImpl extends UserViewImpl  implements HistoryView{
 		labelTitle.setContents(title);
 		labelResultNbMails.setContents(String.valueOf(student.getLogs().size()));
 		
-
+		pieChart.drawChart();
 	}
 
 	@Override
