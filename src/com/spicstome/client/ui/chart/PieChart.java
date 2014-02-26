@@ -16,7 +16,7 @@ public class PieChart extends HLayout {
 	private ArrayList<String> strings, colors;
 	private String label;
 	private static int PADDING_TOP = 30, MARGIN = 5, SPACE_BETWEEN_LEGEND_AND_CHART = 20, 
-			LEGEND_ITEM_HEIGHT = 50, LEGEND_RECT_HEIGHT = 40, LEGEND_RECT_WIDTH = 80;
+			LEGEND_ITEM_HEIGHT = 30, LEGEND_RECT_HEIGHT = 20, LEGEND_RECT_WIDTH = 40;
 	private int radius, legendWidth;
 	
 	public PieChart(int radius, ArrayList<Double> percents, ArrayList<String> strings, 
@@ -93,7 +93,7 @@ public class PieChart extends HLayout {
     	
     	drawPane.erase();
     	
-    	drawLabel(radius+MARGIN, MARGIN, label, "center");
+    	drawLabel(drawPane.getWidth()/2, MARGIN, label, "center");
     	
     	int startAngle = 0, endAngle = 0;
     	

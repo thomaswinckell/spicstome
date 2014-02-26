@@ -87,7 +87,7 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 		if(o==null)
 			return null;
 		
-		/*long id = Long.valueOf(o.toString());
+		long id = Long.valueOf(((UserDTO) o).getId().toString());
 		
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 	    session.beginTransaction();
@@ -102,9 +102,11 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	    else if(user instanceof Referent)
 	    	userDTO = Transtypage.createReferentDTO((Referent)user);
 	    
-	    session.getTransaction().commit();*/
+	    session.getTransaction().commit();
 	    
-		return (UserDTO) o;
+	    userDTO.setPassword(((UserDTO) o).getPassword());
+	    
+		return userDTO;
 	}
 	
 	@Override
