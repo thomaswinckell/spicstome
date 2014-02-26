@@ -152,6 +152,7 @@ public class HistoryViewImpl extends UserViewImpl  implements HistoryView{
 		for(int x=0;x<list.size();x++)
 		{
 			coords.add(new Point2D(x,list.get(x).y));
+			System.out.println(list.get(x).y);
 			libelleX.add(String.valueOf((int)list.get(x).x));
 		}
 
