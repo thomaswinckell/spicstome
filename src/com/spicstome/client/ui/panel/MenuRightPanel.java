@@ -63,7 +63,7 @@ public class MenuRightPanel extends VLayout{
 	public void setIconsVisible(boolean b)
 	{
 		if(b)
-			setWidth(300);
+			setWidth(200);
 		else
 			setWidth(80);
 		

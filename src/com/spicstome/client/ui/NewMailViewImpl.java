@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.smartgwt.client.widgets.IconButton;
 import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
@@ -14,7 +15,7 @@ import com.spicstome.client.place.MailPlace;
 import com.spicstome.client.ui.panel.AlbumBookPanel;
 import com.spicstome.client.ui.panel.Book;
 import com.spicstome.client.ui.panel.MailMenuRightPanel;
-import com.spicstome.client.ui.panel.RecipientPanel;
+import com.spicstome.client.ui.panel.SelectRecipientPanel;
 import com.spicstome.client.ui.panel.SendingPanel;
 import com.spicstome.client.ui.tts.TextToSpeech;
 import com.spicstome.client.ui.widget.Crumb;
@@ -31,17 +32,22 @@ public class NewMailViewImpl extends UserViewImpl  implements NewMailView{
 	public AlbumBookPanel album;
 	MailDropZone dropZone;
 	MailMenuRightPanel menuRight;
-	RecipientPanel recipient;
+	SelectRecipientPanel selectionRecipient;
+	IconButton imageRecipient = new IconButton("");
 	SendingPanel sending;
 	HLayout horizontalLayout = new HLayout();
 	VLayout mailLayout = new VLayout();
 	VLayout mainMailLayout = new VLayout();
 	public boolean expanded = false;
+	public boolean selectedRecipient = false;
 	VLayout expandLayout = new VLayout();
 	ImageTileGrid bigMessageTileGrid;
 	Label bigMessageLabel = new Label();
 	StudentDTO defaultStudent;
+	Label labelTitle = new Label();
 	long begin;
+	HLayout recipientLayout = new HLayout();
+	String recipientMail;
 	
 	public NewMailViewImpl()
 	{
@@ -87,17 +93,19 @@ public class NewMailViewImpl extends UserViewImpl  implements NewMailView{
 			}
     		
     	};
-    	recipient = new RecipientPanel(){
+    	selectionRecipient = new SelectRecipientPanel(){
 
 			@Override
-			public void onChangeRecipient(UserDTO user) {
+			public void onSelectedRecipient(UserDTO user,String mail) {
 				
 				if(admin)
 				{
+					
 					if(user instanceof StudentDTO)
 					{
 						StudentDTO student = (StudentDTO) user;
 						album.setStudent(student);
+						imageRecipient.setIcon("upload/"+student.getImage().getFilename());
 						dropZone.init();
 					}
 					else
@@ -105,6 +113,10 @@ public class NewMailViewImpl extends UserViewImpl  implements NewMailView{
 						album.setStudent(defaultStudent);
 					}
 				}
+				
+				IsSelectedRecipient(true);
+				recipientMail=mail;
+				
 			}	
     	};
     	
@@ -118,9 +130,18 @@ public class NewMailViewImpl extends UserViewImpl  implements NewMailView{
     	
     	expandLayout.addMember(bigMessageTileGrid);
     	expandLayout.addMember(bigMessageLabel);
+    	 
+    	imageRecipient.setIconSize(100);
+    	labelTitle.setHeight(40);
+    	labelTitle.setWidth(300);
+    	labelTitle.setContents("Que veux tu dire à cette personne ?");
+    	labelTitle.setStyleName("title");
     	
-        
-    	mailLayout.addMember(recipient);
+    	recipientLayout.addMember(imageRecipient);
+    	recipientLayout.addMember(labelTitle);
+    	
+    	mailLayout.addMember(selectionRecipient);
+    	mailLayout.addMember(recipientLayout);
     	mailLayout.addMember(album);
     	mailLayout.addMember(dropZone);
     	mailLayout.addMember(sending);
@@ -132,13 +153,14 @@ public class NewMailViewImpl extends UserViewImpl  implements NewMailView{
         horizontalLayout.addMember(menuRight);
         mainPanel.addMember(horizontalLayout);
 	}
+	
+	
 
 	@Override
 	public void setStudent(StudentDTO owner) {
 		
 		defaultStudent=owner;
 		album.setStudent(owner);
-		
 		menuRight.init();
 		sending.init();
 	}
@@ -147,17 +169,16 @@ public class NewMailViewImpl extends UserViewImpl  implements NewMailView{
 
 	@Override
 	public void setRecipients(List<UserDTO> recipients) {	
-		recipient.setRecipients(recipients);
+		selectionRecipient.setRecipients(recipients);
 	}
 
 	public void getLogs()
 	{
-		
-		
+
 		long now = System.currentTimeMillis()-begin;
 		int seconds = (int) (now/1000);
 		
-		LogDTO logDTO = new LogDTO((long)-1, null, recipient.mail.getValue().toString(), new Date(),
+		LogDTO logDTO = new LogDTO((long)-1, null, recipientMail, new Date(),
 				dropZone.message.size(),
 				seconds,dropZone.getMovementCount());
 		
@@ -166,7 +187,7 @@ public class NewMailViewImpl extends UserViewImpl  implements NewMailView{
 	
 	public void sendMail()
 	{
-		((NewMailView.Presenter)(listener)).sendMail(recipient.getMail(), dropZone.message, dropZone.getCorrectedWords());
+		((NewMailView.Presenter)(listener)).sendMail(recipientMail, dropZone.message, dropZone.getCorrectedWords());
 	}
 
 	@Override
@@ -174,12 +195,23 @@ public class NewMailViewImpl extends UserViewImpl  implements NewMailView{
 		
 		super.init(admin);
 		
+		IsSelectedRecipient(false);
 		dropZone.init();
-		recipient.init();
-	
-		expand(false);
-
+		expand(false);	
+		imageRecipient.setIcon("upload/"+"default_user.png");
 		begin = System.currentTimeMillis();
+	}
+	
+	public void IsSelectedRecipient(boolean b)
+	{
+		selectedRecipient=b;
+		
+		sending.setVisible(selectedRecipient);
+		album.setVisible(selectedRecipient);
+		dropZone.setVisible(selectedRecipient);
+		menuRight.setVisible(selectedRecipient);
+		selectionRecipient.setVisible(!selectedRecipient);
+		recipientLayout.setVisible(selectedRecipient);
 	}
 	
 	public void expand(boolean b)
