@@ -46,10 +46,19 @@ public class UserViewImpl extends VLayout implements UserView{
 		
 	}
 	
+	
+	
 	@Override
 	public void init(boolean a)
 	{
 		this.admin=a;
+	}
+
+	@Override
+	public void setMenuTopVisible(boolean b) {
+		
+		connectPanel.setVisible(b);
+		
 	}
 
 

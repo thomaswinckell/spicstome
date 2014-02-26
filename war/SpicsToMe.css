@@ -16,7 +16,7 @@ h1 {
 
 
 .treeCell, .treeCellDark, .treeCellOver, .treeCellOverDark, .treeCellSelected, .treeCellSelectedDark, .treeCellSelectedOver, .treeCellSelectedOverDark, .treeCellDisabled, .treeCellDisabledDark, .treeTallCell, .treeTallCellDark, .treeTallCellOver, .treeTallCellOverDark, .treeTallCellSelected, .treeTallCellSelectedDark, .treeTallCellSelectedOver, .treeTallCellSelectedOverDark, .treeTallCellDisabled, .treeTallCellDisabledDark {
-    font-size: 15px !important;;
+    font-size: 15px !important;
 }
 
 
@@ -36,6 +36,12 @@ h1 {
 .title
 {
 	font-size:30px;
+	color:darkblue;
+}
+
+.bigMessage
+{
+	font-size:60px;
 	color:darkblue;
 }
 

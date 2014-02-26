@@ -33,7 +33,7 @@ public class Book extends VLayout{
 	public ImageRecord selectedImage=null;
 	
 	public int nbRowPerPage=2;
-	public int nbColPerPage=2;
+	public int nbColPerPage=3;
 	
 	int iLeftPage=0;
 	int lastPage=0;

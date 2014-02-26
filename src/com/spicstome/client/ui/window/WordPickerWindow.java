@@ -12,7 +12,7 @@ public class WordPickerWindow extends PickerWindow {
     public Book book;
 	
 	public WordPickerWindow(List<StudentDTO> list) {
-		super(list,Type.IMPORT, 1200, 600);
+		super(list,Type.IMPORT, 1400, 600);
 		
 	}
 	@Override

@@ -9,7 +9,7 @@ public interface UserView {
 	
 	void setPresenter(Presenter listener);
 	public void init(boolean a);
-	
+	public void setMenuTopVisible(boolean b);
 	
 	public interface Presenter
 	{

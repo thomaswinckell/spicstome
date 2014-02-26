@@ -1,22 +1,17 @@
 package com.spicstome.client.ui.widget;
 
 import java.util.ArrayList;
-
 import com.smartgwt.client.data.RecordList;
 import com.smartgwt.client.types.Alignment;
-import com.smartgwt.client.widgets.IconButton;
 import com.smartgwt.client.widgets.Img;
 import com.smartgwt.client.widgets.Label;
-import com.smartgwt.client.widgets.events.ClickEvent;
-import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.spicstome.client.dto.WordDTO;
 import com.spicstome.client.syntax.state.SyntaxAnalyser;
-import com.spicstome.client.ui.tts.TextToSpeech;
 import com.spicstome.client.ui.widget.ImageTileGrid.Mode;
 
-public class MailDropZone extends VLayout{
+public abstract class MailDropZone extends VLayout{
 
 	ImageTileGrid dropZone;
 	private SyntaxAnalyser analyser;
@@ -27,8 +22,6 @@ public class MailDropZone extends VLayout{
 	HLayout horizontalLayout = new HLayout();
 	Img drophere = new Img("drophere.gif");
 	public ArrayList<WordDTO> message=new ArrayList<WordDTO>();
-	private TextToSpeech textToSpeech = new TextToSpeech();
-	protected IconButton speakButton = new IconButton("");
 
 	public MailDropZone(int iconSize) {
 		
@@ -45,53 +38,42 @@ public class MailDropZone extends VLayout{
 				UpdateMail();
 			}
 		};
-		
-		speakButton.addClickHandler(new ClickHandler() {
 
-			@Override
-			public void onClick(ClickEvent event) {
-				textToSpeech.playMessage(analyser.getSentence());
-			}			
-		});
-	
-		
 		dropZone.setWidth100();
-		dropZone.setHeight(iconSize+100);
-		dropZone.setStyleName("bloc");
+		dropZone.setHeight(iconSize+50);
 		dropZone.removeOnDragOver();
 		
 		validationLayout.setWidth(220);
-		validImg.setWidth(130);
-		validImg.setHeight(90);
+		validImg.setWidth(80);
+		validImg.setHeight(70);
 		labelGood.setContents("BRAVO ! continue ainsi !");
 		labelGood.setStyleName("title");
-		speakButton.setIcon("sound.png");
-		speakButton.setIconSize(128);
+		
 		validationLayout.addMember(validImg);
 		validationLayout.addMember(labelGood);
-		validationLayout.addMember(speakButton);
-		
-		horizontalLayout.addMember(dropZone);
-		horizontalLayout.addMember(validationLayout);
 
 		drophere.setSize(60);
 		drophere.setLayoutAlign(Alignment.CENTER);
-		drophere.setPrompt("Glissez les mots dans le bandeau ci-dessous");
+		drophere.setPrompt("Glissez les mots dans ce bandeau");
 		
-		addMember(drophere);
+		horizontalLayout.addMember(drophere);
+		horizontalLayout.addMember(dropZone);
+		horizontalLayout.addMember(validationLayout);
+
+		horizontalLayout.setStyleName("bloc");
+
 		addMember(horizontalLayout);
-		
-		
-		
+
 		analyser = new SyntaxAnalyser();
 	}
 	
-	public void setDropZoneIconSize(int n)
+
+	public String getSentence()
 	{
-		dropZone.setTileSize(n);
+		return analyser.getSentence();
 	}
 	
-	public void UpdateValidation(Boolean b,int nbElement)
+	public void UpdateValidation(Boolean b)
 	{
 		validationLayout.setVisible(b);
 		
@@ -99,21 +81,19 @@ public class MailDropZone extends VLayout{
 		{
 			dropZone.setBackgroundColor("lightgreen");
 		}
-		else if(nbElement>0)
-		{
-			dropZone.setBackgroundColor("lightpink");
-		}
 		else
 		{
 			dropZone.setBackgroundColor("white");
 		}
+		
+		onTextChange(b);
 	}
 	
 	public void init()
 	{
 		movementCount=0;
 		dropZone.clearItems();
-		UpdateValidation(false,0);
+		UpdateValidation(false);
 		drophere.setVisible(true);
 		message.clear();
 		
@@ -122,10 +102,9 @@ public class MailDropZone extends VLayout{
 	public ArrayList<ImageRecord> UpdateMail()
 	{
 		movementCount++;
-		
-		drophere.setVisible(false);
-	
+
 		RecordList list = dropZone.getDataAsRecordList();
+		drophere.setVisible(list.getLength()==0);
 		ArrayList<ImageRecord> words = new ArrayList<ImageRecord>();
 		message.clear();
 		
@@ -140,12 +119,10 @@ public class MailDropZone extends VLayout{
 		
 		analyser.init(words);
 		analyser.analyse();
-		
-		UpdateValidation(analyser.currentState.acceptance,list.getLength());
-	
+		UpdateValidation(analyser.currentState.acceptance);
 		dropZone.clearItems();
-		
 		dropZone.setItems(words);
+		
 		
 		return words;
 
@@ -158,4 +135,6 @@ public class MailDropZone extends VLayout{
 	public ArrayList<String> getCorrectedWords() {
 		return analyser.getCorrectedWords();
 	}
+	
+	public abstract void onTextChange(boolean isOK);
 }
