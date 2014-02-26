@@ -2,6 +2,7 @@ package com.spicstome.client.mvp;
 
 import com.google.gwt.place.shared.PlaceHistoryMapper;
 import com.google.gwt.place.shared.WithTokenizers;
+import com.spicstome.client.place.ReceivedMailsPlace;
 import com.spicstome.client.place.UserEditPlace;
 import com.spicstome.client.place.AlbumEditPlace;
 import com.spicstome.client.place.AlbumManagementPlace;
@@ -32,6 +33,7 @@ import com.spicstome.client.place.UsersManagementPlace;
 					HistoryManagementPlace.Tokenizer.class,
 					HistoryPlace.Tokenizer.class,
 					UsersManagementPlace.Tokenizer.class,
-					UserEditPlace.Tokenizer.class})
+					UserEditPlace.Tokenizer.class, 
+					ReceivedMailsPlace.Tokenizer.class})
 public interface AppPlaceHistoryMapper extends PlaceHistoryMapper {
 }

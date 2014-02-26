@@ -4,6 +4,7 @@ import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.activity.shared.ActivityMapper;
 import com.google.gwt.place.shared.Place;
 import com.spicstome.client.ClientFactory;
+import com.spicstome.client.activity.ReceivedMailsActivity;
 import com.spicstome.client.activity.UserEditActivity;
 import com.spicstome.client.activity.AlbumActivity;
 import com.spicstome.client.activity.AlbumEditActivity;
@@ -16,6 +17,7 @@ import com.spicstome.client.activity.NewMailActivity;
 import com.spicstome.client.activity.MainMenuActivity;
 import com.spicstome.client.activity.LoginActivity;
 import com.spicstome.client.activity.UsersManagementActivity;
+import com.spicstome.client.place.ReceivedMailsPlace;
 import com.spicstome.client.place.UserEditPlace;
 import com.spicstome.client.place.AlbumEditPlace;
 import com.spicstome.client.place.AlbumManagementPlace;
@@ -76,6 +78,9 @@ public class AppActivityMapper implements ActivityMapper {
 			return new UsersManagementActivity((UsersManagementPlace) place, clientFactory);
 		else if (place instanceof UserEditPlace)
 			return new UserEditActivity((UserEditPlace) place, clientFactory);
+		else if (place instanceof ReceivedMailsPlace)
+			return new ReceivedMailsActivity((ReceivedMailsPlace) place, clientFactory);
+		
 		return null;
 	}
 }

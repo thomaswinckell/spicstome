@@ -2,6 +2,8 @@ package com.spicstome.client;
 
 import com.google.gwt.place.shared.PlaceController;
 import com.google.web.bindery.event.shared.SimpleEventBus;
+import com.spicstome.client.ui.ReceivedMailsView;
+import com.spicstome.client.ui.ReceivedMailsViewImpl;
 import com.spicstome.client.ui.UserEditView;
 import com.spicstome.client.ui.UserEditViewImpl;
 import com.spicstome.client.ui.AlbumEditView;
@@ -53,7 +55,7 @@ public class ClientFactory
 	private static final MailView mailView = new MailViewImpl();
 	private static final HistoryManagementView historyManagementView = new HistoryManagementViewImpl();
 	private static final HistoryView historyView = new HistoryViewImpl();
-
+	private static final ReceivedMailsView receivedMailsView = new ReceivedMailsViewImpl();
 
 
 	public SimpleEventBus getEventBus() {
@@ -110,5 +112,9 @@ public class ClientFactory
 	
 	public  HistoryView getHistoryView() {
 		return historyView;
+	}
+	
+	public  ReceivedMailsView getReceivedMailsView() {
+		return receivedMailsView;
 	}
 }

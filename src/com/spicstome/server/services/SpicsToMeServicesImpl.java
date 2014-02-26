@@ -5,13 +5,17 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.TreeSet;
+
 import javax.servlet.ServletException;
+
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
+
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.spicstome.client.dto.AdjectiveDTO;
 import com.spicstome.client.dto.AlbumDTO;
 import com.spicstome.client.dto.ArticleDTO;
+import com.spicstome.client.dto.MailDTO;
 import com.spicstome.client.dto.WordDTO;
 import com.spicstome.client.dto.FolderDTO;
 import com.spicstome.client.dto.ImageDTO;
@@ -1068,5 +1072,11 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 			ArrayList<String> correctedWords) {
 		
 		return MailHelper.sendMail(sender, emailReceiver, words, correctedWords);
+	}
+	
+	@Override
+	public ArrayList<MailDTO> getMails(UserDTO user) {
+		
+		return MailHelper.mailsInbox(user);
 	}
 }

@@ -1,7 +1,9 @@
 package com.spicstome.client.ui;
 
 import java.util.ArrayList;
+
 import com.spicstome.client.place.NewMailPlace;
+import com.spicstome.client.place.ReceivedMailsPlace;
 import com.spicstome.client.ui.widget.Crumb;
 import com.spicstome.client.ui.widget.ImageRecord;
 import com.spicstome.client.ui.widget.ImageTileGrid;
@@ -32,7 +34,7 @@ public class MailViewImpl extends UserViewImpl  implements MailView
 				
 				switch (object.getAttributeAsInt(ImageRecord.PICTURE_ID)) {
 					case 0 :
-						//goTo(new AlbumManagementPlace());
+						goTo(new ReceivedMailsPlace());
 						break;
 					case 1 :
 						goTo(new NewMailPlace());

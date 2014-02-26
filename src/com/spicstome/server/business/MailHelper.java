@@ -1,6 +1,7 @@
 package com.spicstome.server.business;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -9,6 +10,7 @@ import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.activation.FileDataSource;
 import javax.mail.Authenticator;
+import javax.mail.BodyPart;
 import javax.mail.Folder;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -21,9 +23,16 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import javax.mail.internet.MimePart;
 
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.IOUtils;
+
+import com.spicstome.client.dto.MailDTO;
 import com.spicstome.client.dto.UserDTO;
 import com.spicstome.client.dto.WordDTO;
+import com.sun.mail.util.BASE64DecoderStream;
 
 public abstract class MailHelper {
 
@@ -96,31 +105,60 @@ public abstract class MailHelper {
 		return false;
 	}
 
-	/*public static List<Mail> mailsInbox(final AutisteUserLogin user){
+	public static ArrayList<MailDTO> mailsInbox(final UserDTO user){
 		try{
 			Session session = sessionFactory(user.getLogin(), user.getPassword());
 			Store store = session.getStore("imaps");
-			store.connect(ConfigurationManager.getInstance().getMailSMTP(), user.getLogin(), user.getPassword());
+			store.connect(SMTP, user.getEmail(), user.getPassword());
 			System.out.println(store);
 			Folder inbox = store.getFolder("Inbox");
 			inbox.open(Folder.READ_ONLY);
 			Message messages[] = inbox.getMessages();
-			List<Mail> mails = new ArrayList<Mail>();
-			for(int i=messages.length-1; i>=0; i--){ // LIFO
-				if(messages[i].getHeader(MAIL_IMAGES_ID) != null && messages[i].getHeader(MAIL_SENDER_ID)!=null){
-					Mail mail = new Mail();
-					Long sender = Long.parseLong(messages[i].getHeader(MAIL_SENDER_ID)[0]);
-					mail.setSender(Manager.getInstance().autisteUser(sender));
-					mail.setContent(Manager.getInstance().objects(messages[i].getHeader(MAIL_IMAGES_ID)[0].split(IMAGE_MAIL_ID_SEPARATOR)));
-					mails.add(mail);
+			ArrayList<MailDTO> mails = new ArrayList<MailDTO>();
+			for(int i=messages.length-1; i>=messages.length-30; i--){ // LIFO
+				
+				if (messages[i].getSubject() != null && !messages[i].getSubject().isEmpty() && 
+						(messages[i].getSubject().length() >= SUBJECT.length()) && 
+						messages[i].getSubject().substring(0, SUBJECT.length()).equals(SUBJECT)) {
+					
+					if(messages[i].getHeader(MAIL_IMAGES_ID) != null && messages[i].getHeader(MAIL_SENDER_ID)!=null){
+						final MailDTO mail = new MailDTO();
+						Long idSender = Long.parseLong(messages[i].getHeader(MAIL_SENDER_ID)[0]);
+						
+						mail.setSender(idSender);						
+						mail.setReceivedDate(messages[i].getReceivedDate());
+						
+						Multipart content = (Multipart) messages[i].getContent();
+						
+						String HTML = (String) content.getBodyPart(content.getCount()-1).getContent();
+						
+						for (int j=0; j<content.getCount()-1; j++) {
+							
+							MimeBodyPart img = (MimeBodyPart) content.getBodyPart(j);
+							
+						    byte[] byteArray = IOUtils.toByteArray((InputStream) img.getContent());
+						    byte[] encodeBase64 = Base64.encodeBase64(byteArray);
+						    
+						    String imgSrc = new String(encodeBase64, "UTF-8");
+						    
+						    String imgType = "data:image/" + FilenameUtils.getExtension(img.getFileName()) + ";base64,";
+						    
+						    HTML = HTML.replaceFirst("cid:[0-9]+", imgType+imgSrc);
+						}
+						
+						mail.setMessageHTML(HTML);
+						mails.add(mail);
+					}
 				}
+				
+				System.out.println("Message "+i+"/"+(messages.length-1));
 			}
 			return mails;
 		}catch(Exception e){
 			e.printStackTrace();
 			return null;
 		}
-	}*/
+	}
 
 	public static MimeBodyPart convertToMime(WordDTO word){
 		MimeBodyPart imagePart = new MimeBodyPart();

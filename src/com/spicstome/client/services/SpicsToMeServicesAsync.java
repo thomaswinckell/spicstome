@@ -16,9 +16,11 @@ package com.spicstome.client.services;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.spicstome.client.dto.AlbumDTO;
 import com.spicstome.client.dto.LogDTO;
+import com.spicstome.client.dto.MailDTO;
 import com.spicstome.client.dto.WordDTO;
 import com.spicstome.client.dto.FolderDTO;
 import com.spicstome.client.dto.ImageDTO;
@@ -82,4 +84,5 @@ public interface SpicsToMeServicesAsync {
 	
 	/* MAIL */
 	void sendMail(UserDTO sender, String emailReceiver, ArrayList<WordDTO> words, ArrayList<String> correctedWords, AsyncCallback<Boolean> callback);
+	void getMails(UserDTO user, AsyncCallback<ArrayList<MailDTO>> callback);
 }
