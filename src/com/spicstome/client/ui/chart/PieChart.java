@@ -99,7 +99,7 @@ public class PieChart extends HLayout {
     	
     	for(int i = 0; i < percents.size(); i++) {
     		
-    		endAngle = (int) (percents.get(i) / 100 * 360);
+    		endAngle = startAngle + (int) (percents.get(i) / 100 * 360);
     		
     		drawSector(startAngle,endAngle,colors.get(i));
     		
