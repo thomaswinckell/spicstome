@@ -1077,6 +1077,13 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	@Override
 	public ArrayList<MailDTO> getMails(UserDTO user) {
 		
-		return MailHelper.mailsInbox(user);
+		ArrayList<MailDTO> mails =  MailHelper.mailsInbox(user);
+		
+		// loading the sender user
+		for(int i=0; i<mails.size(); i++) {
+			mails.get(i).setSender(getUser(user.getId()));
+		}
+		
+		return mails;
 	}
 }

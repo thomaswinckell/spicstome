@@ -7,27 +7,27 @@ public class MailDTO implements Serializable {
 
 	private static final long serialVersionUID = 5615667762906524784L;
 
-	private long sender;
+	private UserDTO sender;
 	private String messageHTML;
 	private Date receivedDate;
 	
 	public MailDTO() {
-		this.sender = -1;
+		this.sender = new UserDTO();
 		this.messageHTML = null;
 		this.receivedDate = new Date();
 	}
 	
-	public MailDTO(long sender, String messageHTML, Date receivedDate) {
+	public MailDTO(UserDTO sender, String messageHTML, Date receivedDate) {
 		this.sender = sender;
 		this.messageHTML = messageHTML;
 		this.receivedDate = receivedDate;
 	}
 
-	public long getSender() {
+	public UserDTO getSender() {
 		return sender;
 	}
 
-	public void setSender(long sender) {
+	public void setSender(UserDTO sender) {
 		this.sender = sender;
 	}
 

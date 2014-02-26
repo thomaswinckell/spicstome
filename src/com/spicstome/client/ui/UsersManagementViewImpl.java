@@ -22,7 +22,6 @@ import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.spicstome.client.dto.UserDTO;
 import com.spicstome.client.place.UserEditPlace;
-import com.spicstome.client.place.UsersManagementPlace;
 import com.spicstome.client.ui.form.ReferentsEditForm;
 import com.spicstome.client.ui.form.StudentsEditForm;
 import com.spicstome.client.ui.form.TeachersEditForm;
@@ -43,8 +42,7 @@ public class UsersManagementViewImpl extends UserViewImpl implements UsersManage
 		
 		addCrumb(new Crumb("Gestion des utilisateurs") {
 			@Override
-			public void onClickCrumb() {			
-				goTo(new UsersManagementPlace());
+			public void onClickCrumb() {
 			}
 		});
 		

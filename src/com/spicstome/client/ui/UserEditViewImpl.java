@@ -26,8 +26,7 @@ public class UserEditViewImpl extends UserViewImpl  implements UserEditView {
 		
 		addCrumb(new Crumb("Ajout/Edition d'utilisateur"){
 			@Override
-			public void onClickCrumb() {			
-				goTo(new UserEditPlace(null));
+			public void onClickCrumb() {
 			}
 		});
 		

@@ -115,7 +115,7 @@ public abstract class MailHelper {
 			inbox.open(Folder.READ_ONLY);
 			Message messages[] = inbox.getMessages();
 			ArrayList<MailDTO> mails = new ArrayList<MailDTO>();
-			for(int i=messages.length-1; i>=messages.length-30; i--){ // LIFO
+			for(int i=messages.length-1; i>=0; i--){ // LIFO
 				
 				if (messages[i].getSubject() != null && !messages[i].getSubject().isEmpty() && 
 						(messages[i].getSubject().length() >= SUBJECT.length()) && 
@@ -125,12 +125,12 @@ public abstract class MailHelper {
 						final MailDTO mail = new MailDTO();
 						Long idSender = Long.parseLong(messages[i].getHeader(MAIL_SENDER_ID)[0]);
 						
-						mail.setSender(idSender);						
+						mail.setSender(new UserDTO(idSender));						
 						mail.setReceivedDate(messages[i].getReceivedDate());
 						
 						Multipart content = (Multipart) messages[i].getContent();
 						
-						String HTML = (String) content.getBodyPart(content.getCount()-1).getContent();
+						String HTML = new String((String) content.getBodyPart(content.getCount()-1).getContent());
 						
 						for (int j=0; j<content.getCount()-1; j++) {
 							
