@@ -32,5 +32,6 @@
 	<classpathentry kind="lib" path="lib/gwtupload-1.0.0.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/gwt-voices-3.3.0.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/gwt-servlet.jar"/>
+	<classpathentry kind="lib" path="lib/mail.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>

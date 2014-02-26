@@ -1,9 +1,7 @@
 package com.spicstome.client.syntax.state;
 
 import java.util.ArrayList;
-
 import com.spicstome.client.dto.ArticleDTO;
-import com.spicstome.client.dto.ImageDTO;
 import com.spicstome.client.dto.NounDTO;
 import com.spicstome.client.dto.SubjectDTO;
 import com.spicstome.client.dto.WordDTO;

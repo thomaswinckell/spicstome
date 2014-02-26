@@ -86,11 +86,11 @@ public class HistoryViewImpl extends UserViewImpl  implements HistoryView{
 		averageExecutionTimeLayout.addMember(labelResultAverageExecutionTime);
 		averageMessageLengthLayout.addMember(labelAverageMessageLength);
 		averageMessageLengthLayout.addMember(labelResultAverageMessageLength);
+		singleCurveChartCountMail = new SingleCurveChart(1000,500,100,50, "semaine", "mails envoyés");
 		
 		firstResults.setStyleName("bloc");
 		labelTitle.setAlign(Alignment.CENTER);
-		
-		
+			
 		firstResults.addMember(nbMailLayout);
 		firstResults.addMember(averageExecutionTimeLayout);
 		firstResults.addMember(averageMessageLengthLayout);
@@ -98,41 +98,40 @@ public class HistoryViewImpl extends UserViewImpl  implements HistoryView{
 		verticalLayout.addMember(labelTitle);
 		verticalLayout.addMember(firstResults);
 
-		singleCurveChartCountMail = new SingleCurveChart(1000,500,100,50, "semaine", "mails envoyés");
-		singleCurveChartMessageLength = new SingleCurveChart(600,400,100,50, "semaine", "longueur moyenne des mails");
-		singleCurveChartExecutionTime = new SingleCurveChart(600,400,100,50, "semaine", "temps moyen d'écriture");
-
 		horizontalLayout.setStyleName("bloc");
 		horizontalLayout2.setStyleName("bloc");
 		horizontalLayout3.setStyleName("bloc");
 		
 		horizontalLayout.addMember(verticalLayout);
 		horizontalLayout.addMember(singleCurveChartCountMail);
-	
-		horizontalLayout2.addMember(singleCurveChartMessageLength);
-		horizontalLayout2.addMember(singleCurveChartExecutionTime);
 		
 		/* Test pie chart */
 		
-		ArrayList<Double> percents = new ArrayList<Double>();
+		
 		ArrayList<String> strings = new ArrayList<String>();
 		ArrayList<String> colors = new ArrayList<String>();
-		
-		percents.add(10.0);
-		percents.add(50.0);
-		percents.add(100.0);
-		
+
+		colors.add("grey");
 		colors.add("red");
-		colors.add("yellow");
+		colors.add("orange");
+		colors.add("green");
 		colors.add("blue");
 		
-		strings.add("tessssst");
-		strings.add("aaaaaaa");
-		strings.add("bbbbbbbb");
+		strings.add("1 mot");
+		strings.add("2 mots");
+		strings.add("3 mots");
+		strings.add("4 mots");
+		strings.add("5 mots et plus");
 		
-		pieChart = new PieChart(200, percents, strings, colors, "test", 300);
+		singleCurveChartMessageLength = new SingleCurveChart(600,400,100,50, "semaine", "longueur moyenne des mails");
+		pieChart = new PieChart(100, null, strings, colors, "Répartition des messages par longueur", 300);
+	
+		horizontalLayout2.addMember(singleCurveChartMessageLength);
+		horizontalLayout2.addMember(pieChart);
 		
-		horizontalLayout3.addMember(pieChart);
+		singleCurveChartExecutionTime = new SingleCurveChart(600,400,100,50, "semaine", "temps moyen d'écriture");
+		
+		horizontalLayout3.addMember(singleCurveChartExecutionTime);
 		
 		mainPanel.addMember(horizontalLayout);
 		mainPanel.addMember(horizontalLayout2);
@@ -149,7 +148,7 @@ public class HistoryViewImpl extends UserViewImpl  implements HistoryView{
 		labelTitle.setContents(title);
 		labelResultNbMails.setContents(String.valueOf(student.getLogs().size()));
 		
-		pieChart.drawChart();
+		
 	}
 
 	@Override
@@ -179,7 +178,6 @@ public class HistoryViewImpl extends UserViewImpl  implements HistoryView{
 		for(int x=0;x<list.size();x++)
 		{
 			coords.add(new Point2D(x,list.get(x).y));
-			System.out.println(list.get(x).y);
 			libelleX.add(String.valueOf((int)list.get(x).x));
 		}
 
@@ -218,8 +216,9 @@ public class HistoryViewImpl extends UserViewImpl  implements HistoryView{
 
 	@Override
 	public void setPartitionMessageLength(ArrayList<Double> list) {
-	
-		// pie chart
+
+		pieChart.setPercents(list);
+		pieChart.drawChart();
 		
 	}
 }

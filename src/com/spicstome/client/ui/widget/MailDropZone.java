@@ -11,7 +11,6 @@ import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
-import com.spicstome.client.dto.ImageDTO;
 import com.spicstome.client.dto.WordDTO;
 import com.spicstome.client.syntax.state.SyntaxAnalyser;
 import com.spicstome.client.ui.tts.TextToSpeech;

@@ -2,9 +2,10 @@ package com.spicstome.client.shared;
 
 import java.io.Serializable;
 import java.util.Date;
+
 import com.spicstome.client.dto.LogDTO;
 
-public class Log implements Serializable {
+public class Log implements Comparable<Log>,Serializable {
 
 	private static final long serialVersionUID = 8544863337442780335L;
 	
@@ -91,6 +92,27 @@ public class Log implements Serializable {
 
 	public void setActions(int actions) {
 		this.actions = actions;
+	}
+	
+	@Override
+	public int compareTo(Log that) {
+		
+		final int BEFORE = -1;
+        final int AFTER = 1;
+ 
+        if (that == null) {
+            return BEFORE;
+        }
+        
+        if(getDate().before(that.getDate()))
+        {
+        	return BEFORE;
+        }
+        else
+        {
+        	return AFTER;
+        }
+		
 	}
 
 	@Override

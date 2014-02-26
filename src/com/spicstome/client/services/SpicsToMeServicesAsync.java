@@ -16,8 +16,6 @@ package com.spicstome.client.services;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.spicstome.client.dto.AlbumDTO;
 import com.spicstome.client.dto.LogDTO;
@@ -51,10 +49,10 @@ public interface SpicsToMeServicesAsync {
 	void getAllTeachers(AsyncCallback<List<TeacherDTO>> callback);
 	void getAllReferents(AsyncCallback<List<ReferentDTO>> callback);
 	void getEverybody(AsyncCallback<List<UserDTO>> callback);
-	void getAverageMessageLength(int nW,int nY,Set<LogDTO> set,AsyncCallback<Double> callback);
-	void getAverageTimeExecution(int nW,int nY,Set<LogDTO> set,AsyncCallback<Double> callback);
-	void getHistoryPerWeek(Set<LogDTO> set,int type,AsyncCallback<ArrayList<Point2D>> callback);
-	void getPartitionMessageLength(Set<LogDTO> set,AsyncCallback<ArrayList<Double>> callback);
+	void getAverageMessageLength(int nW,int nY,ArrayList<LogDTO> set,AsyncCallback<Double> callback);
+	void getAverageTimeExecution(int nW,int nY,ArrayList<LogDTO> set,AsyncCallback<Double> callback);
+	void getHistoryPerWeek(ArrayList<LogDTO> set,int type,AsyncCallback<ArrayList<Point2D>> callback);
+	void getPartitionMessageLength(ArrayList<LogDTO> set,AsyncCallback<ArrayList<Double>> callback);
 	
 	/* SAVE */
 	void saveImage(ImageDTO imageDTO, AsyncCallback<Long> callback);

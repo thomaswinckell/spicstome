@@ -1,9 +1,7 @@
 package com.spicstome.client.ui.form;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
-
 import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.SelectItem;
 import com.smartgwt.client.widgets.form.fields.events.ChangeEvent;
@@ -112,7 +110,7 @@ public class UserTypeForm extends VLayout {
 		if (userTypeSelectItem.getValueAsString().equals("student")) {
 			if (mode == FormUtils.Mode.NEW) {
 				return new StudentDTO((long) -1, null, null, null, null, null, null, new ImageDTO((long) -1, 
-						null), null, new HashSet<LogDTO>());
+						null), null, new ArrayList<LogDTO>());
 			} else {
 				
 				return userDTO;

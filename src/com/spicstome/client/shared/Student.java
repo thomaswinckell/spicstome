@@ -1,8 +1,11 @@
 package com.spicstome.client.shared;
 
 import java.io.Serializable;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
+
 import com.spicstome.client.dto.LogDTO;
 import com.spicstome.client.dto.StudentDTO;
 
@@ -10,7 +13,7 @@ public class Student extends User implements Serializable {
 	
 	private static final long serialVersionUID = 5196763171962166568L;
 	private Album album;
-	private Set<Log> logs;
+	private SortedSet<Log> logs;
 	
 	public Student() {		
 	}
@@ -24,9 +27,9 @@ public class Student extends User implements Serializable {
 		
 		this.album = new Album(studentDTO.getAlbum());
 		
-		Set<LogDTO> logDTOs = studentDTO.getLogs();
+		ArrayList<LogDTO> logDTOs = studentDTO.getLogs();
 		if (logDTOs != null) {
-			Set<Log> logs = new HashSet<Log>(logDTOs.size());
+			SortedSet<Log> logs = new TreeSet<Log>();
 			for (LogDTO logDTO : logDTOs) {
 				logs.add(new Log(logDTO,this));
 			}
@@ -44,7 +47,7 @@ public class Student extends User implements Serializable {
 
 	public void addLog(Log log) {
 		if (logs == null) {
-			logs = new HashSet<Log>();
+			logs = new TreeSet<Log>();
 		}
 		logs.add(log);
 	}
@@ -60,7 +63,7 @@ public class Student extends User implements Serializable {
 		return logs;
 	}
 
-	public void setLogs(Set<Log> logs) {
+	public void setLogs(SortedSet<Log> logs) {
 		this.logs = logs;
 	}
 

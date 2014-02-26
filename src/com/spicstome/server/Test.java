@@ -2,7 +2,6 @@ package com.spicstome.server;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.TreeSet;
 import com.spicstome.client.shared.Adjective;
 import com.spicstome.client.shared.Album;
@@ -35,7 +34,7 @@ public class Test {
 		student.setPassword(Encryption.toSHA256(password));
 		student.setImage(imageUser);
 		student.setAlbum(album);
-		student.setLogs(new HashSet<Log>());
+		student.setLogs(new TreeSet<Log>());
 		
 		HibernateManager.getInstance().save(student);
 
@@ -79,6 +78,11 @@ public class Test {
 			}
 			
 			calendar.set(Calendar.WEEK_OF_YEAR, calendar.get(Calendar.WEEK_OF_YEAR)+1);
+			
+			if(calendar.get(Calendar.WEEK_OF_YEAR)==1)
+			{
+				calendar.set(Calendar.YEAR, calendar.get(Calendar.YEAR)+1);
+			}
 			
 		};
 	}

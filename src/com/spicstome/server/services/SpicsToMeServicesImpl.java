@@ -4,14 +4,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 import java.util.TreeSet;
-
 import javax.servlet.ServletException;
-
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
-
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.spicstome.client.dto.AdjectiveDTO;
 import com.spicstome.client.dto.AlbumDTO;
@@ -304,15 +300,12 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	
 
 	@Override
-	public Double getAverageMessageLength(int nWeekInCalendar,int nYearInCalendar,Set<LogDTO> set) {
+	public Double getAverageMessageLength(int nWeekInCalendar,int nYearInCalendar,ArrayList<LogDTO> set) {
 		
 		Calendar calendar = Calendar.getInstance();
 		double all=0.0;
 		boolean nonConstrained= ((nWeekInCalendar==-1) || (nYearInCalendar==-1));
 		double sum=0.0;	
-		
-		if(set.size()==0)
-			return 0.0;
 
 		for(LogDTO log:set)
 		{
@@ -327,6 +320,9 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 			}
 			
 		}
+		
+		if(all==0.0)
+			return 0.0;
 
 		return sum/all;
 		
@@ -334,11 +330,11 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	
 	
 	
-	public double getCountMail(int nWeekInCalendar,int nYearInCalendar,Set<LogDTO> set)
+	public double getCountMail(int nWeekInCalendar,int nYearInCalendar,ArrayList<LogDTO> set)
 	{
 		Calendar calendar = Calendar.getInstance();
 		
-		int sum=0;	
+		double sum=0.0;	
 		int nWeek=-1;
 		int nYear=-1;
 
@@ -348,7 +344,9 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 			nWeek = calendar.get(Calendar.WEEK_OF_YEAR);
 			nYear = calendar.get(Calendar.YEAR);
 			
-			if(nWeek==nWeekInCalendar && nYear==nYearInCalendar)
+			
+			
+			if((nWeek==nWeekInCalendar) && (nYear==nYearInCalendar))
 			{
 				sum++;
 			}
@@ -358,15 +356,12 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	}
 	
 	@Override
-	public Double getAverageTimeExecution(int nWeekInCalendar,int nYearInCalendar,Set<LogDTO> set) {
+	public Double getAverageTimeExecution(int nWeekInCalendar,int nYearInCalendar,ArrayList<LogDTO> set) {
 		
 		Calendar calendar = Calendar.getInstance();
 		double all=0.0;
 		boolean nonConstrained= ((nWeekInCalendar==-1) || (nYearInCalendar==-1));
 		double sum=0.0;	
-		
-		if(set.size()==0)
-			return 0.0;
 
 		for(LogDTO log:set)
 		{
@@ -381,13 +376,16 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 			}
 			
 		}
+		
+		if(all==0.0)
+			return 0.0;
 
 		return sum/all;
 		
 	}
 
 	@Override
-	public ArrayList<Point2D> getHistoryPerWeek(Set<LogDTO> set,int type) {
+	public ArrayList<Point2D> getHistoryPerWeek(ArrayList<LogDTO> set,int type) {
 		
 		ArrayList<Point2D> res = new ArrayList<Point2D>();
 		int nbMonthBack=6;
@@ -396,8 +394,9 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(new Date());
 		int currentWeek = cal.get(Calendar.WEEK_OF_YEAR);
+		int currentYear = cal.get(Calendar.YEAR);
 		cal.set(Calendar.MONTH, cal.get(Calendar.MONTH)-nbMonthBack);
-		
+
 		do{
 			
 			nW = cal.get(Calendar.WEEK_OF_YEAR);
@@ -406,26 +405,31 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 			if(type==0)
 				res.add(new Point2D((double) nW,getCountMail(nW,nY, set)));
 			else if(type==1)
-				res.add(new Point2D((double) nW,getAverageTimeExecution(nW,nY, set)));
+				res.add(new Point2D((double) nW,getAverageTimeExecution(nW,nY, set).doubleValue()));
 			else if(type==2)
-				res.add(new Point2D((double) nW,getAverageMessageLength(nW,nY, set)));
+				res.add(new Point2D((double) nW,getAverageMessageLength(nW,nY, set).doubleValue()));
 
+			
 			cal.set(Calendar.WEEK_OF_YEAR, cal.get(Calendar.WEEK_OF_YEAR)+1);
 			
-		}while(nW!=currentWeek);
+			if(cal.get(Calendar.WEEK_OF_YEAR)==1)
+				cal.set(Calendar.YEAR, cal.get(Calendar.YEAR)+1);
+				
+			
+		}while(!((nW==currentWeek) && (nY==currentYear)));
 		
 		
 		return res;
 	}
 
 	@Override
-	public ArrayList<Double> getPartitionMessageLength(Set<LogDTO> set) {
+	public ArrayList<Double> getPartitionMessageLength(ArrayList<LogDTO> set) {
 		
 		ArrayList<Double> res  =new ArrayList<Double>();
 		
 		if(set.size()==0)
 		{
-			res.add(0.0);
+			res.add(0.0);res.add(0.0);res.add(0.0);res.add(0.0);res.add(0.0);
 			return res;
 		}
 
@@ -457,11 +461,11 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 			}
 		}
 		
-		res.add((double)nbMessage1/set.size());
-		res.add((double)nbMessage2/set.size());
-		res.add((double)nbMessage3/set.size());
-		res.add((double)nbMessage4/set.size());
-		res.add((double)nbMessage5p/set.size());
+		res.add((double)nbMessage1/set.size()*100.0);
+		res.add((double)nbMessage2/set.size()*100.0);
+		res.add((double)nbMessage3/set.size()*100.0);
+		res.add((double)nbMessage4/set.size()*100.0);
+		res.add((double)nbMessage5p/set.size()*100.0);
 
 		return res;
 	}

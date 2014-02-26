@@ -37,6 +37,11 @@ public class PieChart extends HLayout {
     	addMember(drawPane);
 	}
 	
+	public void setPercents(ArrayList<Double> percents)
+	{
+		this.percents=percents;
+	}
+	
 	private void drawLabel(int left, int top, String content, String align) {
     	DrawLabel drawLabel = new DrawLabel();
     	drawLabel.setDrawPane(drawPane);

@@ -106,9 +106,9 @@ public class Transtypage {
 				log.getEmailRecipient(),log.getDate(),log.getMessageLength(),log.getExecutionTime(),log.getActions());
 	}
 	
-	public static Set<LogDTO> createListLogDTO(Set<Log> list,StudentDTO student)
+	public static ArrayList<LogDTO> createListLogDTO(Set<Log> list,StudentDTO student)
 	{
-		Set<LogDTO> listDTO=new HashSet<>();
+		ArrayList<LogDTO> listDTO=new ArrayList<LogDTO>();
 		
 		for(Log log:list){		
 			listDTO.add(createLogDTO(log,student));
