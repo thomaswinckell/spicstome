@@ -46,7 +46,7 @@ public class NewMailViewImpl extends UserViewImpl  implements NewMailView{
 				{
 					mailPanel.setImageRecipient(user.getImage().getFilename());
 					
-					if(admin)
+					if(isAdmin())
 					{
 
 						if(user instanceof StudentDTO)
@@ -64,7 +64,7 @@ public class NewMailViewImpl extends UserViewImpl  implements NewMailView{
 				{
 					mailPanel.setImageRecipient("default_user.png");
 					
-					if(admin)
+					if(isAdmin())
 					{
 						mailPanel.setStudent(defaultStudent);	
 					}
@@ -110,7 +110,7 @@ public class NewMailViewImpl extends UserViewImpl  implements NewMailView{
 		
 		mailPanel.setStudent(owner);
 		
-		if(!admin)
+		if(!isAdmin())
 			mailPanel.album.setMyAlbumTitle();
 		
 		
@@ -132,9 +132,9 @@ public class NewMailViewImpl extends UserViewImpl  implements NewMailView{
 	}
 	
 	@Override
-	public void init(boolean admin) {
+	public void init(userType type) {
 		
-		super.init(admin);
+		super.init(type);
 		
 	}
 	

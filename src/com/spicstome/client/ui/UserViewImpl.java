@@ -12,7 +12,9 @@ public class UserViewImpl extends VLayout implements UserView{
 	protected VLayout mainPanel = new VLayout();
 	protected Presenter listener;
 	protected MenuTopPanel connectPanel;
-	protected boolean admin=false;
+	protected userType type;
+
+	public static enum userType{REFERENT,TEACHER,ADMIN,STUDENT};
 	
 	public UserViewImpl() {
 		
@@ -49,9 +51,9 @@ public class UserViewImpl extends VLayout implements UserView{
 	
 	
 	@Override
-	public void init(boolean a)
+	public void init(userType type)
 	{
-		this.admin=a;
+		this.type=type;
 	}
 
 	@Override
@@ -61,7 +63,10 @@ public class UserViewImpl extends VLayout implements UserView{
 		
 	}
 
-
+	protected boolean isAdmin()
+	{
+		return (!(type==userType.STUDENT));
+	}
 
 
 	

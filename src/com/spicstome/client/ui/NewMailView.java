@@ -8,12 +8,13 @@ import com.spicstome.client.dto.LogDTO;
 import com.spicstome.client.dto.StudentDTO;
 import com.spicstome.client.dto.UserDTO;
 import com.spicstome.client.dto.WordDTO;
+import com.spicstome.client.ui.UserViewImpl.userType;
 
 public interface NewMailView extends IsWidget{
 
 	void setStudent(StudentDTO owner);
 	void setRecipients(List<UserDTO> recipients);
-	void init(boolean admin);
+	void init(userType type);
 	void initComponents();
 	
 	public interface Presenter 

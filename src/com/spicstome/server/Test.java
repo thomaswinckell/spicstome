@@ -3,6 +3,7 @@ package com.spicstome.server;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TreeSet;
+
 import com.spicstome.client.shared.Adjective;
 import com.spicstome.client.shared.Album;
 import com.spicstome.client.shared.Article;
@@ -13,6 +14,7 @@ import com.spicstome.client.shared.Noun;
 import com.spicstome.client.shared.Pronoun;
 import com.spicstome.client.shared.Referent;
 import com.spicstome.client.shared.Student;
+import com.spicstome.client.shared.Teacher;
 import com.spicstome.client.shared.Verb;
 
 
@@ -20,11 +22,11 @@ public class Test {
 	
 	public enum Type {EXAMPLE,GENERAL,EMPTY};
 	
-	public static Student populateWithStudent(String name,String firstname,String login,String password)
+	public static Student populateWithStudent(String name,String firstname,String login,String password,String filename)
 	{
 		Album album = generateAlbum(Type.EMPTY);
 		
-		Image imageUser = populateWithImageUser();
+		Image imageUser = populateWithImageUser(filename);
 		
 		Student student = new Student((long)-1);
 		student.setName(name);
@@ -100,10 +102,16 @@ public class Test {
 		HibernateManager.getInstance().save(log);
 	}
 	
-	public static Image populateWithImageUser()
+	public static Image populateWithImageUser(String filename)
 	{
+		
+		
 		Image imageUser = new Image((long)-1);
-		imageUser.setFilename("default_user.png");
+		if(!filename.equals(""))
+			imageUser.setFilename(filename);
+		else
+			imageUser.setFilename("default_user.png");
+		
 		
 		HibernateManager.getInstance().save(imageUser);
 		
@@ -380,7 +388,7 @@ public class Test {
 		
 		
 		/* Super Admin */
-		Image imageAdmin = populateWithImageUser();
+		Image imageAdmin = populateWithImageUser("");
 		
 		Referent superAdmin = new Referent((long)-1);
 		superAdmin.setName("admin");
@@ -394,32 +402,70 @@ public class Test {
 
 		/* Student */
 		
-		Student albert = populateWithStudent("Dupuis", "Albert", "albert", "albert");
-		Student maxime = populateWithStudent("Hass", "Maxime", "mofo", "mofo");
-		Student marcel = populateWithStudent("Dupont", "Marcel", "marcel", "marcel");
-		Student thomas = populateWithStudent("Winckell", "Thomas", "thomas", "thomas");
+		Student albert = populateWithStudent("Dupuis", "Albert", "albert", "albert","albert.png");
+		Student stephane = populateWithStudent("Mars", "Stephane", "stephane", "stephane","stephane.png");
+		Student sophie = populateWithStudent("Dupont", "Sophie", "sophie", "sophie","sophie.png");
+		Student marie = populateWithStudent("Schmitt", "Marie", "marie", "marie","marie.png");
+		Student leo = populateWithStudent("Dubois", "Leo", "leo", "leo","leo.png");
+		Student laura = populateWithStudent("Doe", "Laura", "laura", "laura","laura.png");
 		
 		generateLogForStudent(albert);
 	
 		
 		/* Referant */
-		Image imageReferant = populateWithImageUser();
+		Image imageJacques = populateWithImageUser("jacques.png");
 		
-		Referent referent = new Referent((long)-1);
-		referent.setName("Martin");
-		referent.setFirstName("Jacques");
-		referent.setEmail("martinjacques@gmail.com");
-		referent.setLogin("referent");
-		referent.setPassword(Encryption.toSHA256("referent"));
-		referent.setImage(imageReferant);
+		Referent jacques = new Referent((long)-1);
+		jacques.setName("Martin");
+		jacques.setFirstName("Jacques");
+		jacques.setEmail("mj@gmail.com");
+		jacques.setLogin("jacques");
+		jacques.setPassword(Encryption.toSHA256("jacques"));
+		jacques.setImage(imageJacques);
 		
-		referent.setStudents(new TreeSet<Student>());
-		referent.addStudent(albert);
-		referent.addStudent(maxime);
-		referent.addStudent(thomas);
-		referent.addStudent(marcel);
+		jacques.setStudents(new TreeSet<Student>());
+		jacques.addStudent(albert);
+		jacques.addStudent(stephane);
+		jacques.addStudent(sophie);
+		jacques.addStudent(marie);
+		jacques.addStudent(leo);
+		jacques.addStudent(laura);
 		
-		HibernateManager.getInstance().save(referent);
+		HibernateManager.getInstance().save(jacques);
+		
+		Image imageDelphine = populateWithImageUser("delphine.png");
+		
+		Referent delphine = new Referent((long)-1);
+		delphine.setName("Marchand");
+		delphine.setFirstName("Delphine");
+		delphine.setEmail("dm@gmail.com");
+		delphine.setLogin("delphine");
+		delphine.setPassword(Encryption.toSHA256("delphine"));
+		delphine.setImage(imageDelphine);
+		
+		delphine.setStudents(new TreeSet<Student>());
+		delphine.addStudent(stephane);
+		
+		HibernateManager.getInstance().save(delphine);
+		
+		/* Teacher */
+		Image imageRobert = populateWithImageUser("robert.png");
+		
+		Teacher robert = new Teacher((long)-1);
+		robert.setName("Duchemin");
+		robert.setFirstName("Robert");
+		robert.setEmail("rd@gmail.com");
+		robert.setLogin("robert");
+		robert.setPassword(Encryption.toSHA256("robert"));
+		robert.setImage(imageRobert);
+		
+		robert.setStudents(new TreeSet<Student>());
+		robert.addStudent(albert);
+		robert.addStudent(stephane);
+		robert.addStudent(leo);
+		robert.addStudent(marie);
+		
+		HibernateManager.getInstance().save(robert);
 
 	}
 

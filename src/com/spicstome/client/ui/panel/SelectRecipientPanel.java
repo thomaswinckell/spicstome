@@ -11,6 +11,7 @@ import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.TextItem;
 import com.smartgwt.client.widgets.form.fields.events.ChangedEvent;
 import com.smartgwt.client.widgets.form.fields.events.ChangedHandler;
+import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.spicstome.client.dto.UserDTO;
 import com.spicstome.client.ui.widget.ImageRecord;
@@ -23,10 +24,11 @@ public abstract class SelectRecipientPanel extends VLayout {
 	ImageTileGrid userGrid;
 	Label labelNothing = new Label();
 	List<UserDTO> users;
+	HLayout textLayout = new HLayout();
 	DynamicForm form = new DynamicForm();
 	TextItem item = new TextItem();
 	IconButton validation = new IconButton("");
-	int iconsize=40;
+	int iconsize=20;
 	Label labelTitle = new Label();
 	
 	public SelectRecipientPanel() {
@@ -40,15 +42,36 @@ public abstract class SelectRecipientPanel extends VLayout {
 			public void OnSelectChanged(ImageRecord object) {
 				super.OnSelectChanged(object);
 		
-				UpdateValidation();
+				if(userGrid.getSelectedItem()!=null)
+				{
+					UserDTO user = (UserDTO)userGrid.getSelectedItem().getAttributeAsObject(ImageRecord.DATA);
+					onSelectedRecipient(user,user.getEmail());
+				}
 			};
 		};
 		
-		userGrid.setHeight(300);
+		userGrid.setHeight(600);
 		
 
 		item.setTitle("Rechercher");
 		form.setItems(item);
+		
+		validation.setIconSize(iconsize);
+		validation.setIcon("check.png");
+		
+		validation.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				
+				onSelectedRecipient(null,item.getValueAsString());
+				
+
+			}
+		});
+		
+		textLayout.addMember(form);
+		textLayout.addMember(validation);
 		
 		item.addChangedHandler(new ChangedHandler() {
 			
@@ -71,33 +94,12 @@ public abstract class SelectRecipientPanel extends VLayout {
 		labelNothing.setContents("Aucun utilisateur ne correspond à votre recherche");
 		labelNothing.setHeight(40);
 		
-		validation.setIconSize(iconsize);
-		validation.setIcon("check.png");
 		
-		validation.addClickHandler(new ClickHandler() {
-			
-			@Override
-			public void onClick(ClickEvent event) {
-				
-				UserDTO user=null;
-				if(userGrid.getSelectedItem()!=null)
-				{
-					user = (UserDTO)userGrid.getSelectedItem().getAttributeAsObject(ImageRecord.DATA);
-					onSelectedRecipient(user,user.getEmail());
-				}
-				else
-				{
-					onSelectedRecipient(null,item.getValueAsString());
-				}
-
-			}
-		});
 		
 		addMember(labelTitle);
-		addMember(form);
+		addMember(textLayout);
 		addMember(labelNothing);
 		addMember(userGrid);
-		addMember(validation);
 		
 	}
 	
@@ -112,7 +114,7 @@ public abstract class SelectRecipientPanel extends VLayout {
 				false:
 			item.getValueAsString().matches("^([a-zA-Z0-9_.\\-+])+@(([a-zA-Z0-9\\-])+\\.)+[a-zA-Z0-9]{2,4}$"));
 		
-		this.validation.setVisible((userGrid.getSelectedItem()!=null)|| textIsMail);
+		this.validation.setVisible(textIsMail);
 	}
 	
 	public void setRecipients(List<UserDTO> userList)
@@ -145,6 +147,8 @@ public abstract class SelectRecipientPanel extends VLayout {
 		userGrid.setItems(wordsRecord);
 
 	}
+	
+
 	
 	public abstract void onSelectedRecipient(UserDTO user,String mail);
 	

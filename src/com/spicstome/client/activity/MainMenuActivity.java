@@ -7,11 +7,14 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.spicstome.client.ClientFactory;
 import com.spicstome.client.dto.ReferentDTO;
+import com.spicstome.client.dto.StudentDTO;
+import com.spicstome.client.dto.TeacherDTO;
 import com.spicstome.client.dto.UserDTO;
 import com.spicstome.client.place.MainMenuPlace;
 import com.spicstome.client.services.SpicsToMeServices;
 import com.spicstome.client.ui.MainMenuView;
 import com.spicstome.client.ui.UserViewImpl;
+import com.spicstome.client.ui.UserViewImpl.userType;
 
 public class MainMenuActivity extends UserActivity{
 
@@ -35,12 +38,20 @@ public class MainMenuActivity extends UserActivity{
 			
 				if(result instanceof ReferentDTO)
 				{
-					mainView.init(true);
+					if(result.getId()==1)
+						mainView.init(userType.ADMIN);
+					else
+						mainView.init(userType.REFERENT);
 				}
-				else
+				else if(result instanceof TeacherDTO)
 				{
-					mainView.init(false);
+					mainView.init(userType.TEACHER);
 				}
+				else if(result instanceof StudentDTO)
+				{
+					mainView.init(userType.STUDENT);
+				}
+					
 				
 			}
 			

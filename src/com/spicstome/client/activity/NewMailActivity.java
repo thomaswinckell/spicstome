@@ -16,6 +16,7 @@ import com.spicstome.client.place.NewMailPlace;
 import com.spicstome.client.services.SpicsToMeServices;
 import com.spicstome.client.ui.NewMailView;
 import com.spicstome.client.ui.UserViewImpl;
+import com.spicstome.client.ui.UserViewImpl.userType;
 
 public class NewMailActivity extends UserActivity implements NewMailView.Presenter{
 	
@@ -41,7 +42,7 @@ public class NewMailActivity extends UserActivity implements NewMailView.Present
 				
 				if(result instanceof StudentDTO)
 				{
-					newMailview.init(false);
+					newMailview.init(userType.STUDENT);
 					newMailview.setStudent((StudentDTO)result);
 					
 				}
@@ -54,7 +55,7 @@ public class NewMailActivity extends UserActivity implements NewMailView.Present
 							StudentDTO falseStudent = new StudentDTO((long)-1);
 							falseStudent.setAlbum(result);
 							
-							newMailview.init(true);
+							newMailview.init(userType.ADMIN);
 							newMailview.setStudent(falseStudent);
 							
 						}

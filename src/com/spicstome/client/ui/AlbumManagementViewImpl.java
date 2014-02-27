@@ -61,7 +61,7 @@ public class AlbumManagementViewImpl extends UserViewImpl  implements AlbumManag
 			public void OnSelectChanged(ImageRecord object) {
 
 	               actionMainAlbumLayout.setVisible(getSelectedItem()!=null);
-	               buttonMainEdit.setVisible(admin);
+	               buttonMainEdit.setVisible(type==userType.ADMIN);
 			};
 		};
 		
@@ -117,7 +117,7 @@ public class AlbumManagementViewImpl extends UserViewImpl  implements AlbumManag
 			public void OnSelectChanged(ImageRecord object) {
 
 	                actionStudentAlbumLayout.setVisible(getSelectedItem()!=null);
-	                buttonStudentEdit.setVisible(admin);
+	                buttonStudentEdit.setVisible(isAdmin());
 			};
 		};
 		
@@ -209,9 +209,9 @@ public class AlbumManagementViewImpl extends UserViewImpl  implements AlbumManag
 	}
 
 	@Override
-	public void init(boolean b) {
+	public void init(userType type) {
 		
-		super.init(b);
+		super.init(type);
 		
 		actionMainAlbumLayout.setVisible(false);
 		actionStudentAlbumLayout.setVisible(false);
