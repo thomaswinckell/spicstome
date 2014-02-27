@@ -229,24 +229,23 @@ public class Test {
 	{
 		Folder racine = generateFolder(0,"Tout", "all.png", null);
 		
-		if(type!=Type.EMPTY)
+		if(type==Type.GENERAL)
 		{
-			if(type==Type.GENERAL)
-			{
-				Folder articles = generateFolder(0,"Articles", "articles.gif", racine);	
-				
-					generateArticle(0, "le", "le.gif", articles, 0, 0);
-					generateArticle(1, "la", "la.gif", articles, 1, 0);
-					generateArticle(2, "un", "un.gif", articles, 0, 0);
-					generateArticle(3, "une", "une.gif", articles, 1, 0);
-					generateArticle(4, "des", "des.gif", articles, 0, 1);
-					generateArticle(5, "les", "les.gif", articles, 0, 1);
-					generateArticle(6, "de la", "dela.gif", articles, 1, 0);
-					generateArticle(7, "du", "du.gif", articles, 0, 0);
-					generateArticle(8, "mon", "mon.gif", articles, 0, 0);
-					generateArticle(9, "ma", "ma.gif", articles, 1, 0);
-					generateArticle(10, "mes", "mes.gif", articles, 1, 1);
-			}
+			
+			Folder articles = generateFolder(0,"Articles", "articles.gif", racine);	
+			
+				generateArticle(0, "le", "le.gif", articles, 0, 0);
+				generateArticle(1, "la", "la.gif", articles, 1, 0);
+				generateArticle(2, "un", "un.gif", articles, 0, 0);
+				generateArticle(3, "une", "une.gif", articles, 1, 0);
+				generateArticle(4, "des", "des.gif", articles, 0, 1);
+				generateArticle(5, "les", "les.gif", articles, 0, 1);
+				generateArticle(6, "de la", "dela.gif", articles, 1, 0);
+				generateArticle(7, "du", "du.gif", articles, 0, 0);
+				generateArticle(8, "mon", "mon.gif", articles, 0, 0);
+				generateArticle(9, "ma", "ma.gif", articles, 1, 0);
+				generateArticle(10, "mes", "mes.gif", articles, 1, 1);
+			
 				
 			Folder qui = generateFolder(1,"Qui", "qui.gif", racine);	
 			
@@ -255,65 +254,65 @@ public class Test {
 					generateNoun(0,"boulanger", "boulanger.gif", commercants, 0, 0,0);
 					generateNoun(1,"coiffeur", "coiffeur.gif", commercants, 0, 0,0);
 					
+				Folder animaux = generateFolder(1,"Animaux", "animaux.gif", qui);
+					
+					generateNoun(0,"chien", "chien.gif", animaux, 0, 0,0);	
+					generateNoun(0,"pingouin", "pingouin.gif", animaux, 0, 0,0);	
+					
 				generatePronoun(0,"je", "je_1.JPG", qui, 0, 0, 0);
 				generatePronoun(1,"je", "je_2.JPG", qui, 1, 0, 0);
 				generatePronoun(2,"tu", "tu_1.JPG", qui, 0, 0, 1);
 				generatePronoun(3,"tu", "tu_2.JPG", qui, 1, 0, 1);	
-				
-				if(type==Type.GENERAL)
-				{	
-					generatePronoun(4,"il", "il_1.JPG", qui, 0, 0, 2);
-					generatePronoun(5,"elle", "elle_1.JPG", qui, 1, 0, 2);
-					generateNoun(6, "parent", "parent.gif", qui, 0, 1,0);
-					generateNoun(7, "papa", "pere.gif", qui, 0, 0,0);
-					generateNoun(8, "maman", "mere.gif", qui, 1, 0,0);
-					generatePronoun(9,"nous", "nous_1.JPG", qui, 0, 1, 0);
-					generatePronoun(10,"nous", "nous_2.JPG", qui, 1, 1, 0);
-					generatePronoun(11,"vous", "vous_1.JPG", qui, 0, 1, 1);
-					generatePronoun(12,"vous", "vous_2.JPG", qui, 1, 1, 1);
-				}
-				
+				generatePronoun(4,"il", "il_1.JPG", qui, 0, 0, 2);
+				generatePronoun(5,"elle", "elle_1.JPG", qui, 1, 0, 2);
+				generateNoun(6, "parent", "parent.gif", qui, 0, 1,0);
+				generateNoun(7, "papa", "pere.gif", qui, 0, 0,0);
+				generateNoun(8, "maman", "mere.gif", qui, 1, 0,0);
+				generatePronoun(9,"nous", "nous_1.JPG", qui, 0, 1, 0);
+				generatePronoun(10,"nous", "nous_2.JPG", qui, 1, 1, 0);
+				generatePronoun(11,"vous", "vous_1.JPG", qui, 0, 1, 1);
+				generatePronoun(12,"vous", "vous_2.JPG", qui, 1, 1, 1);
+					
 			Folder quoi = generateFolder(2,"Quoi", "quoi.gif", racine);
 			
-			generateVerb(0,"être", "etre.gif", quoi, 0,2,"suis","es","est","sommes","êtes","sont");
-			generateVerb(1,"ne pas être", "nepasetre.JPG", quoi, 1,2,"suis","es","est","sommes","êtes","sont");
-			generateVerb(2,"aimer", "aimer.gif", quoi, 0,0,"","","","","","");
-			generateVerb(3,"ne pas aimer", "nepasaimer.gif", quoi, 1,0,"","","","","","");
-			generateVerb(4,"manger", "manger.gif", quoi, 0,0,"","","","","","");
-			generateVerb(5,"boire", "boire.gif", quoi, 0,2,"bois","bois","boit","buvons","buvez","boivent");
-			
-				if(type==Type.GENERAL)
-				{
-					generateVerb(6,"vouloir", "vouloir.JPG", quoi, 0,2,"veux","veux","veut","voulons","voulez","veulent");
-					generateVerb(7,"ne pas vouloir", "nepasvouloir.JPG", quoi, 1,2,"veux","veux","veut","voulons","voulez","veulent");
-					generateVerb(8,"écouter", "ecouter.gif", quoi, 0,0,"","","","","","");
-					generateVerb(9,"savoir", "savoir.jpg", quoi, 0,2,"sais","sais","sait","savons","savez","savent");
-					generateVerb(10,"ne pas savoir", "nepassavoir.JPG", quoi, 1,2,"sais","sais","sait","savons","savez","savent");
-					generateVerb(11,"lire", "lire.gif", quoi, 0,2,"lis","lis","lit","lisons","lisez","lisent");
-					generateVerb(12,"dormir", "dormir.gif", quoi, 0,2,"dors","dors","dort","dormons","dormez","dorment");
-					generateVerb(13,"trouver", "trouver.gif", quoi, 0,0,"","","","","","");
-					generateVerb(14,"courir", "courir.gif", quoi, 0,2,"cours","cours","court","courons","courez","courent");
-					generateVerb(15,"dire", "dire.gif", quoi, 0,2,"dis","dis","dit","disons","dites","disent");
-				}
-			
+				generateVerb(0,"être", "etre.gif", quoi, 0,2,"suis","es","est","sommes","êtes","sont");
+				generateVerb(1,"ne pas être", "nepasetre.JPG", quoi, 1,2,"suis","es","est","sommes","êtes","sont");
+				generateVerb(2,"aimer", "aimer.gif", quoi, 0,0,"","","","","","");
+				generateVerb(3,"ne pas aimer", "nepasaimer.gif", quoi, 1,0,"","","","","","");
+				generateVerb(4,"manger", "manger.gif", quoi, 0,0,"","","","","","");
+				generateVerb(5,"boire", "boire.gif", quoi, 0,2,"bois","bois","boit","buvons","buvez","boivent");
+				generateVerb(6,"vouloir", "vouloir.JPG", quoi, 0,2,"veux","veux","veut","voulons","voulez","veulent");
+				generateVerb(7,"ne pas vouloir", "nepasvouloir.JPG", quoi, 1,2,"veux","veux","veut","voulons","voulez","veulent");
+				generateVerb(8,"écouter", "ecouter.gif", quoi, 0,0,"","","","","","");
+				generateVerb(9,"savoir", "savoir.jpg", quoi, 0,2,"sais","sais","sait","savons","savez","savent");
+				generateVerb(10,"ne pas savoir", "nepassavoir.JPG", quoi, 1,2,"sais","sais","sait","savons","savez","savent");
+				generateVerb(11,"lire", "lire.gif", quoi, 0,2,"lis","lis","lit","lisons","lisez","lisent");
+				generateVerb(12,"dormir", "dormir.gif", quoi, 0,2,"dors","dors","dort","dormons","dormez","dorment");
+				generateVerb(13,"trouver", "trouver.gif", quoi, 0,0,"","","","","","");
+				generateVerb(14,"courir", "courir.gif", quoi, 0,2,"cours","cours","court","courons","courez","courent");
+				generateVerb(15,"dire", "dire.gif", quoi, 0,2,"dis","dis","dit","disons","dites","disent");
+				generateVerb(16,"danser", "danser.gif", quoi, 0,0,"","","","","","");
+				generateVerb(17,"demander", "demander.gif", quoi, 0,0,"","","","","","");
+				generateVerb(18,"rêver", "rêver.gif", quoi, 0,0,"","","","","","");
+				generateVerb(19,"rire", "rire.gif", quoi, 0,2,"ris","ris","rit","rions","riez","rient");
+				
 				Folder nouriture = generateFolder(0,"Nourriture", "nourriture.gif", quoi);
 				
-				if(type==Type.GENERAL)
-				{
-					generateNoun(0, "yahourt", "yaourt.gif", nouriture, 0, 0,1);
+					generateNoun(0, "yaourt", "yaourt.gif", nouriture, 0, 0,1);
 					generateNoun(1, "biscuit", "biscuit.gif", nouriture, 0, 0,1);
-				}
+					generateNoun(2, "pain au chocolat", "pain au chocolat.gif", nouriture, 0, 0,0);
+					generateNoun(3, "pain", "pain.gif", nouriture, 0, 0,1);
+					generateNoun(4, "oeuf sur le plat", "oeuf sur le plat.gif", nouriture, 0, 0,0);
+					generateNoun(5, "pizza", "pizza.gif", nouriture, 1, 0,1);
+					generateNoun(6, "poulet", "poulet.gif", nouriture, 0, 0,1);
 				
 					Folder fruits = generateFolder(0,"Fruits", "fruits.gif", nouriture);
 					
 						generateNoun(0,"cerises", "cerises.gif", fruits, 1, 1,0);
-						
-						if(type==Type.GENERAL)
-						{
-							generateNoun(1, "abricot", "abricot.gif", fruits, 0, 0,1);
-							generateNoun(2, "fraise", "fraise.gif", fruits, 1, 0,1);
-							generateNoun(3, "banane", "banane.gif", fruits, 1, 0,1);
-						}
+						generateNoun(1, "abricot", "abricot.gif", fruits, 0, 0,1);
+						generateNoun(2, "fraise", "fraise.gif", fruits, 1, 0,1);
+						generateNoun(3, "banane", "banane.gif", fruits, 1, 0,1);
+						generateNoun(4, "pasteque", "pasteque.gif", fruits, 1, 0,1);
 					
 				Folder boissons = generateFolder(1,"Boissons", "boissons.gif", quoi);
 				
@@ -325,19 +324,30 @@ public class Test {
 				Folder choses = generateFolder(2,"Choses", "choses.gif", quoi);
 				
 					generateNoun(0,"livre", "livre.gif", choses, 0, 0,0);	
+					generateNoun(1,"voiture", "voiture.gif", choses, 0, 1,0);
 							
 			Folder comment = generateFolder(3,"Comment", "comment.gif", racine);
 			
-					generateAdjective(0,"fatigué", "fatiguer.gif", comment,"fatigué","fatigués","fatiguée","fatiguées");	
-					generateAdjective(1,"heureux", "heureux.jpg", comment,"heureux","heureux","heureuse","heureuses");	
-			
-			if(type==Type.GENERAL)
-			{
-				Folder ou = generateFolder(4,"Ou", "ou.gif", racine);
+				generateAdjective(0,"fatigué", "fatiguer.gif", comment,"fatigué","fatigués","fatiguée","fatiguées");	
+				generateAdjective(1,"heureux", "heureux.jpg", comment,"heureux","heureux","heureuse","heureuses");	
+				generateAdjective(2,"enervé", "enerve.JPG", comment,"enervé","enervés","enervée","enervées");	
+
+			Folder ou = generateFolder(4,"Ou", "ou.gif", racine);
 				
-					generateNoun(0,"boucherie", "boucherie.gif", ou, 1, 0,0);	
-					generateNoun(1,"boulangerie", "boulangerie.gif", ou, 1, 0,0);
-			}
+				generateNoun(0,"boucherie", "boucherie.gif", ou, 1, 0,0);	
+				generateNoun(1,"boulangerie", "boulangerie.gif", ou, 1, 0,0);
+				generateNoun(2,"restaurant", "restaurant.gif", ou, 0, 0,0);
+				
+			Folder sports = generateFolder(5,"Sports", "sports.gif", racine);
+				
+				generateNoun(0,"escalade", "escalade.gif", sports, 1, 0,1);	
+				generateNoun(1,"escrime", "escrime.gif", sports, 1, 0,1);
+				generateNoun(2,"gymnastique", "gymnastique.gif", sports, 1, 0,1);
+				generateNoun(3,"course", "course.gif", sports, 1, 0,1);
+				generateNoun(4,"boxe", "boxe.gif", sports, 1, 0,1);
+				generateNoun(5,"bowling", "bowling.gif", sports, 0, 0,1);
+				generateNoun(6,"judo", "judo.gif", sports, 0, 0,1);
+				generateNoun(7,"planche à voile", "plancheavoile.gif", sports, 1, 0,1);
 			
 		}
 
