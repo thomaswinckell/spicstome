@@ -2,6 +2,7 @@ package com.spicstome.client.ui.chart;
 
 import java.util.ArrayList;
 
+import com.google.gwt.i18n.client.NumberFormat;
 import com.smartgwt.client.widgets.drawing.DrawLabel;
 import com.smartgwt.client.widgets.drawing.DrawPane;
 import com.smartgwt.client.widgets.drawing.DrawRect;
@@ -83,7 +84,7 @@ public class PieChart extends HLayout {
 		for(int i = 0; i < strings.size(); i++) {
     		
 			drawRect(left, top, LEGEND_RECT_WIDTH, LEGEND_RECT_HEIGHT, colors.get(i));
-			drawLabel(left+LEGEND_RECT_WIDTH+5, top + LEGEND_RECT_HEIGHT/2 - 8, strings.get(i) + " (" + percents.get(i) + " %)", "start");
+			drawLabel(left+LEGEND_RECT_WIDTH+5, top + LEGEND_RECT_HEIGHT/2 - 8, strings.get(i) + " (" + NumberFormat.getFormat("#0.0").format(percents.get(i)) + " %)", "start");
 			
     		top += LEGEND_ITEM_HEIGHT;
     	}

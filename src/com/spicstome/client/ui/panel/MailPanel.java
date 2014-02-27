@@ -96,7 +96,7 @@ public abstract class MailPanel extends VLayout{
     	 
     	imageRecipient.setIconSize(100);
     	labelTitle.setHeight(40);
-    	labelTitle.setWidth(300);
+    	labelTitle.setWidth(600);
     	labelTitle.setContents("Que veux tu dire à cette personne ?");
     	labelTitle.setStyleName("title");
     	

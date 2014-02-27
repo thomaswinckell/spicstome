@@ -34,7 +34,7 @@ public abstract class SelectRecipientPanel extends VLayout {
 
 		setTitle("Selection du destinataire");
 
-		userGrid = new ImageTileGrid(Mode.CLICK,200,150,60){
+		userGrid = new ImageTileGrid(Mode.CLICK,200,250,200){
 
 			@Override
 			public void OnSelectChanged(ImageRecord object) {

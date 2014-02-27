@@ -76,16 +76,7 @@ public abstract class MailDropZone extends VLayout{
 	public void UpdateValidation(Boolean b)
 	{
 		validationLayout.setVisible(b);
-		
-		if(b)
-		{
-			dropZone.setBackgroundColor("lightgreen");
-		}
-		else
-		{
-			dropZone.setBackgroundColor("white");
-		}
-		
+
 		onTextChange(b);
 	}
 	
