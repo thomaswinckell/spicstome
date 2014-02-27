@@ -603,10 +603,7 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 		onLoadFolder(getSelectedFolder());
 	
 	}
-	
-	
-	
-	
+
 	public abstract void onSaveWord(WordDTO wordDTO);
 	public abstract void onSaveFolder(FolderDTO folderDTO);
 	public abstract void onDeleteWord(WordDTO wordDTO);

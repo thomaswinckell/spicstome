@@ -6,17 +6,16 @@ import com.smartgwt.client.widgets.events.ClickHandler;
 import com.spicstome.client.dto.FolderDTO;
 import com.spicstome.client.dto.PecsDTO;
 import com.spicstome.client.dto.WordDTO;
-import com.spicstome.client.ui.NewMailViewImpl;
 import com.spicstome.client.ui.widget.FolderTree.AlbumTreeNode;
 import com.spicstome.client.ui.window.SearchWordWindow;
 
 public class MailMenuRightPanel extends MenuRightPanel{
 	
-	NewMailViewImpl mailView;
+	MailPanel mailView;
 	IconButton favoriteIcon;
 	IconButton expand;
 
-	public MailMenuRightPanel(final NewMailViewImpl mailView)
+	public MailMenuRightPanel(final MailPanel mailView)
 	{
 		super();
 		

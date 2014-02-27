@@ -26,7 +26,8 @@ public class NewMailActivity extends UserActivity implements NewMailView.Present
 		super(place, clientFactory,(UserViewImpl)clientFactory.getNewMailView());		
 		
 		newMailview = clientFactory.getNewMailView();
-		
+
+		newMailview.initComponents();
 		
 		SpicsToMeServices.Util.getInstance().getCurrentUser(new AsyncCallback<UserDTO>() {
 

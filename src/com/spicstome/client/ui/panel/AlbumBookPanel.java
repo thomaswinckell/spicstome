@@ -1,6 +1,7 @@
 package com.spicstome.client.ui.panel;
 
 import java.util.ArrayList;
+
 import com.smartgwt.client.widgets.tree.events.NodeClickEvent;
 import com.spicstome.client.dto.WordDTO;
 import com.spicstome.client.dto.FolderDTO;
@@ -30,6 +31,7 @@ public class AlbumBookPanel extends AlbumPanel{
 		favoriteFilter=false;
 		book.setList(new ArrayList<ImageRecord>());
 	}
+	
 	
 	@Override
 	public void onFolderClick(NodeClickEvent event)

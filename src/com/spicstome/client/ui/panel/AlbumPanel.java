@@ -59,6 +59,12 @@ public abstract class AlbumPanel extends VLayout{
 		addMember(titleLayout);
 		addMember(horizontalLayout);
 	}
+
+	
+	public void setMyAlbumTitle()
+	{
+		title.setContents("Mon album");
+	}
 	
 	public void setOwnerName(String name)
 	{

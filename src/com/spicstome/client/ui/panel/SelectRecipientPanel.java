@@ -101,6 +101,11 @@ public abstract class SelectRecipientPanel extends VLayout {
 		
 	}
 	
+	public void init()
+	{
+		userGrid.clearItems();
+	}
+	
 	private void UpdateValidation()
 	{
 		boolean textIsMail = (item.getValue()==null?
