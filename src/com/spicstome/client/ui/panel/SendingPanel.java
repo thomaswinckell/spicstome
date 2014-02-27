@@ -10,12 +10,12 @@ public abstract class SendingPanel extends HLayout{
 	IconButton sendingButton = new IconButton("");
 	protected IconButton speakButton = new IconButton("");
 	
-	int iconsize = 60;
+	int iconsize = 100;
 	
 	public SendingPanel()
 	{
 		setWidth100();
-		setHeight(80);
+
 		
 		setStyleName("bloc");
 		
@@ -38,7 +38,7 @@ public abstract class SendingPanel extends HLayout{
 			
 			@Override
 			public void onClick(ClickEvent event) {
-	
+
 				onSend();
 			}
 		});

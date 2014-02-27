@@ -2,6 +2,8 @@ package com.spicstome.client.ui.panel;
 
 import java.util.ArrayList;
 import java.util.Date;
+
+import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.IconButton;
 import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.layout.HLayout;
@@ -54,14 +56,21 @@ public abstract class MailPanel extends VLayout{
 			@Override
 			public void onSend() {
 				
-				long now = System.currentTimeMillis()-begin;
-				int seconds = (int) (now/1000);
-				
-				LogDTO logDTO = new LogDTO((long)-1, null, recipientMail, new Date(),
-						dropZone.message.size(),
-						seconds,dropZone.getMovementCount());
-				
-				onSendMail(recipientMail,dropZone.message,  dropZone.getCorrectedWords(), logDTO);
+				if(dropZone.message.size()>0)
+				{
+					long now = System.currentTimeMillis()-begin;
+					int seconds = (int) (now/1000);
+					
+					LogDTO logDTO = new LogDTO((long)-1, null, recipientMail, new Date(),
+							dropZone.message.size(),
+							seconds,dropZone.getMovementCount());
+					
+					onSendMail(recipientMail,dropZone.message,  dropZone.getCorrectedWords(), logDTO);
+				}
+				else
+				{
+					SC.warn("Le message est vide");
+				}
 				
 			}
 

@@ -3,7 +3,6 @@ package com.spicstome.client.ui;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.types.Alignment;
 import com.spicstome.client.dto.UserDTO;
-import com.spicstome.client.place.UserEditPlace;
 import com.spicstome.client.place.UsersManagementPlace;
 import com.spicstome.client.ui.form.FormUtils;
 import com.spicstome.client.ui.form.UserForm;
