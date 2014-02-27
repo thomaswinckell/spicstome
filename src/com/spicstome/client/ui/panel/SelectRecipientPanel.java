@@ -108,6 +108,11 @@ public abstract class SelectRecipientPanel extends VLayout {
 		userGrid.clearItems();
 	}
 	
+	public void setTextSearchVisible(boolean b)
+	{
+		this.textLayout.setVisible(b);
+	}
+	
 	private void UpdateValidation()
 	{
 		boolean textIsMail = (item.getValue()==null?

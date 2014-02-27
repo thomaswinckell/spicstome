@@ -45,6 +45,7 @@ public class NewMailViewImpl extends UserViewImpl  implements NewMailView{
 				if(user!=null)
 				{
 					mailPanel.setImageRecipient(user.getImage().getFilename());
+					mailPanel.setRecipientLabel(user.getFirstName());
 					
 					if(isAdmin())
 					{
@@ -63,6 +64,7 @@ public class NewMailViewImpl extends UserViewImpl  implements NewMailView{
 				else
 				{
 					mailPanel.setImageRecipient("default_user.png");
+					mailPanel.setRecipientLabel(mail);
 					
 					if(isAdmin())
 					{
@@ -135,7 +137,7 @@ public class NewMailViewImpl extends UserViewImpl  implements NewMailView{
 	public void init(userType type) {
 		
 		super.init(type);
-		
+		selectionRecipientPanel.setTextSearchVisible(isAdmin());
 	}
 	
 	public void SetIsSelectedRecipient(boolean b)

@@ -23,6 +23,7 @@ public abstract class MailPanel extends VLayout{
 	MailDropZone dropZone;
 	long begin;
 	String recipientMail;
+	Label recipientLabel = new Label();
 	VLayout expandLayout = new VLayout();
 	HLayout recipientLayout = new HLayout();
 	public boolean expanded = false;
@@ -96,13 +97,15 @@ public abstract class MailPanel extends VLayout{
     	 
     	imageRecipient.setIconSize(100);
     	labelTitle.setHeight(40);
-    	labelTitle.setWidth(600);
-    	labelTitle.setContents("Que veux tu dire à cette personne ?");
+    	labelTitle.setWidth(270);
+    	labelTitle.setContents("Ecris un message à ");
     	labelTitle.setStyleName("title");
+    	recipientLabel.setStyleName("title");
+    	
     	
     	recipientLayout.addMember(imageRecipient);
     	recipientLayout.addMember(labelTitle);
-    	
+    	recipientLayout.addMember(recipientLabel);
     	
     	mainContent.addMember(recipientLayout);
     	mainContent.addMember(album);
@@ -118,6 +121,11 @@ public abstract class MailPanel extends VLayout{
 		
 		
 		
+	}
+	
+	public void setRecipientLabel(String s)
+	{
+		this.recipientLabel.setContents(s);
 	}
 	
 	public void setStudent(StudentDTO student)
