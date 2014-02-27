@@ -184,6 +184,7 @@ public class AlbumManagementViewImpl extends UserViewImpl  implements AlbumManag
 	@Override
 	public void insertStudentAlbum(ArrayList<StudentDTO> list) {
 
+		imageListStudentAlbum.clearItems();
 		actionStudentAlbumLayout.setVisible(false);
 		
 		for(StudentDTO student :list)
@@ -196,6 +197,7 @@ public class AlbumManagementViewImpl extends UserViewImpl  implements AlbumManag
 	@Override
 	public void insertMainAlbum(List<AlbumDTO> list) {
 
+		imageListMainAlbum.clearItems();
 		actionMainAlbumLayout.setVisible(false);
 		
 		for(AlbumDTO album:list)
@@ -215,9 +217,6 @@ public class AlbumManagementViewImpl extends UserViewImpl  implements AlbumManag
 		
 		actionMainAlbumLayout.setVisible(false);
 		actionStudentAlbumLayout.setVisible(false);
-		
-		imageListMainAlbum.clearItems();
-		imageListStudentAlbum.clearItems();
 		
 	}
 
