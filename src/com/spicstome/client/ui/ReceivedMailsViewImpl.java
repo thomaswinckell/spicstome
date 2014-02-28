@@ -52,16 +52,6 @@ public class ReceivedMailsViewImpl extends UserViewImpl  implements ReceivedMail
 			containerLayout.addMember(mailLayout.get(i));
 		}
 	}
-	
-	@Override
-	public void init() {
-		
-	}
-	
-	@Override
-	public void setUser(UserDTO owner) {
-		
-	}
 
 	@Override
 	public void setReceivedMails(List<MailDTO> mails) {
@@ -87,8 +77,9 @@ public class ReceivedMailsViewImpl extends UserViewImpl  implements ReceivedMail
 			vLayoutSender.addMember(labelSender);
 			vLayoutSender.addMember(imageSender);
 			
-			VLayout vLayoutMessage = new VLayout();			
-			vLayoutMessage.setWidth("600px");
+			VLayout vLayoutMessage = new VLayout();		
+			vLayoutMessage.setWidth100();
+			//vLayoutMessage.setWidth("600px");
 			vLayoutMessage.setHeight("350px");
 			
 			vLayoutMessage.setContents(mails.get(i).getMessageHTML());

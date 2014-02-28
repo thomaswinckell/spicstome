@@ -41,9 +41,6 @@ public class ReceivedMailsActivity extends UserActivity implements ReceivedMails
 				
 				user = result;
 				
-				receivedMailsView.init();
-				receivedMailsView.setUser(result);
-				
 				SpicsToMeServices.Util.getInstance().getMails(user, new AsyncCallback<ArrayList<MailDTO>>() {
 
 					@Override
