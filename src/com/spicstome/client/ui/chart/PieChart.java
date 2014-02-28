@@ -98,7 +98,7 @@ public class PieChart extends HLayout {
     	
     	int startAngle = 0, endAngle = 0;
     	
-    	for(int i = 0; i < percents.size(); i++) {
+    	for(int i = 0; i < percents.size() - 1; i++) {
     		
     		endAngle = startAngle + (int) (percents.get(i) / 100 * 360);
     		
@@ -106,6 +106,10 @@ public class PieChart extends HLayout {
     		
     		startAngle = endAngle;
     	}
+    	
+    	endAngle = 360;
+		
+		drawSector(startAngle,endAngle,colors.get(percents.size() - 1));
     	
     	drawStrings();
     		
