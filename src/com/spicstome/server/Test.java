@@ -81,11 +81,6 @@ public class Test {
 			
 			calendar.set(Calendar.WEEK_OF_YEAR, calendar.get(Calendar.WEEK_OF_YEAR)+1);
 			
-			if(calendar.get(Calendar.WEEK_OF_YEAR)==1)
-			{
-				calendar.set(Calendar.YEAR, calendar.get(Calendar.YEAR)+1);
-			}
-			
 		};
 	}
 	
