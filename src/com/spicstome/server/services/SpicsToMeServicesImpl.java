@@ -407,7 +407,7 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 			
 			nW = cal.get(Calendar.WEEK_OF_YEAR);
 			nY = cal.get(Calendar.YEAR);
-			System.out.println(nW+" "+nY);
+
 
 			if(type==0)
 				res.add(new Point2D((double) nW,getCountMail(nW,nY, set)));

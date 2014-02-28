@@ -67,7 +67,7 @@ public class ImageRecord extends TileRecord {
 		super();
 		
 		setAttribute(PICTURE_ID, userDTO.getId());
-		setAttribute(PICTURE_NAME, userDTO.getFirstName()+" "+userDTO.getName()+"<br/>"+userDTO.getEmail());
+		setAttribute(PICTURE_NAME, userDTO.getFirstName()+" "+userDTO.getName());
 		setAttribute(PICTURE_PATH, "upload/"+userDTO.getImage().getFilename());
 		setAttribute(DATA, userDTO);
 	}
