@@ -59,7 +59,7 @@ public class UserComboBoxItem extends ComboBoxItem {
                 		"<td align='center'><span style='" + styleStr + "width:200px;font-weight:bold;font-family:arial;font-size:25px;'>" + user.getFirstName() + " " + user.getName() + "<span></td>" +
                         "</tr><tr>" +
                 		"<td align='center'><span style='" + styleStr + "width:200px;'>" +
-                    		"<img src='images/"+ FormUtils.UPLOAD_IMAGE_PATH + user.getImage().getFilename() + "' max-width='200px'>" +
+                    		"<img src='images/"+ FormUtils.UPLOAD_IMAGE_PATH + user.getImage().getFilename() + "' height='200px' width='200px'>" +
                     	"<span></td>" +   
                         "</tr></table>";  
                 return retStr;  
