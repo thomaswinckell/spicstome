@@ -55,7 +55,7 @@ public abstract class PickerWindow extends Window{
         setDismissOnOutsideClick(true);
         
         
-        if(others.size()>1)
+        if(others.size()>2)
         {
         	  LinkedHashMap<Integer, String> map = new LinkedHashMap<Integer, String>(others.size());
              
@@ -94,15 +94,20 @@ public abstract class PickerWindow extends Window{
             	  }
               });
         }
-      
-
 
         InitAlbumPanel();
         
-        /* setting first album */
-      
-    	albumPanel.setStudent(others.iterator().next());
-       
+        if(others.size()>2)
+        {
+        	 albumPanel.setStudent(others.iterator().next());
+        }
+        else
+        {
+        	comboBox.setVisible(false);
+        	albumPanel.setStudent(others.get(0));
+        }
+        
+
   
         validButton.setIcon("check.png");
         int iconsize=32;

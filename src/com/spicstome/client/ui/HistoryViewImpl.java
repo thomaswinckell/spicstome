@@ -129,7 +129,7 @@ public class HistoryViewImpl extends UserViewImpl  implements HistoryView{
 		horizontalLayout2.addMember(singleCurveChartMessageLength);
 		horizontalLayout2.addMember(pieChart);
 		
-		singleCurveChartExecutionTime = new SingleCurveChart(900,600,120,50, "semaine", "temps moyen d'écriture (secondes)");
+		singleCurveChartExecutionTime = new SingleCurveChart(1200,600,120,50, "semaine", "temps moyen d'écriture (secondes)");
 		
 		horizontalLayout3.addMember(singleCurveChartExecutionTime);
 		
