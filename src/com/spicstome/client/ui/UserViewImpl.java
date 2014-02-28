@@ -1,6 +1,7 @@
 package com.spicstome.client.ui;
 
 import com.google.gwt.place.shared.Place;
+import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.widgets.Img;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.spicstome.client.dto.UserDTO;
@@ -26,16 +27,16 @@ public class UserViewImpl extends VLayout implements UserView{
 		imgLoading = new Img("loading.gif");
 		imgLoading.setIconWidth(100);
 		imgLoading.setWidth(100);
-		
+		imgLoading.setLayoutAlign(Alignment.CENTER);
+		loadingPanel.setHeight(200);
 		loadingPanel.addMember(imgLoading);
 		
 		mainPanel.setStyleName("mainPanel");
 		loadingPanel.setStyleName("mainPanel");
 		
 		addMember(connectPanel);
-		addMember(loadingPanel);
 		addMember(mainPanel);
-		
+		addMember(loadingPanel);
 		
 
 	}
