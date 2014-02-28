@@ -65,7 +65,7 @@ public class AlbumManagementActivity extends UserActivity implements AlbumManage
 								
 								managementView.init(userType.ADMIN);
 								managementView.insertStudentAlbum(array);
-								
+								userView.setIsLoading(false);
 							}
 						});
 					}
@@ -73,16 +73,15 @@ public class AlbumManagementActivity extends UserActivity implements AlbumManage
 					{
 						managementView.init(userType.REFERENT);
 						managementView.insertStudentAlbum(referent.getStudents());
+						userView.setIsLoading(false);
 					}
-					
-					
-
 				}
 				else if(result instanceof TeacherDTO)
 				{
 					TeacherDTO teacher =  (TeacherDTO) result;
 					managementView.init(userType.STUDENT);
 					managementView.insertStudentAlbum(teacher.getStudents());
+					userView.setIsLoading(false);
 				}
 				
 				SpicsToMeServices.Util.getInstance().getGeneralAndExampleAlbum(new AsyncCallback<List<AlbumDTO>>() {

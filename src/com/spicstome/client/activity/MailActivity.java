@@ -21,14 +21,10 @@ public class MailActivity extends UserActivity implements AlbumManagementView.Pr
 	@Override
 	public void start(AcceptsOneWidget containerWidget, EventBus eventBus) {
 
-		
-		
 		super.start(containerWidget, eventBus);
 		
+		userView.setIsLoading(false);
 
-		
-
-		
 	}
 
 }

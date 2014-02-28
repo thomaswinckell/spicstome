@@ -17,16 +17,24 @@ import com.spicstome.client.ui.UserViewImpl;
 public class HistoryActivity extends UserActivity{
 
 	
-
+	long idStudent;
 	HistoryView historyView;
 	
 	public HistoryActivity(HistoryPlace place, ClientFactory clientFactory) {
 		super(place, clientFactory,(UserViewImpl)clientFactory.getHistoryView());
 
 		this.historyView = clientFactory.getHistoryView();
-
+		this.idStudent=place.idStudent;
 		
-		SpicsToMeServices.Util.getInstance().getUser(place.idStudent, new AsyncCallback<UserDTO>() {
+		
+	}
+
+	@Override
+	public void start(AcceptsOneWidget containerWidget, EventBus eventBus) 
+	{
+		super.start(containerWidget, eventBus);
+		
+		SpicsToMeServices.Util.getInstance().getUser(idStudent, new AsyncCallback<UserDTO>() {
 
 			@Override
 			public void onFailure(Throwable caught) {}
@@ -36,7 +44,7 @@ public class HistoryActivity extends UserActivity{
 				
 				if(result instanceof StudentDTO)
 				{
-					StudentDTO student = (StudentDTO)result;
+					final StudentDTO student = (StudentDTO)result;
 					
 					historyView.setStudent(student);
 					
@@ -49,82 +57,71 @@ public class HistoryActivity extends UserActivity{
 						public void onSuccess(Double result) {
 							
 							historyView.setAverageMessageLength(result);
+							
+							SpicsToMeServices.Util.getInstance().getAverageTimeExecution(-1,-1,student.getLogs(), new AsyncCallback<Double>() {
+
+								@Override
+								public void onFailure(Throwable caught) {}
+
+								@Override
+								public void onSuccess(Double result) {
+									historyView.setAverageExecutionTime(result);
+									
+									SpicsToMeServices.Util.getInstance().getHistoryPerWeek(student.getLogs(), 0,new AsyncCallback<ArrayList<Point2D>>() {
+
+										@Override
+										public void onFailure(Throwable caught) {}
+
+										@Override
+										public void onSuccess(ArrayList<Point2D> result) {
+											
+											historyView.setNbMailPerWeek(result);
+											
+											SpicsToMeServices.Util.getInstance().getHistoryPerWeek(student.getLogs(), 2,new AsyncCallback<ArrayList<Point2D>>() {
+
+												@Override
+												public void onFailure(Throwable caught) {}
+
+												@Override
+												public void onSuccess(ArrayList<Point2D> result) {
+													
+													historyView.setMessageLengthPerWeek(result);
+													
+													SpicsToMeServices.Util.getInstance().getHistoryPerWeek(student.getLogs(), 1,new AsyncCallback<ArrayList<Point2D>>() {
+
+														@Override
+														public void onFailure(Throwable caught) {}
+
+														@Override
+														public void onSuccess(ArrayList<Point2D> result) {
+															
+															historyView.setExecutionTimePerWeek(result);
+															
+															SpicsToMeServices.Util.getInstance().getPartitionMessageLength(student.getLogs(),new AsyncCallback<ArrayList<Double>>() {
+
+																@Override
+																public void onFailure(Throwable caught) {}
+
+																@Override
+																public void onSuccess(ArrayList<Double> result) {
+																	
+																	historyView.setPartitionMessageLength(result);
+																	userView.setIsLoading(false);
+																	historyView.drawCharts();
+																}
+															});
+														}
+													});
+												}
+											});
+										}
+									});
+								}
+							});
 						}
 					});
-					
-					SpicsToMeServices.Util.getInstance().getAverageTimeExecution(-1,-1,student.getLogs(), new AsyncCallback<Double>() {
-
-						@Override
-						public void onFailure(Throwable caught) {}
-
-						@Override
-						public void onSuccess(Double result) {
-							historyView.setAverageExecutionTime(result);
-						}
-					});
-					
-					SpicsToMeServices.Util.getInstance().getHistoryPerWeek(student.getLogs(), 0,new AsyncCallback<ArrayList<Point2D>>() {
-
-						@Override
-						public void onFailure(Throwable caught) {}
-
-						@Override
-						public void onSuccess(ArrayList<Point2D> result) {
-							
-							historyView.setNbMailPerWeek(result);
-							
-						}
-					});
-					
-					SpicsToMeServices.Util.getInstance().getHistoryPerWeek(student.getLogs(), 2,new AsyncCallback<ArrayList<Point2D>>() {
-
-						@Override
-						public void onFailure(Throwable caught) {}
-
-						@Override
-						public void onSuccess(ArrayList<Point2D> result) {
-							
-							historyView.setMessageLengthPerWeek(result);
-							
-						}
-					});
-					
-					SpicsToMeServices.Util.getInstance().getHistoryPerWeek(student.getLogs(), 1,new AsyncCallback<ArrayList<Point2D>>() {
-
-						@Override
-						public void onFailure(Throwable caught) {}
-
-						@Override
-						public void onSuccess(ArrayList<Point2D> result) {
-							
-							historyView.setExecutionTimePerWeek(result);
-							
-						}
-					});
-					
-					SpicsToMeServices.Util.getInstance().getPartitionMessageLength(student.getLogs(),new AsyncCallback<ArrayList<Double>>() {
-
-						@Override
-						public void onFailure(Throwable caught) {}
-
-						@Override
-						public void onSuccess(ArrayList<Double> result) {
-							
-							historyView.setPartitionMessageLength(result);
-							
-						}
-					});
-				}
-				
+				}	
 			}
 		});
-		
 	}
-
-	@Override
-	public void start(AcceptsOneWidget containerWidget, EventBus eventBus) 
-	{
-		super.start(containerWidget, eventBus);
-	}
-
 }

@@ -29,6 +29,13 @@ public class UsersManagementActivity extends UserActivity {
 		
 		view = clientFactory.getUsersManagementView();
 		
+		
+	}
+
+	@Override
+	public void start(AcceptsOneWidget containerWidget, EventBus eventBus) {
+		super.start(containerWidget, eventBus);
+		
 		SpicsToMeServices.Util.getInstance().getAllStudents(new AsyncCallback<List<StudentDTO>> () {
         	
 			@Override
@@ -43,46 +50,43 @@ public class UsersManagementActivity extends UserActivity {
 					users.add(((UserDTO) student));
 				}
 				view.setStudents(users);
-			}
-		});
-		
-		SpicsToMeServices.Util.getInstance().getAllTeachers(new AsyncCallback<List<TeacherDTO>> () {
-        	
-			@Override
-			public void onFailure(Throwable caught) {
-				System.out.println(caught);
-			}
+				
+				SpicsToMeServices.Util.getInstance().getAllTeachers(new AsyncCallback<List<TeacherDTO>> () {
+		        	
+					@Override
+					public void onFailure(Throwable caught) {
+						System.out.println(caught);
+					}
 
-			@Override
-			public void onSuccess(List<TeacherDTO> teachers) {
-				List<UserDTO> users = new ArrayList<UserDTO>();
-				for(TeacherDTO teacher : teachers) {
-					users.add(((UserDTO) teacher));
-				}
-				view.setTeachers(users);
-			}
-		});
-		
-		SpicsToMeServices.Util.getInstance().getAllReferents(new AsyncCallback<List<ReferentDTO>> () {
-        	
-			@Override
-			public void onFailure(Throwable caught) {
-				System.out.println(caught);
-			}
+					@Override
+					public void onSuccess(List<TeacherDTO> teachers) {
+						List<UserDTO> users = new ArrayList<UserDTO>();
+						for(TeacherDTO teacher : teachers) {
+							users.add(((UserDTO) teacher));
+						}
+						view.setTeachers(users);
+						
+						SpicsToMeServices.Util.getInstance().getAllReferents(new AsyncCallback<List<ReferentDTO>> () {
+				        	
+							@Override
+							public void onFailure(Throwable caught) {
+								System.out.println(caught);
+							}
 
-			@Override
-			public void onSuccess(List<ReferentDTO> referents) {
-				List<UserDTO> users = new ArrayList<UserDTO>();
-				for(ReferentDTO referent : referents) {
-					users.add(((UserDTO) referent));
-				}
-				view.setReferents(users);
+							@Override
+							public void onSuccess(List<ReferentDTO> referents) {
+								List<UserDTO> users = new ArrayList<UserDTO>();
+								for(ReferentDTO referent : referents) {
+									users.add(((UserDTO) referent));
+								}
+								view.setReferents(users);
+								
+								userView.setIsLoading(false);
+							}
+						});
+					}
+				});
 			}
-		});
-	}
-
-	@Override
-	public void start(AcceptsOneWidget containerWidget, EventBus eventBus) {
-		super.start(containerWidget, eventBus);
+		});	
 	}
 }

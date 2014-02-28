@@ -32,6 +32,7 @@ public class AlbumActivity extends UserActivity{
 					falseStudent.setAlbum(result);
 					
 					albumView.setStudent(falseStudent);
+					userView.setIsLoading(false);
 				}
 
 				@Override
@@ -45,6 +46,7 @@ public class AlbumActivity extends UserActivity{
 				public void onSuccess(StudentDTO result) {
 					
 					albumView.setStudent(result);
+					userView.setIsLoading(false);
 				}
 				@Override
 				public void onFailure(Throwable caught) {}			

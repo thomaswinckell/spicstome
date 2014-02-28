@@ -52,7 +52,7 @@ public class MainMenuActivity extends UserActivity{
 					mainView.init(userType.STUDENT);
 				}
 					
-				
+				userView.setIsLoading(false);
 			}
 			
 			@Override

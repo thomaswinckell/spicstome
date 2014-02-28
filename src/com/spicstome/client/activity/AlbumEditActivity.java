@@ -29,11 +29,17 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 
 		this.editview = clientFactory.getAlbumEditView();
 		this.idAlbum=place.idAlbum;
-		
+
+	}
+
+	@Override
+	public void start(AcceptsOneWidget containerWidget, EventBus eventBus) 
+	{
+		super.start(containerWidget, eventBus);
 		
 		if(idAlbum==1 || idAlbum==2)
 		{
-			SpicsToMeServices.Util.getInstance().getAlbum(place.idAlbum, new AsyncCallback<AlbumDTO>() {
+			SpicsToMeServices.Util.getInstance().getAlbum(idAlbum, new AsyncCallback<AlbumDTO>() {
 				@Override
 				public void onSuccess(AlbumDTO result) {
 					
@@ -41,6 +47,7 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 					falseStudent.setAlbum(result);
 					
 					editview.setStudent(falseStudent);
+					userView.setIsLoading(false);
 				}
 
 				@Override
@@ -49,7 +56,7 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 		}
 		else
 		{
-			SpicsToMeServices.Util.getInstance().getAlbumOwner(place.idAlbum, new AsyncCallback<StudentDTO>(){
+			SpicsToMeServices.Util.getInstance().getAlbumOwner(idAlbum, new AsyncCallback<StudentDTO>(){
 
 				@Override
 				public void onFailure(Throwable caught) {}
@@ -57,7 +64,8 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 				@Override
 				public void onSuccess(StudentDTO result) {
 
-					editview.setStudent(result);				
+					editview.setStudent(result);	
+					userView.setIsLoading(false);
 				}
 				
 			});
@@ -77,7 +85,7 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 				final List<StudentDTO> mergedListStudent = new ArrayList<StudentDTO>();
 				for(AlbumDTO album:result)
 				{
-					if(album.getId()!=place.idAlbum)
+					if(album.getId()!=idAlbum)
 					{
 						StudentDTO falseStudent = new StudentDTO((long)-1);
 						falseStudent.setAlbum(album);
@@ -100,7 +108,7 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 							
 							for(StudentDTO student : referent.getStudents())
 							{
-								if(student.getAlbum().getId()!=place.idAlbum)
+								if(student.getAlbum().getId()!=idAlbum)
 									mergedListStudent.add(student);
 							}		
 							editview.setAllStudents(mergedListStudent);
@@ -112,12 +120,6 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 			}
 		});
 		
-	}
-
-	@Override
-	public void start(AcceptsOneWidget containerWidget, EventBus eventBus) 
-	{
-		super.start(containerWidget, eventBus);
 	}
 
 	@Override

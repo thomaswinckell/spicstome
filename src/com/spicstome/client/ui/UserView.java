@@ -11,6 +11,8 @@ public interface UserView {
 	void setPresenter(Presenter listener);
 	public void init(userType type);
 	public void setMenuTopVisible(boolean b);
+	public void setIsLoading(boolean b);
+
 	
 	public interface Presenter
 	{

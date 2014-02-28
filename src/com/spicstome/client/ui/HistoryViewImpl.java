@@ -181,7 +181,6 @@ public class HistoryViewImpl extends UserViewImpl  implements HistoryView{
 
 		chart.addCurve(new Curve(coords,libelleX, "x", "y", "red"));
 
-		chart.drawChart();
 	}
 	
 	@Override
@@ -206,8 +205,7 @@ public class HistoryViewImpl extends UserViewImpl  implements HistoryView{
 	public void setExecutionTimePerWeek(ArrayList<Point2D> list) {
 		
 		setDataInWeekIntoChart(list, singleCurveChartExecutionTime);
-		
-		
+
 	}
 
 
@@ -216,7 +214,18 @@ public class HistoryViewImpl extends UserViewImpl  implements HistoryView{
 	public void setPartitionMessageLength(ArrayList<Double> list) {
 
 		pieChart.setPercents(list);
-		pieChart.drawChart();
 		
+		
+	}
+
+
+
+	@Override
+	public void drawCharts() {
+		
+		pieChart.drawChart();
+		singleCurveChartCountMail.drawChart();
+		singleCurveChartExecutionTime.drawChart();
+		singleCurveChartMessageLength.drawChart();
 	}
 }

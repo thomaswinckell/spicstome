@@ -42,6 +42,7 @@ public class HistoryManagementActivity extends UserActivity implements HistoryMa
 				{
 					ReferentDTO referent = (ReferentDTO) result;
 					historyView.insertStudentAlbum(referent.getStudents());
+					userView.setIsLoading(false);
 				}
 
 			}			

@@ -1,6 +1,7 @@
 package com.spicstome.client.ui;
 
 import com.google.gwt.place.shared.Place;
+import com.smartgwt.client.widgets.Img;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.spicstome.client.dto.UserDTO;
 import com.spicstome.client.ui.panel.MenuTopPanel;
@@ -8,7 +9,8 @@ import com.spicstome.client.ui.widget.Crumb;
 
 public class UserViewImpl extends VLayout implements UserView{
 
-	
+	protected VLayout loadingPanel = new VLayout();
+	protected Img imgLoading;
 	protected VLayout mainPanel = new VLayout();
 	protected Presenter listener;
 	protected MenuTopPanel connectPanel;
@@ -17,15 +19,25 @@ public class UserViewImpl extends VLayout implements UserView{
 	public static enum userType{REFERENT,TEACHER,ADMIN,STUDENT};
 	
 	public UserViewImpl() {
+		setWidth100();
 		
 		connectPanel=new MenuTopPanel(this);
 		
-		addMember(connectPanel);
-		addMember(mainPanel);
+		imgLoading = new Img("loading.gif");
+		imgLoading.setIconWidth(100);
+		imgLoading.setWidth(100);
 		
-		setWidth100();
+		loadingPanel.addMember(imgLoading);
 		
 		mainPanel.setStyleName("mainPanel");
+		loadingPanel.setStyleName("mainPanel");
+		
+		addMember(connectPanel);
+		addMember(loadingPanel);
+		addMember(mainPanel);
+		
+		
+
 	}
 	
 	public void goTo(Place place)
@@ -66,6 +78,14 @@ public class UserViewImpl extends VLayout implements UserView{
 	protected boolean isAdmin()
 	{
 		return (!(type==userType.STUDENT));
+	}
+
+	@Override
+	public void setIsLoading(boolean b) {
+	
+		mainPanel.setVisible(!b);
+		loadingPanel.setVisible(b);
+		
 	}
 
 

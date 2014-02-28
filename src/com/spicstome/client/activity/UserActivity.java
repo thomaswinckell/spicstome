@@ -31,6 +31,8 @@ public class UserActivity extends AbstractActivity implements UserView.Presenter
 	@Override
 	public void start(AcceptsOneWidget panel, EventBus eventBus) {
 		
+		userView.setIsLoading(true);
+		
 		Scheduler.get().scheduleFinally(new ScheduledCommand() {
 			public void execute() {
 				SpicsToMeServices.Util.getInstance().getCurrentUser(new AsyncCallback<UserDTO>() {
@@ -46,9 +48,7 @@ public class UserActivity extends AbstractActivity implements UserView.Presenter
 
 					}
 					@Override
-					public void onFailure(Throwable caught) {
-						System.out.println(caught);
-					}
+					public void onFailure(Throwable caught) {}
 				});
 			}
 		});

@@ -16,4 +16,5 @@ public interface HistoryView extends IsWidget{
 	void setMessageLengthPerWeek(ArrayList<Point2D> list);
 	void setExecutionTimePerWeek(ArrayList<Point2D> list);
 	void setPartitionMessageLength(ArrayList<Double> list);
+	void drawCharts();
 }

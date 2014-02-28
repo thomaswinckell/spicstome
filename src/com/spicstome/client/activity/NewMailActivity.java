@@ -28,6 +28,14 @@ public class NewMailActivity extends UserActivity implements NewMailView.Present
 		
 		newMailview = clientFactory.getNewMailView();
 
+		
+	}
+
+	@Override
+	public void start(AcceptsOneWidget containerWidget, EventBus eventBus) 
+	{
+		super.start(containerWidget, eventBus);
+		
 		newMailview.initComponents();
 		
 		SpicsToMeServices.Util.getInstance().getCurrentUser(new AsyncCallback<UserDTO>() {
@@ -44,7 +52,6 @@ public class NewMailActivity extends UserActivity implements NewMailView.Present
 				{
 					newMailview.init(userType.STUDENT);
 					newMailview.setStudent((StudentDTO)result);
-					
 				}
 				else
 				{
@@ -74,17 +81,12 @@ public class NewMailActivity extends UserActivity implements NewMailView.Present
 			public void onSuccess(List<UserDTO> result) {
 				
 				newMailview.setRecipients(result);
+				userView.setIsLoading(false);
 			}
 
 			@Override
 			public void onFailure(Throwable caught) {}
 		});
-	}
-
-	@Override
-	public void start(AcceptsOneWidget containerWidget, EventBus eventBus) 
-	{
-		super.start(containerWidget, eventBus);
 	}
 
 

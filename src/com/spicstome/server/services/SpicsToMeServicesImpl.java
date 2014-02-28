@@ -418,9 +418,7 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 
 			
 			cal.set(Calendar.WEEK_OF_YEAR, cal.get(Calendar.WEEK_OF_YEAR)+1);
-			
 		
-				
 			
 		}while(!((nW==currentWeek) && (nY==currentYear)));
 		
