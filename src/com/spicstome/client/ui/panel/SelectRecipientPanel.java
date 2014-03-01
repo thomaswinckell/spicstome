@@ -103,10 +103,6 @@ public abstract class SelectRecipientPanel extends VLayout {
 		
 	}
 	
-	public void init()
-	{
-		userGrid.clearItems();
-	}
 	
 	public void setTextSearchVisible(boolean b)
 	{

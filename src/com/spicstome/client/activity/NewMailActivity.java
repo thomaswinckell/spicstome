@@ -36,8 +36,6 @@ public class NewMailActivity extends UserActivity implements NewMailView.Present
 	{
 		super.start(containerWidget, eventBus);
 		
-		newMailview.initComponents();
-		
 		SpicsToMeServices.Util.getInstance().getCurrentUser(new AsyncCallback<UserDTO>() {
 
 			@Override

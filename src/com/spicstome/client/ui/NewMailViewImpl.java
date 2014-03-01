@@ -124,19 +124,13 @@ public class NewMailViewImpl extends UserViewImpl  implements NewMailView{
 	public void setRecipients(List<UserDTO> recipients) {	
 		selectionRecipientPanel.setRecipients(recipients);
 	}
-
-	@Override
-	public void initComponents() {
-		
-		mailPanel.init();
-		selectionRecipientPanel.init();
-		SetIsSelectedRecipient(false);
-	}
 	
 	@Override
 	public void init(userType type) {
 		
 		super.init(type);
+		mailPanel.init();
+		SetIsSelectedRecipient(false);
 		selectionRecipientPanel.setTextSearchVisible(isAdmin());
 	}
 	
