@@ -22,12 +22,13 @@ public class NewMailActivity extends UserActivity implements NewMailView.Present
 	
 	NewMailView newMailview;
 	UserDTO user;
+	String recipientMail;
 	
 	public NewMailActivity(NewMailPlace place, ClientFactory clientFactory) {
 		super(place, clientFactory,(UserViewImpl)clientFactory.getNewMailView());		
 		
 		newMailview = clientFactory.getNewMailView();
-
+		recipientMail=place.recipientMail;
 		
 	}
 
@@ -36,55 +37,76 @@ public class NewMailActivity extends UserActivity implements NewMailView.Present
 	{
 		super.start(containerWidget, eventBus);
 		
-		SpicsToMeServices.Util.getInstance().getCurrentUser(new AsyncCallback<UserDTO>() {
-
-			@Override
-			public void onFailure(Throwable caught) {}
-
-			@Override
-			public void onSuccess(UserDTO result) {
-				
-				user=result;
-				
-				if(result instanceof StudentDTO)
-				{
-					newMailview.init(userType.STUDENT);
-					newMailview.setStudent((StudentDTO)result);
-				}
-				else
-				{
-					SpicsToMeServices.Util.getInstance().getAlbum(1, new AsyncCallback<AlbumDTO>() {
-						@Override
-						public void onSuccess(AlbumDTO result) {
-							
-							StudentDTO falseStudent = new StudentDTO((long)-1);
-							falseStudent.setAlbum(result);
-							
-							newMailview.init(userType.ADMIN);
-							newMailview.setStudent(falseStudent);
-							
-						}
-
-						@Override
-						public void onFailure(Throwable caught) {}
-					});
-				}
-				
-			}
-		});
-		
-
 		SpicsToMeServices.Util.getInstance().getEverybody(new AsyncCallback<List<UserDTO>>() {
 			@Override
 			public void onSuccess(List<UserDTO> result) {
 				
 				newMailview.setRecipients(result);
-				userView.setIsLoading(false);
+				
+				SpicsToMeServices.Util.getInstance().getUser(recipientMail, new AsyncCallback<UserDTO>() {
+					
+					@Override
+					public void onSuccess(UserDTO result) {
+						
+						boolean replying=false;
+						if(result!=null)
+						{
+							replying=true;
+							
+						}
+						
+						
+						SpicsToMeServices.Util.getInstance().getAlbum(1, new AsyncCallback<AlbumDTO>() {
+							@Override
+							public void onSuccess(AlbumDTO result) {
+								
+								final StudentDTO falseStudent = new StudentDTO((long)-1);
+								falseStudent.setAlbum(result);
+								
+								SpicsToMeServices.Util.getInstance().getCurrentUser(new AsyncCallback<UserDTO>() {
+
+									@Override
+									public void onFailure(Throwable caught) {}
+
+									@Override
+									public void onSuccess(UserDTO result) {
+										
+										user=result;
+										
+										//init doit prendre en compte le replying et setter correctement le destinataire
+										//comme si il avait eté selectionner de façon classqieu
+										
+										if(result instanceof StudentDTO)
+										{
+											newMailview.init(userType.STUDENT);
+											newMailview.setStudent((StudentDTO)result);
+										}
+										else
+										{
+											newMailview.init(userType.ADMIN);
+											newMailview.setStudent(falseStudent);
+										}		
+										
+										userView.setIsLoading(false);
+									}
+								});			
+							}
+							@Override
+							public void onFailure(Throwable caught) {}
+						});			
+					}		
+					@Override
+					public void onFailure(Throwable caught) {}
+				});
+
 			}
 
 			@Override
 			public void onFailure(Throwable caught) {}
 		});
+		
+		
+		
 	}
 
 

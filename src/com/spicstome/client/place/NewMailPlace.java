@@ -5,9 +5,10 @@ import com.google.gwt.place.shared.PlaceTokenizer;
 
 public class NewMailPlace extends Place{
 	
+	public String recipientMail;
 	
-	public NewMailPlace() {
-		
+	public NewMailPlace(String recipientMail) {
+		this.recipientMail=recipientMail;
 	}
 	
 	/**
@@ -17,12 +18,15 @@ public class NewMailPlace extends Place{
 
 		@Override
 		public String getToken(NewMailPlace place) {
-			return "mail";
+			return "RecipientMail:"+place.recipientMail;
 		}
 
 		@Override
 		public NewMailPlace getPlace(String token) {
-			return new NewMailPlace();
+			String[] split = token.split(":");
+			String  recipient = split[1];
+			
+			return new NewMailPlace(recipient);
 		}
 
 	}

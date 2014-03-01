@@ -103,6 +103,11 @@ public abstract class SelectRecipientPanel extends VLayout {
 		
 	}
 	
+	public void init()
+	{
+		item.setValue("");
+		validation.setVisible(false);
+	}
 	
 	public void setTextSearchVisible(boolean b)
 	{

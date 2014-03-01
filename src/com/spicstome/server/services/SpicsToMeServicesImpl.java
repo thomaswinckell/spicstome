@@ -214,6 +214,19 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	}
 	
 	@Override
+	public UserDTO getUser(String mail) {		
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+	    session.beginTransaction();
+	    @SuppressWarnings("unchecked")
+		List<User> users = session.createCriteria(User.class).add(Restrictions.eq("email",mail)).list();
+	    UserDTO userDTO = null;
+	    if (!users.isEmpty())
+	    	userDTO = Transtypage.createUserDTO(users.get(0));
+    	session.getTransaction().commit();
+    	return userDTO;
+	}
+	
+	@Override
 	public UserDTO getUser(Long idUser) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.beginTransaction();

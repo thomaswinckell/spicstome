@@ -130,6 +130,7 @@ public class NewMailViewImpl extends UserViewImpl  implements NewMailView{
 		
 		super.init(type);
 		mailPanel.init();
+		selectionRecipientPanel.init();
 		SetIsSelectedRecipient(false);
 		selectionRecipientPanel.setTextSearchVisible(isAdmin());
 	}
