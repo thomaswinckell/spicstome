@@ -26,6 +26,7 @@ public class StateNounSubject extends SyntaxState{
 			AdjectiveDTO adjective = (AdjectiveDTO) word;
 
 			analyser.currentState=analyser.stateAdjectiveSubject;
+			analyser.nbGoodWord++;
 			
 			return analyser.syntaxFrenchManager.match(subject.getGender(),subject.getNumber(), 
 					adjective.getMatching1(),adjective.getMatching2(),adjective.getMatching3(),adjective.getMatching4());
@@ -35,6 +36,8 @@ public class StateNounSubject extends SyntaxState{
 			VerbDTO verb = (VerbDTO) word;
 
 			analyser.stateVerb.setAcceptNext(verb.getNegation(), verb.getName());
+			analyser.nbGoodWord++;
+			
 			return conjugueVerb(subject,verb);
 		}
 		else

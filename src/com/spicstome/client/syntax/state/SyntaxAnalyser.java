@@ -15,6 +15,7 @@ public class SyntaxAnalyser {
 	public SyntaxState currentState;
 	public SyntaxFrenchManager syntaxFrenchManager;
 	protected ArrayList<ImageRecord> arrayRecord;
+	public int nbGoodWord;
 	
 	public StateInit stateInit;
 	public StateArticleSubject stateArticleSubject;
@@ -54,6 +55,7 @@ public class SyntaxAnalyser {
 		currentState = stateInit;
 		this.arrayRecord=arrayRecord;
 		stateVerb.nbInfinitifVerb=0;
+		nbGoodWord=0;
 	}
 
 	public WordDTO extractWord(int i)

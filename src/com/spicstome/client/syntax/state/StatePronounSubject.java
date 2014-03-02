@@ -21,6 +21,8 @@ public class StatePronounSubject extends SyntaxState{
 			PronounDTO subject = (PronounDTO) analyser.extractWord(0);
 			
 			analyser.stateVerb.setAcceptNext(verb.getNegation(), verb.getName());
+			analyser.nbGoodWord++;
+			
 			return conjugueVerb(subject,verb);
 
 		}

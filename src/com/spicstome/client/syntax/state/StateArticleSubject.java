@@ -35,6 +35,7 @@ public class StateArticleSubject extends SyntaxState{
 					noun.getGender(), noun.getNumber(),noun.getUncountable()))
 			{
 				analyser.currentState=analyser.stateNounSubject;
+				analyser.nbGoodWord++;
 				return null;
 			}
 			else

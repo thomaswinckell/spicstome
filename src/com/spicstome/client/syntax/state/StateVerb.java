@@ -37,11 +37,13 @@ public class StateVerb extends SyntaxState{
 			ArticleDTO article = (ArticleDTO)word;
 			analyser.stateArticleComplement.setArticle(article);
 			analyser.currentState=analyser.stateArticleComplement;
+			analyser.nbGoodWord++;
 			return null;
 		}
 		else if(word instanceof NounDTO)
 		{
 			analyser.currentState=analyser.stateNounComplement;
+			analyser.nbGoodWord++;
 			return null;
 		}
 		else if(acceptVerb && nbInfinitifVerb<2 && word instanceof VerbDTO)
@@ -49,6 +51,7 @@ public class StateVerb extends SyntaxState{
 			nbInfinitifVerb++;
 			VerbDTO verb = (VerbDTO)word;
 			setAcceptNext(verb.getNegation(), verb.getName());
+			analyser.nbGoodWord++;
 			return null;
 		}
 		else if(acceptAdjective && word instanceof AdjectiveDTO)
@@ -57,6 +60,7 @@ public class StateVerb extends SyntaxState{
 			SubjectDTO subject = (SubjectDTO) analyser.extractWord(0);
 			
 			analyser.currentState=analyser.statefinal;
+			analyser.nbGoodWord++;
 			
 			return analyser.syntaxFrenchManager.match(subject.getGender(),subject.getNumber(), 
 					adjective.getMatching1(),adjective.getMatching2(),adjective.getMatching3(),adjective.getMatching4());

@@ -414,13 +414,13 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 		cal.setTime(new Date());
 		int currentWeek = cal.get(Calendar.WEEK_OF_YEAR);
 		int currentYear = cal.get(Calendar.YEAR);
-		cal.set(Calendar.MONTH, cal.get(Calendar.MONTH)-nbMonthBack);
+		cal.add(Calendar.MONTH,-nbMonthBack);
 
 		do{
 			
 			nW = cal.get(Calendar.WEEK_OF_YEAR);
 			nY = cal.get(Calendar.YEAR);
-
+			System.out.println(nW+" "+nY);
 
 			if(type==0)
 				res.add(new Point2D((double) nW,getCountMail(nW,nY, set)));
@@ -430,8 +430,8 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 				res.add(new Point2D((double) nW,getAverageMessageLength(nW,nY, set).doubleValue()));
 
 			
-			cal.set(Calendar.WEEK_OF_YEAR, cal.get(Calendar.WEEK_OF_YEAR)+1);
-		
+			cal.add(Calendar.WEEK_OF_YEAR, 1);
+			
 			
 		}while(!((nW==currentWeek) && (nY==currentYear)));
 		

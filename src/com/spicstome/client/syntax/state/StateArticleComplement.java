@@ -31,6 +31,7 @@ public class StateArticleComplement extends SyntaxState{
 			if(analyser.syntaxFrenchManager.goodArticle(article.getName(),article.getGender(), article.getNumber(), noun.getGender(), noun.getNumber(),noun.getUncountable()))
 			{
 				analyser.currentState=analyser.stateNounComplement;
+				analyser.nbGoodWord++;
 				return null;
 			}
 			else

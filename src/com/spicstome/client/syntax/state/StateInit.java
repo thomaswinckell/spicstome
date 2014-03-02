@@ -21,16 +21,17 @@ public class StateInit extends SyntaxState{
 			ArticleDTO article = (ArticleDTO)word;
 			analyser.stateArticleSubject.setArticle(article);
 			analyser.currentState=analyser.stateArticleSubject;
+			analyser.nbGoodWord++;
 		}
 		else if(word instanceof NounDTO)
 		{
 			analyser.currentState=analyser.stateNounSubject;
-			
+			analyser.nbGoodWord++;
 		}
 		else if(word instanceof PronounDTO)
 		{
 			analyser.currentState=analyser.statePronounSubject;
-			
+			analyser.nbGoodWord++;
 		}
 		else
 		{

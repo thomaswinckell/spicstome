@@ -79,7 +79,7 @@ public class Test {
 				generateLog(student, calendar.getTime(), falseRecipient, timeExecution, nbAction, messageLength);
 			}
 			
-			calendar.set(Calendar.WEEK_OF_YEAR, calendar.get(Calendar.WEEK_OF_YEAR)+1);
+			calendar.add(Calendar.WEEK_OF_YEAR, 1);
 			
 		};
 	}
