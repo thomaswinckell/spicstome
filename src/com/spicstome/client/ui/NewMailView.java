@@ -14,7 +14,7 @@ public interface NewMailView extends IsWidget{
 
 	void setStudent(StudentDTO owner);
 	void setRecipients(List<UserDTO> recipients);
-	void init(userType type);
+	void init(userType type,String recipientMail,UserDTO recipient);
 	
 	public interface Presenter 
 	{

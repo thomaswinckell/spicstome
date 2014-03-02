@@ -48,14 +48,8 @@ public class NewMailActivity extends UserActivity implements NewMailView.Present
 					@Override
 					public void onSuccess(UserDTO result) {
 						
-						boolean replying=false;
-						if(result!=null)
-						{
-							replying=true;
-							
-						}
-						
-						
+						final UserDTO recipient = result;
+
 						SpicsToMeServices.Util.getInstance().getAlbum(1, new AsyncCallback<AlbumDTO>() {
 							@Override
 							public void onSuccess(AlbumDTO result) {
@@ -72,18 +66,15 @@ public class NewMailActivity extends UserActivity implements NewMailView.Present
 									public void onSuccess(UserDTO result) {
 										
 										user=result;
-										
-										//init doit prendre en compte le replying et setter correctement le destinataire
-										//comme si il avait eté selectionner de façon classqieu
-										
+
 										if(result instanceof StudentDTO)
 										{
-											newMailview.init(userType.STUDENT);
+											newMailview.init(userType.STUDENT,recipientMail,recipient);
 											newMailview.setStudent((StudentDTO)result);
 										}
 										else
 										{
-											newMailview.init(userType.ADMIN);
+											newMailview.init(userType.ADMIN,recipientMail,recipient);
 											newMailview.setStudent(falseStudent);
 										}		
 										
@@ -98,15 +89,10 @@ public class NewMailActivity extends UserActivity implements NewMailView.Present
 					@Override
 					public void onFailure(Throwable caught) {}
 				});
-
 			}
-
 			@Override
 			public void onFailure(Throwable caught) {}
-		});
-		
-		
-		
+		});	
 	}
 
 
@@ -124,9 +110,7 @@ public class NewMailActivity extends UserActivity implements NewMailView.Present
 				public void onFailure(Throwable caught) {}
 
 				@Override
-				public void onSuccess(Long result) {
-
-				}
+				public void onSuccess(Long result) {}
 			});
 		}
 	}
@@ -141,9 +125,7 @@ public class NewMailActivity extends UserActivity implements NewMailView.Present
 			}
 
 			@Override
-			public void onSuccess(Boolean result) {
-				
-			}
+			public void onSuccess(Boolean result) {}
 			
 		});
 	}

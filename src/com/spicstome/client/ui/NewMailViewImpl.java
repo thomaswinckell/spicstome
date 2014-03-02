@@ -41,41 +41,8 @@ public class NewMailViewImpl extends UserViewImpl  implements NewMailView{
 			@Override
 			public void onSelectedRecipient(UserDTO user,String mail) {
 				
-				
-				if(user!=null)
-				{
-					mailPanel.setImageRecipient(user.getImage().getFilename());
-					mailPanel.setRecipientLabel(user.getFirstName());
-					
-					if(isAdmin())
-					{
+				SelectRecipient(user,mail);
 
-						if(user instanceof StudentDTO)
-						{
-							StudentDTO student = (StudentDTO) user;
-							mailPanel.setStudent(student);
-						}
-						else
-						{
-							mailPanel.setStudent(defaultStudent);	
-						}
-					}
-				}
-				else
-				{
-					mailPanel.setImageRecipient("default_user.png");
-					mailPanel.setRecipientLabel(mail);
-					
-					if(isAdmin())
-					{
-						mailPanel.setStudent(defaultStudent);	
-					}
-				}
-				
-				SetIsSelectedRecipient(true);
-				mailPanel.setRecipientMail(mail);
-				mailPanel.startLog();
-				
 			}	
     	};
     	
@@ -126,12 +93,21 @@ public class NewMailViewImpl extends UserViewImpl  implements NewMailView{
 	}
 	
 	@Override
-	public void init(userType type) {
+	public void init(userType type,String recipientMail,UserDTO recipient) {
 		
 		super.init(type);
 		mailPanel.init();
 		selectionRecipientPanel.init();
-		SetIsSelectedRecipient(false);
+		
+		if(recipientMail.equals("?"))
+		{
+			SetIsSelectedRecipient(false);
+		}
+		else
+		{
+			SelectRecipient(recipient, recipientMail);
+		}
+		
 		selectionRecipientPanel.setTextSearchVisible(isAdmin());
 	}
 	
@@ -143,7 +119,43 @@ public class NewMailViewImpl extends UserViewImpl  implements NewMailView{
 		selectionRecipientPanel.setVisible(!selectedRecipient);
 		
 	}
+	
+	public void SelectRecipient(UserDTO user,String mail)
+	{
+		if(user!=null)
+		{
+			mailPanel.setImageRecipient(user.getImage().getFilename());
+			mailPanel.setRecipientLabel(user.getFirstName());
+			
+			if(isAdmin())
+			{
 
+				if(user instanceof StudentDTO)
+				{
+					StudentDTO student = (StudentDTO) user;
+					mailPanel.setStudent(student);
+				}
+				else
+				{
+					mailPanel.setStudent(defaultStudent);	
+				}
+			}
+		}
+		else
+		{
+			mailPanel.setImageRecipient("default_user.png");
+			mailPanel.setRecipientLabel(mail);
+			
+			if(isAdmin())
+			{
+				mailPanel.setStudent(defaultStudent);	
+			}
+		}
+		
+		SetIsSelectedRecipient(true);
+		mailPanel.setRecipientMail(mail);
+		mailPanel.startLog();
+	}
 
 
 	
