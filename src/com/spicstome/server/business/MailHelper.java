@@ -125,6 +125,8 @@ public abstract class MailHelper {
 						final MailDTO mail = new MailDTO();
 						Long idSender = Long.parseLong(messages[i].getHeader(MAIL_SENDER_ID)[0]);
 						
+						System.out.println("Sender ID : "+idSender);
+						
 						mail.setSender(new UserDTO(idSender));						
 						mail.setReceivedDate(messages[i].getReceivedDate());
 						

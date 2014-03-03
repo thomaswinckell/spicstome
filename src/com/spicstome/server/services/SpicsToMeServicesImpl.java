@@ -1092,7 +1092,7 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 		
 		// loading the sender user
 		for(int i=0; i<mails.size(); i++) {
-			mails.get(i).setSender(getUser(user.getId()));
+			mails.get(i).setSender(getUser(mails.get(i).getSender().getId()));
 		}
 		
 		return mails;
