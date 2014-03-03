@@ -29,7 +29,13 @@ public class ReceivedMailsActivity extends UserActivity implements ReceivedMails
 		
 		super(place, clientFactory,(UserViewImpl)clientFactory.getReceivedMailsView());		
 		
-		receivedMailsView = clientFactory.getReceivedMailsView();		
+		receivedMailsView = clientFactory.getReceivedMailsView();	
+	}
+
+	@Override
+	public void start(AcceptsOneWidget containerWidget, EventBus eventBus) 
+	{
+		super.start(containerWidget, eventBus);
 		
 		SpicsToMeServices.Util.getInstance().getCurrentUser(new AsyncCallback<UserDTO>() {
 
@@ -51,15 +57,10 @@ public class ReceivedMailsActivity extends UserActivity implements ReceivedMails
 					@Override
 					public void onSuccess(ArrayList<MailDTO> result) {
 						receivedMailsView.setReceivedMails(result);
+						userView.setIsLoading(false);
 					}			
 				});
 			}
 		});
-	}
-
-	@Override
-	public void start(AcceptsOneWidget containerWidget, EventBus eventBus) 
-	{
-		super.start(containerWidget, eventBus);
 	}
 }
