@@ -3,15 +3,18 @@ package com.spicstome.client.ui;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.smartgwt.client.widgets.Button;
 import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.Img;
 import com.smartgwt.client.widgets.Label;
+import com.smartgwt.client.widgets.events.ClickEvent;
+import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.spicstome.client.dto.MailDTO;
-import com.spicstome.client.dto.UserDTO;
+import com.spicstome.client.dto.MailListDTO;
 import com.spicstome.client.place.MailPlace;
-import com.spicstome.client.place.UsersManagementPlace;
+import com.spicstome.client.place.ReceivedMailsPlace;
 import com.spicstome.client.ui.form.FormUtils;
 import com.spicstome.client.ui.widget.Crumb;
 
@@ -41,24 +44,84 @@ public class ReceivedMailsViewImpl extends UserViewImpl  implements ReceivedMail
 		mainPanel.addMember(containerLayout);
 	}
 	
-	private void updateLayout() {
+	private void updateLayout(boolean hasPrevious, boolean hasNext, final int startPosition, 
+			final int nextStartPosition) {
+		
 		//cleaning
+		
 		for(Canvas c : containerLayout.getMembers()) {
 			containerLayout.removeMember(c);
 		}
 		
-		// adding
+		// adding navigation buttons
+		
+		if (hasPrevious) {
+			Button previousButton = new Button("Précédent");
+			previousButton.addClickHandler(new ClickHandler() {
+
+				@Override
+				public void onClick(ClickEvent event) {
+					goTo(new ReceivedMailsPlace(startPosition, false));
+				}				
+			});
+			
+			containerLayout.addMember(previousButton);
+		}
+		
+		if (hasNext) {
+			Button nextButton = new Button("Suivant");
+			nextButton.addClickHandler(new ClickHandler() {
+
+				@Override
+				public void onClick(ClickEvent event) {
+					goTo(new ReceivedMailsPlace(nextStartPosition, true));
+				}				
+			});
+			
+			containerLayout.addMember(nextButton);
+		}
+		
+		// adding mails
+		
 		for(int i=0; i<mailLayout.size(); i++) {
 			containerLayout.addMember(mailLayout.get(i));
+		}
+		
+		// adding navigation buttons
+		
+		if (hasPrevious) {
+			Button previousButtonBottom = new Button("Précédent");
+			previousButtonBottom.addClickHandler(new ClickHandler() {
+
+				@Override
+				public void onClick(ClickEvent event) {
+					goTo(new ReceivedMailsPlace(startPosition, false));
+				}				
+			});
+			
+			containerLayout.addMember(previousButtonBottom);
+		}
+		
+		if (hasNext) {
+			Button nextButtonBottom = new Button("Suivant");
+			nextButtonBottom.addClickHandler(new ClickHandler() {
+
+				@Override
+				public void onClick(ClickEvent event) {
+					goTo(new ReceivedMailsPlace(nextStartPosition, true));
+				}				
+			});
+			
+			containerLayout.addMember(nextButtonBottom);
 		}
 	}
 
 	@Override
-	public void setReceivedMails(List<MailDTO> mails) {
+	public void setReceivedMails(final MailListDTO mails) {
 		
 		mailLayout = new ArrayList<HLayout>();
 		
-		for (int i=0; i<mails.size(); i++) {
+		for (int i=0; i<mails.getMails().size(); i++) {
 			
 			HLayout hLayout = new HLayout();
 			hLayout.setMargin(50);
@@ -68,30 +131,31 @@ public class ReceivedMailsViewImpl extends UserViewImpl  implements ReceivedMail
 			vLayoutSender.setHeight("350px");
 			
 			Label labelSender = new Label();
-			labelSender.setContents("<h2>" + mails.get(i).getSender().getFirstName() + " dit : </h2>");
+			labelSender.setContents("<h2>" + mails.getMails().get(i).getSender().getFirstName() + " dit : </h2>");
 			
-			Img imageSender = new Img(FormUtils.UPLOAD_IMAGE_PATH + mails.get(i).getSender().getImage().getFilename());
+			Img imageSender = new Img(FormUtils.UPLOAD_IMAGE_PATH + mails.getMails().get(i).getSender().getImage().getFilename());
 			imageSender.setWidth("200px");
 			imageSender.setHeight("200px");
 			
 			vLayoutSender.addMember(labelSender);
 			vLayoutSender.addMember(imageSender);
 			
-			VLayout vLayoutMessage = new VLayout();		
+			VLayout vLayoutMessage = new VLayout();
 			vLayoutMessage.setWidth100();
 			//vLayoutMessage.setWidth("600px");
 			vLayoutMessage.setHeight("350px");
 			
-			vLayoutMessage.setContents(mails.get(i).getMessageHTML());
+			vLayoutMessage.setContents(mails.getMails().get(i).getMessageHTML());
 			
 			hLayout.addMember(vLayoutSender);
 			hLayout.addMember(vLayoutMessage);
 			mailLayout.add(hLayout);
 		}
+			
 		
-		updateLayout();
+		updateLayout(mails.hasPrevious(), mails.hasNext(), mails.getStartPosition(), mails.getNextStartPosition());
 		
-		System.out.println("Nb mails : "+mails.size());
+		System.out.println("Nb mails : "+mails.getMails().size());
 		
 		System.out.println("View update done");
 	}

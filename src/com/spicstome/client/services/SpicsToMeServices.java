@@ -23,6 +23,7 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.spicstome.client.dto.AlbumDTO;
 import com.spicstome.client.dto.LogDTO;
 import com.spicstome.client.dto.MailDTO;
+import com.spicstome.client.dto.MailListDTO;
 import com.spicstome.client.dto.WordDTO;
 import com.spicstome.client.dto.FolderDTO;
 import com.spicstome.client.dto.ImageDTO;
@@ -99,5 +100,5 @@ public interface SpicsToMeServices extends RemoteService {
 	
 	/*MAIL*/
 	public boolean sendMail(UserDTO sender, String emailReceiver, ArrayList<WordDTO> words, ArrayList<String> correctedWords);
-	public ArrayList<MailDTO> getMails(UserDTO user);
+	public MailListDTO getMails(UserDTO user, int startPosition, boolean isDescDirection, int maxNbValidMails);
 }

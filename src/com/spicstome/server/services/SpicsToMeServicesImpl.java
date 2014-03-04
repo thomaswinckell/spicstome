@@ -16,6 +16,7 @@ import com.spicstome.client.dto.AdjectiveDTO;
 import com.spicstome.client.dto.AlbumDTO;
 import com.spicstome.client.dto.ArticleDTO;
 import com.spicstome.client.dto.MailDTO;
+import com.spicstome.client.dto.MailListDTO;
 import com.spicstome.client.dto.WordDTO;
 import com.spicstome.client.dto.FolderDTO;
 import com.spicstome.client.dto.ImageDTO;
@@ -1086,13 +1087,13 @@ public class SpicsToMeServicesImpl extends RemoteServiceServlet implements Spics
 	}
 	
 	@Override
-	public ArrayList<MailDTO> getMails(UserDTO user) {
+	public MailListDTO getMails(UserDTO user, int startPosition, boolean isDescDirection, int maxNbValidMails) {
 		
-		ArrayList<MailDTO> mails =  MailHelper.mailsInbox(user);
+		MailListDTO mails =  MailHelper.mailsInbox(user, startPosition, isDescDirection, maxNbValidMails);
 		
 		// loading the sender user
-		for(int i=0; i<mails.size(); i++) {
-			mails.get(i).setSender(getUser(mails.get(i).getSender().getId()));
+		for(int i=0; i<mails.getMails().size(); i++) {
+			mails.getMails().get(i).setSender(getUser(mails.getMails().get(i).getSender().getId()));
 		}
 		
 		return mails;

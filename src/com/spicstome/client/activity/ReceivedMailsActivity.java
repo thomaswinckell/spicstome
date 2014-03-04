@@ -1,22 +1,16 @@
 package com.spicstome.client.activity;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.spicstome.client.ClientFactory;
-import com.spicstome.client.dto.AlbumDTO;
-import com.spicstome.client.dto.LogDTO;
 import com.spicstome.client.dto.MailDTO;
-import com.spicstome.client.dto.StudentDTO;
+import com.spicstome.client.dto.MailListDTO;
 import com.spicstome.client.dto.UserDTO;
-import com.spicstome.client.dto.WordDTO;
-import com.spicstome.client.place.NewMailPlace;
 import com.spicstome.client.place.ReceivedMailsPlace;
 import com.spicstome.client.services.SpicsToMeServices;
-import com.spicstome.client.ui.NewMailView;
 import com.spicstome.client.ui.ReceivedMailsView;
 import com.spicstome.client.ui.UserViewImpl;
 
@@ -24,12 +18,17 @@ public class ReceivedMailsActivity extends UserActivity implements ReceivedMails
 
 	ReceivedMailsView receivedMailsView;
 	UserDTO user;
+	int maxNbValidMails, startPosition;
+	boolean isDescDirection;
 	
 	public ReceivedMailsActivity(ReceivedMailsPlace place, ClientFactory clientFactory) {
 		
 		super(place, clientFactory,(UserViewImpl)clientFactory.getReceivedMailsView());		
 		
-		receivedMailsView = clientFactory.getReceivedMailsView();	
+		receivedMailsView = clientFactory.getReceivedMailsView();
+		maxNbValidMails = place.maxNbValidMails;
+		startPosition = place.startPosition;
+		isDescDirection = place.isDescDirection;
 	}
 
 	@Override
@@ -47,7 +46,7 @@ public class ReceivedMailsActivity extends UserActivity implements ReceivedMails
 				
 				user = result;
 				
-				SpicsToMeServices.Util.getInstance().getMails(user, new AsyncCallback<ArrayList<MailDTO>>() {
+				SpicsToMeServices.Util.getInstance().getMails(user, startPosition, isDescDirection, maxNbValidMails, new AsyncCallback<MailListDTO>()  {
 
 					@Override
 					public void onFailure(Throwable caught) {
@@ -55,7 +54,7 @@ public class ReceivedMailsActivity extends UserActivity implements ReceivedMails
 					}
 
 					@Override
-					public void onSuccess(ArrayList<MailDTO> result) {
+					public void onSuccess(MailListDTO result) {
 						receivedMailsView.setReceivedMails(result);
 						userView.setIsLoading(false);
 					}			

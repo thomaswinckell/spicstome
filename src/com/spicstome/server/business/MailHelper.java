@@ -3,14 +3,13 @@ package com.spicstome.server.business;
 import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collections;
 import java.util.Properties;
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.activation.FileDataSource;
 import javax.mail.Authenticator;
-import javax.mail.BodyPart;
 import javax.mail.Folder;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -23,16 +22,16 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
-import javax.mail.internet.MimePart;
+import javax.mail.search.SearchTerm;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 
 import com.spicstome.client.dto.MailDTO;
+import com.spicstome.client.dto.MailListDTO;
 import com.spicstome.client.dto.UserDTO;
 import com.spicstome.client.dto.WordDTO;
-import com.sun.mail.util.BASE64DecoderStream;
 
 public abstract class MailHelper {
 
@@ -105,27 +104,45 @@ public abstract class MailHelper {
 		return false;
 	}
 
-	public static ArrayList<MailDTO> mailsInbox(final UserDTO user){
+	public static MailListDTO mailsInbox(final UserDTO user, final int startPosition, final boolean isDescDirection, 
+			final int maxNbValidMails){
+		
 		try{
+			
 			Session session = sessionFactory(user.getLogin(), user.getPassword());
+			
 			Store store = session.getStore("imaps");
 			store.connect(SMTP, user.getEmail(), user.getPassword());
+			
 			System.out.println(store);
+			
 			Folder inbox = store.getFolder("Inbox");
 			inbox.open(Folder.READ_ONLY);
+			
 			Message messages[] = inbox.getMessages();
+			
 			ArrayList<MailDTO> mails = new ArrayList<MailDTO>();
-			for(int i=messages.length-1; i>=0; i--){ // LIFO
+			int nbValidMails = 0;
+			int i = messages.length-1-startPosition;
+			
+			if (!isDescDirection)
+				i = messages.length-startPosition;
+			
+			while ((i>=0) && (i<=(messages.length-1))) {
+				
+				if (nbValidMails == maxNbValidMails)
+					break;
 				
 				if (messages[i].getSubject() != null && !messages[i].getSubject().isEmpty() && 
 						(messages[i].getSubject().length() >= SUBJECT.length()) && 
 						messages[i].getSubject().substring(0, SUBJECT.length()).equals(SUBJECT)) {
 					
 					if(messages[i].getHeader(MAIL_IMAGES_ID) != null && messages[i].getHeader(MAIL_SENDER_ID)!=null){
+						
+						nbValidMails++;
+						
 						final MailDTO mail = new MailDTO();
 						Long idSender = Long.parseLong(messages[i].getHeader(MAIL_SENDER_ID)[0]);
-						
-						System.out.println("Sender ID : "+idSender);
 						
 						mail.setSender(new UserDTO(idSender));						
 						mail.setReceivedDate(messages[i].getReceivedDate());
@@ -153,9 +170,32 @@ public abstract class MailHelper {
 					}
 				}
 				
+				if (isDescDirection)
+					i--;
+				else
+					i++;
+				
 				System.out.println("Message "+i+"/"+(messages.length-1));
 			}
-			return mails;
+			
+			MailListDTO mailList = new MailListDTO();
+			
+			if (isDescDirection) {
+				mailList.setStartPosition(startPosition);
+				mailList.setNextStartPosition(messages.length-1-i);
+				mailList.setHasPrevious(startPosition > 0);
+				mailList.setHasNext(i > -1);
+			} else {
+				Collections.reverse(mails);
+				mailList.setStartPosition(messages.length-1-i);
+				mailList.setNextStartPosition(startPosition);
+				mailList.setHasPrevious(messages.length-1-i > 0);
+				mailList.setHasNext(true);
+			}
+			
+			mailList.setMails(mails);
+			
+			return mailList;
 		}catch(Exception e){
 			e.printStackTrace();
 			return null;
