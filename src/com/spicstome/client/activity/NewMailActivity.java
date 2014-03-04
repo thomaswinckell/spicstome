@@ -23,13 +23,14 @@ public class NewMailActivity extends UserActivity implements NewMailView.Present
 	NewMailView newMailview;
 	UserDTO user;
 	String recipientMail;
+	String htmlReceivedMail;
 	
 	public NewMailActivity(NewMailPlace place, ClientFactory clientFactory) {
 		super(place, clientFactory,(UserViewImpl)clientFactory.getNewMailView());		
 		
 		newMailview = clientFactory.getNewMailView();
-		recipientMail=place.recipientMail;
-		
+		recipientMail = place.recipientMail;
+		htmlReceivedMail = place.htmlReceivedMail;
 	}
 
 	@Override
@@ -69,12 +70,12 @@ public class NewMailActivity extends UserActivity implements NewMailView.Present
 
 										if(result instanceof StudentDTO)
 										{
-											newMailview.init(userType.STUDENT,recipientMail,recipient);
+											newMailview.init(userType.STUDENT,recipientMail,recipient,htmlReceivedMail);
 											newMailview.setStudent((StudentDTO)result);
 										}
 										else
 										{
-											newMailview.init(userType.ADMIN,recipientMail,recipient);
+											newMailview.init(userType.ADMIN,recipientMail,recipient,htmlReceivedMail);
 											newMailview.setStudent(falseStudent);
 										}		
 										

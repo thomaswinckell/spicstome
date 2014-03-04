@@ -3,6 +3,7 @@ package com.spicstome.client.ui;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.smartgwt.client.widgets.layout.VLayout;
 import com.spicstome.client.dto.LogDTO;
 import com.spicstome.client.dto.StudentDTO;
 import com.spicstome.client.dto.UserDTO;
@@ -41,7 +42,7 @@ public class NewMailViewImpl extends UserViewImpl  implements NewMailView{
 			@Override
 			public void onSelectedRecipient(UserDTO user,String mail) {
 				
-				SelectRecipient(user,mail);
+				SelectRecipient(user,mail,"");
 
 			}	
     	};
@@ -93,7 +94,7 @@ public class NewMailViewImpl extends UserViewImpl  implements NewMailView{
 	}
 	
 	@Override
-	public void init(userType type,String recipientMail,UserDTO recipient) {
+	public void init(userType type,String recipientMail,UserDTO recipient,String htmlReceivedMail) {
 		
 		super.init(type);
 		mailPanel.init();
@@ -105,7 +106,7 @@ public class NewMailViewImpl extends UserViewImpl  implements NewMailView{
 		}
 		else
 		{
-			SelectRecipient(recipient, recipientMail);
+			SelectRecipient(recipient, recipientMail, htmlReceivedMail);
 		}
 		
 		selectionRecipientPanel.setTextSearchVisible(isAdmin());
@@ -120,7 +121,7 @@ public class NewMailViewImpl extends UserViewImpl  implements NewMailView{
 		
 	}
 	
-	public void SelectRecipient(UserDTO user,String mail)
+	public void SelectRecipient(UserDTO user,String mail,String htmlReceivedMail)
 	{
 		if(user!=null)
 		{
@@ -154,7 +155,8 @@ public class NewMailViewImpl extends UserViewImpl  implements NewMailView{
 		
 		SetIsSelectedRecipient(true);
 		mailPanel.setRecipientMail(mail);
-		mailPanel.startLog();
+		mailPanel.startLog();		
+		mailPanel.setReceivedMail(htmlReceivedMail);
 	}
 
 

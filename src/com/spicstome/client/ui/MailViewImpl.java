@@ -37,7 +37,7 @@ public class MailViewImpl extends UserViewImpl  implements MailView
 						goTo(new ReceivedMailsPlace());
 						break;
 					case 1 :
-						goTo(new NewMailPlace("?"));
+						goTo(new NewMailPlace("?", ""));
 						break;
 				
 				}
