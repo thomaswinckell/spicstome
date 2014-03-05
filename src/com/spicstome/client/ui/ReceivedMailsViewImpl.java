@@ -1,10 +1,15 @@
 package com.spicstome.client.ui;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Locale;
 
-import com.smartgwt.client.widgets.Button;
+import com.google.gwt.i18n.client.DateTimeFormat;
+import com.smartgwt.client.types.Alignment;
+import com.smartgwt.client.types.VerticalAlignment;
 import com.smartgwt.client.widgets.Canvas;
+import com.smartgwt.client.widgets.IconButton;
 import com.smartgwt.client.widgets.Img;
 import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.events.ClickEvent;
@@ -23,6 +28,7 @@ public class ReceivedMailsViewImpl extends UserViewImpl  implements ReceivedMail
 
 	VLayout containerLayout = new VLayout();
 	ArrayList<HLayout> mailLayout = new ArrayList<HLayout>();
+	Label receivedMailsLabel = new Label();
 	
 	public ReceivedMailsViewImpl() {
 		super();
@@ -39,9 +45,14 @@ public class ReceivedMailsViewImpl extends UserViewImpl  implements ReceivedMail
 		mainPanel.setWidth100();
 		mainPanel.setHeight100();
 		
+		receivedMailsLabel.setContents("Messages reçus :");
+		receivedMailsLabel.setStyleName("bigMessage");
+		receivedMailsLabel.setLeft(100);
+		
 		containerLayout.setWidth100();
 		containerLayout.setHeight100();
 		
+		mainPanel.addMember(receivedMailsLabel);
 		mainPanel.addMember(containerLayout);
 	}
 	
@@ -55,9 +66,19 @@ public class ReceivedMailsViewImpl extends UserViewImpl  implements ReceivedMail
 		}
 		
 		// adding navigation buttons
+		HLayout navLayout = new HLayout();
+		navLayout.setWidth100();
+		navLayout.setHeight("100px");
 		
 		if (hasPrevious) {
-			Button previousButton = new Button("Précédent");
+			
+			IconButton previousButton = new IconButton("");
+			previousButton.setIcon("arrow-left.png");
+			previousButton.setIconSize(96);
+			previousButton.setPrompt("Page précédente");			
+			previousButton.setWidth(96);
+			previousButton.setLayoutAlign(Alignment.LEFT);
+			
 			previousButton.addClickHandler(new ClickHandler() {
 
 				@Override
@@ -66,11 +87,18 @@ public class ReceivedMailsViewImpl extends UserViewImpl  implements ReceivedMail
 				}				
 			});
 			
-			containerLayout.addMember(previousButton);
+			navLayout.addMember(previousButton);
 		}
 		
 		if (hasNext) {
-			Button nextButton = new Button("Suivant");
+			
+			IconButton nextButton = new IconButton("");
+			nextButton.setIcon("arrow-right.png");
+			nextButton.setIconSize(96);
+			nextButton.setPrompt("Page suivante");			
+			nextButton.setWidth(96);
+			nextButton.setLayoutAlign(Alignment.RIGHT);
+			
 			nextButton.addClickHandler(new ClickHandler() {
 
 				@Override
@@ -79,8 +107,10 @@ public class ReceivedMailsViewImpl extends UserViewImpl  implements ReceivedMail
 				}				
 			});
 			
-			containerLayout.addMember(nextButton);
+			navLayout.addMember(nextButton);
 		}
+		
+		containerLayout.addMember(navLayout);
 		
 		// adding mails
 		
@@ -91,7 +121,14 @@ public class ReceivedMailsViewImpl extends UserViewImpl  implements ReceivedMail
 		// adding navigation buttons
 		
 		if (hasPrevious) {
-			Button previousButtonBottom = new Button("Précédent");
+			
+			IconButton previousButtonBottom = new IconButton("");
+			previousButtonBottom.setIcon("arrow-left.png");
+			previousButtonBottom.setIconSize(96);
+			previousButtonBottom.setPrompt("Page précédente");			
+			previousButtonBottom.setWidth(96);
+			previousButtonBottom.setLayoutAlign(Alignment.LEFT);
+			
 			previousButtonBottom.addClickHandler(new ClickHandler() {
 
 				@Override
@@ -104,7 +141,14 @@ public class ReceivedMailsViewImpl extends UserViewImpl  implements ReceivedMail
 		}
 		
 		if (hasNext) {
-			Button nextButtonBottom = new Button("Suivant");
+			
+			IconButton nextButtonBottom = new IconButton("");
+			nextButtonBottom.setIcon("arrow-right.png");
+			nextButtonBottom.setIconSize(96);
+			nextButtonBottom.setPrompt("Page suivante");			
+			nextButtonBottom.setWidth(96);
+			nextButtonBottom.setLayoutAlign(Alignment.RIGHT);
+			
 			nextButtonBottom.addClickHandler(new ClickHandler() {
 
 				@Override
@@ -117,6 +161,7 @@ public class ReceivedMailsViewImpl extends UserViewImpl  implements ReceivedMail
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void setReceivedMails(final MailListDTO mails) {
 		
@@ -124,14 +169,23 @@ public class ReceivedMailsViewImpl extends UserViewImpl  implements ReceivedMail
 		
 		for (int i=0; i<mails.getMails().size(); i++) {
 			
+			if (i>0) {
+				HLayout hr = new HLayout();
+				hr.setWidth100();
+				hr.setHeight("10px");
+				hr.setContents("<hr/>");
+				mailLayout.add(hr);
+			}
+			
 			final MailDTO currentMail = mails.getMails().get(i);
 			
 			HLayout hLayout = new HLayout();
-			hLayout.setMargin(50);
+			hLayout.setMargin(10);
 			
 			VLayout vLayoutSender = new VLayout();		
 			vLayoutSender.setWidth("200px");
 			vLayoutSender.setHeight("350px");
+			vLayoutSender.setLayoutAlign(VerticalAlignment.CENTER);
 			
 			Label labelSender = new Label();
 			labelSender.setContents("<h2>" + currentMail.getSender().getFirstName() + " dit : </h2>");
@@ -140,17 +194,37 @@ public class ReceivedMailsViewImpl extends UserViewImpl  implements ReceivedMail
 			imageSender.setWidth("200px");
 			imageSender.setHeight("200px");
 			
+			Label labelDateReception = new Label();
+			
+			DateFormat fullDateFormatFR = DateFormat.getDateInstance(DateFormat.FULL, new Locale("FR","fr"));
+			labelDateReception.setContents("<h2>Le " + fullDateFormatFR.format(currentMail.getReceivedDate()) + "</h2>");
+			
 			vLayoutSender.addMember(labelSender);
 			vLayoutSender.addMember(imageSender);
+			vLayoutSender.addMember(labelDateReception);
 			
 			VLayout vLayoutMessage = new VLayout();
 			vLayoutMessage.setWidth100();
-			vLayoutMessage.setHeight("350px");
+			vLayoutMessage.setHeight("290px");
+			vLayoutMessage.setLayoutAlign(VerticalAlignment.CENTER);
 			
 			vLayoutMessage.setContents(currentMail.getMessageHTML());
 			
-			Button nextButtonBottom = new Button("Répondre");
-			nextButtonBottom.addClickHandler(new ClickHandler() {
+			VLayout vLayoutReply = new VLayout();
+			vLayoutReply.setWidth("200px");
+			vLayoutReply.setHeight("250px");
+			
+			Label labelReply = new Label();
+			labelReply.setContents("<h2>Répondre à "+currentMail.getSender().getFirstName() + " :</h2>");
+			
+			IconButton replyButton = new IconButton("");
+			replyButton.setIcon("mail.png");
+			replyButton.setIconSize(180);
+			replyButton.setPrompt("Répondre à "+currentMail.getSender().getFirstName());			
+			replyButton.setWidth(180);
+			replyButton.setLayoutAlign(VerticalAlignment.CENTER);
+			
+			replyButton.addClickHandler(new ClickHandler() {
 
 				@Override
 				public void onClick(ClickEvent event) {
@@ -158,9 +232,14 @@ public class ReceivedMailsViewImpl extends UserViewImpl  implements ReceivedMail
 				}				
 			});
 			
+			vLayoutReply.addMember(labelReply);
+			vLayoutReply.addMember(replyButton);
+			
 			hLayout.addMember(vLayoutSender);
 			hLayout.addMember(vLayoutMessage);
-			hLayout.addMember(nextButtonBottom);
+			hLayout.addMember(vLayoutReply);
+			
+			hLayout.setMembersMargin(40);
 			
 			mailLayout.add(hLayout);
 		}

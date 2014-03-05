@@ -165,7 +165,7 @@ public abstract class MailHelper {
 						    HTML = HTML.replaceFirst("cid:[0-9]+", imgType+imgSrc);
 						}
 						
-						mail.setMessageHTML(HTML);
+						mail.setMessageHTML(HTML.substring(HTML.indexOf("<table"), HTML.indexOf("</table>")+7));
 						mails.add(mail);
 					}
 				}

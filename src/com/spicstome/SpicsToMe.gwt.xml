@@ -14,7 +14,9 @@
   
   <inherits name='com.allen_sauer.gwt.voices.gwt-voices'/>
   
-  <inherits name="com.google.gwt.http.HTTP"/>	
+  <inherits name="com.google.gwt.http.HTTP"/>
+  
+  <inherits name="com.google.gwt.i18n.I18N"/>
 
   <!-- Entry Point is the first class called at the begining of the application -->
   
