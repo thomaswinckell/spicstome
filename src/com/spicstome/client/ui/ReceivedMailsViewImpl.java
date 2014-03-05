@@ -1,11 +1,9 @@
 package com.spicstome.client.ui;
 
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import com.google.gwt.i18n.client.DateTimeFormat;
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.types.VerticalAlignment;
 import com.smartgwt.client.widgets.Canvas;
@@ -48,6 +46,7 @@ public class ReceivedMailsViewImpl extends UserViewImpl  implements ReceivedMail
 		receivedMailsLabel.setContents("Messages reçus :");
 		receivedMailsLabel.setStyleName("bigMessage");
 		receivedMailsLabel.setLeft(100);
+		receivedMailsLabel.setMargin(20);
 		
 		containerLayout.setWidth100();
 		containerLayout.setHeight100();
@@ -66,11 +65,18 @@ public class ReceivedMailsViewImpl extends UserViewImpl  implements ReceivedMail
 		}
 		
 		// adding navigation buttons
+		
 		HLayout navLayout = new HLayout();
 		navLayout.setWidth100();
 		navLayout.setHeight("100px");
+		navLayout.setAlign(Alignment.RIGHT);
 		
 		if (hasPrevious) {
+			
+			HLayout navPreviousLayout = new HLayout();
+			navPreviousLayout.setWidth100();
+			navPreviousLayout.setHeight("100px");
+			navPreviousLayout.setAlign(Alignment.LEFT);
 			
 			IconButton previousButton = new IconButton("");
 			previousButton.setIcon("arrow-left.png");
@@ -87,10 +93,17 @@ public class ReceivedMailsViewImpl extends UserViewImpl  implements ReceivedMail
 				}				
 			});
 			
-			navLayout.addMember(previousButton);
+			navPreviousLayout.addMember(previousButton);
+			
+			navLayout.addMember(navPreviousLayout);
 		}
 		
 		if (hasNext) {
+			
+			HLayout navNextLayout = new HLayout();
+			navNextLayout.setWidth100();
+			navNextLayout.setHeight("100px");
+			navNextLayout.setAlign(Alignment.RIGHT);
 			
 			IconButton nextButton = new IconButton("");
 			nextButton.setIcon("arrow-right.png");
@@ -98,6 +111,7 @@ public class ReceivedMailsViewImpl extends UserViewImpl  implements ReceivedMail
 			nextButton.setPrompt("Page suivante");			
 			nextButton.setWidth(96);
 			nextButton.setLayoutAlign(Alignment.RIGHT);
+			nextButton.setLeft("0px");
 			
 			nextButton.addClickHandler(new ClickHandler() {
 
@@ -107,7 +121,9 @@ public class ReceivedMailsViewImpl extends UserViewImpl  implements ReceivedMail
 				}				
 			});
 			
-			navLayout.addMember(nextButton);
+			navNextLayout.addMember(nextButton);
+			
+			navLayout.addMember(navNextLayout);
 		}
 		
 		containerLayout.addMember(navLayout);
@@ -120,7 +136,17 @@ public class ReceivedMailsViewImpl extends UserViewImpl  implements ReceivedMail
 		
 		// adding navigation buttons
 		
+		HLayout navLayoutBottom = new HLayout();
+		navLayoutBottom.setWidth100();
+		navLayoutBottom.setHeight("100px");
+		navLayoutBottom.setAlign(Alignment.RIGHT);
+		
 		if (hasPrevious) {
+			
+			HLayout navPreviousBottomLayout = new HLayout();
+			navPreviousBottomLayout.setWidth100();
+			navPreviousBottomLayout.setHeight("100px");
+			navPreviousBottomLayout.setAlign(Alignment.LEFT);
 			
 			IconButton previousButtonBottom = new IconButton("");
 			previousButtonBottom.setIcon("arrow-left.png");
@@ -137,10 +163,17 @@ public class ReceivedMailsViewImpl extends UserViewImpl  implements ReceivedMail
 				}				
 			});
 			
-			containerLayout.addMember(previousButtonBottom);
+			navPreviousBottomLayout.addMember(previousButtonBottom);
+			
+			navLayoutBottom.addMember(navPreviousBottomLayout);
 		}
 		
 		if (hasNext) {
+			
+			HLayout navNextBottomLayout = new HLayout();
+			navNextBottomLayout.setWidth100();
+			navNextBottomLayout.setHeight("100px");
+			navNextBottomLayout.setAlign(Alignment.RIGHT);
 			
 			IconButton nextButtonBottom = new IconButton("");
 			nextButtonBottom.setIcon("arrow-right.png");
@@ -148,6 +181,9 @@ public class ReceivedMailsViewImpl extends UserViewImpl  implements ReceivedMail
 			nextButtonBottom.setPrompt("Page suivante");			
 			nextButtonBottom.setWidth(96);
 			nextButtonBottom.setLayoutAlign(Alignment.RIGHT);
+			
+			if (hasPrevious)
+				nextButtonBottom.setTop(-100);
 			
 			nextButtonBottom.addClickHandler(new ClickHandler() {
 
@@ -157,11 +193,14 @@ public class ReceivedMailsViewImpl extends UserViewImpl  implements ReceivedMail
 				}				
 			});
 			
-			containerLayout.addMember(nextButtonBottom);
+			navNextBottomLayout.addMember(nextButtonBottom);
+			
+			navLayoutBottom.addMember(navNextBottomLayout);
 		}
+		
+		containerLayout.addMember(navLayoutBottom);
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public void setReceivedMails(final MailListDTO mails) {
 		
