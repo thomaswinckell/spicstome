@@ -19,7 +19,7 @@ import com.spicstome.client.ui.widget.ImageTileGrid.Mode;
 
 public abstract class MailPanel extends VLayout{
 
-	public AlbumBookPanel album;
+	public InteractiveAlbumBookPanel album;
 	MailDropZone dropZone;
 	long begin;
 	String recipientMail;
@@ -40,12 +40,12 @@ public abstract class MailPanel extends VLayout{
 	SendingPanel sending;
 	HLayout horizontalLayout = new HLayout();
 	VLayout mainContent = new VLayout();
-	MailMenuRightPanel menuRight;
+	//MailMenuRightPanel menuRight;
 	private TextToSpeech textToSpeech = new TextToSpeech();
 	
 	public MailPanel()
 	{
-		album = new AlbumBookPanel(new Book(100));  
+		album = new InteractiveAlbumBookPanel(new Book(100), this);  
 	        
     	dropZone = new MailDropZone(album.book.imageSize){
 
@@ -57,8 +57,8 @@ public abstract class MailPanel extends VLayout{
 			}
     		
     	};
-    	menuRight = new MailMenuRightPanel(this);
-    	sending = new SendingPanel(){
+    	//menuRight = new MailMenuRightPanel(this);
+    	sending = new SendingPanel(this){
 
 			@Override
 			public void onSend() {
@@ -106,24 +106,18 @@ public abstract class MailPanel extends VLayout{
     	labelTitle.setWidth(270);
     	labelTitle.setContents("Ecris un message à ");
     	labelTitle.setStyleName("title");
-    	recipientLabel.setStyleName("title");
-    	
+    	recipientLabel.setStyleName("title");    	
     	
     	recipientLayout.addMember(imageRecipient);
     	recipientLayout.addMember(labelTitle);
     	recipientLayout.addMember(recipientLabel);
     	
     	replyImageRecipient.setIconSize(100);
-    	/*replyLabel.setHeight(40);
-    	replyLabel.setWidth(270);
-    	replyLabel.setContents("à écrit :");*/
-    	//replyLabel.setStyleName("title");
     	replyRecipientLabel.setWidth100();
     	replyRecipientLabel.setStyleName("title");
     	
     	replyLabelLayout.addMember(replyImageRecipient);
     	replyLabelLayout.addMember(replyRecipientLabel);
-    	//replyLabelLayout.addMember(replyLabel);
     	
     	receivedMailLayout.setWidth100();
     	receivedMailLayout.setHeight("350px");    	
@@ -140,7 +134,7 @@ public abstract class MailPanel extends VLayout{
     	
     	horizontalLayout.addMember(expandLayout);
         horizontalLayout.addMember(mainContent);
-        horizontalLayout.addMember(menuRight);
+        //horizontalLayout.addMember(menuRight);
         
         addMember(horizontalLayout);
 		
@@ -158,7 +152,7 @@ public abstract class MailPanel extends VLayout{
 	{
 		album.setStudent(student);
 
-		menuRight.init();
+		//menuRight.init();
 		sending.init();
 	}
 	

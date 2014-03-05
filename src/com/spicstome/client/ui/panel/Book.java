@@ -42,7 +42,7 @@ public class Book extends VLayout{
 		
 		super();
 		
-		setMargin(20);
+		setMargin(10);
 		this.imageSize=imageSize;
 		
 		tileWidth  = imageSize+10;
