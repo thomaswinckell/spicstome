@@ -1,9 +1,8 @@
 package com.spicstome.client.ui;
 
-import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Locale;
 
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.types.VerticalAlignment;
 import com.smartgwt.client.widgets.Canvas;
@@ -235,8 +234,8 @@ public class ReceivedMailsViewImpl extends UserViewImpl  implements ReceivedMail
 			
 			Label labelDateReception = new Label();
 			
-			DateFormat fullDateFormatFR = DateFormat.getDateInstance(DateFormat.FULL, new Locale("FR","fr"));
-			labelDateReception.setContents("<h2>Le " + fullDateFormatFR.format(currentMail.getReceivedDate()) + "</h2>");
+			DateTimeFormat fmt = DateTimeFormat.getFormat("EEEE d MMMM yyyy");
+			labelDateReception.setContents("<h2>Le " + fmt.format(currentMail.getReceivedDate()) + "</h2>");
 			
 			vLayoutSender.addMember(labelSender);
 			vLayoutSender.addMember(imageSender);

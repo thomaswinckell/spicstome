@@ -17,6 +17,10 @@
   <inherits name="com.google.gwt.http.HTTP"/>
   
   <inherits name="com.google.gwt.i18n.I18N"/>
+  
+  <extend-property name="locale" values="fr_FR"/>
+  
+  <set-property-fallback name="locale" value="fr_FR"/>
 
   <!-- Entry Point is the first class called at the begining of the application -->
   
