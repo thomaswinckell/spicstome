@@ -19,6 +19,15 @@ h1 {
     font-size: 15px !important;
 }
 
+.logout{
+	color:darkred;
+	
+}
+.logout:hover
+{
+	cursor:pointer;
+	color:white;
+}
 
 .mainTitle
 {

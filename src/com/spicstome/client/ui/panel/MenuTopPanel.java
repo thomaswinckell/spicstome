@@ -68,6 +68,7 @@ public class MenuTopPanel extends VLayout{
 		
 		buttonLogout.setHeight(10);
 		buttonLogout.setContents("deconnexion");
+		buttonLogout.setStyleName("logout");
 		
 		buttonLogout.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {				

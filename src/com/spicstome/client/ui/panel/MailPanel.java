@@ -126,12 +126,13 @@ public abstract class MailPanel extends VLayout{
     	recipientLayout.addMember(recipientLabel);
     	
     	receivedMailLayout.setWidth100();
-    	receivedMailLayout.setHeight("220px");    	
+    	receivedMailLayout.setHeight("220px");    
+    	receivedMailLayout.setStyleName("bloc");
     	
     	replyMailLayout.addMember(receivedMailLayout);
     	
-    	mainContent.addMember(replyMailLayout);
     	mainContent.addMember(recipientLayout);
+    	mainContent.addMember(replyMailLayout);
     	mainContent.addMember(album);
     	mainContent.addMember(dropZone);
     	mainContent.addMember(sending);
