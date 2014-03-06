@@ -417,7 +417,7 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 	    };
 	    
 	    emptyLabel.setContents("C'est vide ici ! Vous pouvez ajouter ou importer des mots depuis "+
-	    "d'autre albums ou depuis votre ordinateur");
+	    "d'autres albums ou depuis votre ordinateur");
 	    emptyLabel.setStyleName("title");
 	    emptyLabel.setMargin(50);
 	    emptyLayout.addMember(emptyLabel);
