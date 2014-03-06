@@ -24,19 +24,16 @@ public abstract class MailPanel extends VLayout{
 	long begin;
 	String recipientMail;
 	Label recipientLabel = new Label();
-	Label replyRecipientLabel = new Label();
 	VLayout expandLayout = new VLayout();
 	HLayout recipientLayout = new HLayout();
 	HLayout receivedMailLayout = new HLayout();
 	VLayout replyMailLayout = new VLayout();
-	HLayout replyLabelLayout = new HLayout();
 	public boolean expanded = false;
 	ImageTileGrid bigMessageTileGrid;
 	Label bigMessageLabel = new Label();
 	Label labelTitle = new Label();
 	Label replyLabel = new Label();
 	IconButton imageRecipient = new IconButton("");
-	IconButton replyImageRecipient = new IconButton("");
 	SendingPanel sending;
 	HLayout horizontalLayout = new HLayout();
 	VLayout mainContent = new VLayout();
@@ -103,8 +100,6 @@ public abstract class MailPanel extends VLayout{
     	 
     	imageRecipient.setIconSize(100);
     	labelTitle.setHeight(40);
-    	labelTitle.setWidth(270);
-    	labelTitle.setContents("Ecris un message à ");
     	labelTitle.setStyleName("title");
     	recipientLabel.setStyleName("title");    	
     	
@@ -112,17 +107,9 @@ public abstract class MailPanel extends VLayout{
     	recipientLayout.addMember(labelTitle);
     	recipientLayout.addMember(recipientLabel);
     	
-    	replyImageRecipient.setIconSize(100);
-    	replyRecipientLabel.setWidth100();
-    	replyRecipientLabel.setStyleName("title");
-    	
-    	replyLabelLayout.addMember(replyImageRecipient);
-    	replyLabelLayout.addMember(replyRecipientLabel);
-    	
     	receivedMailLayout.setWidth100();
-    	receivedMailLayout.setHeight("350px");    	
+    	receivedMailLayout.setHeight("220px");    	
     	
-    	replyMailLayout.addMember(replyLabelLayout);
     	replyMailLayout.addMember(receivedMailLayout);
     	
     	mainContent.addMember(replyMailLayout);
@@ -145,7 +132,6 @@ public abstract class MailPanel extends VLayout{
 	public void setRecipientLabel(String s)
 	{
 		recipientLabel.setContents(s);
-		replyRecipientLabel.setContents(s+" à écrit :");
 	}
 	
 	public void setStudent(StudentDTO student)
@@ -203,13 +189,16 @@ public abstract class MailPanel extends VLayout{
 	public void setImageRecipient(String filename)
 	{
 		imageRecipient.setIcon("upload/"+filename);
-		replyImageRecipient.setIcon("upload/"+filename);
 	}
 	
 	public void setReceivedMail(String htmlReceivedMail) {
 		if (htmlReceivedMail.isEmpty()) {
+			labelTitle.setContents("Ecris un message à ");
+	    	labelTitle.setWidth(270);
 			replyMailLayout.setVisible(false);
 		} else {
+			labelTitle.setContents("Réponds à ");
+	    	labelTitle.setWidth(152);
 			receivedMailLayout.setContents(htmlReceivedMail);
 			replyMailLayout.setVisible(true);
 		}
