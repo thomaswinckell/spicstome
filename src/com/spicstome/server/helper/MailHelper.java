@@ -91,7 +91,7 @@ public abstract class MailHelper {
 			message.setHeader(MAIL_SENDER_ID, sender.getId().toString());
 
 			MimeBodyPart htmlPart = new MimeBodyPart();
-			htmlPart.setContent("<table width='100%' border='0'>" + labelHTML + imageHTML + "</table>", "text/html; charset=UTF-8");
+			htmlPart.setContent("<table border='0'>" + labelHTML + imageHTML + "</table>", "text/html; charset=UTF-8");
 			mp.addBodyPart(htmlPart);
 
 			message.setContent(mp);
@@ -167,6 +167,7 @@ public abstract class MailHelper {
 						
 						HTML = HTML.substring(HTML.indexOf("<table"), HTML.indexOf("</table>")+7);
 						HTML = HTML.replaceAll("200px", "100px");
+						HTML = HTML.replace("width='100%'", "");
 						
 						mail.setMessageHTML(HTML);
 						mails.add(mail);
