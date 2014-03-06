@@ -2,6 +2,7 @@ package com.spicstome.client.ui.panel;
 
 import java.util.ArrayList;
 
+import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.widgets.IconButton;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
@@ -102,7 +103,8 @@ public class InteractiveAlbumPanel extends AlbumPanel {
 	public void addIcon(IconButton icon)
 	{
 		icons.add(icon);
-		icon.setWidth100();
+		icon.setWidth("150px");
+		icon.setLayoutAlign(Alignment.RIGHT);
 		titleLayout.addMember(icon);
 	}
 	
