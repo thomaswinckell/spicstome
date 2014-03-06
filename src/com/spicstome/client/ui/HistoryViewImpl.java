@@ -126,6 +126,7 @@ public class HistoryViewImpl extends UserViewImpl  implements HistoryView{
 		singleCurveChartMessageLength = new SingleCurveChart(600,400,100,50, "semaine", "longueur moyenne des mails");
 		pieChart = new PieChart(100, null, strings, colors, "Répartition des messages par longueur", 300);
 	
+		pieChart.setMargin(50);
 		horizontalLayout2.addMember(singleCurveChartMessageLength);
 		horizontalLayout2.addMember(pieChart);
 		
