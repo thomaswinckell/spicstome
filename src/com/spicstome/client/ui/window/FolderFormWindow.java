@@ -36,7 +36,7 @@ public class FolderFormWindow extends Window{
 		super();
 
 		setWidth(500);
-		setHeight(300);
+		setHeight(350);
 
 		if(mode==Mode.NEW)
 		{
@@ -73,6 +73,7 @@ public class FolderFormWindow extends Window{
 
 		imageUploadForm.setImageFileName(folder.getImage().getFilename());
 		
+		
 		nameDetail.setHeight(20);    
 		nameDetail.setTitle("Nom");
 		
@@ -100,11 +101,13 @@ public class FolderFormWindow extends Window{
 		imageUploadForm.getUploadButton().setWidth(200);
 		imageUploadForm.getImage().setLayoutAlign(Alignment.CENTER);
 		imageUploadForm.getUploadButton().setLayoutAlign(Alignment.CENTER);
-		form.setAlign(Alignment.CENTER);
 		
-		verticalLayout.setWidth(300);
-		verticalLayout.setLayoutAlign(Alignment.CENTER);
+		verticalLayout.setWidth(460);
 		verticalLayout.setMargin(20);
+		
+		form.setWidth(300);
+		form.setMargin(20);
+		form.setLayoutAlign(Alignment.LEFT);
 
 	    verticalLayout.addMember(imageUploadForm.getImage());
 	    verticalLayout.addMember(imageUploadForm.getUploadButton());
