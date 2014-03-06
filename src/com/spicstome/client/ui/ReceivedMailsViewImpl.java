@@ -67,21 +67,21 @@ public class ReceivedMailsViewImpl extends UserViewImpl  implements ReceivedMail
 		
 		HLayout navLayout = new HLayout();
 		navLayout.setWidth100();
-		navLayout.setHeight("100px");
+		navLayout.setHeight("65px");
 		navLayout.setAlign(Alignment.RIGHT);
 		
 		if (hasPrevious) {
 			
 			HLayout navPreviousLayout = new HLayout();
 			navPreviousLayout.setWidth100();
-			navPreviousLayout.setHeight("100px");
+			navPreviousLayout.setHeight("65px");
 			navPreviousLayout.setAlign(Alignment.LEFT);
 			
 			IconButton previousButton = new IconButton("");
 			previousButton.setIcon("arrow-left.png");
-			previousButton.setIconSize(96);
+			previousButton.setIconSize(64);
 			previousButton.setPrompt("Page précédente");			
-			previousButton.setWidth(96);
+			previousButton.setWidth(64);
 			previousButton.setLayoutAlign(Alignment.LEFT);
 			
 			previousButton.addClickHandler(new ClickHandler() {
@@ -101,14 +101,14 @@ public class ReceivedMailsViewImpl extends UserViewImpl  implements ReceivedMail
 			
 			HLayout navNextLayout = new HLayout();
 			navNextLayout.setWidth100();
-			navNextLayout.setHeight("100px");
+			navNextLayout.setHeight("65px");
 			navNextLayout.setAlign(Alignment.RIGHT);
 			
 			IconButton nextButton = new IconButton("");
 			nextButton.setIcon("arrow-right.png");
-			nextButton.setIconSize(96);
+			nextButton.setIconSize(64);
 			nextButton.setPrompt("Page suivante");			
-			nextButton.setWidth(96);
+			nextButton.setWidth(64);
 			nextButton.setLayoutAlign(Alignment.RIGHT);
 			nextButton.setLeft("0px");
 			
@@ -137,21 +137,21 @@ public class ReceivedMailsViewImpl extends UserViewImpl  implements ReceivedMail
 		
 		HLayout navLayoutBottom = new HLayout();
 		navLayoutBottom.setWidth100();
-		navLayoutBottom.setHeight("100px");
+		navLayoutBottom.setHeight("65px");
 		navLayoutBottom.setAlign(Alignment.RIGHT);
 		
 		if (hasPrevious) {
 			
 			HLayout navPreviousBottomLayout = new HLayout();
 			navPreviousBottomLayout.setWidth100();
-			navPreviousBottomLayout.setHeight("100px");
+			navPreviousBottomLayout.setHeight("65px");
 			navPreviousBottomLayout.setAlign(Alignment.LEFT);
 			
 			IconButton previousButtonBottom = new IconButton("");
 			previousButtonBottom.setIcon("arrow-left.png");
-			previousButtonBottom.setIconSize(96);
+			previousButtonBottom.setIconSize(64);
 			previousButtonBottom.setPrompt("Page précédente");			
-			previousButtonBottom.setWidth(96);
+			previousButtonBottom.setWidth(64);
 			previousButtonBottom.setLayoutAlign(Alignment.LEFT);
 			
 			previousButtonBottom.addClickHandler(new ClickHandler() {
@@ -171,18 +171,15 @@ public class ReceivedMailsViewImpl extends UserViewImpl  implements ReceivedMail
 			
 			HLayout navNextBottomLayout = new HLayout();
 			navNextBottomLayout.setWidth100();
-			navNextBottomLayout.setHeight("100px");
+			navNextBottomLayout.setHeight("65px");
 			navNextBottomLayout.setAlign(Alignment.RIGHT);
 			
 			IconButton nextButtonBottom = new IconButton("");
 			nextButtonBottom.setIcon("arrow-right.png");
-			nextButtonBottom.setIconSize(96);
+			nextButtonBottom.setIconSize(64);
 			nextButtonBottom.setPrompt("Page suivante");			
-			nextButtonBottom.setWidth(96);
+			nextButtonBottom.setWidth(64);
 			nextButtonBottom.setLayoutAlign(Alignment.RIGHT);
-			
-			if (hasPrevious)
-				nextButtonBottom.setTop(-100);
 			
 			nextButtonBottom.addClickHandler(new ClickHandler() {
 
@@ -218,19 +215,19 @@ public class ReceivedMailsViewImpl extends UserViewImpl  implements ReceivedMail
 			final MailDTO currentMail = mails.getMails().get(i);
 			
 			HLayout hLayout = new HLayout();
-			hLayout.setMargin(10);
+			//hLayout.setMargin(10);
 			
 			VLayout vLayoutSender = new VLayout();		
-			vLayoutSender.setWidth("200px");
-			vLayoutSender.setHeight("350px");
+			vLayoutSender.setWidth("150px");
+			vLayoutSender.setHeight("300px");
 			vLayoutSender.setLayoutAlign(VerticalAlignment.CENTER);
 			
 			Label labelSender = new Label();
 			labelSender.setContents("<h2>" + currentMail.getSender().getFirstName() + " dit : </h2>");
 			
 			Img imageSender = new Img(FormUtils.UPLOAD_IMAGE_PATH + currentMail.getSender().getImage().getFilename());
-			imageSender.setWidth("200px");
-			imageSender.setHeight("200px");
+			imageSender.setWidth("100px");
+			imageSender.setHeight("100px");
 			
 			Label labelDateReception = new Label();
 			
@@ -243,24 +240,23 @@ public class ReceivedMailsViewImpl extends UserViewImpl  implements ReceivedMail
 			
 			VLayout vLayoutMessage = new VLayout();
 			vLayoutMessage.setWidth100();
-			vLayoutMessage.setHeight("290px");
+			vLayoutMessage.setHeight("220px");
 			vLayoutMessage.setLayoutAlign(VerticalAlignment.CENTER);
 			
 			vLayoutMessage.setContents(currentMail.getMessageHTML());
 			
 			VLayout vLayoutReply = new VLayout();
-			vLayoutReply.setWidth("200px");
-			vLayoutReply.setHeight("250px");
+			vLayoutReply.setWidth("150px");
+			vLayoutReply.setHeight("200px");
 			
 			Label labelReply = new Label();
 			labelReply.setContents("<h2>Répondre à "+currentMail.getSender().getFirstName() + " :</h2>");
 			
 			IconButton replyButton = new IconButton("");
 			replyButton.setIcon("mail.png");
-			replyButton.setIconSize(180);
+			replyButton.setIconSize(90);
 			replyButton.setPrompt("Répondre à "+currentMail.getSender().getFirstName());			
-			replyButton.setWidth(180);
-			replyButton.setLayoutAlign(VerticalAlignment.CENTER);
+			replyButton.setWidth(90);
 			
 			replyButton.addClickHandler(new ClickHandler() {
 
