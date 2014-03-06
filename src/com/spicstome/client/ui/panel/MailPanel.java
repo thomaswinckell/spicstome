@@ -45,7 +45,7 @@ public abstract class MailPanel extends VLayout{
 	private TextToSpeech textToSpeech = new TextToSpeech();
 	
 	public MailPanel()
-	{
+	{		
 		album = new InteractiveAlbumBookPanel(new Book(100), this);  
 	        
     	dropZone = new MailDropZone(album.book.imageSize){
@@ -54,7 +54,6 @@ public abstract class MailPanel extends VLayout{
 			public void onTextChange(boolean isOK) {
 				
 				sending.setSpeakVisible(isOK);
-				
 			}
     		
     	};

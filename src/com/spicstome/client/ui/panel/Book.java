@@ -42,6 +42,9 @@ public class Book extends VLayout{
 		
 		super();
 		
+		if (com.google.gwt.user.client.Window.getClientWidth() < 1300)
+			nbColPerPage = 2;
+		
 		setMargin(10);
 		this.imageSize=imageSize;
 		
