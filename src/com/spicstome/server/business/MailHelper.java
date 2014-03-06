@@ -91,7 +91,7 @@ public abstract class MailHelper {
 			message.setHeader(MAIL_SENDER_ID, sender.getId().toString());
 
 			MimeBodyPart htmlPart = new MimeBodyPart();
-			htmlPart.setContent("<table width='100%' border='0'>" + labelHTML + imageHTML + "</table>", "text/html");
+			htmlPart.setContent("<table width='100%' border='0'>" + labelHTML + imageHTML + "</table>", "text/html; charset=UTF-8");
 			mp.addBodyPart(htmlPart);
 
 			message.setContent(mp);
