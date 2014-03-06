@@ -3,9 +3,12 @@ package com.spicstome.client.ui.panel;
 import java.util.ArrayList;
 import java.util.Date;
 
+import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.IconButton;
 import com.smartgwt.client.widgets.Label;
+import com.smartgwt.client.widgets.events.ClickEvent;
+import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.spicstome.client.dto.LogDTO;
@@ -25,6 +28,7 @@ public abstract class MailPanel extends VLayout{
 	String recipientMail;
 	Label recipientLabel = new Label();
 	VLayout expandLayout = new VLayout();
+	IconButton shrinkButton = new IconButton("");
 	HLayout recipientLayout = new HLayout();
 	HLayout receivedMailLayout = new HLayout();
 	VLayout replyMailLayout = new VLayout();
@@ -95,6 +99,20 @@ public abstract class MailPanel extends VLayout{
     	bigMessageLabel.setLeft(100);
     	bigMessageLabel.setRight(100);
     	
+    	shrinkButton.setIcon("shrink.png");
+    	shrinkButton.setIconSize(100);
+    	shrinkButton.setPrompt("Sortir du mode plein écran");
+    	shrinkButton.setLayoutAlign(Alignment.RIGHT);
+    	shrinkButton.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				
+				expand(false);
+			}
+		});
+    	
+    	expandLayout.addMember(shrinkButton);
     	expandLayout.addMember(bigMessageTileGrid);
     	expandLayout.addMember(bigMessageLabel);
     	 

@@ -10,7 +10,7 @@ public abstract class SendingPanel extends HLayout{
 
 	IconButton sendingButton = new IconButton("");
 	protected IconButton speakButton = new IconButton("");
-	IconButton expand;
+	IconButton expand = new IconButton("");
 	private MailPanel mailView;
 	
 	int iconsize = 100;
@@ -48,7 +48,8 @@ public abstract class SendingPanel extends HLayout{
 			}
 		});
 		
-		expand = new IconButton("");
+		//expand = new IconButton("");
+		expand.setIcon("expand.png");
 		expand.setIconSize(iconsize);
 		expand.setPrompt("Plein écran");
 		expand.addClickHandler(new ClickHandler() {
@@ -56,8 +57,9 @@ public abstract class SendingPanel extends HLayout{
 			@Override
 			public void onClick(ClickEvent event) {
 				
-				mailView.expand(!mailView.expanded);
-				updateExpand();
+				mailView.expand(true);
+				/*mailView.expand(!mailView.expanded);
+				updateExpand();*/
 			}
 		});
 
@@ -70,7 +72,7 @@ public abstract class SendingPanel extends HLayout{
 	public void init()
 	{
 		speakButton.setVisible(false);
-		updateExpand();
+		//updateExpand();
 	}
 	
 	public void setSpeakVisible(boolean b)
@@ -78,10 +80,10 @@ public abstract class SendingPanel extends HLayout{
 		speakButton.setVisible(b);
 	}
 	
-	public void updateExpand()
+	/*public void updateExpand()
 	{
 		expand.setIcon((mailView.expanded?"shrink.png":"expand.png"));
-	}
+	}*/
 	
 	public abstract void onSend();
 	public abstract void onSpeak();
