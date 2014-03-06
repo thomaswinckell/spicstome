@@ -15,7 +15,6 @@ public class InteractiveAlbumPanel extends AlbumPanel {
 
 	MailPanel mailView;
 	IconButton favoriteIcon;
-	//IconButton expand;
 	int iconsize = 60;
 	ArrayList<IconButton> icons = new ArrayList<IconButton>();
 
@@ -24,20 +23,6 @@ public class InteractiveAlbumPanel extends AlbumPanel {
 		super();
 		
 		this.mailView=mailView;
-		
-		
-		/*expand = new IconButton("Plein écran");
-		expand.setIconSize(iconsize);
-		
-		expand.addClickHandler(new ClickHandler() {
-			
-			@Override
-			public void onClick(ClickEvent event) {
-				
-				mailView.expand(!mailView.expanded);
-				updateExpand();
-			}
-		});*/
 
 		IconButton search = new IconButton("Rechercher");
 		search.setIcon("search.png");
@@ -111,7 +96,6 @@ public class InteractiveAlbumPanel extends AlbumPanel {
 		
 		addIcon(favoriteIcon);
 		addIcon(search);
-		//addIcon(expand);
 
 	}
 	
@@ -125,13 +109,7 @@ public class InteractiveAlbumPanel extends AlbumPanel {
 	public void init()
 	{
 		updateFavorite();
-		//updateExpand();
 	}
-	
-	/*public void updateExpand()
-	{
-		expand.setIcon((mailView.expanded?"shrink.png":"expand.png"));
-	}*/
 
 	public void updateFavorite()
 	{

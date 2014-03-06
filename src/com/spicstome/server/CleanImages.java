@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.hibernate.Session;
 
-import com.spicstome.client.shared.Image;
+import com.spicstome.server.business.Image;
 
 public class CleanImages {
 	

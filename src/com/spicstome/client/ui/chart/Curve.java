@@ -2,7 +2,7 @@ package com.spicstome.client.ui.chart;
 
 import java.util.ArrayList;
 
-import com.spicstome.client.shared.Point2D;
+import com.spicstome.client.dto.Point2D;
 
 public class Curve {
 	

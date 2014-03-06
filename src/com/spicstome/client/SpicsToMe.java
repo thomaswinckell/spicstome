@@ -40,6 +40,7 @@ public class SpicsToMe implements EntryPoint
 
 		// Start ActivityManager for the main widget with our ActivityMapper
 		ActivityMapper activityMapper = new AppActivityMapper(clientFactory);
+		
 		//L'activitymanager se sert de l'activitymapper pour faire le lien entre place et activity
 		ActivityManager activityManager = new ActivityManager(activityMapper, eventBus);
 		activityManager.setDisplay(appWidget);

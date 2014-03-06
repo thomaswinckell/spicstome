@@ -7,7 +7,7 @@ import com.smartgwt.client.widgets.drawing.DrawLine;
 import com.smartgwt.client.widgets.drawing.DrawPane;
 import com.smartgwt.client.widgets.drawing.Point;
 import com.smartgwt.client.widgets.layout.HLayout;
-import com.spicstome.client.shared.Point2D;
+import com.spicstome.client.dto.Point2D;
 
 public class SingleCurveChart extends HLayout {
     

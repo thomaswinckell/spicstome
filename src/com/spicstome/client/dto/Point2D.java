@@ -1,4 +1,4 @@
-package com.spicstome.client.shared;
+package com.spicstome.client.dto;
 
 import java.io.Serializable;
 

@@ -1,12 +1,9 @@
 package com.spicstome.client.activity;
 
-import java.util.ArrayList;
-
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.spicstome.client.ClientFactory;
-import com.spicstome.client.dto.MailDTO;
 import com.spicstome.client.dto.MailListDTO;
 import com.spicstome.client.dto.UserDTO;
 import com.spicstome.client.place.ReceivedMailsPlace;
@@ -32,8 +29,7 @@ public class ReceivedMailsActivity extends UserActivity implements ReceivedMails
 	}
 
 	@Override
-	public void start(AcceptsOneWidget containerWidget, EventBus eventBus) 
-	{
+	public void start(AcceptsOneWidget containerWidget, EventBus eventBus) {
 		super.start(containerWidget, eventBus);
 		
 		SpicsToMeServices.Util.getInstance().getCurrentUser(new AsyncCallback<UserDTO>() {
@@ -49,9 +45,7 @@ public class ReceivedMailsActivity extends UserActivity implements ReceivedMails
 				SpicsToMeServices.Util.getInstance().getMails(user, startPosition, isDescDirection, maxNbValidMails, new AsyncCallback<MailListDTO>()  {
 
 					@Override
-					public void onFailure(Throwable caught) {
-						
-					}
+					public void onFailure(Throwable caught) { }
 
 					@Override
 					public void onSuccess(MailListDTO result) {

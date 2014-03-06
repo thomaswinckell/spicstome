@@ -16,11 +16,11 @@
     	
     	<property name="current_session_context_class">thread</property>
     	
-	    <mapping resource="com/spicstome/client/shared/User.hbm.xml" />
-		<mapping resource="com/spicstome/client/shared/Pecs.hbm.xml" />
-		<mapping resource="com/spicstome/client/shared/Album.hbm.xml" />
-		<mapping resource="com/spicstome/client/shared/Image.hbm.xml" />
-		<mapping resource="com/spicstome/client/shared/Log.hbm.xml" />
+	    <mapping resource="com/spicstome/server/hbm/User.hbm.xml" />
+		<mapping resource="com/spicstome/server/hbm/Pecs.hbm.xml" />
+		<mapping resource="com/spicstome/server/hbm/Album.hbm.xml" />
+		<mapping resource="com/spicstome/server/hbm/Image.hbm.xml" />
+		<mapping resource="com/spicstome/server/hbm/Log.hbm.xml" />
 		
 	    
     </session-factory>

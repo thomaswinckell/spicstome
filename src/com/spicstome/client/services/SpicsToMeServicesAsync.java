@@ -20,8 +20,8 @@ import java.util.List;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.spicstome.client.dto.AlbumDTO;
 import com.spicstome.client.dto.LogDTO;
-import com.spicstome.client.dto.MailDTO;
 import com.spicstome.client.dto.MailListDTO;
+import com.spicstome.client.dto.Point2D;
 import com.spicstome.client.dto.WordDTO;
 import com.spicstome.client.dto.FolderDTO;
 import com.spicstome.client.dto.ImageDTO;
@@ -29,7 +29,6 @@ import com.spicstome.client.dto.ReferentDTO;
 import com.spicstome.client.dto.StudentDTO;
 import com.spicstome.client.dto.TeacherDTO;
 import com.spicstome.client.dto.UserDTO;
-import com.spicstome.client.shared.Point2D;
 
 
 public interface SpicsToMeServicesAsync {

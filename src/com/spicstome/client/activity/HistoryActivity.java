@@ -6,11 +6,11 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.spicstome.client.ClientFactory;
+import com.spicstome.client.dto.Point2D;
 import com.spicstome.client.dto.StudentDTO;
 import com.spicstome.client.dto.UserDTO;
 import com.spicstome.client.place.HistoryPlace;
 import com.spicstome.client.services.SpicsToMeServices;
-import com.spicstome.client.shared.Point2D;
 import com.spicstome.client.ui.HistoryView;
 import com.spicstome.client.ui.UserViewImpl;
 

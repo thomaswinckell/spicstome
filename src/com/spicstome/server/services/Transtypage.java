@@ -19,22 +19,22 @@ import com.spicstome.client.dto.StudentDTO;
 import com.spicstome.client.dto.TeacherDTO;
 import com.spicstome.client.dto.UserDTO;
 import com.spicstome.client.dto.VerbDTO;
-import com.spicstome.client.shared.Adjective;
-import com.spicstome.client.shared.Album;
-import com.spicstome.client.shared.Article;
-import com.spicstome.client.shared.Word;
-import com.spicstome.client.shared.Folder;
-import com.spicstome.client.shared.Image;
-import com.spicstome.client.shared.Log;
-import com.spicstome.client.shared.Noun;
-import com.spicstome.client.shared.Pecs;
-import com.spicstome.client.shared.Pronoun;
-import com.spicstome.client.shared.Referent;
-import com.spicstome.client.shared.Student;
-import com.spicstome.client.shared.Subject;
-import com.spicstome.client.shared.Teacher;
-import com.spicstome.client.shared.User;
-import com.spicstome.client.shared.Verb;
+import com.spicstome.server.business.Adjective;
+import com.spicstome.server.business.Album;
+import com.spicstome.server.business.Article;
+import com.spicstome.server.business.Folder;
+import com.spicstome.server.business.Image;
+import com.spicstome.server.business.Log;
+import com.spicstome.server.business.Noun;
+import com.spicstome.server.business.Pecs;
+import com.spicstome.server.business.Pronoun;
+import com.spicstome.server.business.Referent;
+import com.spicstome.server.business.Student;
+import com.spicstome.server.business.Subject;
+import com.spicstome.server.business.Teacher;
+import com.spicstome.server.business.User;
+import com.spicstome.server.business.Verb;
+import com.spicstome.server.business.Word;
 
 public class Transtypage {
 	

@@ -43,7 +43,7 @@ public class ReceivedMailsViewImpl extends UserViewImpl  implements ReceivedMail
 		mainPanel.setHeight100();
 		
 		receivedMailsLabel.setContents("Messages reçus :");
-		receivedMailsLabel.setStyleName("bigMessage");
+		receivedMailsLabel.setStyleName("title");
 		receivedMailsLabel.setLeft(100);
 		receivedMailsLabel.setMargin(20);
 		
@@ -215,7 +215,6 @@ public class ReceivedMailsViewImpl extends UserViewImpl  implements ReceivedMail
 			final MailDTO currentMail = mails.getMails().get(i);
 			
 			HLayout hLayout = new HLayout();
-			//hLayout.setMargin(10);
 			
 			VLayout vLayoutSender = new VLayout();		
 			vLayoutSender.setWidth("150px");
@@ -276,13 +275,8 @@ public class ReceivedMailsViewImpl extends UserViewImpl  implements ReceivedMail
 			hLayout.setMembersMargin(40);
 			
 			mailLayout.add(hLayout);
-		}
-		
+		}		
 		
 		updateLayout(mails.hasPrevious(), mails.hasNext(), mails.getStartPosition(), mails.getNextStartPosition());
-		
-		System.out.println("Nb mails : "+mails.getMails().size());
-		
-		System.out.println("View update done");
 	}
 }

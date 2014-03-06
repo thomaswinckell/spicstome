@@ -1,4 +1,4 @@
-package com.spicstome.client.shared;
+package com.spicstome.server.business;
 
 import java.io.Serializable;
 import java.util.ArrayList;

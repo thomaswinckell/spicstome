@@ -3,8 +3,8 @@ package com.spicstome.client.ui;
 import java.util.ArrayList;
 
 import com.google.gwt.user.client.ui.IsWidget;
+import com.spicstome.client.dto.Point2D;
 import com.spicstome.client.dto.StudentDTO;
-import com.spicstome.client.shared.Point2D;
 
 
 public interface HistoryView extends IsWidget{

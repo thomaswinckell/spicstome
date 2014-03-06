@@ -1,4 +1,4 @@
-package com.spicstome.server.business;
+package com.spicstome.server.helper;
 
 import java.io.File;
 import java.io.InputStream;

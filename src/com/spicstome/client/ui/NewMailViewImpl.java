@@ -3,7 +3,6 @@ package com.spicstome.client.ui;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.smartgwt.client.widgets.layout.VLayout;
 import com.spicstome.client.dto.LogDTO;
 import com.spicstome.client.dto.StudentDTO;
 import com.spicstome.client.dto.UserDTO;

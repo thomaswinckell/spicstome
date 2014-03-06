@@ -5,12 +5,12 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.cfg.Configuration;
 
-import com.spicstome.client.shared.Album;
-import com.spicstome.client.shared.Log;
-import com.spicstome.client.shared.Word;
-import com.spicstome.client.shared.Image;
-import com.spicstome.client.shared.Pecs;
-import com.spicstome.client.shared.User;
+import com.spicstome.server.business.Album;
+import com.spicstome.server.business.Image;
+import com.spicstome.server.business.Log;
+import com.spicstome.server.business.Pecs;
+import com.spicstome.server.business.User;
+import com.spicstome.server.business.Word;
 
 /**
  * 
