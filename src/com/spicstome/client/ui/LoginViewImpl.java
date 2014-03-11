@@ -34,7 +34,8 @@ public class LoginViewImpl extends VLayout implements LoginView
 	{
 		
 		title.setWidth100();
-		title.setHeight(30);
+		title.setHeight(50);
+		title.setStyleName("mainTitle");
 		
 		image = new Img("logo.png");
 		image.setSize(100);
