@@ -12,6 +12,8 @@ import com.smartgwt.client.widgets.events.DropCompleteHandler;
 import com.smartgwt.client.widgets.tile.TileGrid;
 import com.smartgwt.client.widgets.tile.events.RecordClickEvent;
 import com.smartgwt.client.widgets.tile.events.RecordClickHandler;
+import com.smartgwt.client.widgets.tile.events.RecordDoubleClickEvent;
+import com.smartgwt.client.widgets.tile.events.RecordDoubleClickHandler;
 import com.smartgwt.client.widgets.viewer.DetailViewerField;
 import com.spicstome.client.dto.WordDTO;
 
@@ -66,6 +68,13 @@ public abstract class ImageTileGrid extends TileGrid {
 			}
 		});
 		
+		addRecordDoubleClickHandler(new RecordDoubleClickHandler() {
+			
+			@Override
+			public void onRecordDoubleClick(RecordDoubleClickEvent event) {
+				OnDoubleClickImage((ImageRecord)event.getRecord());
+			}
+		});
 		
 		
 	}
@@ -186,6 +195,11 @@ public abstract class ImageTileGrid extends TileGrid {
 	}
 
 	public void OnSelectChanged(ImageRecord object)
+	{
+		
+	}
+	
+	public void OnDoubleClickImage(ImageRecord object)
 	{
 		
 	}

@@ -151,6 +151,14 @@ public class Book extends VLayout{
 				{
 					book.onSelectChangeBook(object);
 				}
+				
+				@Override
+				public void OnDoubleClickImage(ImageRecord object)
+				{
+					book.onDoubleClickImage(object);
+				}
+				
+				
 			};
 			
 			imageList.addFocusChangedHandler(new FocusChangedHandler() {
@@ -167,6 +175,9 @@ public class Book extends VLayout{
 					}
 				}
 			});
+			
+			
+			
 			
 			imageList.setWidth(widthPage);
 			imageList.setHeight(heightPage);
@@ -218,6 +229,11 @@ public class Book extends VLayout{
 	{
 		if(image!=null)
 			selectedImage=image;
+	}
+	
+	public void onDoubleClickImage(ImageRecord image)
+	{
+		
 	}
 
 }

@@ -46,7 +46,16 @@ public abstract class MailPanel extends VLayout{
 	
 	public MailPanel()
 	{		
-		album = new InteractiveAlbumBookPanel(new Book(100), this);  
+		Book book = new Book(100){
+			
+			@Override
+			public void onDoubleClickImage(ImageRecord image)
+			{
+				dropZone.addImage(new ImageRecord((WordDTO)image.getAttributeAsObject(ImageRecord.DATA)));
+			}
+		};
+		
+		album = new InteractiveAlbumBookPanel(book, this);  
 	        
     	dropZone = new MailDropZone(album.book.imageSize){
 

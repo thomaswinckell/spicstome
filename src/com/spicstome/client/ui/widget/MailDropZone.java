@@ -1,6 +1,7 @@
 package com.spicstome.client.ui.widget;
 
 import java.util.ArrayList;
+
 import com.smartgwt.client.data.RecordList;
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.widgets.Img;
@@ -27,6 +28,13 @@ public abstract class MailDropZone extends VLayout{
 			@Override
 			public void OnRemove()
 			{
+				UpdateMail();
+			}
+			
+			@Override
+			public void OnDoubleClickImage(ImageRecord object)
+			{
+				dropZone.removeItem(object);
 				UpdateMail();
 			}
 			
@@ -112,6 +120,12 @@ public abstract class MailDropZone extends VLayout{
 		
 		return words;
 
+	}
+	
+	public void addImage(ImageRecord image)
+	{
+		dropZone.addItem(image);
+		UpdateMail();
 	}
 	
 	public int getMovementCount() {
