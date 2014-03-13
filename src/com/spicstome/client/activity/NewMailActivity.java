@@ -70,13 +70,13 @@ public class NewMailActivity extends UserActivity implements NewMailView.Present
 
 										if(result instanceof StudentDTO)
 										{
-											newMailview.init(userType.STUDENT,recipientMail,recipient,htmlReceivedMail);
 											newMailview.setStudent((StudentDTO)result);
+											newMailview.init(userType.STUDENT,recipientMail,recipient,htmlReceivedMail);
 										}
 										else
-										{
-											newMailview.init(userType.ADMIN,recipientMail,recipient,htmlReceivedMail);
+										{	
 											newMailview.setStudent(falseStudent);
+											newMailview.init(userType.ADMIN,recipientMail,recipient,htmlReceivedMail);
 										}		
 										
 										userView.setIsLoading(false);
