@@ -238,6 +238,7 @@ public class ReceivedMailsViewImpl extends UserViewImpl  implements ReceivedMail
 			vLayoutSender.addMember(labelDateReception);
 			
 			VLayout vLayoutMessage = new VLayout();
+			vLayoutMessage.setStyleName("bloc");
 			vLayoutMessage.setWidth100();
 			vLayoutMessage.setHeight("220px");
 			vLayoutMessage.setLayoutAlign(VerticalAlignment.CENTER);

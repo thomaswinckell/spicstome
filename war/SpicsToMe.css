@@ -89,6 +89,16 @@ h1 {
 	font-style:italic
 }
 
+.userBox{
+	margin:20px;
+	padding:10px;
+	border-width:2px;
+	border-style:outset;
+	border-color:grey;
+	border-radius:20px;
+	background-color: #f2f2e5;
+}
+
 .connexionPanel
 {
 	margin:auto;

@@ -3,6 +3,7 @@ package com.spicstome.client.ui.panel;
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.widgets.IconButton;
 import com.smartgwt.client.widgets.Img;
+import com.smartgwt.client.widgets.ImgButton;
 import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
@@ -23,7 +24,7 @@ public class MenuTopPanel extends VLayout{
 	Label userName = new Label();
 	Label userFirstName = new Label();
 	Label userType = new Label();
-	protected Label buttonLogout = new Label();
+	protected IconButton buttonLogout = new IconButton("");
 	private Img logo =new Img("logo.png");
 	public BreadCrumb breadcrumb=new BreadCrumb();
 	protected UserViewImpl mainView;
@@ -66,9 +67,9 @@ public class MenuTopPanel extends VLayout{
 		userName.setHeight(10);
 		userType.setHeight(10);
 		
-		buttonLogout.setHeight(10);
-		buttonLogout.setContents("deconnexion");
-		buttonLogout.setStyleName("logout");
+		buttonLogout.setIcon("exit.png");
+		buttonLogout.setIconSize(50);
+		buttonLogout.setPrompt("Quitter");
 		
 		buttonLogout.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {				
@@ -87,6 +88,7 @@ public class MenuTopPanel extends VLayout{
 		userLayout.addMember(userDetail);
 		
 		userLayout.setLayoutAlign(Alignment.RIGHT);
+		userLayout.setStyleName("userBox");
 		
 		topLayout.addMember(logo);
 		topLayout.addMember(labelTitle);
