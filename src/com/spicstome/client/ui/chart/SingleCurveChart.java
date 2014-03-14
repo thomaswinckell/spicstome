@@ -16,7 +16,7 @@ public class SingleCurveChart extends HLayout {
 	private ArrayList<Curve> curves;
 	private double maxX = 0, maxY = 0;
 	private String stringX, stringY;
-	private static int ARROW_LENGTH = 5, STEP_HEIGHT = 50, STEP_WIDTH = 50, STEP_LINE_LENGTH = 5; // pixels
+	private static int ARROW_LENGTH = 5, STEP_HEIGHT = 50, STEP_WIDTH = 70, STEP_LINE_LENGTH = 5; // pixels
 
     public SingleCurveChart(int width, int height, int margin, int padding, String stringX, String stringY) {
     	
@@ -110,12 +110,12 @@ public class SingleCurveChart extends HLayout {
     	Point p;
     	
     	if (maxX > 10) 
-    		stepX = (int) (maxX / (getLocalWidth() / STEP_HEIGHT));
+    		stepX = (int) (maxX / (getLocalWidth() / STEP_WIDTH));
     	else
     		stepX = 1;
     	
     	if (maxY > 10) 
-    		stepY = (int) (maxY / (getLocalHeight() / STEP_WIDTH));
+    		stepY = (int) (maxY / (getLocalHeight() / STEP_HEIGHT));
     	else
     		stepY = 1;
     	
