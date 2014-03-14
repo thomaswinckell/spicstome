@@ -9,6 +9,10 @@ import com.spicstome.client.dto.PecsDTO;
 import com.spicstome.client.dto.StudentDTO;
 import com.spicstome.client.ui.widget.ImageRecord;
 
+/**
+ * AlbumBook panel is composed of a book , the
+ * treegrid of his parent class allow to navigate in the book
+ */
 public class AlbumBookPanel extends AlbumPanel{
 
 	public Book book;

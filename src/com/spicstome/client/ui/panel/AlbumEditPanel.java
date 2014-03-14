@@ -32,6 +32,9 @@ import com.spicstome.client.ui.window.FolderPickerWindow;
 import com.spicstome.client.ui.window.WordFormWindow;
 import com.spicstome.client.ui.window.WordPickerWindow;
 
+/**
+ * AlbumPanel used in a case of edition (creation/edit/delete).
+ */
 public abstract class AlbumEditPanel extends AlbumPanel{
 
 	ImageTileGrid wordsGrid;

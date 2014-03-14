@@ -3,20 +3,10 @@ package com.spicstome.client.syntax.french;
 
 public abstract class SyntaxVerb
 {
-	protected String radical; /* vaut fr�m pour le verbe fr�mir, vaut mang pour le verbe manger...*/
+	protected String radical; 
 
-	/*
-	 * attention l'argument doit �tre le radical et non l'infinitif !
-	 * */
 	protected SyntaxVerb(String radical) {this.radical = radical.trim().toLowerCase();}
 
-	/**
-	 * @param infinitif: infinitif du verbe
-	 * @param terminaisonInfinitif : terminaison du verbe � l'infinitif
-	 * @param messageErreur : message d'erreur � incorporer � l'exception si l'exception est lanc�e
-	 * @exception : lance une VerbeException si infinitif et terminaisonInfinitif sont incompatibles 
-	 * 
-	 * */
 	protected SyntaxVerb( String infinitif, String terminaisonInfinitif, String messageErreur) // throws VerbeException
 	{
 		String infi, term;
@@ -72,4 +62,4 @@ public abstract class SyntaxVerb
 	abstract public String terminaison3emePersonnePluriel();
 
 
-}//Verbe
+}

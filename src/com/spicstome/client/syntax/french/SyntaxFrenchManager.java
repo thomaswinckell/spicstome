@@ -1,5 +1,8 @@
 package com.spicstome.client.syntax.french;
 
+/**
+ * French grammatical rules, matching word, conjugate, Group/Verb etc.
+ */
 public class SyntaxFrenchManager {
 	
 
@@ -114,11 +117,9 @@ public class SyntaxFrenchManager {
 			conjugateVerb = conjugateVerb1stOr2ndGroup(infinitif, subjectPerson,subjectNumber);
 		}	
 		else
-		{		
-			
+		{				
 			if(subjectNumber==0)
 			{
-
 				if(subjectPerson==0)
 					conjugateVerb = irregular1;
 				else if(subjectPerson==1)
@@ -141,12 +142,9 @@ public class SyntaxFrenchManager {
 		{
 			conjugateVerb = negation(conjugateVerb)+ conjugateVerb +" pas";
 		}
-		
-		
-		
-		return conjugateVerb;
 			
-
+		return conjugateVerb;
+		
 	}
 	
 	public boolean isVoyel(char c)
@@ -163,8 +161,7 @@ public class SyntaxFrenchManager {
 			else if(subjectPerson==1)
 				return analyseSpecificGroup(infinitif).conjugue2emePersonneSingulier();
 			else if(subjectPerson==2)
-				return analyseSpecificGroup(infinitif).conjugue3emePersonneSingulier();
-			
+				return analyseSpecificGroup(infinitif).conjugue3emePersonneSingulier();		
 		}
 		else
 		{
@@ -185,8 +182,7 @@ public class SyntaxFrenchManager {
 		if(isVoyel(firstChar))
 			return "n'";
 		else
-			return "ne ";
-		
+			return "ne ";	
 	}
 	
 	public String formatArticle(String article,String next)

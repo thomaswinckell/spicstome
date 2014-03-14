@@ -19,6 +19,9 @@ import com.spicstome.client.ui.UserViewImpl;
 import com.spicstome.client.ui.widget.BreadCrumb;
 import com.spicstome.client.ui.widget.Crumb;
 
+/**
+ * MenuTop display the connected user, a breadcrumb, and the main logo of the application
+ */
 public class MenuTopPanel extends VLayout{
 
 	Label userName = new Label();

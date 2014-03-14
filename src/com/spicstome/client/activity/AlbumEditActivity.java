@@ -19,6 +19,10 @@ import com.spicstome.client.services.SpicsToMeServices;
 import com.spicstome.client.ui.AlbumEditView;
 import com.spicstome.client.ui.UserViewImpl;
 
+/**
+ * activity which load an album with a given id and allow to modify it.
+ * Modification on folder, word, orders, import ...
+ */
 public class AlbumEditActivity extends UserActivity implements AlbumEditView.Presenter{
 	
 	AlbumEditView editview;
@@ -37,6 +41,7 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 	{
 		super.start(containerWidget, eventBus);
 		
+		//general and example case
 		if(idAlbum==1 || idAlbum==2)
 		{
 			SpicsToMeServices.Util.getInstance().getAlbum(idAlbum, new AsyncCallback<AlbumDTO>() {
@@ -56,6 +61,7 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 		}
 		else
 		{
+			//student case
 			SpicsToMeServices.Util.getInstance().getAlbumOwner(idAlbum, new AsyncCallback<StudentDTO>(){
 
 				@Override
@@ -73,7 +79,7 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 		
 			
 		
-		
+		//creation of the list of "others album available".
 		SpicsToMeServices.Util.getInstance().getGeneralAndExampleAlbum(new AsyncCallback<List<AlbumDTO>>() {
 
 			@Override
@@ -94,7 +100,7 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 						
 				}
 				
-				
+				//combination with the other student
 				SpicsToMeServices.Util.getInstance().getCurrentUser( new AsyncCallback<UserDTO>() {
 					
 					@Override
@@ -124,7 +130,7 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 
 	@Override
 	public void save(final WordDTO wordDTO) {
-		
+		//save word
 		SpicsToMeServices.Util.getInstance().saveImage(wordDTO.getImage(), new AsyncCallback<Long>() {
 			@Override
 			public void onFailure(Throwable caught) {}
@@ -181,7 +187,7 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 
 	@Override
 	public void delete(final WordDTO word) {
-		
+		//delete word
 		SpicsToMeServices.Util.getInstance().deleteWord(word.getId(), new AsyncCallback<Boolean>() {
 			@Override
 			public void onFailure(Throwable caught) {}
@@ -196,6 +202,7 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 
 	@Override
 	public void delete(final FolderDTO f) {
+		//delete folder
 		SpicsToMeServices.Util.getInstance().deleteFolder(f.getId(), new AsyncCallback<Boolean>() {
 			@Override
 			public void onFailure(Throwable caught) {}
@@ -252,7 +259,7 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 
 	@Override
 	public void update(final FolderDTO f) {
-		
+		//update a folder (+image)
 		SpicsToMeServices.Util.getInstance().updateImage(f.getImage(), new AsyncCallback<Long>() {
 
 			@Override
@@ -279,7 +286,7 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 
 	@Override
 	public void update(final WordDTO word) {
-		
+		//update word (+image)
 		SpicsToMeServices.Util.getInstance().updateImage(word.getImage(),new AsyncCallback<Long>() {
 
 			@Override
@@ -318,6 +325,7 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 
 	@Override
 	public void get(FolderDTO f) {
+		//get the whole folder
 		SpicsToMeServices.Util.getInstance().getFolder(f.getId(), new AsyncCallback<FolderDTO>() {
 
 			@Override
@@ -334,7 +342,7 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 
 	@Override
 	public void reorder(WordDTO wordDTO) {
-		
+		//reorder one word
 		SpicsToMeServices.Util.getInstance().updateWord(wordDTO, new AsyncCallback<Boolean>() {
 			@Override
 			public void onFailure(Throwable caught) {}
@@ -346,6 +354,7 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 
 	@Override
 	public void reorder(FolderDTO f) {
+		//reorder one folder
 		SpicsToMeServices.Util.getInstance().updateFolderAndChild(f,new AsyncCallback<Boolean>() {
 
 			@Override
@@ -361,6 +370,7 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 	
 	public void InsertFolder(FolderDTO f)
 	{
+		//insert one folder into the view
 		editview.insertFolder(f);
 		
 		for(PecsDTO pecs:f.getContent())
@@ -375,8 +385,6 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 	
 	@Override
 	public void copy(final FolderDTO f,FolderDTO parent) {
-		
-		
 		
 		if(f.getFolder()==null)
 		{
@@ -398,11 +406,8 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 							UpdateStudentDTO();
 						}
 					});
-				}
-				
+				}			
 			}
-			
-			
 		}
 		else
 		{
@@ -416,9 +421,7 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 				public void onSuccess(FolderDTO result) {
 					
 					InsertFolder(result);
-					
 					UpdateStudentDTO();
-					
 				}
 			});
 
@@ -430,13 +433,11 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 	public void UpdateStudentDTO()
 	{
 		/* album update */
-		
 		SpicsToMeServices.Util.getInstance().getAlbum(idAlbum, new AsyncCallback<AlbumDTO>() {
 			@Override
 			public void onSuccess(AlbumDTO result) {
 				
 				editview.updateAlbum(result);
-
 			}
 			@Override
 			public void onFailure(Throwable caught) {}			
@@ -445,7 +446,7 @@ public class AlbumEditActivity extends UserActivity implements AlbumEditView.Pre
 
 	@Override
 	public void copy(WordDTO word, FolderDTO parent) {
-		
+		//copy a word
 		parent.getContent().add(word);
 		word.setOrder(parent.getContent().size());
 	

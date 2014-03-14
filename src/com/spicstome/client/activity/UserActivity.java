@@ -14,13 +14,13 @@ import com.spicstome.client.services.SpicsToMeServices;
 import com.spicstome.client.ui.UserView;
 import com.spicstome.client.ui.UserViewImpl;
 
-
+/**
+ * Activity which contain a top view with the connected user and a breadcrumb
+ */
 public class UserActivity extends AbstractActivity implements UserView.Presenter{
 
 	protected UserViewImpl userView;
 	protected ClientFactory clientFactory;
-
-	
 	
 	public UserActivity(Place place, ClientFactory clientFactory,UserViewImpl userView) 
 	{

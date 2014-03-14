@@ -10,13 +10,16 @@ import com.spicstome.client.dto.VerbDTO;
 import com.spicstome.client.syntax.french.SyntaxFrenchManager;
 import com.spicstome.client.ui.widget.ImageRecord;
 
+/**
+ * Analysis of the sentence and correction/ result 
+ */
 public class SyntaxAnalyser {
 
 	public SyntaxState currentState;
 	public SyntaxFrenchManager syntaxFrenchManager;
 	protected ArrayList<ImageRecord> arrayRecord;
 	public int nbGoodWord;
-	
+
 	public StateInit stateInit;
 	public StateArticleSubject stateArticleSubject;
 	public StateNounSubject stateNounSubject;

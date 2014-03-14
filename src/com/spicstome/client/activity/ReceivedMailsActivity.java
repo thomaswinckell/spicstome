@@ -11,6 +11,10 @@ import com.spicstome.client.services.SpicsToMeServices;
 import com.spicstome.client.ui.ReceivedMailsView;
 import com.spicstome.client.ui.UserViewImpl;
 
+/**
+ * Inbox activity
+ * allow to reply to a received mail
+ */
 public class ReceivedMailsActivity extends UserActivity implements ReceivedMailsView.Presenter{
 
 	ReceivedMailsView receivedMailsView;

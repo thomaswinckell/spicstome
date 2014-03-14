@@ -17,9 +17,10 @@ import com.spicstome.client.dto.UserDTO;
 import com.spicstome.client.ui.widget.ImageRecord;
 import com.spicstome.client.ui.widget.ImageTileGrid;
 import com.spicstome.client.ui.widget.ImageTileGrid.Mode;
-
+/**
+ * Selection menu of a recipient for a mail
+ */
 public abstract class SelectRecipientPanel extends VLayout {
-
 
 	ImageTileGrid userGrid;
 	Label labelNothing = new Label();

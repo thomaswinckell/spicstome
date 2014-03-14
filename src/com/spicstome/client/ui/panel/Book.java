@@ -15,7 +15,10 @@ import com.spicstome.client.ui.widget.ImageRecord;
 import com.spicstome.client.ui.widget.ImageTileGrid;
 import com.spicstome.client.ui.widget.ImageTileGrid.Mode;
 
-
+/**
+ * A book is a list of pages which contain tilegrids.
+ * a pagination allow to move from one page to the other.
+ */
 public class Book extends VLayout{
 	
 	protected ArrayList<ImageTileGrid> listPage= new ArrayList<ImageTileGrid>();

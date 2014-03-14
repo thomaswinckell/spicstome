@@ -4,12 +4,16 @@ import com.spicstome.client.dto.WordDTO;
 import com.spicstome.client.dto.SubjectDTO;
 import com.spicstome.client.dto.VerbDTO;
 
+/**
+ * A state have an acceptance ( good or bad) 
+ * it checks a word and infer if it is appropriate or not.
+ */
+
 public abstract class SyntaxState {
 
 	public boolean acceptance;
 	protected SyntaxAnalyser analyser;
 
-	
 	public SyntaxState(boolean acceptance,SyntaxAnalyser analyser)
 	{
 		this.acceptance=acceptance;

@@ -14,6 +14,9 @@ import com.spicstome.client.services.SpicsToMeServices;
 import com.spicstome.client.ui.HistoryView;
 import com.spicstome.client.ui.UserViewImpl;
 
+/**
+ * activity which present some result about history of a student
+ */
 public class HistoryActivity extends UserActivity{
 
 	
@@ -48,6 +51,7 @@ public class HistoryActivity extends UserActivity{
 					
 					historyView.setStudent(student);
 					
+					//all call are in cascade in order to stop the loading screen at the right time
 					SpicsToMeServices.Util.getInstance().getAverageMessageLength(-1,-1,student.getLogs(), new AsyncCallback<Double>() {
 
 						@Override

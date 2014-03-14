@@ -11,10 +11,15 @@ import com.spicstome.client.services.SpicsToMeServices;
 import com.spicstome.client.ui.AlbumView;
 import com.spicstome.client.ui.UserViewImpl;
 
+/**
+ * Activity which loads and display an album with a given id
+ * 1 => general album
+ * 2=> example album
+ */
+
 public class AlbumActivity extends UserActivity{
 
-	
-
+	//album View
 	AlbumView albumView;
 	
 	public AlbumActivity(AlbumPlace place, ClientFactory clientFactory) {
@@ -22,6 +27,7 @@ public class AlbumActivity extends UserActivity{
 
 		this.albumView = clientFactory.getAlbumView();
 
+		//general and example case
 		if(place.idAlbum==1 || place.idAlbum==2)
 		{
 			SpicsToMeServices.Util.getInstance().getAlbum(place.idAlbum, new AsyncCallback<AlbumDTO>() {
@@ -41,6 +47,7 @@ public class AlbumActivity extends UserActivity{
 		}
 		else
 		{
+			//student case
 			SpicsToMeServices.Util.getInstance().getAlbumOwner(place.idAlbum, new AsyncCallback<StudentDTO>() {
 				@Override
 				public void onSuccess(StudentDTO result) {

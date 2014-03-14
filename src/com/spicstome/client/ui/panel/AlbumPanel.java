@@ -15,6 +15,10 @@ import com.spicstome.client.dto.StudentDTO;
 import com.spicstome.client.ui.widget.FolderTree;
 import com.spicstome.client.ui.widget.FolderTree.AlbumTreeNode;
 
+/**
+ * An albumPanel is composed of a title and a tree that
+ * allow to navigate into the album
+ */
 public abstract class AlbumPanel extends VLayout{
 
 	protected HLayout titleLayout = new HLayout();

@@ -18,7 +18,8 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 
 /**
- * Activities are started and stopped by an ActivityManager associated with a container Widget.
+ * Activity which list groups of users and allow to delete or modify them.
+ * Create a new user etc.
  */
 public class UsersManagementActivity extends UserActivity {
 	

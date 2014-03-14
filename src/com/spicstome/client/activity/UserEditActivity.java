@@ -10,6 +10,10 @@ import com.spicstome.client.services.SpicsToMeServices;
 import com.spicstome.client.ui.UserEditView;
 import com.spicstome.client.ui.UserViewImpl;
 
+/**
+ * Activity which allow to modify information about a user
+ * with his given id
+ */
 public class UserEditActivity extends UserActivity {
 	
 	UserEditView view;

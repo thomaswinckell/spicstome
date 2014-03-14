@@ -11,7 +11,10 @@ import com.spicstome.client.services.SpicsToMeServices;
 import com.spicstome.client.ui.HistoryManagementView;
 import com.spicstome.client.ui.UserViewImpl;
 
-
+/**
+ * activity which present a list of history per student and allow to 
+ * choice one of them
+ */
 public class HistoryManagementActivity extends UserActivity implements HistoryManagementView.Presenter {
 
 	

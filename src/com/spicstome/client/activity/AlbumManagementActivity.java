@@ -18,6 +18,9 @@ import com.spicstome.client.ui.AlbumManagementView;
 import com.spicstome.client.ui.UserViewImpl;
 import com.spicstome.client.ui.UserViewImpl.userType;
 
+/**
+ * activity which display a list of album and allow to view or edit them.
+ */
 
 public class AlbumManagementActivity extends UserActivity implements AlbumManagementView.Presenter {
 
@@ -33,7 +36,7 @@ public class AlbumManagementActivity extends UserActivity implements AlbumManage
 	public void start(AcceptsOneWidget containerWidget, EventBus eventBus) {
 
 		super.start(containerWidget, eventBus);
-		
+		//save the view
 		managementView = clientFactory.getAlbumManagementView();
 
 		SpicsToMeServices.Util.getInstance().getCurrentUser( new AsyncCallback<UserDTO>() {

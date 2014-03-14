@@ -16,6 +16,9 @@ import com.spicstome.client.ui.MainMenuView;
 import com.spicstome.client.ui.UserViewImpl;
 import com.spicstome.client.ui.UserViewImpl.userType;
 
+/**
+ * MainMenu : depending of the current user, the menu allow different action
+ */
 public class MainMenuActivity extends UserActivity{
 
 	MainMenuView mainView;

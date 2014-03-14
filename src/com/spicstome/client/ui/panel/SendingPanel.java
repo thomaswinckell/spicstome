@@ -5,20 +5,22 @@ import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
 
+/**
+ * 
+ * This panel allow to click on a "sending" button, "listen" or "expand"
+ *
+ */
 public abstract class SendingPanel extends HLayout{
 
 	IconButton sendingButton = new IconButton("");
 	protected IconButton speakButton = new IconButton("");
 	IconButton expand = new IconButton("");
-	
 	int iconsize = 100;
 	
 	public SendingPanel(final MailPanel mailView)
 	{
 		
-		setWidth100();
-
-		
+		setWidth100();	
 		setStyleName("bloc");
 		
 		speakButton.addClickHandler(new ClickHandler() {

@@ -18,6 +18,15 @@ import com.spicstome.client.ui.NewMailView;
 import com.spicstome.client.ui.UserViewImpl;
 import com.spicstome.client.ui.UserViewImpl.userType;
 
+/**
+ * 
+ * Mail creation activity.
+ * this part allow to
+ * 	-choose a recipient
+ * 	-create a mail
+ * 	-sending it
+ *
+ */
 public class NewMailActivity extends UserActivity implements NewMailView.Presenter{
 	
 	NewMailView newMailview;

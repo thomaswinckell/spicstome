@@ -8,7 +8,11 @@ import com.spicstome.client.place.MailPlace;
 import com.spicstome.client.ui.AlbumManagementView;
 import com.spicstome.client.ui.UserViewImpl;
 
-
+/**
+ * activity which allow to cchoice between " create" or "read" a mail.
+ * 
+ *
+ */
 public class MailActivity extends UserActivity implements AlbumManagementView.Presenter {
 
 	ReferentDTO referent;

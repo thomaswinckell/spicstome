@@ -6,6 +6,9 @@ import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 
+/**
+ * List of checks and crosses associated with the grammatical correction
+ */
 public class ValidationPanel extends HLayout{
 
 	HLayout checksLayout = new HLayout();
@@ -17,13 +20,8 @@ public class ValidationPanel extends HLayout{
 	
 		validImg.setWidth(50);
 		validImg.setHeight(50);
-	
-		
-		
 
-		
 		setStyleName("bloc");
-		
 		
 		addMember(checksLayout);
 		addMember(validImg);

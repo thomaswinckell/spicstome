@@ -20,6 +20,13 @@ import com.spicstome.client.ui.widget.ImageTileGrid;
 import com.spicstome.client.ui.widget.MailDropZone;
 import com.spicstome.client.ui.widget.ImageTileGrid.Mode;
 
+/**
+ * 
+ * The mail panel contains:
+ * 	-the recipient (with the reply message if present)
+ * 	-an interactive album book (favorite, search function)
+ *	-a sending panel allowing to listen ,expend or send the mail
+ */
 public abstract class MailPanel extends VLayout{
 
 	public InteractiveAlbumBookPanel album;
@@ -41,7 +48,6 @@ public abstract class MailPanel extends VLayout{
 	SendingPanel sending;
 	HLayout horizontalLayout = new HLayout();
 	VLayout mainContent = new VLayout();
-	//MailMenuRightPanel menuRight;
 	private TextToSpeech textToSpeech = new TextToSpeech();
 	
 	public MailPanel()
@@ -66,7 +72,7 @@ public abstract class MailPanel extends VLayout{
 			}
     		
     	};
-    	//menuRight = new MailMenuRightPanel(this);
+
     	sending = new SendingPanel(this){
 
 			@Override
@@ -86,15 +92,13 @@ public abstract class MailPanel extends VLayout{
 				else
 				{
 					SC.warn("Le message est vide");
-				}
-				
+				}				
 			}
 
 			@Override
 			public void onSpeak() {
 				
 				textToSpeech.playMessage(dropZone.getSentence());
-				
 			}
     		
     	};
@@ -145,15 +149,10 @@ public abstract class MailPanel extends VLayout{
     	mainContent.addMember(dropZone);
     	mainContent.addMember(sending);
     
-    	
     	horizontalLayout.addMember(expandLayout);
         horizontalLayout.addMember(mainContent);
-        //horizontalLayout.addMember(menuRight);
         
-        addMember(horizontalLayout);
-		
-		
-		
+        addMember(horizontalLayout);		
 	}
 	
 	public void setRecipientLabel(String s)
@@ -164,8 +163,6 @@ public abstract class MailPanel extends VLayout{
 	public void setStudent(StudentDTO student)
 	{
 		album.setStudent(student);
-
-		//menuRight.init();
 		sending.init();
 	}
 	
@@ -184,9 +181,7 @@ public abstract class MailPanel extends VLayout{
 	public void expand(boolean b)
 	{
 		expanded=b;
-
 		onExpand(b);
-		
 		expandLayout.setVisible(expanded);
 		mainContent.setVisible(!expanded);
 		
