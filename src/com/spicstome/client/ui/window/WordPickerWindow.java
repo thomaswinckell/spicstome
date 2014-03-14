@@ -7,6 +7,9 @@ import com.spicstome.client.ui.panel.AlbumBookPanel;
 import com.spicstome.client.ui.panel.Book;
 import com.spicstome.client.ui.widget.ImageRecord;
 
+/**
+ * Selection of a word from a given album ( or albums)
+ */
 public class WordPickerWindow extends PickerWindow {
 
     public Book book;

@@ -21,6 +21,9 @@ import com.spicstome.client.ui.widget.ImageRecord;
 import com.spicstome.client.ui.widget.ImageTileGrid;
 import com.spicstome.client.ui.widget.ImageTileGrid.Mode;
 
+/**
+ * filtering search of words
+ */
 public class SearchWordWindow extends Window {
 
 	VLayout layout = new VLayout();

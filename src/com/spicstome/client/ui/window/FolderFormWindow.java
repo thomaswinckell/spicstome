@@ -14,21 +14,17 @@ import com.spicstome.client.dto.FolderDTO;
 import com.spicstome.client.dto.ImageDTO;
 import com.spicstome.client.dto.PecsDTO;
 import com.spicstome.client.ui.form.ImageUploadForm;
-
+/**
+ * Folder form window, allow to insert information about a folder
+ */
 public class FolderFormWindow extends Window{
 
 	VLayout verticalLayout = new VLayout();
 	DynamicForm form = new DynamicForm();
-	
 	ImageUploadForm imageUploadForm = new ImageUploadForm(128, 128);
-	
 	IconButton buttonValidate = new IconButton("");
-	
 	public FolderDTO folder;
-	
 	TextItem nameDetail = new TextItem("name");
-
-	
 	public enum Mode{NEW, EDIT}
 	
 	public FolderFormWindow(Mode mode,FolderDTO folderDTO,FolderDTO parent) 
@@ -61,8 +57,6 @@ public class FolderFormWindow extends Window{
 			this.folder=folderDTO;
 		}
 		
-		
-		
 		setShowMinimizeButton(false);
 		setIsModal(true);
 		setShowModalMask(true);
@@ -72,7 +66,6 @@ public class FolderFormWindow extends Window{
 		
 
 		imageUploadForm.setImageFileName(folder.getImage().getFilename());
-		
 		
 		nameDetail.setHeight(20);    
 		nameDetail.setTitle("Nom");

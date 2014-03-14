@@ -21,14 +21,10 @@ public abstract class ImageTileGrid extends TileGrid {
 
 	public enum Mode{CLICK, DRAG, DRAG_AND_DROP}
 
-
 	protected Mode mode;
 	
 	//	Only used for deselection 
 	private ImageRecord old=null;
-	
-	
-	
 
 	public ImageTileGrid(Mode mode,int tileWidth,int tileHeight,int imageSize) {
 	
@@ -39,8 +35,7 @@ public abstract class ImageTileGrid extends TileGrid {
 		setData(new ImageRecord[]{});
 		setShowAllRecords(true);
 		setTileMargin(2);
-
-		
+	
 		setTileWidth(tileWidth);
 		setTileHeight(tileHeight);
 	
@@ -52,9 +47,7 @@ public abstract class ImageTileGrid extends TileGrid {
 		//nameField.setCellStyle("tile");
 		
 		setFields(pictureField, nameField);
-		
-		
-		
+			
 		initComponent();
 		
 		/*
@@ -74,17 +67,13 @@ public abstract class ImageTileGrid extends TileGrid {
 			public void onRecordDoubleClick(RecordDoubleClickEvent event) {
 				OnDoubleClickImage((ImageRecord)event.getRecord());
 			}
-		});
-		
-		
+		});		
 	}
 	
-
 	protected void initComponent(){
 		switch (this.mode) {
 		case CLICK :
 			setCanReorderTiles(false);
-			
 			
 			/* 
 			 * A click on a already selected tile will deselect it
@@ -108,7 +97,6 @@ public abstract class ImageTileGrid extends TileGrid {
 			setTileDragAppearance(DragAppearance.TARGET);
 			setDragTrackerStyle("dragStyle");
 
-
 			break;
 		case DRAG_AND_DROP:
 			setCanReorderTiles(true);  
@@ -127,7 +115,6 @@ public abstract class ImageTileGrid extends TileGrid {
 					
 				}
 			});
-			
 			
 			break;
 		}

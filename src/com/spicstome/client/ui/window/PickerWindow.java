@@ -16,11 +16,8 @@ import com.spicstome.client.dto.StudentDTO;
 import com.spicstome.client.ui.panel.AlbumPanel;
 
 /**
- * 
- * @author Maxime
  * A PickerWindow allow the user to choose something among a list of Album
  * A validButton shows up in the bottomLayout
- * 
  */
 public abstract class PickerWindow extends Window{
 

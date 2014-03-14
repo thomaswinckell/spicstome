@@ -26,6 +26,9 @@ import com.spicstome.client.dto.SubjectDTO;
 import com.spicstome.client.dto.VerbDTO;
 import com.spicstome.client.ui.form.ImageUploadForm;
 
+/**
+ * Word form window allow to insert information about a word ( adjective, verb, pronoun ...)
+ */
 public class WordFormWindow extends Window{
 	
 	VLayout verticalLayout = new VLayout();
