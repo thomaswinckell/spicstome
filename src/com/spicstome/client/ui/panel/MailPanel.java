@@ -100,6 +100,13 @@ public abstract class MailPanel extends VLayout{
 				
 				textToSpeech.playMessage(dropZone.getSentence());
 			}
+
+			@Override
+			public void onTrash() {
+				
+				onTrashMail();
+				
+			}
     		
     	};
     	
@@ -228,4 +235,5 @@ public abstract class MailPanel extends VLayout{
 	
 	public abstract void onSendMail(String recipient,ArrayList<WordDTO> words,ArrayList<String> correctedWords,LogDTO log);
 	public abstract void onExpand(boolean b);
+	public abstract void onTrashMail();
 }

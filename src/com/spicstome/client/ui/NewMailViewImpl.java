@@ -60,7 +60,14 @@ public class NewMailViewImpl extends UserViewImpl  implements NewMailView{
 			@Override
 			public void onExpand(boolean b) {
 
-				setMenuTopVisible(!b);
+				setMenuTopVisible((!b) && (isAdmin()));
+				
+			}
+
+			@Override
+			public void onTrashMail() {
+				
+				goTo(new MailPlace());
 				
 			}
 		};
@@ -81,8 +88,7 @@ public class NewMailViewImpl extends UserViewImpl  implements NewMailView{
 		
 		if(!isAdmin())
 			mailPanel.album.setMyAlbumTitle();
-		
-		
+			
 	}
 
 
@@ -109,6 +115,7 @@ public class NewMailViewImpl extends UserViewImpl  implements NewMailView{
 		}
 		
 		selectionRecipientPanel.setTextSearchVisible(isAdmin());
+		connectPanel.setVisible(isAdmin());
 	}
 	
 	public void SetIsSelectedRecipient(boolean b)

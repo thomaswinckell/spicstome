@@ -42,13 +42,16 @@ public class ReceivedMailsViewImpl extends UserViewImpl  implements ReceivedMail
 		mainPanel.setWidth100();
 		mainPanel.setHeight100();
 		
-		receivedMailsLabel.setContents("Messages reçus :");
+		receivedMailsLabel.setContents("Messages reçus");
+		receivedMailsLabel.setWidth(300);
+		receivedMailsLabel.setLayoutAlign(Alignment.CENTER);
 		receivedMailsLabel.setStyleName("title");
 		receivedMailsLabel.setLeft(100);
 		receivedMailsLabel.setMargin(20);
 		
 		containerLayout.setWidth100();
 		containerLayout.setHeight100();
+		containerLayout.setStyleName("bloc");
 		
 		mainPanel.addMember(receivedMailsLabel);
 		mainPanel.addMember(containerLayout);
@@ -250,10 +253,11 @@ public class ReceivedMailsViewImpl extends UserViewImpl  implements ReceivedMail
 			vLayoutReply.setHeight("200px");
 			
 			Label labelReply = new Label();
-			labelReply.setContents("<h2>Répondre à "+currentMail.getSender().getFirstName() + " :</h2>");
+			labelReply.setContents("Répondre à "+currentMail.getSender().getFirstName() + " :");
+			labelReply.setStyleName("subTitle");
 			
 			IconButton replyButton = new IconButton("");
-			replyButton.setIcon("mail.png");
+			replyButton.setIcon("sendmail.png");
 			replyButton.setIconSize(90);
 			replyButton.setPrompt("Répondre à "+currentMail.getSender().getFirstName());			
 			replyButton.setWidth(90);

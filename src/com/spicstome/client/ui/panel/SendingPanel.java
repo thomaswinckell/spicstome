@@ -12,6 +12,7 @@ import com.smartgwt.client.widgets.layout.HLayout;
  */
 public abstract class SendingPanel extends HLayout{
 
+	IconButton trashButton = new IconButton("");
 	IconButton sendingButton = new IconButton("");
 	protected IconButton speakButton = new IconButton("");
 	IconButton expand = new IconButton("");
@@ -34,7 +35,7 @@ public abstract class SendingPanel extends HLayout{
 		speakButton.setIcon("sound.png");
 		speakButton.setIconSize(iconsize);
 
-		sendingButton.setIcon("mail.png");
+		sendingButton.setIcon("sendmail.png");
 		sendingButton.setIconSize(iconsize);
 		sendingButton.setPrompt("Envoyer le mail");
 		
@@ -58,9 +59,22 @@ public abstract class SendingPanel extends HLayout{
 				mailView.expand(true);
 			}
 		});
+		
+		trashButton.setIcon("trash.png");
+		trashButton.setIconSize(iconsize);
+		trashButton.setPrompt("Annuler");
+		trashButton.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				
+				onTrash();
+			}
+		});
 
 		addMember(sendingButton);
 		addMember(speakButton);
+		addMember(trashButton);
 		addMember(expand);
 
 	}
@@ -77,5 +91,6 @@ public abstract class SendingPanel extends HLayout{
 	
 	public abstract void onSend();
 	public abstract void onSpeak();
+	public abstract void onTrash();
 
 }
