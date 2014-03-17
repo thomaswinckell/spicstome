@@ -34,6 +34,7 @@ public abstract class SendingPanel extends HLayout{
 		
 		speakButton.setIcon("sound.png");
 		speakButton.setIconSize(iconsize);
+		speakButton.setPrompt("Ecouter le mail");
 
 		sendingButton.setIcon("sendmail.png");
 		sendingButton.setIconSize(iconsize);

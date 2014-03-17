@@ -185,7 +185,7 @@ public abstract class AlbumEditPanel extends AlbumPanel{
 			@Override
 			public void onClick(ClickEvent event) {
 				
-				SC.confirm("Êtes vous sure de vouloir supprimer cet article ?", new BooleanCallback() {
+				SC.confirm("Êtes vous sure de vouloir supprimer ce mot ?", new BooleanCallback() {
 					
 					public void execute(Boolean value) {
 						if (value != null && value) 
